@@ -206,6 +206,8 @@ class Rimplenet {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-rimplenet-public.php';
 
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'api/class-base-api.php';
+
 		$this->loader = new Rimplenet_Loader();
 
 	}
