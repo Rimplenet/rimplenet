@@ -1,6 +1,6 @@
 <?php
 
-class Rimplenet_Base_Users_Api {
+class Rimplenet_Base_Wallets_Api {
 
 	private $plugin_name;
 
@@ -20,4 +20,4 @@ class Rimplenet_Base_Users_Api {
 }
 
 
-$Rimplenet_Base_Users_Api = new Rimplenet_Base_Users_Api();
+$Rimplenet_Base_Wallets_Api = new Rimplenet_Base_Wallets_Api();
