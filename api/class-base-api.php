@@ -5,18 +5,18 @@
  * @link       https://rimplenet.com/
  * @since      1.0.0
  *
- * @package    Rimplenet_Admin_Tools_Extended
- * @subpackage Rimplenet_Admin_Tools_Extended/api
+ * @package    Rimplenet
+ * @subpackage Rimplenet/api
  */
 /**
  * The api-facing functionality of the plugin.
  *
  * Defines the plugin name, version, and two examples hooks for how to
- * @package    Rimplenet_Admin_Tools_Extended
- * @subpackage Rimplenet_Admin_Tools_Extended/api
+ * @package    Rimplenet
+ * @subpackage Rimplenet/api
  * @author     Rimplenet <info@rimplenet.com>
  */
-class Rimplenet_Admin_Tools_Extended_Api {
+class Rimplenet_Api {
 	/**
 	 * The ID of this plugin.
 	 *
@@ -41,16 +41,16 @@ class Rimplenet_Admin_Tools_Extended_Api {
 	 * @param      string    $version    The version of this plugin.
 	 */
 	public function __construct() {
-		$this->plugin_name = $plugin_name;
-		$this->version = $version;
+		$this->plugin_name = $plugin_name ?? 'Rimplenet';
+		$this->version = $version ?? 'v1';
 		$this->load_required_files();
 	}
     private function load_required_files() {
    	 //Add Required Files to Load
-	 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'api/wallets/get-wallet.php';
+	 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'api/core/wallets/class-base-wallets.php';
     }
 	
 }
 
 
-$Rimplenet_Admin_Tools_Extended_Api = new Rimplenet_Admin_Tools_Extended_Api();
+$Rimplenet_Api = new Rimplenet_Api();
