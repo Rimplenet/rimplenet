@@ -7,7 +7,7 @@ Tested up to: 5.9
 Stable tag: 1.1.31
 Requires PHP: 5.6
 License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+License URI: http://www.gnu.org/licenses/gpl-2.0.html 
 
 Rimplenet is a Financial Technology (FinTech) Plugin for Wordpress with E-Wallet Functionality used to setup E-Banking, Loan - Requester App, MLM, Matrix, Investments and Packages. Using this Plugin is simple, install it, RIMPLENET will appear on your admin dashboard menu (with ability to create Ewallets, Matrix and Matrix Tree, Packages, and E-banking Rules). Admin can auto credit or debit using rules or manually via WALLET SETTINGS Page. WALLETS can be also be used for making woocommerce payment. 
 
