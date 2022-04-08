@@ -11,11 +11,12 @@ class Rimplenet_Base_Users_Api {
 		$this->version = $version;
 		$this->load_required_files();
 	}
-  
-  private function load_required_files() {
-    //Add Required Files to Load
-    require_once plugin_dir_path( dirname( __FILE__ ) ) . 'api/core/users/users-list.php';
-  }
+    private function load_required_files() {
+   	 //Add Required Files to Load
+	 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'users/app/user.php';
+	 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'users/app/register.php';
+	 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'users/app/login.php';
+    }
 	
 }
 
