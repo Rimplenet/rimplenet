@@ -203,6 +203,7 @@ class CreateWallet
         return $wallet_metas;
     }
 }
+
 $CreateWallet = new CreateWallet();
 
 
