@@ -70,19 +70,19 @@ class LoginUser
 
     public function validate($request)
     {
-        $user['user_email'] = sanitize_text_field( $request->get_param( 'email' ) );
-	    $user['user_pass'] = sanitize_text_field( $request->get_param( 'password' ) );
+        $user['user_email'] = sanitize_text_field( $request->get_param( 'user_email' ) );
+	    $user['user_pass'] = sanitize_text_field( $request->get_param( 'user_pass' ) );
 
         if ($user['user_email'] == '') {
-            $this->validation_error[] = 'Email is required';
+            $this->validation_error[] = 'user_email is required';
         }
 
         if (!is_email($user['user_email'])) {
-            $this->validation_error[] = 'Invalid email';
+            $this->validation_error[] = 'Invalid user_email';
         }
 
         if ($user['user_pass'] == '') {
-            $this->validation_error[] = 'Password is required';
+            $this->validation_error[] = 'user_pass is required';
         }
 
         return $user;
