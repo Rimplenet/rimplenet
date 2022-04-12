@@ -1,4 +1,5 @@
 <?php
+require 'jwt.php';
 
 class Rimplenet_Base_Users_Api {
 
@@ -13,9 +14,11 @@ class Rimplenet_Base_Users_Api {
 	}
     private function load_required_files() {
    	 //Add Required Files to Load
-	 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'users/app/user.php';
-	 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'users/app/register.php';
-	 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'users/app/login.php';
+	 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'users/create-users.php';
+	 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'users/delete-users.php';
+	 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'users/get-users.php';
+	 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'users/login.php';
+	 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'users/update-users.php';
     }
 	
 }
