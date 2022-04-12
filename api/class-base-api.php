@@ -41,13 +41,14 @@ class Rimplenet_Api {
 	 * @param      string    $version    The version of this plugin.
 	 */
 	public function __construct() {
-		$this->plugin_name = $plugin_name ?? 'Rimplenet';
-		$this->version = $version ?? 'v1';
+		$this->plugin_name = $plugin_name;
+		$this->version = $version;
 		$this->load_required_files();
 	}
     private function load_required_files() {
    	 //Add Required Files to Load
 	 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'api/core/wallets/class-base-wallets.php';
+	 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'api/core/users/class-base-users.php';
     }
 	
 }

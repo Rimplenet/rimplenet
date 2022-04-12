@@ -6,8 +6,8 @@ class Rimplenet_Admin_Wallets{
     public function __construct() {
         
         $this->viewed_url = $_SERVER['REQUEST_URI'];
-        $this->admin_post_page_type = sanitize_text_field($_GET["rimplenettransaction_type"] ?? '');
-        $this->post_id = sanitize_text_field($_GET['post'] ?? '');
+        $this->admin_post_page_type = sanitize_text_field($_GET["rimplenettransaction_type"]);
+        $this->post_id = sanitize_text_field($_GET['post']);
         
         $wallet_id = get_post_meta($this->post_id, 'rimplenet_wallet_id', true);
         if(empty($this->post_id) or !empty($wallet_id )){
