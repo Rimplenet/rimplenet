@@ -63,26 +63,34 @@ class LoginUser
 
         $response['status_code'] = 400;
         $response['status'] = 'Bad Request';
-        $response['validation_error'] = $this->validation_error;
+        $response['error'] = $this->validation_error;
 
         return new WP_REST_Response( $response );
     }
 
     public function validate($request)
     {
-        $user['user_email'] = sanitize_text_field( $request->get_param( 'email' ) );
-	    $user['user_pass'] = sanitize_text_field( $request->get_param( 'password' ) );
+        $user_email_error = [];
+        $user_pass_error = [];
+
+        $user['user_email'] = sanitize_text_field( $request->get_param( 'user_email' ) );
+	    $user['user_pass'] = sanitize_text_field( $request->get_param( 'user_pass' ) );
 
         if ($user['user_email'] == '') {
-            $this->validation_error[] = 'Email is required';
+            $user_email_error[] = 'user_email is required';
         }
-
         if (!is_email($user['user_email'])) {
-            $this->validation_error[] = 'Invalid email';
+            $user_email_error[] = 'Invalid user_email';
+        }
+        if (!empty($user_email_error)) {
+            $this->validation_error[] = ['user_email' => $user_email_error];
         }
 
         if ($user['user_pass'] == '') {
-            $this->validation_error[] = 'Password is required';
+            $user_pass_error[] = 'user_pass is required';
+        }
+        if (!empty($user_pass_error)) {
+            $this->validation_error[] = ['user_pass' => $user_pass_error];
         }
 
         return $user;
