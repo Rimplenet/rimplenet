@@ -12,7 +12,7 @@ class LoginUser
     public function register_api_routes()
     {
         register_rest_route(
-            'rimplenet/v1', '/login',
+            'rimplenet/v1', '/users/login',
             [
                 'methods' => 'POST',
                 'callback' => [$this, 'login_user']
