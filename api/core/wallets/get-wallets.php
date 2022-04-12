@@ -23,7 +23,7 @@ $RetrieveWallet = new Class
     {
         register_rest_route('/rimplenet/v1', 'wallets', [
             'methods' => 'GET',
-            'callback' => [$this, 'retrieve_wallet']    
+            'callback' => [$this, 'retrieve_wallet']
         ]);
     }
 
