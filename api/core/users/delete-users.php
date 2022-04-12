@@ -34,20 +34,20 @@ class DeleteUser
 
             if ($deleted) {
                 $response['status_code'] = 204;
-                $response['status'] = 'Resource deleted';
+                $response['status'] = 'true';
                 $response['response_message'] = 'Successfuly deleted';
                 return new WP_REST_Response( $response );
             }
 
             $response['status_code'] = 404;
-            $response['status'] = 'Not found';
+            $response['status'] = 'failed';
             $response['response_message'] = 'User not found';
             return new WP_REST_Response( $response );
 
         }
 
         $response['status_code'] = 400;
-        $response['status'] = 'Bad Request';
+        $response['status'] = 'failed';
         $response['error'] = 'user_id id required';
 
         return new WP_REST_Response( $response );

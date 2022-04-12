@@ -29,7 +29,7 @@ class LoginUser
         
         if (is_wp_error($is_user)) {
 
-            $this->validation_error[] = 'Invalid credential';
+            $this->validation_error[] = 'invalid_credential';
         }
 
         if (empty($this->validation_error)) {
@@ -53,16 +53,17 @@ class LoginUser
             $jwt = JWT::encode($payload);
             
             $response['status_code'] = 200;
-            $response['status'] = 'Success';
+            $response['status'] = 'true';
             $response['response_message'] = 'Login Successful';
-            $response['access_token'] = $jwt;
+            $response['data'] = ['access_token' => $jwt];
             return new WP_REST_Response( $response );
 
         }
 
 
         $response['status_code'] = 400;
-        $response['status'] = 'Bad Request';
+        $response['status'] = 'failed';
+        $response['response_message'] = 'Invalid Credential';
         $response['error'] = $this->validation_error;
 
         return new WP_REST_Response( $response );
