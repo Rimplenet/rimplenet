@@ -6,8 +6,8 @@ class Rimplenet_Admin_Matrix{
     public function __construct() {
         
         $this->viewed_url = $_SERVER['REQUEST_URI'];
-        $this->admin_post_page_type = sanitize_text_field($_GET["rimplenettransaction_type"] ?? '');
-        $this->post_id = sanitize_text_field($_GET['post'] ?? '');
+        $this->admin_post_page_type = sanitize_text_field($_GET["rimplenettransaction_type"]);
+        $this->post_id = sanitize_text_field($_GET['post']);
         
         add_action('init',  array($this,'required_admin_functions_loaded'));
         //save meta value with save post hook when Template Settings is POSTED
