@@ -34,7 +34,7 @@ class UpdateUser
             $update_user = wp_update_user( $user['user'] );
             
             $response['status_code'] = 200;
-            $response['status'] = 'Updated';
+            $response['status'] = 'true';
             $response['response_message'] = 'Updated Successful';
             $response['data'] = $update_user;
             return new WP_REST_Response( $response );
@@ -42,7 +42,7 @@ class UpdateUser
         }
 
         $response['status_code'] = 400;
-        $response['status'] = 'Bad Request';
+        $response['status'] = 'failed';
         $response['error'] = $this->validation_error;
 
         return new WP_REST_Response( $response );

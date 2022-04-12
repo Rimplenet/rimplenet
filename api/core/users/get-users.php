@@ -33,15 +33,15 @@ class GetUsers
 
                 if ($user === "Expired token") {
                     $response['status_code'] = 401;
-                    $response['status'] = 'Fail';
+                    $response['status'] = 'failed';
                     $response['error'] = 'Expired token';
                 } elseif ($user === "Invalid signature") {
                     $response['status_code'] = 401;
-                    $response['status'] = 'Fail';
+                    $response['status'] = 'failed';
                     $response['error'] = 'Invalid signature';
                 } elseif ($user) {
                     $response['status_code'] = 200;
-                    $response['status'] = 'Success';
+                    $response['status'] = 'true';
                     $response['response_message'] = 'User Data';
                     $response['data'] = json_decode($user);
                 }
@@ -57,6 +57,7 @@ class GetUsers
         } else {
 
             $response['status_code'] = 404;
+            $response['status'] = 'failed';
             $response['response_message'] = 'User not found';
         }
 
