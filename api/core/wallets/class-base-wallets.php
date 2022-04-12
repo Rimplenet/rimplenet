@@ -1,5 +1,6 @@
 <?php
 
+
 class Rimplenet_Base_Wallets_Api
 {
 

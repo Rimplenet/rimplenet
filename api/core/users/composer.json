@@ -1,0 +1,11 @@
+{
+  "require": {
+    "vlucas/phpdotenv": "^2.4",
+    "nesbot/carbon": "^2.57"
+  },
+  "autoload": {
+    "psr-4": {
+      "Src\\": "src/"
+    }
+  }
+}
