@@ -100,49 +100,7 @@ class RevertTxns{
   }
   
 
-  public function formatTransactions($data)
-  {
 
-    foreach ($data as $key => $value) {
-      
-      $txn_id=$value->ID;
-      
-                        
-      $data[$key]->date_time = get_the_date('D, M j, Y', $txn_id).'<br>'.get_the_date('g:i A', $txn_id);
-      $wallet_id = get_post_meta($txn_id, 'currency', true);
-
-      $all_rimplenet_wallets = $this->getWallets();
-      
-      $data[$key]->wallet_symbol = $all_rimplenet_wallets[$wallet_id]['symbol'];
-      $data[$key]->wallet_decimal = $all_rimplenet_wallets[$wallet_id]['decimal'];
-      
-      
-      $data[$key]->amount = get_post_meta($txn_id, 'amount', true);
-      $data[$key]->txn_type = get_post_meta($txn_id, 'txn_type', true);
-
-      $data[$key]->amount_formatted_disp = apply_filters("rimplenet_history_amount_formatted", $amount_formatted_disp,$txn_id, $txn_type, $amount, $amount_formatted_disp);
-                        
-      $data[$key]->note = get_post_meta($txn_id, 'note', true);
-
-      
-    }
-
-
-    return $data;
-  }
-
-
-
-  public function searchTransaction()
-    {
-        ob_start();
-
-        include plugin_dir_path(__FILE__) . 'layouts/search-transaction.php';
-
-        $output = ob_get_clean();
-
-        return $output;
-    }
 
     private function checkIfAlreadyReversed($post_id)
     {
