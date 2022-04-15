@@ -286,7 +286,8 @@ class RevertTxns
                "user_id2"=>$_POST['user_id2'],
                "wallet_id"=>$_POST['wallet_id'],
                "wallet_id2"=>$_POST['wallet_id2'],
-               "amount_to_add"=>$_POST['amount_to_add']
+               "amount_to_add"=>$_POST['amount_to_add'],
+               "note"=>$_POST['note']
             );
 
            //Filter out empty inputs
