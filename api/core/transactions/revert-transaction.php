@@ -280,9 +280,15 @@ class RevertTxns
     {
         $inputed_data = array(
             //    "request_id"=>$request_id, 
-               "txn_type"=>$txn_type, 
-               "user_id"=>$user_id, 
-               "security_code"=>$security_code);
+               "post_id"=>$_POST['post_id'], 
+               "user_id"=>$_POST['user_id'], 
+               "security_code"=>$_POST['security_code'],
+               "user_id2"=>$_POST['user_id2'],
+               "wallet_id"=>$_POST['wallet_id'],
+               "wallet_id2"=>$_POST['wallet_id2'],
+               "amount_to_add"=>$_POST['amount_to_add']
+            );
+
            //Filter out empty inputs
             $empty_input_array = array(); 
             foreach($inputed_data as $input_key=>$single_data){ 
@@ -296,7 +302,7 @@ class RevertTxns
             if(!empty($empty_input_array)){
                 //if atleast one required input is empty
                 $data['status_code'] = 400;
-                $data['statu']s = "one_or_more_input_required";
+                $data['status'] = "one_or_more_input_required";
                 $data['message'] = "One or more input field is required";
                 $data['data'] = $empty_input_array;
                 $data["error"] = "one_or_more_input_required";
