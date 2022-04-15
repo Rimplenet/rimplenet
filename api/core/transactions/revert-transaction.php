@@ -10,7 +10,7 @@ class RevertTxns{
   }
   
   public function register_api_routes() {
-          register_rest_route( 'rimplenet/v1','/transactions/reverse', array(
+          register_rest_route( 'rimplenet/v1','/transactions/revert', array(
             'methods' => 'POST',
             'permission_callback' => '__return_true',
             'callback' => array($this,'api_reverse_txns'),
@@ -27,14 +27,14 @@ class RevertTxns{
             'status' => false,
             'message' => "Transaction Already Reversed!!"
         ];
-        return $data;
+        return $this->returndata($data);
     } elseif ($this->checkIfAlreadyReversed($_POST['post_id'])) {
         // return false;
         $data = [
             'status' => false,
             'message' => "Transaction Already Reversed!!"
         ];
-        return $data;
+        return $this->returndata($data);
     } else {
         $rimplewallet = new Rimplenet_Wallets();
         if ($rimplewallet->add_user_mature_funds_to_wallet($_POST['user_id'], $_POST['amount_to_add'], $_POST['wallet_id'], $_POST['note'], $tags = [])) {
@@ -49,7 +49,7 @@ class RevertTxns{
                 'status' => true,
                 'message' => "Transaction Refunded!!"
             ];
-            return $data;
+            return $this->returndata($data);
         } else {
             $data = [
                 'status' => false,
@@ -57,7 +57,7 @@ class RevertTxns{
                 'data'=>''
             ];
 
-            return $data;
+            return $this->returndata($data);
         }
     }
 
