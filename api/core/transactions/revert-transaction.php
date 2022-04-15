@@ -24,15 +24,19 @@ class RevertTxns{
     if ($this->checkIfAlreadyRefunded($_POST['post_id'])) {
 
         $data = [
+            'status_code'=>401,
             'status' => false,
-            'message' => "Transaction Already Reversed!!"
+            'message' => "Transaction Already Reversed!!",
+            'data'=>''
         ];
         return $this->returndata($data);
     } elseif ($this->checkIfAlreadyReversed($_POST['post_id'])) {
         // return false;
         $data = [
+            'status_code'=>401,
             'status' => false,
-            'message' => "Transaction Already Reversed!!"
+            'message' => "Transaction Already Reversed!!",
+            'data'=>''
         ];
         return $this->returndata($data);
     } else {
@@ -47,11 +51,13 @@ class RevertTxns{
             $data = [
                 'status_code'=>200,
                 'status' => true,
-                'message' => "Transaction Refunded!!"
+                'message' => "Transaction Refunded!!",
+                'data'=>''
             ];
             return $this->returndata($data);
         } else {
             $data = [
+                'status_code'=>500,
                 'status' => false,
                 'message' => "Something went wrong!!",
                 'data'=>''
@@ -77,7 +83,7 @@ class RevertTxns{
               'status_code' => $data['status_code'],
               'status' => $data['status'],
               'message' => $data['message'],
-              'data' => $data 
+              'data' => $data['data'] 
               )
              );
             
