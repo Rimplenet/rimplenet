@@ -31,7 +31,7 @@ class RegisterUser
             add_user_meta($new_user, 'first_name', $user['user_meta']['first_name']);
             add_user_meta($new_user, 'last_name', $user['user_meta']['last_name']);
             $response['status_code'] = 201;
-            $response['status'] = 'Created';
+            $response['status'] = 'true';
             $response['response_message'] = 'Registration Successful';
             $response['data'] = $new_user;
             return new WP_REST_Response( $response );
@@ -39,7 +39,7 @@ class RegisterUser
         }
 
         $response['status_code'] = 400;
-        $response['status'] = 'Bad Request';
+        $response['status'] = 'failed';
         $response['error'] = $this->validation_error;
 
         return new WP_REST_Response( $response );
