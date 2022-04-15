@@ -1,104 +1,107 @@
 <?php
 //INCLUDED from api/class-base-api.php ~ main plugin file
 
-class RevertTxns{
-    
-  public function __construct() {
-    
-    add_action( 'rest_api_init', array($this,'register_api_routes') );
+class RevertTxns
+{
 
-  }
-  
-  public function register_api_routes() {
-          register_rest_route( 'rimplenet/v1','/transactions/revert', array(
+    public $error;
+
+    public function __construct()
+    {
+
+        add_action('rest_api_init', array($this, 'register_api_routes'));
+    }
+
+    public function register_api_routes()
+    {
+        register_rest_route('rimplenet/v1', '/transactions/revert', array(
             'methods' => 'POST',
             'permission_callback' => '__return_true',
-            'callback' => array($this,'api_reverse_txns'),
-          ) );
-   }
-  
-    
-  public function api_retrieve_txns(WP_REST_Request $request ) {
-
-
-    if ($this->checkIfAlreadyRefunded($_POST['post_id'])) {
-
-        $data = [
-            'status_code'=>401,
-            'status' => false,
-            'message' => "Transaction Already Reversed!!",
-            'data'=>''
-        ];
-        return $this->returndata($data);
-    } elseif ($this->checkIfAlreadyReversed($_POST['post_id'])) {
-        // return false;
-        $data = [
-            'status_code'=>401,
-            'status' => false,
-            'message' => "Transaction Already Reversed!!",
-            'data'=>''
-        ];
-        return $this->returndata($data);
-    } else {
-        $rimplewallet = new Rimplenet_Wallets();
-        if ($rimplewallet->add_user_mature_funds_to_wallet($_POST['user_id'], $_POST['amount_to_add'], $_POST['wallet_id'], $_POST['note'], $tags = [])) {
-            $this->addAlreadyRefundedMeta($_POST['post_id']);
-            $data['amount_to_add'] = 0 - $_POST['amount_to_add'];
-
-            $rimplewallet->add_user_mature_funds_to_wallet($data['user_id2'], $data['amount_to_add'], $data['wallet_id2'], $data['note'], $tags = []);
-            $this->addAlreadyRefundedMeta($data['post_id2']);
-
-            $data = [
-                'status_code'=>200,
-                'status' => true,
-                'message' => "Transaction Refunded!!",
-                'data'=>''
-            ];
-            return $this->returndata($data);
-        } else {
-            $data = [
-                'status_code'=>500,
-                'status' => false,
-                'message' => "Something went wrong!!",
-                'data'=>''
-            ];
-
-            return $this->returndata($data);
-        }
+            'callback' => array($this, 'api_reverse_txns'),
+        ));
     }
 
 
-   
-  }
+    public function api_retrieve_txns(WP_REST_Request $request)
+    {
 
-  public function returndata($data)
-  {
-      //RETURN RESPONSE
-      if($data['status_code']) { 
-        //learn more about status_code to return at https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
-              
-              //OR if !is_wp_error($request) 
-             return new WP_REST_Response(
-             array(
-              'status_code' => $data['status_code'],
-              'status' => $data['status'],
-              'message' => $data['message'],
-              'data' => $data['data'] 
-              )
-             );
-            
-          }
-          else {
-              
+        if ($this->validate()) {
+            if ($this->checkIfAlreadyRefunded($_POST['post_id'])) {
+
+                $data = [
+                    'status_code' => 401,
+                    'status' => false,
+                    'message' => "Transaction Already Reversed!!",
+                    'data' => ''
+                ];
+                return $this->returndata($data);
+            } elseif ($this->checkIfAlreadyReversed($_POST['post_id'])) {
+                // return false;
+                $data = [
+                    'status_code' => 401,
+                    'status' => false,
+                    'message' => "Transaction Already Reversed!!",
+                    'data' => ''
+                ];
+                return $this->returndata($data);
+            } else {
+                $rimplewallet = new Rimplenet_Wallets();
+                if ($rimplewallet->add_user_mature_funds_to_wallet($_POST['user_id'], $_POST['amount_to_add'], $_POST['wallet_id'], $_POST['note'], $tags = [])) {
+                    $this->addAlreadyRefundedMeta($_POST['post_id']);
+                    $data['amount_to_add'] = 0 - $_POST['amount_to_add'];
+
+                    $rimplewallet->add_user_mature_funds_to_wallet($data['user_id2'], $data['amount_to_add'], $data['wallet_id2'], $data['note'], $tags = []);
+                    $this->addAlreadyRefundedMeta($data['post_id2']);
+
+                    $data = [
+                        'status_code' => 200,
+                        'status' => true,
+                        'message' => "Transaction Refunded!!",
+                        'data' => ''
+                    ];
+                    return $this->returndata($data);
+                } else {
+                    $data = [
+                        'status_code' => 500,
+                        'status' => false,
+                        'message' => "Something went wrong!!",
+                        'data' => ''
+                    ];
+
+                    return $this->returndata($data);
+                }
+            }
+        }else{
+            return $this->returndata($this->error);
+        }
+    }
+
+    public function returndata($data)
+    {
+        //RETURN RESPONSE
+        if ($data['status_code']) {
+            //learn more about status_code to return at https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
+
+            //OR if !is_wp_error($request) 
+            return new WP_REST_Response(
+                array(
+                    'status_code' => $data['status_code'],
+                    'status' => $data['status'],
+                    'message' => $data['message'],
+                    'data' => $data['data']
+                )
+            );
+        } else {
+
             $status_code = 400;
             $response_message = "Unknown Error";
             $data = array(
-                "error"=>"unknown_error"
-            ); 
+                "error" => "unknown_error"
+            );
             return new WP_Error($status_code, $response_message, $data);
-          }
-  }
-  
+        }
+    }
+
 
 
 
@@ -272,8 +275,58 @@ class RevertTxns{
         return $activated_wallets;
     }
 
-  
 
+    public function validate()
+    {
+        $inputed_data = array(
+            //    "request_id"=>$request_id, 
+               "txn_type"=>$txn_type, 
+               "user_id"=>$user_id, 
+               "security_code"=>$security_code);
+           //Filter out empty inputs
+            $empty_input_array = array(); 
+            foreach($inputed_data as $input_key=>$single_data){ 
+                if(empty($single_data)){
+                  $empty_input_array[$input_key]  = "field_required" ;
+                }
+            } 
+
+
+
+            if(!empty($empty_input_array)){
+                //if atleast one required input is empty
+                $data['status_code'] = 400;
+                $data['statu']s = "one_or_more_input_required";
+                $data['message'] = "One or more input field is required";
+                $data['data'] = $empty_input_array;
+                $data["error"] = "one_or_more_input_required";
+                $this->error=$data;
+           }
+           elseif(!empty($security_code) AND $security_code!=$security_code_ret ){
+                // throw error if security fails 
+                $data['status_code'] = 401;
+                $data['status'] = "incorrect_security_credentials";
+                $data['message'] = "Security verification failed";
+                $data['data'] = array(
+                    "error"=>"incorrect_security_credentials"
+                ); 
+                $this->error=$data;
+           }
+           elseif(!empty($extra_data) AND json_last_error() === JSON_ERROR_NONE ){
+                // throw error if extra_data is not json 
+                $data['status_code'] = 406;
+                $data['status'] = "extra_data_not_json";
+                $data['message'] = "extra_data input field should be json";
+                $data['data'] = array(
+                    "extra_data"=>$extra_data,
+                    "error"=>json_last_error()
+                ); 
+                $this->error=$data;
+           }
+           else{
+               return true;
+           }
+    }
 }
 
 $RetrieveTxns = new RevertTxns();
