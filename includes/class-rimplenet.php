@@ -208,6 +208,9 @@ class Rimplenet {
 
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'api/class-base-api.php';
 
+
+	  require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/users/class-base-wallets.php';
+
 		$this->loader = new Rimplenet_Loader();
 
 	}
