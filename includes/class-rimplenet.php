@@ -209,6 +209,7 @@ class Rimplenet
 		require_once plugin_dir_path(dirname(__FILE__)) . 'public/class-rimplenet-public.php';
 
 		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/wallets/class-base-wallets.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/txn/class-base-txn.php';
 		require_once plugin_dir_path(dirname(__FILE__)) . 'api/class-base-api.php';
 
 
