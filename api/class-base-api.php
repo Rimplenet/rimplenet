@@ -25,7 +25,8 @@ class Rimplenet_Api {
     private function load_required_files() {
    	 //Add Required Files to Load
 	 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'api/core/wallets/class-base-wallets.php';
-	 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'api/core/users/class-base-users.php';
+	 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'api/core/debits/class-base-debits.php';
+	//  require_once plugin_dir_path( dirname( __FILE__ ) ) . 'api/core/users/class-base-users.php';
     }
 	
 }
