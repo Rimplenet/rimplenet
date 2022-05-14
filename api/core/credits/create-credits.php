@@ -2,7 +2,7 @@
 
 use Txn\CreateTxn\BaseTxn;
 
-$createDebits = new class extends BaseTxn
+$createCredits = new class extends BaseTxn
 {
 
     public function __construct()
@@ -12,20 +12,20 @@ $createDebits = new class extends BaseTxn
 
     public function register_api_routes()
     {
-        register_rest_route('/rimplenet/v1', 'debits', [
+        register_rest_route('/rimplenet/v1', 'credits', [
             'methods' => 'POST',
-            'callback' => [$this, 'api_create_debits']
+            'callback' => [$this, 'api_create_credits']
         ]);
     }
 
-    public function api_create_debits(WP_REST_Request $req)
+    public function api_create_credits(WP_REST_Request $req)
     {
         $this->req = [
             'note'          => sanitize_text_field($req['note'] ?? ''),
             'user_id'       => (int) $req['user_id'],
             'wallet_id'     => sanitize_text_field(strtolower($req['wallet_id'])),
             'request_id'      => sanitize_text_field($req['txn_type']),
-            'amount_to_add' => floatval(-str_replace('-', '',$req['amount'])),
+            'amount_to_add' => floatval(str_replace('-', '',$req['amount'])),
         ];
 
         # check for required fields
