@@ -36,6 +36,9 @@ abstract class Base
 
     protected $query = null;
 
+    /**
+     * Check empty and required fields
+     */
     protected function checkEmpty(array $req = [])
     {
         # if req is not passed use req from parent
