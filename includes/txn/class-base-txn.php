@@ -11,8 +11,9 @@ class Rimplenet_Base_Txn {
    	 //Add Required Files to Load
 	 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'txn/base-txn.php';
 	 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'txn/create-txn.php';
-	 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'txn/get-txn.php';
 	 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'txn/update-txn.php';
+	 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'txn/get-txn.php'; 
+	 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'txn/delete-txn.php'; 
     }
 	
 }
