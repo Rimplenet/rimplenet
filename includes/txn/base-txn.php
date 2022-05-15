@@ -58,4 +58,17 @@ abstract class Base
 
         return;
     }
+    
+
+    /**
+     * Check  if transaction has been executed before time
+     * @param int $id > id of transaction
+     * @param string $type > type of transaction (creadit / debit)
+     * @return object>boolean
+     */
+    protected function txnExists(int $id, string $type= 'credit')
+    {
+        global $wpdb;
+        return $wpdb->get_row("SELECT * FROM $wpdb->postmeta WHERE post_id ='$id' AND meta_key='request_id' AND meta_value = '$type' ");
+    }
 }

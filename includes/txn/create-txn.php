@@ -82,7 +82,11 @@ abstract class BaseTxn extends Base
     }
 
 
-    private function txnExists($value)
+    /**
+     * Check Transaction Exists
+     * @return
+     */
+    protected function txnExists($value, string $type = '')
     {
         global $wpdb;
         $row = $wpdb->get_row("SELECT * FROM $wpdb->postmeta WHERE meta_key='txn_request_id' AND meta_value='$value'");

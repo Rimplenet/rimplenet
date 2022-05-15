@@ -1,8 +1,8 @@
 <?php
 
-use Txn\UpdateTxn\Base;
+use Txn\UpdateTxn\BaseTxn;
 
-$updateCredits = new class extends Base
+$updateCredits = new class extends BaseTxn
 {
     public function __construct()
     {

@@ -9,10 +9,10 @@ class Rimplenet_Base_Auth {
 
     private function load_required_files() {
    	 //Add Required Files to Load
-	 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'wallets/create-wallets.php';
-	 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'wallets/get-wallets.php';
-	 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'wallets/update-wallets.php';
-	 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'wallets/delete-wallets.php';
+	 //require_once plugin_dir_path( dirname( __FILE__ ) ) . 'wallets/create-wallets.php';
+	 //require_once plugin_dir_path( dirname( __FILE__ ) ) . 'wallets/get-wallets.php';
+	 //require_once plugin_dir_path( dirname( __FILE__ ) ) . 'wallets/update-wallets.php';
+	 //require_once plugin_dir_path( dirname( __FILE__ ) ) . 'wallets/delete-wallets.php';
     }
 	
 }

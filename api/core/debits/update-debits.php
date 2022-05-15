@@ -1,8 +1,8 @@
 <?php
 
-use Txn\UpdateTxn\Base;
+use Txn\UpdateTxn\BaseTxn;
 
-$updateDebits = new class extends Base
+$updateDebits = new class extends BaseTxn
 {
     public function __construct()
     {
