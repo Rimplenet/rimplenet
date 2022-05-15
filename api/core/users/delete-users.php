@@ -1,7 +1,7 @@
 <?php
 require_once(ABSPATH.'wp-admin/includes/user.php');
 
-class DeleteUser
+class RimplenetDeleteUserApi
 {
     public $validation_error = [];
 
@@ -13,7 +13,7 @@ class DeleteUser
     public function register_api_routes()
     {
         register_rest_route(
-            'rimplenet/v1', '/users/(?P<user_id>\d+)',
+            'rimplenet/v1', '/users',
             [
                 'methods' => 'DELETE',
                 'callback' => [$this, 'delete_user']
@@ -23,36 +23,16 @@ class DeleteUser
 
     public function delete_user(WP_REST_Request $request)
     {
-        global $wpdb;
 
-        $user_id = sanitize_text_field( $request->get_param( 'user_id', null ) );
-
-        if ($user_id) {
-
-            $table='wp_users';
-            $deleted = wp_delete_user( $user_id );
-
-            if ($deleted) {
-                $response['status_code'] = 204;
-                $response['status'] = 'true';
-                $response['response_message'] = 'Successfuly deleted';
-                return new WP_REST_Response( $response );
-            }
-
-            $response['status_code'] = 404;
-            $response['status'] = 'failed';
-            $response['response_message'] = 'User not found';
-            return new WP_REST_Response( $response );
-
-        }
-
-        $response['status_code'] = 400;
-        $response['status'] = 'failed';
-        $response['error'] = 'user_id id required';
-
-        return new WP_REST_Response( $response );
+        $user = new RimplenetDeleteUser();
+        $delete_user = $user->delete_user(
+            $request->get_param('caller_id'),
+            $request->get_param('user_id')
+        );
+        
+        return new WP_REST_Response($delete_user);
     }
     
 }
 
-$DeleteUser = new DeleteUser();
+$RimplenetDeleteUserApi = new RimplenetDeleteUserApi();
