@@ -1,6 +1,6 @@
 <?php
 
-class GetUsers
+class RimplenetGetUserApi
 {
     public function __construct()
     {
@@ -24,47 +24,15 @@ class GetUsers
         $headers = getallheaders();
         $access_token = $headers['Authorization'];
 
-
-        if ($access_token) {
-
-            try {
-                
-                $user = JWT::decode($access_token);
-
-                if ($user === "Expired token") {
-                    $response['status_code'] = 401;
-                    $response['status'] = 'failed';
-                    $response['error'] = 'Expired token';
-                } elseif ($user === "Invalid signature") {
-                    $response['status_code'] = 401;
-                    $response['status'] = 'failed';
-                    $response['error'] = 'Invalid signature';
-                } elseif ($user) {
-                    $response['status_code'] = 200;
-                    $response['status'] = 'true';
-                    $response['response_message'] = 'User Data';
-                    $response['data'] = json_decode($user);
-                }
-
-            } catch (Exception $ex) {
-                
-                $response['status_code'] = 401;
-                $response['status'] = 'Invalid';
-                $response['response_message'] = $ex->getMessage();
-
-            }
-
-        } else {
-
-            $response['status_code'] = 404;
-            $response['status'] = 'failed';
-            $response['response_message'] = 'User not found';
-        }
-
+        $user = new RimplenetGetUser();
+        $get_user = $user->get_user(
+            $request->get_param('caller_id'),
+            $access_token,
+        );
         
+        return new WP_REST_Response($get_user);
 
-        return new WP_REST_Response( $response );
     }
 }
 
-$GetUsers = new GetUsers();
+$RimplenetGetUserApi = new RimplenetGetUserApi();
