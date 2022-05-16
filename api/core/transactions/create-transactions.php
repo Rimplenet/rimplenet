@@ -53,7 +53,7 @@ $createDebits = new class extends BaseTxn
         ];
     }
 
-    public function CreditData($req)
+    public function creditData($req)
     {
         $this->req = [
             'note'          => sanitize_text_field($req['note'] ?? ''),
