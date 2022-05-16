@@ -19,6 +19,8 @@ class Rimplenet_Base_Users_Api {
 	 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'users/get-users.php';
 	 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'users/login.php';
 	 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'users/update-users.php';
+	 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'users/reset-password.php';
+	 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'users/change-password.php';
     }
 	
 }
