@@ -80,4 +80,19 @@ abstract class Base
             return false;
         endif;
     }
+    
+    /**
+     * Check if wallet already exists
+     */
+    protected function walletExists()
+    {
+        global $wpdb;
+
+        $exists = $wpdb->get_row("SELECT * FROM $wpdb->postmeta WHERE meta_key='rimplenet_wallet_id' AND meta_value='$this->wallet_id'");
+
+        if ($exists)
+            $this->error[] = 'Transaction Already Exists';
+        if (!empty($this->error)) return true;
+        else return false;
+    }
 }
