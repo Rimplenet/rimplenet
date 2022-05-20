@@ -1,7 +1,7 @@
 <?php
 //INCLUDED from api/class-base-api.php ~ main plugin file
 
-class RetrieveTxns{
+class RetrieveTransactions{
     
   public function __construct() {
     
@@ -223,4 +223,4 @@ class RetrieveTxns{
 
 }
 
-$RetrieveTxns = new RetrieveTxns();
+$RetrieveTxns = new RetrieveTransactions();
