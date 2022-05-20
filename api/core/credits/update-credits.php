@@ -1,8 +1,8 @@
 <?php
 
-use Txn\UpdateTxn\BaseTxn;
+use Credits\UpdateCredits\BaseCredits;
 
-$updateCredits = new class extends BaseTxn
+$updateCredits = new class extends BaseCredits
 {
     public function __construct()
     {
@@ -20,7 +20,7 @@ $updateCredits = new class extends BaseTxn
     public function api_update_credits(WP_REST_Request $request)
     {
         $this->req = [
-            'id' => $request['txn_id'],
+            'id' => $request['credit_id'],
             'note' => sanitize_text_field($request['note']),
             'type' => 'credit'
         ];
@@ -28,7 +28,7 @@ $updateCredits = new class extends BaseTxn
         if ($this->checkEmpty())
             return new WP_REST_Response($this->response);
 
-        $this->updateTxn();
+        $this->updateCredits();
         return new WP_REST_Response($this->response);
     }
 };

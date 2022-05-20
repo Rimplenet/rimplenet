@@ -1,19 +1,19 @@
 <?php
-namespace Txn\DeleteTxn;
+namespace Credits\DeleteCredits;
 
-use Txn\Base;
+use Credits\Base;
 
-abstract Class BaseTxn extends Base
+abstract Class BaseCredits extends Base
 {
-    protected function deleteTxn(int $id, string $type = ''){
+    protected function deleteCredits(int $id, string $type = ''){
 
-        if($txn = $this->txnExists($id, $type)):
-            wp_delete_post($txn->post_id);
+        if($credits = $this->creditsExists($id, $type)):
+            wp_delete_post($credits->post_id);
             $this->response = [
                 'status_code' => 200,
                 'status' => 'success',
                 'response_message' => 'Delete action completed',
-                'data' => ['Transaction '.$txn->post_id.' Deleted']
+                'data' => ['Transaction '.$credits->post_id.' Deleted']
             ];
             return true;
         else:

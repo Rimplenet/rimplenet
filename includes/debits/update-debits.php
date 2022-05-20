@@ -1,10 +1,10 @@
 <?php
 
-namespace Txn\UpdateTxn;
+namespace Debits\UpdateDebits;
 
-use Txn\Base;
+use Debits\Base;
 
-abstract class BaseTxn extends Base
+abstract class BaseDebits extends Base
 {
     /**
      * Update Transaction note
@@ -13,7 +13,7 @@ abstract class BaseTxn extends Base
      * @param string $type > Type of the transaction (debit / credit)
      * @return boolean
      */
-    protected function updateTxn(int $id = 0, $note = '', $type = '')
+    protected function updateDebits(int $id = 0, $note = '', $type = '')
     {
         # assign param id to $id otherwise get id from class
         $id = $id !== 0 ? $id : $this->req['id'];
@@ -21,13 +21,13 @@ abstract class BaseTxn extends Base
         $note = !empty($note) ? $note : $this->req['note'];
         # assign param type to $type otherwise get type from class
         $type = !empty($type) ? $type : $this->req['type'];
-
+ 
 
         # Check if the transaction has already been executed
-        if ($this->txnExists($id, $type)) :
+        if ($this->debitsExists($id, $type)) :
 
             # if transaction is executed proceed to update transaction note
-            $txn =  $this->getTxnToUpdate($id);
+            $txn =  $this->getDebitsToUpdate($id);
             if ($txn) :
                 update_post_meta($id, 'note', $note);
                 $this->response = [
@@ -56,7 +56,7 @@ abstract class BaseTxn extends Base
      * @param int $id > id of transaction
      * @return boolean>object
      */
-    protected function getTxnToUpdate(int $id)
+    protected function getDebitsToUpdate(int $id)
     {
         global $wpdb;
         return $wpdb->get_row("SELECT * FROM $wpdb->postmeta WHERE meta_key='note' AND post_id='$id'");

@@ -4,9 +4,9 @@
  * Delete
  */
 
-use Txn\DeleteTxn\BaseTxn;
+use Credits\DeleteCredits\BaseCredits;
 
-$DeleteCredits = new class extends BaseTxn
+$DeleteCredits = new class extends BaseCredits
 {
     public function __construct()
     {
@@ -15,15 +15,15 @@ $DeleteCredits = new class extends BaseTxn
 
     public function register_api_routes()
     {
-        register_rest_route('/rimplenet/v1', 'credits/(?P<txn>[\d]+)', [
+        register_rest_route('/rimplenet/v1', 'credits/(?P<credits>[\d]+)', [
             'methods' => 'DELETE',
             'callback' => [$this, 'api_delete_credits']
         ]);
     }
 
-    public function api_delete_credits($txn)
+    public function api_delete_credits($Credits)
     {
-        $this->deleteTxn($txn['txn'], 'credit');
+        $this->deleteCredits($Credits['credits'], 'credit');
         return new WP_REST_Response($this->response);
     }
 };

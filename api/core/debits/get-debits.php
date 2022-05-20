@@ -1,8 +1,8 @@
 <?php
 
-use Txn\GetTxn\BaseTxn;
+use Debits\GetDebits\BaseDebits;
 
-$getDebits = new Class extends BaseTxn
+$getDebits = new Class extends BaseDebits
 {
     public function __construct() {
         add_action('rest_api_init', [$this, 'register_api_routes']);
@@ -19,11 +19,11 @@ $getDebits = new Class extends BaseTxn
     public function api_get_debits(WP_REST_Request $req)
     {
         # ================= set fields ============
-        $wlt_id  = sanitize_text_field($req['txn_id']);
+        $wlt_id  = sanitize_text_field($req['debits_id']);
         $page      = $req['page'] ?? 1;
 
         if ($wlt_id !== '') :
-            return new WP_REST_Response($this->getTxn($wlt_id, 'debit'));
+            return new WP_REST_Response($this->getDebits($wlt_id, 'debit'));
         else:
             return "Debit Frowning";
         endif;
