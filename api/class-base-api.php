@@ -28,13 +28,9 @@ class Rimplenet_Api {
 	 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'api/core/debits/class-base-debits.php';
 	 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'api/core/credits/class-base-credits.php';
      require_once plugin_dir_path( dirname( __FILE__ ) ) . 'api/core/users/class-base-users.php';
-<<<<<<< HEAD
      require_once plugin_dir_path( dirname( __FILE__ ) ) . 'api/core/users/class-base-auth.php';
 	 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'api/core/referrals/class-base-referral.php';
 	 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'api/core/transactions/class-base-transactions.php';
-=======
-     require_once plugin_dir_path( dirname( __FILE__ ) ) . 'api/core/auth/class-base-auth.php';
->>>>>>> fdcbe84a6028db3ebc325d3996ba8aeeae138f79
     }
 	
 }
