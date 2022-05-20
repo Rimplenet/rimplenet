@@ -1,6 +1,7 @@
 <?php
 
-class Rimplenet_Base_Users_Api {
+class Rimplenet_Base_Users {
+
 
 	public function __construct() {
 		$this->load_required_files();
@@ -17,4 +18,5 @@ class Rimplenet_Base_Users_Api {
 	
 }
 
-$Rimplenet_Base_Users_Api = new Rimplenet_Base_Users_Api();
+
+$Rimplenet_Base_Users = new Rimplenet_Base_Users();

@@ -1,6 +1,6 @@
 <?php
 
-class Rimplenet_Base_Auth {
+class Rimplenet_Base_Auth_Api {
 
 
 	public function __construct() {
@@ -15,4 +15,4 @@ class Rimplenet_Base_Auth {
 }
 
 
-$Rimplenet_Base_Auth = new Rimplenet_Base_Auth();
+$Rimplenet_Base_Auth_Api = new Rimplenet_Base_Auth_Api();
