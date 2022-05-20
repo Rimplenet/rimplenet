@@ -85,7 +85,8 @@ class RetrieveRefferrals
                 // $txn_loop =
             }
 
-            if ($txn_loop->have_posts()) {
+            // if ($txn_loop->have_posts()) {
+            if ($txn_loop) {
 
                 $status_code = 200;
                 $status = true;
@@ -95,7 +96,7 @@ class RetrieveRefferrals
                 $status_code = 406;
                 $status = "failed";
                 $response_message = "refferrals Retrieved Failed";
-                $data = "No Transaction Performed by this User";
+                $data = "No Referral Performed by this User";
             }
         }
 
