@@ -1,8 +1,8 @@
 <?php
 
-use Txn\UpdateTxn\BaseTxn;
+use Debits\UpdateDebits\BaseDebits;
 
-$updateDebits = new class extends BaseTxn
+$updateDebits = new class extends BaseDebits
 {
     public function __construct()
     {
@@ -20,7 +20,7 @@ $updateDebits = new class extends BaseTxn
     public function api_update_debits(WP_REST_Request $request)
     {
         $this->req = [
-            'id' => (int) $request['txn_id'],
+            'id' => (int) $request['debits_id'],
             'note' => sanitize_text_field($request['note']),
             'type' => 'debit'
         ];
@@ -28,7 +28,7 @@ $updateDebits = new class extends BaseTxn
         if ($this->checkEmpty())
             return new WP_REST_Response($this->response);
 
-        $this->updateTxn();
+        $this->updateDebits();
         return new WP_REST_Response($this->response);
     }
 };
