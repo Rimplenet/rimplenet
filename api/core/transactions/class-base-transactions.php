@@ -14,9 +14,6 @@ class Rimplenet_Base_Tranasactions_Api {
   private function load_required_files() {
    //Add Required Files to Load
    require_once plugin_dir_path( dirname( __FILE__ ) ) . 'transactions/get-transactions.php';
-   require_once plugin_dir_path( dirname( __FILE__ ) ) . 'transactions/create-transactions.php';
-   require_once plugin_dir_path( dirname( __FILE__ ) ) . 'transactions/delete-transactions.php';
-   require_once plugin_dir_path( dirname( __FILE__ ) ) . 'transactions/update-transactions.php';
   }
 	
 }
