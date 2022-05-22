@@ -1,13 +1,13 @@
 <?php
 
-namespace Txn\CreateTxn;
+namespace Debits\CreateDebits;
 
 use Rimplenet_Wallets;
-use Txn\Base;
+use Debits\Base;
 
-abstract class BaseTxn extends Base
+abstract class BaseDebits extends Base
 {
-    protected function createDebit(array $param = [])
+    protected function createDebits(array $param = [])
     {
 
         $prop = empty($param) ? $this->req : $param;
@@ -86,7 +86,7 @@ abstract class BaseTxn extends Base
      * Check Transaction Exists
      * @return
      */
-    protected function txnExists($value, string $type = '')
+    protected function debitsExists($value, string $type = '')
     {
         global $wpdb;
         $row = $wpdb->get_row("SELECT * FROM $wpdb->postmeta WHERE meta_key='txn_request_id' AND meta_value='$value'");

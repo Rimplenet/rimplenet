@@ -4,9 +4,9 @@
  * Delete
  */
 
-use Txn\DeleteTxn\BaseTxn;
+use Debits\DeleteDebits\BaseDebits;
 
-$DeleteDebits = new class extends BaseTxn
+$DeleteDebits = new class extends BaseDebits
 {
     public function __construct()
     {
@@ -15,15 +15,15 @@ $DeleteDebits = new class extends BaseTxn
 
     public function register_api_routes()
     {
-        register_rest_route('/rimplenet/v1', 'debits/(?P<txn>[\d]+)', [
+        register_rest_route('/rimplenet/v1', 'debits/(?P<Debits>[\d]+)', [
             'methods' => 'DELETE',
             'callback' => [$this, 'api_delete_debits']
         ]);
     }
 
-    public function api_delete_debits($txn)
+    public function api_delete_debits($Debits)
     {
-        $this->deleteTxn($txn['txn'], 'debit');
+        $this->deleteDebits($Debits['Debits'], 'debit');
         return new WP_REST_Response($this->response);
     }
 };
