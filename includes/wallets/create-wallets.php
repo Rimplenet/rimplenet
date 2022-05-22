@@ -110,7 +110,7 @@ abstract class BaseWallet extends Base
     /**
      * Check if wallet already exists
      */
-    private function walletExists()
+    protected function walletExists()
     {
         global $wpdb;
 
@@ -125,7 +125,7 @@ abstract class BaseWallet extends Base
     /**
      * Insert into DB
      */
-    private function insertWallet()
+    protected function insertWallet()
     {
         extract($this->prop);
         $wlt_id = wp_insert_post([
