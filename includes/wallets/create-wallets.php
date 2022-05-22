@@ -110,7 +110,7 @@ abstract class BaseWallet extends Base
     /**
      * Check if wallet already exists
      */
-    protected function walletExists()
+    public function walletExists()
     {
         global $wpdb;
 
