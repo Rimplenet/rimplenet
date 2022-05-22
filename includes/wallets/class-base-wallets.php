@@ -13,7 +13,7 @@ class Rimplenet_Base_Wallets {
 	 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'wallets/create-wallets.php';
 	 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'wallets/get-wallets.php';
 	 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'wallets/update-wallets.php';
-	 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'wallets/delete-wallets.php';
+	 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'wallets/delete-wallets.php'; 
     }
 	
 }

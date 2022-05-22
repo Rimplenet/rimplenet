@@ -110,17 +110,17 @@ abstract class BaseWallet extends Base
     /**
      * Check if wallet already exists
      */
-    private function walletExists()
-    {
-        global $wpdb;
+    // private function walletExists()
+    // {
+    //     global $wpdb;
 
-        $exists = $wpdb->get_row("SELECT * FROM $wpdb->postmeta WHERE meta_key='rimplenet_wallet_id' AND meta_value='$this->wallet_id'");
+    //     $exists = $wpdb->get_row("SELECT * FROM $wpdb->postmeta WHERE meta_key='rimplenet_wallet_id' AND meta_value='$this->wallet_id'");
 
-        if ($exists)
-            $this->error[] = 'Transaction Already Exists';
-        if (!empty($this->error)) return true;
-        else return false;
-    }
+    //     if ($exists)
+    //         $this->error[] = 'Transaction Already Exists';
+    //     if (!empty($this->error)) return true;
+    //     else return false;
+    // }
 
     /**
      * Insert into DB
