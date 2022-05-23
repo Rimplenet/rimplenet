@@ -1,23 +1,21 @@
 <?php
 
-class AddReferral
+use Referrals\CreateReferrals\BaseReferrals;
+
+$RimplenetcreateReferralsApi = new class extends BaseReferrals
 {
-    public $validation_error = [];
 
     public function __construct()
     {
-        add_action('rest_api_init', array($this, 'register_api_routes'));
+        add_action('rest_api_init', [$this, 'register_api_routes']);
     }
 
     public function register_api_routes()
     {
-        register_rest_route(
-            'rimplenet/v1', '/referrals',
-            [
-                'methods' => 'POST',
-                'callback' => [$this, 'add_user_referral']
-            ]
-        );
+        register_rest_route('/rimplenet/v1', 'referrals', [
+            'methods' => 'POST',
+            'callback' => [$this, 'add_user_referral']
+        ]);
     }
 
     public function add_user_referral(WP_REST_Request $request)
@@ -27,8 +25,14 @@ class AddReferral
 
         if (empty($this->validation_error)) {
 
+            $this->req = [
+                'user_id'       => (int) $request['user_id'],
+                'user_referral'     => $user['user_meta']['referral'],
+            ];
+
             
-            add_user_meta($request['user_id'] ?? 1, 'rimplenet_user_refferral', $user['user_meta']['referral']);
+            // add_user_meta($request['user_id'] ?? 1, 'rimplenet_user_refferral', $user['user_meta']['referral']);
+            $this->createReferral();
             $response['status_code'] = 201;
             $response['status'] = 'true';
             $response['response_message'] = 'Referral Added Successfully';
@@ -64,7 +68,6 @@ class AddReferral
 
         return ['user_meta' => $user_meta];
     }
-    
-}
 
-$RegisterUser = new AddReferral();
+  
+};

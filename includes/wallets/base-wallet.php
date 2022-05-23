@@ -18,9 +18,10 @@ abstract class Base
     const MAX_AMOUNT = 999999999;
     const WALLET_CAT_NAME = 'RIMPLENET WALLETS';
 
-    public function __construct(mixed $var = '')
+    // public function __construct(mixed $var = '')
+    public function __construct($var = "")
     {
-        // $this->var = $var;
+        $this->var = $var;
     }
 
     /**

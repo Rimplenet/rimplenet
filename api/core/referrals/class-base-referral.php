@@ -16,8 +16,10 @@ class Rimplenet_Base_Referral_Api
 	private function load_required_files()
 	{
 		//Add Required Files to Load
-		require_once plugin_dir_path(dirname(__FILE__)) . 'referrals/add-referral.php';
+		// require_once plugin_dir_path(dirname(__FILE__)) . 'referrals/add-referral.php';
 		require_once plugin_dir_path(dirname(__FILE__)) . 'referrals/get-referrals.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'referrals/create-referrals.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'referrals/delete-referrals.php';
 		
 	}
 }
