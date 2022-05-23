@@ -1,6 +1,6 @@
 <?php
 
-class Rimplenet_Admin {
+class Rimplenet_Base_Admin {
 
 	public function __construct() {
 		$this->load_required_files();
@@ -15,6 +15,6 @@ class Rimplenet_Admin {
 }
 
 
-$Rimplenet_Admin = new Rimplenet_Admin();
+$Rimplenet_Base_Admin = new Rimplenet_Base_Admin();
 
 ?>
