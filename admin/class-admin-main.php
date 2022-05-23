@@ -66,6 +66,10 @@ class Rimplenet_Admin {
 		
 		//Include class-file to displays Matrix Settings as Metabox 
 		include_once plugin_dir_path( dirname( __FILE__ ) ) . '/admin/class-admin-matrix.php';
+
+
+		//Include class-file to displays Matrix Settings as Metabox 
+		include_once plugin_dir_path( dirname( __FILE__ ) ) . '/admin/wallets/class-base-wallets.php';
         
         //tgmpa_register Shows message for installing required plugins
         add_action( 'tgmpa_register', array( $this,  'required_plugins' ));
