@@ -1,39 +1,39 @@
 <?php
 
-class AddReferral
+use Referrals\DeleteReferrals\BaseReferrals;
+
+$RimplenetdeleteReferralsApi = new class extends BaseReferrals
 {
-    public $validation_error = [];
 
     public function __construct()
     {
-        add_action('rest_api_init', array($this, 'register_api_routes'));
+        add_action('rest_api_init', [$this, 'register_api_routes']);
     }
 
     public function register_api_routes()
     {
-        register_rest_route(
-            'rimplenet/v1', '/referrals',
-            [
-                'methods' => 'POST',
-                'callback' => [$this, 'add_user_referral']
-            ]
-        );
+        register_rest_route('/rimplenet/v1', 'referrals', [
+            'methods' => 'DELETE',
+            'callback' => [$this, 'delete_user_referral']
+        ]);
     }
 
-    public function add_user_referral(WP_REST_Request $request)
+    public function delete_user_referral(WP_REST_Request $request)
     {
 
         $user = $this->validate($request);
 
         if (empty($this->validation_error)) {
 
+            $this->req = [
+                'user_id'       => (int) $request['user_id'],
+                'user_referral'     => $user['user_meta']['referral'],
+            ];
+
             
-            add_user_meta($request['user_id'] ?? 1, 'rimplenet_user_refferral', $user['user_meta']['referral']);
-            $response['status_code'] = 201;
-            $response['status'] = 'true';
-            $response['response_message'] = 'Referral Added Successfully';
-            $response['data'] = $user;
-            return new WP_REST_Response( $response );
+            // add_user_meta($request['user_id'] ?? 1, 'rimplenet_user_refferral', $user['user_meta']['referral']);
+            $deletereferral=$this->deleteReferral();
+            return new WP_REST_Response( $deletereferral );
 
         }
 
@@ -64,7 +64,6 @@ class AddReferral
 
         return ['user_meta' => $user_meta];
     }
-    
-}
 
-$RegisterUser = new AddReferral();
+  
+};
