@@ -213,6 +213,7 @@ class Rimplenet
 		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/credits/class-base-credits.php';
 		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/debits/class-base-debits.php';
 		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/auth/class-base-auth.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/referrals/class-base-referrals.php';
 		require_once plugin_dir_path(dirname(__FILE__)) . 'api/class-base-api.php';
 
 

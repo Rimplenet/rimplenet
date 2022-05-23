@@ -1,7 +1,8 @@
 <?php
 //INCLUDED from api/class-base-api.php ~ main plugin file
+use Referrals\GetReferrals\BaseReferrals;
 
-class RetrieveRefferrals
+$RimplenetcreateReferralsApi = new class extends BaseReferrals
 {
 
     public function __construct()
@@ -80,47 +81,14 @@ class RetrieveRefferrals
 
            
             if (isset($user_id) && $user_id != "any") {
-                $txn_loop = get_usermeta($user_id, 'rimplenet_user_refferral');
-            } else {
-                // $txn_loop =
-            }
+                $this->req = [
+                    'user_id'       => (int) $request['user_id'],
+                ];
+                $referrals=$this->getReferral();
+                return new WP_REST_Response($referrals);
 
-            // if ($txn_loop->have_posts()) {
-            if ($txn_loop) {
-
-                $status_code = 200;
-                $status = true;
-                $response_message = "refferrals Retrieved Successful";
-                $data = $txn_loop;
-            } else {
-                $status_code = 406;
-                $status = "failed";
-                $response_message = "refferrals Retrieved Failed";
-                $data = "No Referral Performed by this User";
-            }
-        }
-
-        //RETURN RESPONSE
-        if ($status_code) {
-            //learn more about status_code to return at https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
-
-            //OR if !is_wp_error($request) 
-            return new WP_REST_Response(
-                array(
-                    'status_code' => $status_code,
-                    'status' => $status,
-                    'message' => $response_message,
-                    'data' => $data
-                )
-            );
-        } else {
-
-            $status_code = 400;
-            $response_message = "Unknown Error";
-            $data = array(
-                "error" => "unknown_error"
-            );
-            return new WP_Error($status_code, $response_message, $data);
+                // $txn_loop = get_usermeta($user_id, 'rimplenet_user_referral');
+            } 
         }
     }
 
@@ -128,6 +96,6 @@ class RetrieveRefferrals
     {
         # code...
     }
-}
+};
 
-$Retrieverefferrals = new RetrieveRefferrals();
+
