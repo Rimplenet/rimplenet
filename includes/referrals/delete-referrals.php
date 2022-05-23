@@ -19,7 +19,7 @@ abstract class BaseReferrals extends Base
             $this->response = [
                 'status_code' => 200,
                 'status' => 'success',
-                'response_message' => "Referral was successfully Retreived",
+                'response_message' => "Referral was successfully deleted",
                 'data' => $referral
             ];
         }else{
