@@ -90,6 +90,8 @@ $RimplenetGetReferralsApi = new class extends RimplenetGetReferrals
                 // $txn_loop = get_usermeta($user_id, 'rimplenet_user_referral');
             } 
         }
+
+        return new WP_REST_Response($data, $status_code);
     }
 
     public function validateData()

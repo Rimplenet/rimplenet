@@ -14,12 +14,13 @@ class RimplenetCreateReferrals extends Base
         extract($prop);
 
         // add_user_meta($request['user_id'] ?? 1, 'rimplenet_user_refferral', $user['user_meta']['referral'])
-        $referral = add_user_meta($user_id ?? 1, 'rimplenet_user_referral', $user_referral);
+        $referral = add_user_meta($user_id ?? 1, 'rimplenet_user_referred', $user_referral);
+        $referral = add_user_meta($user_referral ?? 1, 'rimplenet_referrer_sponsor', $user_id);
         if ($referral) {
             $this->response = [
                 'status_code' => 201,
                 'status' => 'success',
-                'response_message' => "Referral was successfully created",
+                'message' => "Referral was successfully created",
                 'data' => $referral
             ];
         };

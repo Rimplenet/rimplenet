@@ -1,9 +1,13 @@
 <?php
 global $current_user,$wp;
 wp_get_current_user();
-$wallet_obj = new Rimplenet_Wallets();
+$wallet_obj = new RimplenetGetWallets();
+// RimplenetGetWallets
 $all_wallets = $wallet_obj->getWallets();
 $WALLET_CAT_NAME = 'RIMPLENET WALLETS';
+
+var_dump($wallet_obj->response);
+die;
 
 
 if(isset( $_POST['rimplenet_wallet_submitted'] ) || wp_verify_nonce( $_POST['rimplenet_wallet_settings_nonce_field'], 'rimplenet_wallet_settings_nonce_field' ) )  {
@@ -149,98 +153,6 @@ if(isset( $_POST['rimplenet_credit_debit_submitted'] ) || wp_verify_nonce( $_POS
 
 ?>
 
-<h2><center>CREDIT / DEBIT WALLET</center></h2>
-  <form method="POST" style="max-width:700px; margin:auto;border:1px solid #ccc; border-radius:11px;padding: 13px;">
-   <table class="form-table">
-        <tbody>
-
-            <tr>
-                <th>
-                    <label for="rimplenet_wallet"> Select Wallet </label>
-                </th>
-                <td>
-                  <select name="rimplenet_wallet" id="rimplenet_wallet" style="width: 100%; height: 40px;" required>
-                    <option value=""> Select Wallet ID </option>
-                      <?php
-                        foreach($all_wallets as $wallet){
-                               $wallet_id_op = $wallet['id'];
-                               $user_wdr_bal = $wallet_obj->get_withdrawable_wallet_bal($user_id, $wallet_id_op);
-                               $dec = $wallet['decimal'];
-                               $symbol = $wallet['symbol'];
-                               $symbol_position = $all_wallets[$wallet_id_op]['symbol_position'];
-                               
-                              $disp_info = $wallet['name'];
-                               
-                        ?>
-                        <option value="<?php echo $wallet_id_op; ?>" > <?php echo $disp_info; ?> </option> 
-                       <?php
-                               
-                        }
-                     ?>
-                </select>
-                    
-                </td>
-            </tr>
-            
-            <tr>
-                <th>
-                    <label for="rimplenet_txn_type"> Transaction Type </label>
-                </th>
-                <td>
-                      <select name="rimplenet_txn_type" id="rimplenet_txn_type" style="width: 100%; height: 40px;" required>
-                         <option value=""> Select Transaction Type </option> 
-                         <option value="credit"> Credit </option> 
-                         <option value="debit"> Debit </option> 
-                      </select>
-                </td>
-            </tr>
-            
-            <tr>
-                <th>
-                    <label for="rimplenet_user"> Select User </label>
-                </th>
-                <td>
-                    <select name="rimplenet_user" id="rimplenet_user" class="form-control" style="width: 100%; height: 40px;" required>
-                          
-                        <option value=""> Select User </option>
-                        <?php
-                            //$args = array( 'search' => 'john' );
-                          $users = get_users();
-                        // Array of WP_User objects.
-                        foreach ($users as $user) {
-                        ?>
-                
-                         <option value="<?php echo $user->ID; ?>" > <?php echo $user->user_login." - ".$user->user_email; ?> </option> 
-                
-                        <?php
-                            } 
-                        ?>
-                            
-                      </select>
-                </td>
-            </tr>
-            
-            <tr>
-                <th><label for="rimplenet_amount"> Amount </label></th>
-                <td><input name="rimplenet_amount" id="rimplenet_amount" type="text" value="" placeholder="20" class="regular-text" required style="width:100%;max-width: 400px; height: 40px;" /></td>
-            </tr>
-            <tr>
-                <th><label for="rimplenet_credit_debit_note"> Transaction Note </label></th>
-                <td>
-                  <textarea id="rimplenet_credit_debit_note" name="rimplenet_credit_debit_note" rows="4" placeholder="Leave Note here" style="width:100%;max-width: 400px;"></textarea>
-
-                  </td>
-            </tr>
-            
-            </tbody>
-    </table>
-     <input type="hidden" name="rimplenet_credit_debit_submitted" value="true" />
-    <?php wp_nonce_field( 'rimplenet_credit_debit_nonce_field', 'rimplenet_credit_debit_nonce_field' ); ?>
-    
-      <center>
-        <input type="submit" name="submit" id="submit" class="button button-primary" value="APPLY ACTION">
-      </center>
-</form>
 
 
 <br>

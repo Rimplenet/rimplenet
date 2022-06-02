@@ -13,19 +13,19 @@ class RimplenetGetReferrals extends Base
         $prop = empty($param) ? $this->req : $param;
         extract($prop);
 
-        $referral = get_usermeta($user_id, 'rimplenet_user_referral', $single=false);
+        $referral = get_usermeta($user_id, 'rimplenet_user_referred', $single=false);
         if ($referral) {
             $this->response = [
                 'status_code' => 200,
                 'status' => 'success',
-                'response_message' => "Referral was successfully Retreived",
+                'message' => "Referral was successfully Retreived",
                 'data' => $referral
             ];
         }else{
             $this->response = [
                 'status_code' => 406,
                 'status' => 'success',
-                'response_message' => "Referral was successfully Retreived",
+                'message' => "Referral was successfully Retreived",
                 'data' => "No Referral Performed by this User"
             ];
 

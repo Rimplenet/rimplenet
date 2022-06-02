@@ -1,10 +1,10 @@
 <?php
 
-namespace Wallets\GetWallets;
+// namespace Wallets\GetWallets;
 
 use Wallets\Base;
 
-abstract class RimplenetGetWallets extends Base
+ class RimplenetGetWallets extends Base
 {
     /**
      * Get a single wallet based on wallet id
@@ -28,7 +28,7 @@ abstract class RimplenetGetWallets extends Base
      * Get all wallet
      * @return array>boolean
      */
-    protected function getWallets()
+    public function getWallets()
     {
         if ($this->query && $this->query->have_posts()):
             $posts = $this->query->get_posts();

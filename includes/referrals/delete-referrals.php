@@ -19,14 +19,14 @@ class RimplenetDeleteReferrals extends Base
             $this->response = [
                 'status_code' => 200,
                 'status' => 'success',
-                'response_message' => "Referral was successfully deleted",
+                'message' => "Referral was successfully deleted",
                 'data' => $referral
             ];
         }else{
             $this->response = [
                 'status_code' => 406,
                 'status' => 'success',
-                'response_message' => "Referral was successfully Retreived",
+                'message' => "Referral was successfully Retreived",
                 'data' => "No Referral Performed by this User"
             ];
 
