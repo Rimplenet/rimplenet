@@ -2,7 +2,7 @@
 
 // namespace Referrals\CreateReferrals;
 
-use Rimplenet_Wallets;
+// use Rimplenet_Wallets;
 use Referrals\Base;
 
 class RimplenetCreateReferrals extends Base
