@@ -3,16 +3,16 @@
 if(isset( $_POST['rimplenet_wallet_submitted'] ) || wp_verify_nonce( $_POST['rimplenet_wallet_settings_nonce_field'], 'rimplenet_wallet_settings_nonce_field' ) )  {
 
 
-     $this->req = [
+     $req = [
             'wallet_name'           => sanitize_text_field($_POST['rimplenet_wallet_name']),
             'wallet_id'             => sanitize_text_field($_POST['rimplenet_wallet_id']),
             'wallet_symbol'         => sanitize_text_field($_POST['rimplenet_wallet_symbol']),
             'wallet_symbol_pos'     => sanitize_text_field($_POST['rimplenet_wallet_symbol_pos'] ?? 'left'),
             'wallet_note'           => sanitize_text_field($_POST['rimplenet_wallet_note'] ?? $_POST['rimplenet_wallet_name']),
             'wallet_type'           => sanitize_text_field($_POST['rimplenet_wallet_type']),
-            'wallet_decimal'        => $_POST['rimplenet_wallet_decimal'] ?? 2,
-            'max_withdrawal_amount' => $_POST['rimplenet_max_withdrawal_amount'] ?? CreateWallet::MAX_AMOUNT,
-            'min_withdrawal_amount' => $_POST['rimplenet_min_withdrawal_amount'] ?? CreateWallet::MIN_AMOUNT,
+            'wallet_decimal'        => intval($_POST['rimplenet_wallet_decimal']) ?? 2,
+            'max_withdrawal_amount' => intval($_POST['rimplenet_max_withdrawal_amount']) ?? CreateWallet::MAX_AMOUNT,
+            'min_withdrawal_amount' => intval($_POST['rimplenet_min_withdrawal_amount']) ?? CreateWallet::MIN_AMOUNT,
             'inc_i_w_cl'            => $_POST['rimplenet_inc_in_woocmrce_curr_list'] ?? false,
             'e_a_w_p'               => $_POST['rimplenet_enable_as_woocmrce_pymt_wlt'] ?? false,
             'r_b_b_w'               => sanitize_text_field($_POST['rimplenet_rules_before_withdrawal'] ?? ''),
@@ -20,7 +20,19 @@ if(isset( $_POST['rimplenet_wallet_submitted'] ) || wp_verify_nonce( $_POST['rim
         ];
 
  
-        $wallets = new RimplenetCreateWallets;
+
+
+        $wallets = new RimplenetCreateWallets();
+
+        // var_dump($wallets->createWallet($req));
+        // die;
+        if ($wallets->createWallet($req) && empty($wallets->response['error'])) {
+            echo '<div class="updated">
+            <p>Your Wallet have been created successfully</p>
+        </div> ';
+        }else{
+            var_dump($wallets->response['error']);
+        }
 
 }
 ?>
@@ -54,6 +66,16 @@ if(isset( $_POST['rimplenet_wallet_submitted'] ) || wp_verify_nonce( $_POST['rim
             <tr>
                 <th><label for="rimplenet_wallet_decimal"> Wallet Decimal </label></th>
                 <td><input name="rimplenet_wallet_decimal" id="rimplenet_wallet_decimal" type="number" min="1" value="<?php echo get_option('rimplenet_wallet_decimal'); ?>" placeholder="e.g 2"  class="regular-text" required style="<?php echo $input_width; ?>" /></td>
+            </tr>
+
+            <tr>
+                <th><label for="rimplenet_wallet_decimal"> Wallet Type </label></th>
+                <td><select name="rimplenet_wallet_type" id="rimplenet_wallet_type" style="width: 100%;max-width: 400px; height: 40px;" required="">
+                         <option value=""> Select Wallet Type  </option> 
+                         <option value="fiat" selected=""> Fiat Currency Wallet </option> 
+                         <option value="crypto"> Cryptocurrency Wallet </option> 
+                      </select>
+                    </td>
             </tr>
 
             <tr>
