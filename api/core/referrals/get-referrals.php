@@ -2,7 +2,7 @@
 //INCLUDED from api/class-base-api.php ~ main plugin file
 use Referrals\GetReferrals\BaseReferrals;
 
-$RimplenetcreateReferralsApi = new class extends BaseReferrals
+$RimplenetGetReferralsApi = new class extends RimplenetGetReferrals
 {
 
     public function __construct()
@@ -84,7 +84,7 @@ $RimplenetcreateReferralsApi = new class extends BaseReferrals
                 $this->req = [
                     'user_id'       => (int) $request['user_id'],
                 ];
-                $referrals=$this->getReferral();
+                $referrals=$this->getReferrals();
                 return new WP_REST_Response($referrals);
 
                 // $txn_loop = get_usermeta($user_id, 'rimplenet_user_referral');

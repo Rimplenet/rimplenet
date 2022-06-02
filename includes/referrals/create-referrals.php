@@ -1,13 +1,13 @@
 <?php
 
-namespace Referrals\CreateReferrals;
+// namespace Referrals\CreateReferrals;
 
 use Rimplenet_Wallets;
 use Referrals\Base;
 
-abstract class BaseReferrals extends Base
+class RimplenetCreateReferrals extends Base
 {
-    protected function createReferral(array $param = [])
+    protected function createReferrals(array $param = [])
     {
 
         $prop = empty($param) ? $this->req : $param;

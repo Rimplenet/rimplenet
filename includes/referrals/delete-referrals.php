@@ -1,13 +1,13 @@
 <?php
 
-namespace Referrals\DeleteReferrals;
+// namespace Referrals\DeleteReferrals;
 
 
 use Referrals\Base;
 
-abstract class BaseReferrals extends Base
+class RimplenetDeleteReferrals extends Base
 {
-    protected function deleteReferral(array $param = [])
+    protected function deleteReferrals(array $param = [])
     {
 
         $prop = empty($param) ? $this->req : $param;

@@ -2,7 +2,7 @@
 
 use Referrals\DeleteReferrals\BaseReferrals;
 
-$RimplenetdeleteReferralsApi = new class extends BaseReferrals
+$RimplenetdeleteReferralsApi = new class extends RimplenetDeleteReferrals
 {
 
     public function __construct()
@@ -32,7 +32,7 @@ $RimplenetdeleteReferralsApi = new class extends BaseReferrals
 
             
             // add_user_meta($request['user_id'] ?? 1, 'rimplenet_user_refferral', $user['user_meta']['referral']);
-            $deletereferral=$this->deleteReferral();
+            $deletereferral=$this->deleteReferrals();
             return new WP_REST_Response( $deletereferral );
 
         }
