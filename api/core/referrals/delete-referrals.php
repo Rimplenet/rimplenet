@@ -41,7 +41,7 @@ $RimplenetdeleteReferralsApi = new class extends RimplenetDeleteReferrals
         $response['status'] = 'failed';
         $response['error'] = $this->validation_error;
 
-        return new WP_REST_Response( $response );
+        return new WP_REST_Response($response, $response['status_code']);
     }
 
     public function validate($request)
