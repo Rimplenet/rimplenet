@@ -4,7 +4,7 @@ namespace Wallets\GetWallets;
 
 use Wallets\Base;
 
-abstract class BaseWallet extends Base
+abstract class RimplenetGetWallets extends Base
 {
     /**
      * Get a single wallet based on wallet id
@@ -39,7 +39,7 @@ abstract class BaseWallet extends Base
             return $res;
         else:
             $this->response['status_code'] = 404;
-            $this->response['response_message'] = "Wallet not found";
+            $this->response['message'] = "Wallet not found";
             $this->response['error'][] = "We are sorry we cannot retrieve any wallet at the moment";
         endif;
         return false;
@@ -51,10 +51,10 @@ abstract class BaseWallet extends Base
         $this->id = $wallet->ID;
 
         $max_withdrawal = $this->postMeta('rimplenet_min_withdrawal_amount');
-        $max_withdrawal == '' && $max_withdrawal  = BaseWallet::MAX_AMOUNT;
+        $max_withdrawal == '' && $max_withdrawal  = Base::MAX_AMOUNT;
 
         $min_widhdrawal = $this->postMeta('rimplenet_max_withdrawal_amount');
-        $min_widhdrawal == '' && $min_widhdrawal  = BaseWallet::MIN_AMOUNT;
+        $min_widhdrawal == '' && $min_widhdrawal  = Base::MIN_AMOUNT;
 
         $inc_wlt_curr_list = $this->postMeta('include_in_woocommerce_currency_list');
         !$inc_wlt_curr_list ? $inc_wlt_curr_list = false :  $inc_wlt_curr_list = true;

@@ -1,8 +1,8 @@
 <?php
 
-use Wallets\GetWallets\BaseWallet;
+use Wallets\GetWallets\RimplenetGetWallets;
 
-$RetrieveWallet = new class extends BaseWallet
+$RetrieveWallet = new class extends RimplenetGetWallets
 {
     public function __construct()
     {
@@ -49,7 +49,7 @@ $RetrieveWallet = new class extends BaseWallet
             if ($wallet = $this->getWallets())
                 return new WP_REST_Response($wallet);
             else
-                return new WP_REST_Response($this->response);
+                return new WP_REST_Response($this->response, $this->response['status_code']);
         endif;
     }
 };

@@ -1,16 +1,14 @@
 <?php
 
-use Wallets\CreateWallets\BaseWallet;
+use Wallets\CreateWallets\RimplenetCreateWallets;
 
 /**
  * Create wallet
  */
 
 
-class CreateWallet extends BaseWallet
+class CreateWallet extends RimplenetCreateWallets
 {
-
-    protected $baseWallet;
 
     public function __construct()
     {
@@ -45,21 +43,11 @@ class CreateWallet extends BaseWallet
             'r_a_b_w'               => sanitize_text_field($req['rules_after_withdrawal'] ?? '')
         ];
 
-        # Check required
-        if ($this->checkEmpty())
-            return new WP_REST_Response($this->response);
 
-        # validate decimals or number 
-        if ($this->notFloatOrNumber())
-            return new WP_REST_Response($this->response);
+        $wallets = new RimplenetCreateWallets;
 
-        # create Wallet
-        if ($this->createWallet())
-            return new WP_REST_Response($this->response);
-        else
-            return new WP_REST_Response($this->response);
-
-        return new WP_Error(500, 'Server Error', []);
+        $wallets->createWallet($this->req);
+        return new WP_REST_Response($wallets->response, $wallets->response['status_code']);
     }
 }
 
