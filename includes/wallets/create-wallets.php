@@ -1,6 +1,6 @@
 <?php
 
-namespace Wallets\CreateWallets;
+// namespace Wallets\CreateWallets;
 use Wallets\Base;
 
 class RimplenetCreateWallets extends Base

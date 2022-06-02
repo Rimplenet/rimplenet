@@ -1,6 +1,6 @@
 <?php
 
-use Wallets\CreateWallets\RimplenetCreateWallets;
+// use Wallets\CreateWallets\RimplenetCreateWallets;
 
 /**
  * Create wallet

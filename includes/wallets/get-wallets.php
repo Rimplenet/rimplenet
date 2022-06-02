@@ -45,6 +45,21 @@ use Wallets\Base;
         return false;
     }
 
+    public function createQuery()
+    {
+        $this->query = new WP_Query([
+            'post_type' => self::POST_TYPE,
+            'post_status' => 'publish',
+            'posts_per_page' => -1,
+            'paged' => $page,
+            'tax_query' => array([
+                'taxonomy' => self::TAXONOMY,
+                'field'    => 'name',
+                'terms'    => static::WALLET_CAT_NAME,
+            ]),
+        ]);
+    }
+
 
     private function walletFormat($wallet)
     {
