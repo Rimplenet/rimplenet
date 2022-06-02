@@ -22,8 +22,8 @@ class RimplenetAdminCreateWallet
 
   public function create_wallets_fxn(){
  
-      // include_once plugin_dir_path( dirname( __FILE__ ) ) . '/admin/wallets/layouts/admin-settings-wallets.php';
-      echo "hello";
+      include_once plugin_dir_path( dirname( __FILE__ ) ) . '/admin/wallets/layouts/admin-settings-wallets.php';
+      // echo "hello";
 
     }
    
