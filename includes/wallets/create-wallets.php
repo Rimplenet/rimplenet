@@ -83,7 +83,7 @@ class RimplenetCreateWallets extends Base
     /**
      * Create Wallet
      */
-    protected function createWallet(array $req = [])
+    public function createWallet(array $req = [])
     {
         $this->prop = empty($req) ? $this->req : $req;
         $this->wallet_id = strtolower($this->prop['wallet_id']);
