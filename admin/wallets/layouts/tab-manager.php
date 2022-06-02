@@ -17,18 +17,18 @@
             if($_GET["tab"] == "api-settings")
              {
                $api_settings_tab_active = "nav-tab-active";
-               $path_to_tab = plugin_dir_path( dirname( __FILE__ ) ) . "layouts/tab-api-settings.php";
+               $path_to_tab = plugin_dir_path( dirname( __FILE__ ) ) . "layouts/admin-settings-wallet.php";
              }
             elseif($_GET["tab"] == "setup")
              {
                $setup_tab_active = "nav-tab-active";
-               $path_to_tab = plugin_dir_path( dirname( __FILE__ ) ) . "layouts/tab-dashboard-demo-data-setup.php";
+               $path_to_tab = plugin_dir_path( dirname( __FILE__ ) ) . "layouts/create-wallets.php";
              }
             else
              { 
                $active_tab  = "dashboard-overview";
                $overview_tab_active = "nav-tab-active";
-               $path_to_tab = plugin_dir_path( dirname( __FILE__ ) ) . "layouts/dashboard-overview.php";
+               $path_to_tab = plugin_dir_path( dirname( __FILE__ ) ) . "layouts/get-wallets.php";
              }
              
              //Set the url for each of the tab
@@ -45,11 +45,11 @@
         </a>
         
         <a href="<?php echo $setup_tab_url; ?>" class="nav-tab <?php echo $setup_tab_active; ?>">
-            <?php _e('Setup & Demo Data', 'rimplenet'); ?>
+            <?php _e('Create Wallet', 'rimplenet'); ?>
         </a>
 
         <a href="<?php echo $api_settings_tab_url; ?>" class="nav-tab <?php echo $api_settings_tab_active; ?>">
-            <?php _e('Rimplenet API Settings', 'rimplenet'); ?>
+            <?php _e('Wallet Settings', 'rimplenet'); ?>
         </a>
         
         

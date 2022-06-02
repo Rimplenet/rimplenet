@@ -33,18 +33,19 @@ $RetrieveWallet = new class extends RimplenetGetWallets
                 return new WP_REST_Response($wallet); # return the wallet data if valid
         else :
             # return valid wallets if wallet id is not provided
-            $this->query = new WP_Query([
-                'post_type' => self::POST_TYPE,
-                'post_status' => 'publish',
-                'posts_per_page' => -1,
-                'paged' => $page,
-                'tax_query' => array([
-                    'taxonomy' => self::TAXONOMY,
-                    'field'    => 'name',
-                    'terms'    => static::WALLET_CAT_NAME,
-                ]),
-            ]);
+            // $this->query = new WP_Query([
+            //     'post_type' => self::POST_TYPE,
+            //     'post_status' => 'publish',
+            //     'posts_per_page' => -1,
+            //     'paged' => $page,
+            //     'tax_query' => array([
+            //         'taxonomy' => self::TAXONOMY,
+            //         'field'    => 'name',
+            //         'terms'    => static::WALLET_CAT_NAME,
+            //     ]),
+            // ]);
             // return $this->query->posts;
+            $this->createQuery();
 
             if ($wallet = $this->getWallets())
                 return new WP_REST_Response($wallet);
