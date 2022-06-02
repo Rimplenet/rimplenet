@@ -10,6 +10,7 @@ class Rimplenet_Base_Admin {
    	 //Add Required Files to Load
 	 require_once plugin_dir_path(dirname( __FILE__ ) ) . '/admin/wallets/class-base-wallets.php';
 	 require_once plugin_dir_path(dirname( __FILE__ ) ) . '/admin/users/class-base-users.php';
+	 require_once plugin_dir_path(dirname( __FILE__ ) ) . '/admin/referrals/class-base-referrals.php';
 	
     }
 	
