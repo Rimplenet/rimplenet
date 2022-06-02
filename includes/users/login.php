@@ -38,7 +38,7 @@ class RimplenetLoginUser
             $new = get_userdata($is_user->data->ID);
             $check_role = get_userdata($is_user->data->ID);
 
-            if($check_role->wp_capabilities['administrator']) {
+            if($check_role->wp_capabilities['administrator'] == 'administrator') {
                 $role = "administrator";
             } else {
                 $role = "subscriber";
