@@ -4,9 +4,9 @@
  * Delete
  */
 
-use Wallets\DeleteWallet\BaseWallet;
+use Wallets\DeleteWallet\RimplenetDeleteWallets;
 
-$DeleteWallets = new class extends BaseWallet
+$DeleteWallets = new class extends RimplenetDeleteWallets
 {
     public function __construct()
     {
@@ -24,10 +24,6 @@ $DeleteWallets = new class extends BaseWallet
     public function api_delete_wallet($wallet)
     {
         $wallet = $this->deleteWallet($wallet['wallet']);
-        if(!$wallet)
-            return new WP_REST_Response($this->response);
-        else 
-            return new WP_REST_Response($this->response);
-        
+        return new WP_REST_Response($this->response, $this->response['status_code']);
     }
 };

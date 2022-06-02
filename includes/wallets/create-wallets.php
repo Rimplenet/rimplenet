@@ -3,7 +3,7 @@
 namespace Wallets\CreateWallets;
 use Wallets\Base;
 
-abstract class BaseWallet extends Base
+class RimplenetCreateWallets extends Base
 {
     /**
      * validate fields for decimals and numbers
@@ -88,19 +88,25 @@ abstract class BaseWallet extends Base
         $this->prop = empty($req) ? $this->req : $req;
         $this->wallet_id = strtolower($this->prop['wallet_id']);
 
+        $this->req = $this->prop;
+
+        if ($this->checkEmpty()) return $this->response;
+        if ($this->notFloatOrNumber()) return $this->response;
+
+
         # check if wallet already exist
         // return $this->walletExists();
         if ($this->walletExists()) :
             $this->response['error'] = $this->error;
             $this->response['status_code'] = 409;
-            $this->response['response_message'] = "Wallet already exists";
+            $this->response['message'] = "Wallet already exists";
             return false;
         else :
             $wallet = $this->insertWallet();
             $this->response = [
                 'status_code' => 201,
                 'status' => 'success',
-                'response_message' => "Wallet was successfully created",
+                'message' => "Wallet was successfully created",
                 'data' => $wallet
             ];
             return true;

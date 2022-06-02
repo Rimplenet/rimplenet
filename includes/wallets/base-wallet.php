@@ -7,7 +7,7 @@ abstract class Base
     /**
      * @var array
      */
-    protected $error;
+    public $error;
 
     /**
      * @var string
@@ -27,21 +27,21 @@ abstract class Base
     /**
      * @var array
      */
-    protected $response = [
+    public $response = [
         'status_code' => 400,
         'status' => 'failed',
-        'response_message' => '',
+        'message' => '',
         'data' => [],
         'error' => []
     ];
 
-    protected $query = null;
+    public $query = null;
     
     /**
      * Check empty Fields
      * @return mixed
      */
-    protected function checkEmpty(array $req = [])
+    public function checkEmpty(array $req = [])
     {
         // return "hekko";
         $prop = empty($req) ? $this->req : $req;
@@ -58,15 +58,15 @@ abstract class Base
 
 
         if (!empty($this->error)) {
-            $this->response['response_message'] = "One or two fields are required";
+            $this->response['message'] = "One or two fields are required";
             $this->response['error'] = $this->error;
             return true;
         }
 
-        return;
+        return false;
     }
 
-    protected function getWalletById(string $walletId)
+    public function getWalletById(string $walletId)
     {
         global $wpdb;
 
@@ -76,7 +76,7 @@ abstract class Base
             return $wallet;
         else :
             $this->response['status_code'] = 404;
-            $this->response['response_message'] = "Wallet not found";
+            $this->response['message'] = "Wallet not found";
             $this->response['error'][] = 'Invalid Wallet Id';
             return false;
         endif;
@@ -85,7 +85,7 @@ abstract class Base
     /**
      * Check if wallet already exists
      */
-    protected function walletExists()
+    public function walletExists()
     {
         global $wpdb;
 
