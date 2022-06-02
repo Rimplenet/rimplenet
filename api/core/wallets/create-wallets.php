@@ -43,7 +43,7 @@ class CreateWallet extends RimplenetCreateWallets
             'r_a_b_w'               => sanitize_text_field($req['rules_after_withdrawal'] ?? '')
         ];
 
-
+ 
         $wallets = new RimplenetCreateWallets;
 
         $wallets->createWallet($this->req);
