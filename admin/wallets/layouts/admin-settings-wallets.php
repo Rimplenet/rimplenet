@@ -1,13 +1,9 @@
 <?php
 global $current_user,$wp;
 wp_get_current_user();
-$wallet_obj = new RimplenetGetWallets();
-// RimplenetGetWallets
+$wallet_obj = new Rimplenet_Wallets();
 $all_wallets = $wallet_obj->getWallets();
 $WALLET_CAT_NAME = 'RIMPLENET WALLETS';
-
-var_dump($wallet_obj->response);
-die;
 
 
 if(isset( $_POST['rimplenet_wallet_submitted'] ) || wp_verify_nonce( $_POST['rimplenet_wallet_settings_nonce_field'], 'rimplenet_wallet_settings_nonce_field' ) )  {
