@@ -1,13 +1,13 @@
 <?php
 
-namespace Referrals\DeleteReferrals;
+// namespace Referrals\DeleteReferrals;
 
 
 use Referrals\Base;
 
-abstract class BaseReferrals extends Base
+class RimplenetDeleteReferrals extends Base
 {
-    protected function deleteReferral(array $param = [])
+    protected function deleteReferrals(array $param = [])
     {
 
         $prop = empty($param) ? $this->req : $param;
@@ -19,7 +19,7 @@ abstract class BaseReferrals extends Base
             $this->response = [
                 'status_code' => 200,
                 'status' => 'success',
-                'response_message' => "Referral was successfully Retreived",
+                'response_message' => "Referral was successfully deleted",
                 'data' => $referral
             ];
         }else{

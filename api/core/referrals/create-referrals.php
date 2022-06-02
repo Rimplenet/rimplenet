@@ -1,8 +1,8 @@
 <?php
 
-use Referrals\CreateReferrals\BaseReferrals;
+// use Referrals\CreateReferrals\BaseReferrals;
 
-$RimplenetcreateReferralsApi = new class extends BaseReferrals
+$RimplenetcreateReferralsApi = new class extends RimplenetCreateReferrals
 {
 
     public function __construct()
@@ -32,7 +32,7 @@ $RimplenetcreateReferralsApi = new class extends BaseReferrals
 
             
             // add_user_meta($request['user_id'] ?? 1, 'rimplenet_user_refferral', $user['user_meta']['referral']);
-            $this->createReferral();
+            $this->createReferrals();
             $response['status_code'] = 201;
             $response['status'] = 'true';
             $response['response_message'] = 'Referral Added Successfully';
