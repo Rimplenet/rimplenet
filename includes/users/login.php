@@ -38,13 +38,7 @@ class RimplenetLoginUser
             $new = get_userdata($is_user->data->ID);
             $check_role = get_userdata($is_user->data->ID);
 
-            // if($check_role->wp_capabilities['administrator'] == 'administrator') {
-            //     $role = "administrator";
-            // } else {
-            //     $role = "subscriber";
-            // }
-
-            $is_user->data->role = "subscriber";
+            $is_user->data->role = $check_role->wp_capabilities;
 
             $iss = 'localhost';
             $iat = time();
