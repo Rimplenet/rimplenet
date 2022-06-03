@@ -19,21 +19,21 @@
                $api_settings_tab_active = "nav-tab-active";
                $path_to_tab = plugin_dir_path( dirname( __FILE__ ) ) . "layouts/admin-settings-wallet.php";
              }
-            elseif($_GET["tab"] == "setup")
+            elseif($_GET["tab"] == "create-wallet-tab")
              {
                $setup_tab_active = "nav-tab-active";
                $path_to_tab = plugin_dir_path( dirname( __FILE__ ) ) . "layouts/create-wallets.php";
              }
             else
              { 
-               $active_tab  = "dashboard-overview";
+               $active_tab  = "wallets-overview";
                $overview_tab_active = "nav-tab-active";
                $path_to_tab = plugin_dir_path( dirname( __FILE__ ) ) . "layouts/get-wallets.php";
              }
              
              //Set the url for each of the tab
-             $overview_tab_url = add_query_arg( array( 'post_type'=>$_GET["post_type"], 'page'=>$_GET["page"], 'tab'=>'dashboard-overview', 'viewing_user'=>$current_user->ID), admin_url( "edit.php") );
-             $setup_tab_url = add_query_arg( array( 'post_type'=>$_GET["post_type"], 'page'=>$_GET["page"], 'tab'=>'setup', 'viewing_user'=>$current_user->ID), admin_url( "edit.php") );
+             $overview_tab_url = add_query_arg( array( 'post_type'=>$_GET["post_type"], 'page'=>$_GET["page"], 'tab'=>'wallets-overview', 'viewing_user'=>$current_user->ID), admin_url( "edit.php") );
+             $setup_tab_url = add_query_arg( array( 'post_type'=>$_GET["post_type"], 'page'=>$_GET["page"], 'tab'=>'create-wallet-tab', 'viewing_user'=>$current_user->ID), admin_url( "edit.php") );
              $api_settings_tab_url = add_query_arg( array( 'post_type'=>$_GET["post_type"], 'page'=>$_GET["page"], 'tab'=>'api-settings', 'viewing_user'=>$current_user->ID), admin_url( "edit.php") );
              
          ?>

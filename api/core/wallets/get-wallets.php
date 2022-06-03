@@ -1,6 +1,6 @@
 <?php
 
-use Wallets\GetWallets\RimplenetGetWallets;
+// use Wallets\GetWallets\RimplenetGetWallets;
 
 $RetrieveWallet = new class extends RimplenetGetWallets
 {
