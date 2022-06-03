@@ -1,6 +1,6 @@
 <?php
     //This file is Included at admin/class-admin-sidebar-menu-settings.php
-    $plugin_name = $this->plugin_name;
+    // $plugin_name = $this->plugin_name;
     global $current_user,$wpdb, $post,  $wp;
      $current_user = wp_get_current_user();
 ?>
@@ -12,6 +12,8 @@
     <h2 class="nav-tab-wrapper">
         <!-- when tab buttons are clicked we jump back to the same page but with a new parameter that represents the clicked tab. accordingly we make it active -->
          <?php
+
+            $_GET["tab"]=$_GET["tab"] ?? "";
             $active_tab = $_GET["tab"] ;
             
             if($_GET["tab"] == "api-settings")
