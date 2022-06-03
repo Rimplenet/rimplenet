@@ -4,10 +4,12 @@ wp_get_current_user();
 // $wallet_obj = new Rimplenet_Wallets();
 
 $wallet_obj = new RimplenetGetWallets();
-$wallet_obj->createQuery();
-$all_wallets = $wallet_obj->getWallets();
+// $wallet_obj->createQuery();
+$wallet_obj->getWallets();
+$all_wallets=$wallet_obj->response['data'];
 
 // var_dump($all_wallets);
+// die;
 
 
 ?>
@@ -33,8 +35,8 @@ $all_wallets = $wallet_obj->getWallets();
 <?php
     foreach ($all_wallets as $key => $value) {
         // $wallet_id = get_post_meta($txn_id, 'rimplenet_wallet_id', true);
-        $user_balance_shortcode  = '[rimplenet-wallet action="view_balance" wallet_id="'.$value->wallet_id.'"]';
-        $edit_wallet_link = '<a href="'.get_edit_post_link($txn_id).'" target="_blank">Edit Wallet & Rules</a>';
+        $user_balance_shortcode  = '[rimplenet-wallet action="view_balance" wallet_id="'.$value['wallet_id'].'"]';
+        $edit_wallet_link = '<a href="'.get_edit_post_link('').'" target="_blank">Edit Wallet & Rules</a>';
         if(!empty($linked_page_id)){
             $view_wallet_page_link = ' | <a href="'.get_permalink($linked_page_id).'" target="_blank">View Wallet Page</a>' ;
         }

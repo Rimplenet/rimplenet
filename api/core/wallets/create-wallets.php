@@ -1,7 +1,4 @@
 <?php
-
-// use Wallets\CreateWallets\RimplenetCreateWallets;
-
 /**
  * Create wallet
  */
@@ -42,12 +39,9 @@ class CreateWallet extends RimplenetCreateWallets
             'r_b_b_w'               => sanitize_text_field($req['rules_before_withdrawal'] ?? ''),
             'r_a_b_w'               => sanitize_text_field($req['rules_after_withdrawal'] ?? '')
         ];
-
- 
-        $wallets = new RimplenetCreateWallets;
-
-        $wallets->createWallet($this->req);
-        return new WP_REST_Response($wallets->response, $wallets->response['status_code']);
+        
+        $this->createWallet();
+        return new WP_REST_Response($this->response, $this->response['status_code']);
     }
 }
 

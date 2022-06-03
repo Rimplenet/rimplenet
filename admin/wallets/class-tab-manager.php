@@ -12,10 +12,10 @@ class RimplenetAdminClassTabManagerWallets
    {
      add_submenu_page(
             'edit.php?post_type=rimplenettransaction',
-            __( 'Create Wallets Tab', 'rimplenet' ),
-            __( 'Create Wallets Tab', 'rimplenet' ),
+            __( 'Wallets', 'rimplenet' ),
+            __( 'Wallets', 'rimplenet' ),
             'manage_options',
-            'create_wallets_tab',
+            'rimplenet_wallets_tab',
             array( $this, 'create_wallets_fxn' )
             );
   }

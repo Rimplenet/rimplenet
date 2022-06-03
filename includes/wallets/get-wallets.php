@@ -1,10 +1,8 @@
 <?php
 
-// namespace Wallets\GetWallets;
-
 use Wallets\Base;
 
- class RimplenetGetWallets extends Base
+class RimplenetGetWallets extends Base
 {
     /**
      * Get a single wallet based on wallet id
@@ -20,7 +18,9 @@ use Wallets\Base;
         else :
             $wallet = get_post($wallet->post_id);
             $walletData = $this->walletFormat($wallet);
-            return $walletData;
+            $this->response['status_code'] = 200;
+            $this->response['status'] = true;
+            $this->response['data'] = $walletData;
         endif;
     }
 
@@ -28,15 +28,20 @@ use Wallets\Base;
      * Get all wallet
      * @return array>boolean
      */
-    public function getWallets()
+    public function getWallets($page = 1)
     {
+        $this->queryDb($page);
+
         if ($this->query && $this->query->have_posts()):
             $posts = $this->query->get_posts();
             $res = [];
             foreach($posts as $value):
                 $res[] = $this->walletFormat($value);
             endforeach;
-            return $res;
+            $this->response['status_code'] = 200;
+            $this->response['status'] = true;
+            $this->response['data'] = $res;
+            return true;
         else:
             $this->response['status_code'] = 404;
             $this->response['message'] = "Wallet not found";
@@ -44,22 +49,6 @@ use Wallets\Base;
         endif;
         return false;
     }
-
-    public function createQuery()
-    {
-        $this->query = new WP_Query([
-            'post_type' => self::POST_TYPE,
-            'post_status' => 'publish',
-            'posts_per_page' => -1,
-            'paged' => $page,
-            'tax_query' => array([
-                'taxonomy' => self::TAXONOMY,
-                'field'    => 'name',
-                'terms'    => static::WALLET_CAT_NAME,
-            ]),
-        ]);
-    }
-
 
     private function walletFormat($wallet)
     {

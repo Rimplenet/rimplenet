@@ -1,5 +1,9 @@
 <?php
+
 namespace Wallets;
+
+use WP_Query;
+use WP_Term;
 
 abstract class Base
 {
@@ -36,7 +40,7 @@ abstract class Base
     ];
 
     public $query = null;
-    
+
     /**
      * Check empty Fields
      * @return mixed
@@ -81,7 +85,7 @@ abstract class Base
             return false;
         endif;
     }
-    
+
     /**
      * Check if wallet already exists
      */
@@ -95,5 +99,23 @@ abstract class Base
             $this->error[] = 'Transaction Already Exists';
         if (!empty($this->error)) return true;
         else return false;
+    }
+
+
+
+    protected function queryDb($page)
+    {
+
+        $this->query = new WP_Query([
+            'post_type' => self::POST_TYPE,
+            'post_status' => 'publish',
+            'posts_per_page' => -1,
+            'paged' => $page,
+            'tax_query' => array([
+                'taxonomy' => self::TAXONOMY,
+                'field'    => 'name',
+                'terms'    => static::WALLET_CAT_NAME,
+            ]),
+        ]);
     }
 }
