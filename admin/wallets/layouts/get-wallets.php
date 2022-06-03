@@ -4,10 +4,12 @@ wp_get_current_user();
 // $wallet_obj = new Rimplenet_Wallets();
 
 $wallet_obj = new RimplenetGetWallets();
-$wallet_obj->createQuery();
-$all_wallets = $wallet_obj->getWallets();
+// $wallet_obj->createQuery();
+$wallet_obj->getWallets();
+$all_wallets=$wallet_obj->response['data'];
 
 // var_dump($all_wallets);
+// die;
 
 
 ?>
