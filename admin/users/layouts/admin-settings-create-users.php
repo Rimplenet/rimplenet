@@ -45,7 +45,7 @@
     }
 
     .form-container img {
-        width: 100%;
+        width: 80%;
     }
 
     .error {
@@ -60,7 +60,7 @@
 <?php
 
 $dir = plugin_dir_url(dirname(__FILE__));
-require plugin_dir_path(dirname(__FILE__)).'/assets/php/create.php';
+require plugin_dir_path(dirname(__FILE__)) . '/assets/php/create.php';
 ?>
 
 <div class="user-card">
@@ -70,23 +70,39 @@ require plugin_dir_path(dirname(__FILE__)).'/assets/php/create.php';
     <div class="form-container rt">
         <form action="" method="POST" id="form-container">
             <div class="control">
-                <label for="fname">First Name</label>
-                <input type="text" name="first_name" id="fname" class="form-input" placeholder="First Name">
+                <label for="fname">First Name
+                <span class="dashicons dashicons-editor-help rimplenet-admin-tooltip" title="First Name (Your birth name)"></span>
+                </label>
+                <input type="text" name="fname" id="fname" class="form-input" placeholder="First Name">
             </div>
             <div class="control">
-                <label for="lname">Last Name</label>
-                <input type="text" name="last_name" id="lname" class="form-input" placeholder="Last Name">
+                <label for="lname">Last Name
+                <span class="dashicons dashicons-editor-help rimplenet-admin-tooltip" title="Last Name (Your Family name)"></span>
+                </label>
+                <input type="text" name="lname" id="lname" class="form-input" placeholder="Last Name">
             </div>
             <div class="control">
-                <label for="email">Email</label>
+                <label for="lname">Username
+                <span class="dashicons dashicons-editor-help rimplenet-admin-tooltip" title="Username (Choose a preferred name u would like)"></span>
+                </label>
+                <input type="text" name="uname" id="uname" class="form-input" placeholder="Username">
+            </div>
+            <div class="control">
+                <label for="email">Email
+                <span class="dashicons dashicons-editor-help rimplenet-admin-tooltip" title="Email Address, Please enter a valid email address"></span>
+                </label>
                 <input type="email" name="email" id="email" class="form-input" placeholder="Email">
             </div>
             <div class="control">
-                <label for="pwd">Password</label>
+                <label for="pwd">Password
+                <span class="dashicons dashicons-editor-help rimplenet-admin-tooltip" title="Password(Choose a strong password to secure your account)"></span>
+                </label>
                 <input type="text" name="password" id="pwd" class="form-input" placeholder="****">
             </div>
             <div class="control">
-                <label for="pwd2">Confirm Passsword</label>
+                <label for="pwd2">Confirm Passsword
+                <span class="dashicons dashicons-editor-help rimplenet-admin-tooltip" title="Confirm Password (Confirm that the password you entered above is correct)"></span>
+                </label>
                 <input type="text" name="confirm_password" id="pwd2" class="form-input" placeholder="****">
             </div>
             <div class="control">
@@ -96,18 +112,18 @@ require plugin_dir_path(dirname(__FILE__)).'/assets/php/create.php';
     </div>
 </div>
 
-<!-- <script>
+<script>
     let form = document.getElementById('form-container'),
         firstName = document.getElementById('fname'),
         lastName = document.getElementById('lname'),
+        uname = document.getElementById('uname'),
         email = document.getElementById('email'),
         password = document.getElementById('pwd'),
         cpassword = document.getElementById('pwd2')
     canSend = []
-    pathFile = "<?= $path ?>"
 
     const showMssg = (input, type = 'error') => {
-        type == 'error' ? input.classList.add('error') : input.className = 'form-input success'
+        type == 'error' ? input.className = 'form-input error' : input.className = 'form-input success'
     }
     const checkempty = (input = []) => {
         canSend = []
@@ -122,30 +138,43 @@ require plugin_dir_path(dirname(__FILE__)).'/assets/php/create.php';
         });
     }
 
-    var requestOptions = {
-        method: 'POST',
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: {
-            first_name: firstName,
-            last_name: lastName,
-            user_email: email,
-            user_pass: password
-        },
-        redirect: 'follow'
-    };
+    cpassword.oninput = (e) => {
+        if (e.target.value == password.value) {
+            showMssg(e.target, 'success')
+            showMssg(password, 'success')
+            canSend.push(true)
+        } else {
+            showMssg(e.target)
+            canSend = [false]
+        }
+    }
+
+    const validatePassword = () => {
+
+        if (password.value.length > 6) {
+            if (password.value == cpassword.value) {
+                showMssg(password, 'success')
+                showMssg(cpassword, 'success')
+                canSend = [true]
+            } else {
+                showMssg(password)
+                showMssg(cpassword)
+                canSend = [false]
+            }
+        }else{
+            showMssg(password)
+            canSend = [false]
+        }
+    }
 
     form.onsubmit = (e) => {
         e.preventDefault();
 
-        checkempty([firstName, lastName, email, password, cpassword])
+        checkempty([firstName, lastName, email, password, uname, cpassword])
+        validatePassword()
 
         if (!canSend.includes(false)) {
-            fetch(redLocation, requestOptions).then(res => res.json())
-            .then(data => {
-                console.log(data)
-            }).catch(err =>  console.log(err))
+            form.submit();
         }
     }
-</script> -->
+</script>

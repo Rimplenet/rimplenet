@@ -1,26 +1,20 @@
 <?php
 
-use Wallets\CreateWallets\RimplenetCreateWallets;
-use Wallets\GetWallets\RimplenetGetWallets;
-
-if(isset($_POST['first_name'])):
+if(isset($_POST['fname'])):
     $data = [];
 
     foreach ($_POST as $key => $value) {
         $data[$key] = sanitize_text_field($value);
     }
+    extract($data);
 
-    $users = new RimplenetCreateUser();
-    $users->create_user(
-        1, 
-        $data['email'],
-        $data[''],
-        $data[],
-        $data[],
-        [
-            'first_name' => '',
-            'last_name' => ''
+    $user = new RimplenetCreateUser();
+
+    $newUser = $user->create_user(
+        1, $email, $uname, $password, [
+            'first_name' => $fname,
+            'last_name' => $lname
         ]
     );
-    
+
 endif;
