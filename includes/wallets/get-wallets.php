@@ -1,6 +1,6 @@
 <?php
 
-namespace Wallets\GetWallets;
+// namespace Wallets\GetWallets;
 
 use Wallets\Base;
 
