@@ -14,6 +14,32 @@ $all_wallets=$wallet_obj->response['data'];
 
 ?>
 
+<style>
+  @media screen and (max-width: 600px) {	
+
+      table {width:100%;}
+
+      /* thead {display: none;} */
+
+      tr:nth-of-type(2n) {background-color: inherit;}
+
+      tr td:first-child {background: #f0f0f0; font-weight:bold;font-size:1.3em;}
+
+      /* tbody td {display: block;  text-align:center;} */
+
+      tbody td:before {
+
+        /* content: attr(data-th); */
+
+        display: block;
+
+        text-align:center; 
+
+      }
+
+}
+</style>
+
 <h2> ACTIVE WALLETS</h2>
 <table class="wp-list-table widefat fixed striped posts" >
 
@@ -24,8 +50,8 @@ $all_wallets=$wallet_obj->response['data'];
     <th> Wallet Symbol - (ID) </th>
     <th> Wallet Decimal </th>
     <th> User Balance Shortcode </th>
-    <th> Include Wallet in Withdrawal Form</th>
-    <th> Include Wallet in Woocommerce Currency List</th>
+    <!-- <th> Include Wallet in Withdrawal Form</th> -->
+    <!-- <th> Include Wallet in Woocommerce Currency List</th> -->
     <th> Actions </th>
   </tr>
  </thead>
@@ -47,14 +73,14 @@ $all_wallets=$wallet_obj->response['data'];
   
   <tr>
     <td><?php echo $value['wallet_name']; ?></td>
-    <td><?php echo $value['description']; ?></td>
+    <td><?php echo $value['wallet_note']; ?></td>
     <td><?php echo $value['wallet_symbol']; ?> - (<?php echo $value['wallet_id']; ?>)</td>
     <td><?php echo $value['wallet_decimal']; ?></td>
     <td> <code class="rimplenet_click_to_copy"> <?php echo $user_balance_shortcode; ?></code> </td>
-    <td><?php echo $value['include_in_withdrawal_form']; ?></td>
-    <td><?php echo $value['include_in_woocommerce_currency_list']; ?></td>
+    <!-- <td><?php //echo $value['include_in_withdrawal_form']; ?></td> -->
+    <!-- <td><?php //echo $value['include_in_woocommerce_currency_list']; ?></td> -->
     <td> 
-      <?php echo $edit_wallet_link; ?> <?php echo $view_wallet_page_link; ?> <?php echo $edit_linked_product_link; ?> <?php echo $view_linked_product_link; ?>
+      <?php //echo $edit_wallet_link; ?> <?php //echo $view_wallet_page_link; ?> <?php //echo $edit_linked_product_link; ?> <?php //echo $view_linked_product_link; ?>
     </td>
 
     
@@ -77,8 +103,8 @@ $all_wallets=$wallet_obj->response['data'];
     <th> Wallet Symbol - (ID) </th>
     <th> Wallet Decimal </th>
     <th> User Balance Shortcode </th>
-    <th> Include Wallet in Withdrawal Form</th>
-    <th> Include Wallet in Woocommerce Currency List</th>
+    <!-- <th> Include Wallet in Withdrawal Form</th> -->
+    <!-- <th> Include Wallet in Woocommerce Currency List</th> -->
     <th> Actions </th>
   </tr>
   </tfoot>
