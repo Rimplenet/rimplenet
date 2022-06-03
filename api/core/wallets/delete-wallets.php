@@ -3,9 +3,6 @@
 /**
  * Delete
  */
-
-use Wallets\DeleteWallet\RimplenetDeleteWallets;
-
 $DeleteWallets = new class extends RimplenetDeleteWallets
 {
     public function __construct()

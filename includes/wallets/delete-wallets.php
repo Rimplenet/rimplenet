@@ -1,6 +1,4 @@
 <?php
-namespace Wallets\DeleteWallet;
-
 use Wallets\Base;
 
 abstract class RimplenetDeleteWallets extends Base
