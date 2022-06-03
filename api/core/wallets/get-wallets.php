@@ -1,6 +1,6 @@
 <?php
 
-// use Wallets\GetWallets\RimplenetGetWallets;
+use Wallets\GetWallets\RimplenetGetWallets;
 
 $RetrieveWallet = new class extends RimplenetGetWallets
 {
@@ -19,6 +19,7 @@ $RetrieveWallet = new class extends RimplenetGetWallets
 
     public function retrieve_wallet(WP_REST_Request $req)
     {
+
         # ================= set fields ============
         $wlt_id  = sanitize_text_field($req['wallet_id']);
         $page      = $req['page'] ?? 1;
@@ -47,10 +48,8 @@ $RetrieveWallet = new class extends RimplenetGetWallets
             // return $this->query->posts;
             $this->createQuery();
 
-            if ($wallet = $this->getWallets())
-                return new WP_REST_Response($wallet);
-            else
-                return new WP_REST_Response($this->response, $this->response['status_code']);
+            $this->getWallets();
+            return new WP_REST_Response($this->response, $this->response['status_code']);
         endif;
     }
 };

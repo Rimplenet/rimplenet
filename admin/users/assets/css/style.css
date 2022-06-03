@@ -1,0 +1,48 @@
+.user-card {
+  width: 97%;
+  display: flex;
+  margin-top: 20px;
+  margin: 0 8px 16px;
+  background-color: #fff;
+  border: 1px solid #dcdcde;
+  box-sizing: border-box;
+}
+
+.form-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+form {
+  width: 100%;
+}
+
+.control {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  margin: 0 auto;
+  margin-top: 8px;
+}
+
+label {
+  margin: 5px 0;
+  font-weight: 600;
+  color: #787878;
+}
+
+.form-input {
+  padding: 4px !important;
+  border: 2px solid #e1e1e1 !important;
+}
+
+.rt {
+  background: #f8f8f8;
+}
+
+.form-container img {
+  width: 100%;
+}

@@ -1,6 +1,6 @@
 <?php
 
-// namespace Wallets\GetWallets;
+namespace Wallets\GetWallets;
 
 use Wallets\Base;
 
@@ -28,15 +28,20 @@ use Wallets\Base;
      * Get all wallet
      * @return array>boolean
      */
-    public function getWallets()
+    public function getWallets($page = 1)
     {
+        $this->queryDb($page);
+
         if ($this->query && $this->query->have_posts()):
             $posts = $this->query->get_posts();
             $res = [];
             foreach($posts as $value):
                 $res[] = $this->walletFormat($value);
             endforeach;
-            return $res;
+            $this->response['status_code'] = 200;
+            $this->response['status'] = true;
+            $this->response['data'] = $res;
+            return true;
         else:
             $this->response['status_code'] = 404;
             $this->response['message'] = "Wallet not found";
