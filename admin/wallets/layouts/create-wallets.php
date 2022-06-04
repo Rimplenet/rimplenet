@@ -343,7 +343,7 @@ $dir = plugin_dir_url(dirname(__FILE__));
         </style>
 
 
-        <form id="regForm" action="/action_page.php">
+        <form id="regForm" method="POST">
             <!-- One "tab" for each step in the form: -->
             <div class="tab">
                 <h2>CREATE NEW WALLET</h2> <br>
@@ -393,63 +393,16 @@ $dir = plugin_dir_url(dirname(__FILE__));
                             <td><input name="rimplenet_max_withdrawal_amount" id="rimplenet_max_withdrawal_amount" style="width: 100%;max-width: 400px; height: 40px;" type="text" value="<?php echo get_option('rimplenet_max_withdrawal_amount'); ?>" placeholder="e.g 99.99" class="regular-text" style="<?php echo $input_width; ?>" /></td>
                         </tr>
 
-
-                    </tbody>
-                </table>
-            </div>
-            <div class="tab">
-                <table class="form-table">
-                    <tbody>
-
-                        <tr>
-                            <th><label for="rimplenet_wallet_name"> Wallet Name </label></th>
-                            <td><input name="rimplenet_wallet_name" id="rimplenet_wallet_name" style="width: 100%;max-width: 400px; height: 40px;" type="text" value="<?php echo get_option('rimplenet_wallet_name'); ?>" placeholder="e.g United Bunny Wallet" class="regular-text" required style="<?php echo $input_width; ?>" /></td>
-                        </tr>
-                        <tr>
-                            <th><label for="rimplenet_wallet_desc"> Wallet Description </label></th>
-                            <td>
-                                <textarea id="rimplenet_wallet_desc" style="width: 100%;max-width: 400px; height: 40px;" name="rimplenet_wallet_desc" placeholder="Description here" style="<?php echo $input_width; ?>"></textarea>
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <th><label for="rimplenet_wallet_symbol"> Wallet Symbol <span class="dashicons dashicons-editor-help rimplenet-admin-tooltip" title="Wallet Symbol of the Wallet e.g $ for Dollars, ₦ for Naira,  ₿  for Bitcoin or maybe ETH for Ethereum"></span></label></th>
-                            <td><input name="rimplenet_wallet_symbol" id="rimplenet_wallet_symbol" style="width: 100%;max-width: 400px; height: 40px;" type="text" value="<?php echo get_option('rimplenet_wallet_symbol'); ?>" placeholder="e.g $" class="regular-text" required style="<?php echo $input_width; ?>" /></td>
-                        </tr>
-
-                        <tr>
-                            <th><label for="rimplenet_wallet_decimal"> Wallet Decimal <span class="dashicons dashicons-editor-help rimplenet-admin-tooltip" title="Wallet Decimal of the Wallet, it sometimes 2 is for fiat currecny wallet &amp; 6 or more for cryptocurrency wallet"></span> </label></th>
-                            <td><input name="rimplenet_wallet_decimal" id="rimplenet_wallet_decimal" style="width: 100%;max-width: 400px; height: 40px;" type="number" min="1" value="<?php echo get_option('rimplenet_wallet_decimal'); ?>" placeholder="e.g 2" class="regular-text" style="<?php echo $input_width; ?>" /></td>
-                        </tr>
-
-                        <tr>
-                            <th><label for="rimplenet_wallet_decimal"> Wallet Type </label></th>
-                            <td><select name="rimplenet_wallet_type" id="rimplenet_wallet_type" style="width: 100%;max-width: 400px; height: 40px;" required="">
-                                    <option value=""> Select Wallet Type </option>
-                                    <option value="fiat" selected=""> Fiat Currency Wallet </option>
-                                    <option value="crypto"> Cryptocurrency Wallet </option>
-                                </select>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <th><label for="rimplenet_min_withdrawal_amount"> Wallet Minimum Withdrawal Amount </label></th>
-                            <td><input name="rimplenet_min_withdrawal_amount" id="rimplenet_min_withdrawal_amount" style="width: 100%;max-width: 400px; height: 40px;" type="text" value="<?php echo get_option('rimplenet_min_withdrawal_amount'); ?>" placeholder="e.g 10" class="regular-text" style="<?php echo $input_width; ?>" /></td>
-                        </tr>
-
-                        <tr>
-                            <th><label for="rimplenet_max_withdrawal_amount"> Wallet Maximum Withdrawal Amount </label></th>
-                            <td><input name="rimplenet_max_withdrawal_amount" id="rimplenet_max_withdrawal_amount" style="width: 100%;max-width: 400px; height: 40px;" type="text" value="<?php echo get_option('rimplenet_max_withdrawal_amount'); ?>" placeholder="e.g 99.99" class="regular-text" style="<?php echo $input_width; ?>" /></td>
-                        </tr>
-
                         <tr>
                             <th><label for="rimplenet_wallet_id"> Wallet ID <span class="dashicons dashicons-editor-help rimplenet-admin-tooltip" title="Wallet ID should be unique for each of your created wallet, wallet id should be lowercase alphabets and underscore (blank space is not allowed) e.g btc for United State Dollars, ngn for Nigerian Naira , btc for Bitcoin, you can as well use savings_wallet"></span> </label></th>
                             <td><input name="rimplenet_wallet_id" id="rimplenet_wallet_id" style="width: 100%;max-width: 400px; height: 40px;" type="text" value="<?php echo get_option('rimplenet_wallet_id'); ?>" placeholder="e.g usd" class="regular-text" required style="<?php echo $input_width; ?>" /></td>
                         </tr>
+
+
                     </tbody>
                 </table>
             </div>
-
+           
             <div class="tab">
                 <table class="form-table">
                     <tbody>
@@ -566,7 +519,7 @@ $dir = plugin_dir_url(dirname(__FILE__));
                 <span class="step"></span>
                 <span class="step"></span>
                 <span class="step"></span>
-                <span class="step"></span>
+                <!-- <span class="step"></span> -->
             </div>
         </form>
     </div>
