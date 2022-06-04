@@ -7,7 +7,7 @@ use Referrals\Base;
 
 class RimplenetGetReferrals extends Base
 {
-    protected function getReferrals(array $param = [])
+    public function getReferrals(array $param = [])
     {
 
         $prop = empty($param) ? $this->req : $param;
