@@ -7,9 +7,8 @@ use Referrals\Base;
 
 class RimplenetCreateReferrals extends Base
 {
-    protected function createReferrals(array $param = [])
+    public function createReferrals(array $param = [])
     {
-
         $prop = empty($param) ? $this->req : $param;
         extract($prop);
 
@@ -23,7 +22,14 @@ class RimplenetCreateReferrals extends Base
                 'message' => "Referral was successfully created",
                 'data' => $referral
             ];
-        };
+        } else {
+            $this->response = [
+                'status_code' => 201,
+                'status' => 'success',
+                'message' => "Oops something went wrong.",
+                'data' => $referral
+            ];
+        }
 
        
     }

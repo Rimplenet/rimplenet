@@ -18,7 +18,7 @@ abstract class Base
     /**
      * @var array
      */
-    protected $response = [
+    public $response = [
         'status_code' => 400,
         'status' => 'failed',
         'response_message' => '',
