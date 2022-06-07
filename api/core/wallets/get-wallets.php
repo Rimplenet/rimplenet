@@ -25,8 +25,8 @@ $RetrieveWallet = new class extends RimplenetGetWallets
 
         # Check required
         if (!empty($wlt_id)) {
-            $this->getWallet($wlt_id);
-            return new WP_REST_Response($this->response, $this->response['status_code']);
+            // $this->getWallet($wlt_id);
+            // return new WP_REST_Response($this->response, $this->response['status_code']);
         }else{
             return "Wallet Id is Required";
             // $this->getWallets();
