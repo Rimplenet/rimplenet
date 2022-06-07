@@ -9,7 +9,7 @@ $wallet_obj->get_user(1, "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2Nhb
 $all_wallets=$wallet_obj->response;
 
 var_dump($all_wallets);
-die;
+// die;
 
 
 ?>
