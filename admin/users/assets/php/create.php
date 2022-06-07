@@ -1,5 +1,5 @@
 <?php
-
+echo "Hello here";
 if(isset($_POST['fname'])):
     $data = [];
 

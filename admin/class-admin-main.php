@@ -114,6 +114,7 @@ class Rimplenet_Admin {
 		 */
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/rimplenet-admin.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name."sweet-alert", plugin_dir_url( __FILE__ ) . 'js/sweet-alert.js', array( 'jquery' ), $this->version, false );
 
 	}
 	
