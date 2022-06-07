@@ -61,10 +61,10 @@ $all_wallets=$wallet_obj->response['data'];
 <?php
     foreach ($all_wallets as $key => $value) {
         // $wallet_id = get_post_meta($txn_id, 'rimplenet_wallet_id', true);
-        $user_balance_shortcode  = '[rimplenet-wallet action="view_balance" wallet_id="'.$value['wallet_id'].'"]';
-        $edit_wallet_link = '<a href="'.get_edit_post_link('').'" target="_blank">Edit Wallet & Rules</a>';
+        $user_balance_shortcode  = '[rimplenet-wallet action="view_balance" wallet_id="'.$value['post_id'].'"]';
+        $edit_wallet_link = '<a href="'.get_edit_post_link($value['post_id']).'" target="_blank">Edit Wallet</a>';
         if(!empty($linked_page_id)){
-            $view_wallet_page_link = ' | <a href="'.get_permalink($linked_page_id).'" target="_blank">View Wallet Page</a>' ;
+            $view_wallet_page_link = ' | <a href="'.get_permalink($linked_page_id).'" target="_blank">View Wallet</a>' ;
         }
         
     //     //$view_linked_product_link = ' | <a href="'.get_post_permalink($linked_woocommerce_product_id).'"  target="_blank">View Linked Product</a>';
@@ -80,7 +80,7 @@ $all_wallets=$wallet_obj->response['data'];
     <!-- <td><?php //echo $value['include_in_withdrawal_form']; ?></td> -->
     <!-- <td><?php //echo $value['include_in_woocommerce_currency_list']; ?></td> -->
     <td> 
-      <?php //echo $edit_wallet_link; ?> <?php //echo $view_wallet_page_link; ?> <?php //echo $edit_linked_product_link; ?> <?php //echo $view_linked_product_link; ?>
+      <?php echo $edit_wallet_link; ?> <?php //echo $view_wallet_page_link; ?> <?php //echo $edit_linked_product_link; ?> <?php //echo $view_linked_product_link; ?>
     </td>
 
     

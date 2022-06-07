@@ -200,7 +200,7 @@ $dir = plugin_dir_url(dirname(__FILE__));
                                 <option value=""> Select Wallet ID </option>
                                  <?php
                                     foreach($all_wallets as $wallet){
-                                        $wallet_id_op = $wallet['id'] ?? '';
+                                        $wallet_id_op = $wallet['post_id'] ?? '';
                                         $disp_info = $wallet['wallet_name'];
                                
                                 ?>

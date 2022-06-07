@@ -67,6 +67,7 @@ class RimplenetGetWallets extends Base
         !$enb_as_wcclst ? $enb_as_wcclst = false : $enb_as_wcclst = true;
 
         $res = [
+            'post_id'=>$this->id,
             'wallet_id'        => $this->postMeta('rimplenet_wallet_id'),
             'wallet_name'      => $wallet->post_title,
             "wallet_symbol"    => $this->postMeta('rimplenet_wallet_symbol'),
