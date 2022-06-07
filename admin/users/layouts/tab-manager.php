@@ -29,6 +29,7 @@
                 $active_tab  = "dashboard-overview";
                 $overview_tab_active = "nav-tab-active";
                 // $path_to_tab = plugin_dir_path( dirname( __FILE__ ) ) . "layouts/tab-dashboard-demo-data-setup.php";
+                $path_to_tab = plugin_dir_path( dirname( __FILE__ ) ) . "layouts/get-users.php";
              }
              
              //Set the url for each of the tab
