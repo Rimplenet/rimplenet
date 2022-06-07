@@ -222,6 +222,10 @@ class Rimplenet
 		require_once plugin_dir_path(dirname(__FILE__)) . 'api/class-base-api.php';
 
 
+		//for shortcodes
+		require_once plugin_dir_path(dirname(__FILE__)) . 'shortcodes/rimplenet-class-base-shortcodes.php';
+
+
 
 		$this->loader = new Rimplenet_Loader();
 	}
