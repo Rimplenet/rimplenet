@@ -21,6 +21,17 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         } else {
             var_dump($wallets->response['error']);
         }
+    }elseif (isset($_POST['rimplenet_search_user'])) {
+        $users = new WP_User_Query( array(
+            'search'         => '*'.esc_attr( $_POST['rimplenet_search_user'] ).'*',
+            'search_columns' => array(
+                'user_login',
+                'user_nicename',
+                'user_email',
+                'user_url',
+            ),
+        ) );
+        $users_found = $users->get_results();
     }
 }
 ?>

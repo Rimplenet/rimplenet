@@ -3,12 +3,12 @@ global $current_user,$wp;
 wp_get_current_user();
 // $wallet_obj = new Rimplenet_Wallets();
 
-$wallet_obj = new RimplenetGetWallets();
+$wallet_obj = new RimplenetGetUser();
 // $wallet_obj->createQuery();
-$wallet_obj->getWallets();
-$all_wallets=$wallet_obj->response['data'];
+$wallet_obj->get_user(1, "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJsb2NhbGhvc3QiLCJpYXQiOjE2NTEwOTQyODcsImV4cCI6MTY1MTA5Nzg4NywiZGF0YSI6eyJJRCI6IjI1IiwidXNlcl9sb2dpbiI6InRhaXdvb28iLCJ1c2VyX25pY2VuYW1lIjoidGFpd29vbyIsInVzZXJfZW1haWwiOiJ0YWl3b0BnbWFpbC5jb20iLCJ1c2VyX3VybCI6IiIsInVzZXJfcmVnaXN0ZXJlZCI6IjIwMjItMDQtMjcgMjA6NDE6NDkiLCJ1c2VyX2FjdGl2YXRpb25fa2V5IjoiIiwidXNlcl9zdGF0dXMiOiIwIiwiZGlzcGxheV9uYW1lIjoidGFpd29vbyJ9fQ.TX-xxGCl5JMn3IUu8bBdk3vAJr-FI5UQfOd_pztX0Vw");
+$all_wallets=$wallet_obj->response;
 
-// var_dump($all_wallets);
+var_dump($all_wallets);
 // die;
 
 
