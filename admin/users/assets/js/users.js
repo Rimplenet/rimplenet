@@ -63,14 +63,14 @@ form.onsubmit = (e) => {
         form.submit();
     }
 }
-let url = document.getElementById('pluginUrl')
-fetch(url.value+'assets/php/create.php').then(res => res.json()).then(data => {
-}).catch(err => {
-    console.log(err)
-})
+// let url = document.getElementById('pluginUrl')
+// fetch(url.value+'assets/php/create.php').then(res => res.json()).then(data => {
+// }).catch(err => {
+//     console.log(err)
+// })
 
-swal({
-    title: "Good job!",
-    text: "You clicked the button!",
-    icon: "success",
-  });
+// swal({
+//     title: "Good job!",
+//     text: "You clicked the button!",
+//     icon: "success",
+//   });
