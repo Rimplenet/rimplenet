@@ -7,7 +7,7 @@
 <div class="wrap rimplenet-wrap">
     
     <div id="icon-options-rimplenet-action-and-rules" class="icon32"></div>
-    <h1><?php _e('Rimplenet Action & Rules', 'rimplenet'); ?></h1>
+    <h1><?php _e('Rimplenet Debits', 'rimplenet'); ?></h1>
      <!-- wordpress provides the styling for tabs. -->
     <h2 class="nav-tab-wrapper">
         <!-- when tab buttons are clicked we jump back to the same page but with a new parameter that represents the clicked tab. accordingly we make it active -->
