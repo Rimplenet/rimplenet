@@ -1,13 +1,13 @@
 <?php
 
-namespace Credits\CreateCredits;
+// namespace Credits\CreateCredits;
 
-use Rimplenet_Wallets;
+// use Rimplenet_Wallets;
 use Credits\Base;
 
-abstract class BaseCredits extends Base
+class RimplenetCreateCredits extends Base
 {
-    protected function createCredits(array $param = [])
+    public function createCredits(array $param = [])
     {
 
         $prop = empty($param) ? $this->req : $param;

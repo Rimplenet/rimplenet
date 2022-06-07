@@ -1,8 +1,8 @@
 <?php
 
-use Credits\CreateCredits\BaseCredits;
+// use Credits\CreateCredits\BaseCredits;
 
-$createCredits = new class extends BaseCredits
+$createCredits = new class extends RimplenetCreateCredits
 {
 
     public function __construct()
