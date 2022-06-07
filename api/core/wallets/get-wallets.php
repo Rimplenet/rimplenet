@@ -19,19 +19,18 @@ $RetrieveWallet = new class extends RimplenetGetWallets
 
     public function retrieve_wallet(WP_REST_Request $req)
     {
-
         # ================= set fields ============
         $wlt_id  = sanitize_text_field($req['wallet_id']);
         $page      = $req['page'] ?? 1;
 
         # Check required
-        if ($wlt_id !== '') :
-            # if wallet id is not empty return the wallet
+        if (!empty($wlt_id)) {
             $this->getWallet($wlt_id);
             return new WP_REST_Response($this->response, $this->response['status_code']);
-        else :
+        }else{
             $this->getWallets();
             return new WP_REST_Response($this->response, $this->response['status_code']);
-        endif;
+
+        }
     }
 };
