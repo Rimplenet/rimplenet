@@ -15,7 +15,7 @@ class RimplenetAdminClassTabManagerReferrals
             __( 'Referrals', 'rimplenet' ),
             __( 'Referrals', 'rimplenet' ),
             'manage_options',
-            'referrals_tab',
+            'referrals-tab',
             array( $this, 'create_referrals_fxn' )
         );
     }
