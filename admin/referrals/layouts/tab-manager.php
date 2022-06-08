@@ -32,9 +32,9 @@
              }
              
              //Set the url for each of the tab
-             $overview_tab_url = add_query_arg( array( 'post_type'=>$_GET["post_type"], 'page'=>$_GET["page"], 'tab'=>'dashboard-overview', 'viewing_user'=>$current_user->ID), admin_url( "edit.php") );
-             $setup_tab_url = add_query_arg( array( 'post_type'=>$_GET["post_type"], 'page'=>$_GET["page"], 'tab'=>'setup', 'viewing_user'=>$current_user->ID), admin_url( "edit.php") );
-             $api_settings_tab_url = add_query_arg( array( 'post_type'=>$_GET["post_type"], 'page'=>$_GET["page"], 'tab'=>'api-settings', 'viewing_user'=>$current_user->ID), admin_url( "edit.php") );
+             $overview_tab_url = add_query_arg( array( 'post_type'=>$_GET["post_type"], 'page'=>$_GET["page"], 'tab'=>'overview', 'viewing_user'=>$current_user->ID), admin_url( "edit.php") );
+             $setup_tab_url = add_query_arg( array( 'post_type'=>$_GET["post_type"], 'page'=>$_GET["page"], 'tab'=>'create', 'viewing_user'=>$current_user->ID), admin_url( "edit.php") );
+             $api_settings_tab_url = add_query_arg( array( 'post_type'=>$_GET["post_type"], 'page'=>$_GET["page"], 'tab'=>'settings', 'viewing_user'=>$current_user->ID), admin_url( "edit.php") );
              
          ?>
          <style>
