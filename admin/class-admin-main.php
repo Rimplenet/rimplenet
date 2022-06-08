@@ -90,7 +90,9 @@ class Rimplenet_Admin {
 		 * class.
 		 */
 
+		wp_enqueue_style( $this->plugin_name.'bootstrap5', plugin_dir_url( __FILE__ ) . 'css/rimplenet-bootstrap5.css', array(), $this->version, 'all' );
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/rimplenet-admin.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name.'datatable', plugin_dir_url( __FILE__ ) . 'css/rimplenet-datatables.css', array(), $this->version, 'all' );
 
 	}
 
@@ -114,6 +116,9 @@ class Rimplenet_Admin {
 		 */
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/rimplenet-admin.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name.'datatable', plugin_dir_url( __FILE__ ) . 'js/rimplenet-datatables.js', array( 'jquery' ), $this->version, true );
+		wp_enqueue_script( $this->plugin_name.'datatable-bootstrap', plugin_dir_url( __FILE__ ) . 'js/rimplenet-bootstrap-datatable.js', array( 'jquery' ), $this->version, true );
+		wp_enqueue_script( $this->plugin_name.'datatable-table', plugin_dir_url( __FILE__ ) . 'wallets/assets/js/get-wallets.js', array( 'jquery' ), $this->version, true );
 		wp_enqueue_script( $this->plugin_name."sweet-alert", plugin_dir_url( __FILE__ ) . 'js/sweet-alert.js', array( 'jquery' ), $this->version, false );
 
 	}

@@ -15,7 +15,7 @@ class RimplenetAdminClassTabManagerWallets
             __( 'Wallets', 'rimplenet' ),
             __( 'Wallets', 'rimplenet' ),
             'manage_options',
-            'rimplenet_wallets_tab',
+            'wallets-tab',
             array( $this, 'create_wallets_fxn' )
             );
   }
