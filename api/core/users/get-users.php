@@ -20,6 +20,7 @@ class RimplenetGetUserApi
 
     public function get_users(WP_REST_Request $request)
     {
+        $user_id = sanitize_text_field($request->get_param('user_id'));
 
         $headers = getallheaders();
         $access_token = $headers['Authorization'];
@@ -27,6 +28,7 @@ class RimplenetGetUserApi
         $user = new RimplenetGetUser();
         $get_user = $user->get_users(
             $access_token,
+            $user_id ? $user_id : null,
         );
         
         return new WP_REST_Response($get_user);
