@@ -9,77 +9,55 @@ $all_referrals = $referral_obj->getreferrals(['user_id' => $user_id])['data'];
 
 ?>
 
-
-<style>
-  @media screen and (max-width: 600px) {	
-
-      table {width:100%;}
-
-      /* thead {display: none;} */
-
-      tr:nth-of-type(2n) {background-color: inherit;}
-
-      tr td:first-child {background: #f0f0f0; font-weight:bold;font-size:1.3em;}
-
-      /* tbody td {display: block;  text-align:center;} */
-
-      tbody td:before {
-
-        /* content: attr(data-th); */
-
-        display: block;
-
-        text-align:center; 
-
-      }
-
-}
-</style>
-
 <h2> USER REFERRALS</h2>
-<table class="wp-list-table widefat fixed striped posts" >
+<div class="table-responsive bg-white p-5 mr-3 ml-3">
+<table class="table table-sm table-borderless table-striped" style="width:100%" id="rimplenetmyTable">
 
- <thead>
-  <tr>
+<thead>
+ <tr>
     <th> User ID </th>
     <th> User Name </th>
-  </tr>
- </thead>
-  
- <tbody>
+ </tr>
+</thead>
+ 
+<tbody>
 
 <?php
   if (is_array($all_referrals)) {
     foreach ($all_referrals as $refaree_id) {
 ?>
-  
-  <tr>
-
+ 
+ <tr>
     <td><?php  echo $refaree_id; ?></td>
     <td><?php echo get_userdata($refaree_id)->user_login; ?></td>
-    
-  </tr>
 
-<?php
+   
+ </tr>
+
+ <?php
     }
-  } else {
-?>
-  
+    } else {
+ ?>
+
   <tr>
 
-    <td><?php  echo $all_referrals; ?></td>
-    
+  <td><?php  echo $all_referrals; ?></td>
+
   </tr>
 
 <?php } ?>
+ 
 </tbody>
 
- <tfoot>
-  <tr>
+<tfoot>
+ <tr>
     <th> User ID </th>
     <th> User Name </th>
-  </tr>
-  </tfoot>
+ </tr>
+ </tfoot>
 
 </table>
+</div>
+
+
 
