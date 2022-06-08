@@ -25,8 +25,7 @@ class RimplenetGetUserApi
         $access_token = $headers['Authorization'];
 
         $user = new RimplenetGetUser();
-        $get_user = $user->get_user(
-            $request->get_param('caller_id'),
+        $get_user = $user->get_users(
             $access_token,
         );
         
