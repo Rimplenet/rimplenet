@@ -154,6 +154,8 @@ class RimplenetGetUser
             "user_activation_key" => $user->data->user_activation_key,
             "user_status" => $user->data->user_status,
             "display_name" => $user->data->display_name,
+            "first_name" => get_user_meta($user->data->ID, "first_name", true),
+            "last_name" => get_user_meta($user->data->ID, "last_name", true),
 			"roles" => [
 				$user->roles,
 			],
