@@ -46,3 +46,5 @@ label {
 .form-container img {
   width: 100%;
 }
+.success{border-color: #15d52d94 !important;}
+.error{border-color: #ff594494 !important;}
