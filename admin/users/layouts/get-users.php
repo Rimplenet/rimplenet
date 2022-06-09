@@ -1,4 +1,52 @@
-<br>
-<span class="rimplenet_click_to_copy">
-  Hwll
-</span>
+<?php
+
+require plugin_dir_path(dirname(__FILE__)) . '/assets/php/get.php';
+?>
+
+<h2> Active Users</h2>
+<div class="table-responsive bg-white p-5 mr-3 ml-3">
+    <table class="table table-sm table-borderless table-striped" style="width:100%" id="rimplenetmyTable">
+
+        <thead>
+            <tr>
+                <th> Username </th>
+                <th> Email </th>
+                <th> Display Name </th>
+                <th> Created Date </th>
+                <th> User Balance Shortcode </th>
+                <!-- <th> Include Wallet in Withdrawal Form</th> -->
+                <!-- <th> Include Wallet in Woocommerce Currency List</th> -->
+                <th> Actions </th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+                <?php if(!empty($users)): foreach($users as $user):?>
+                    <tr>
+                        <td> <?= $user['user_login'] ?? '__' ?> </td>
+                        <td> <?= $user['user_email'] ?? '__' ?> </td>
+                        <td> <?= $user['display_name'] ?? '__' ?> </td>
+                        <td> <?= date('Y m d', strtotime($user['user_registered'])) ?? '__' ?> </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                <?php endforeach; endif; ?>
+
+        </tbody>
+
+        <tfoot>
+            <tr>
+                <th> Username </th>
+                <th> Email </th>
+                <th> Display Name </th>
+                <th> Created Date </th>
+                <th> User Balance Shortcode </th>
+                <!-- <th> Include Wallet in Withdrawal Form</th> -->
+                <!-- <th> Include Wallet in Woocommerce Currency List</th> -->
+                <th> Actions </th>
+            </tr>
+        </tfoot>
+
+    </table>
+</div>
