@@ -41,11 +41,13 @@ class RimplenetGetUser
             $wp_user_query = new WP_User_Query($args);
             $get_users = $wp_user_query->get_results();
 
+            $data = [];
             foreach ($get_users as $get_user) {
                 unset($get_user->data->user_pass);
+                $data[]=$this->userFormat($get_user);
             }
 
-            return $this->response(200, true, "Successful", $get_users, []);
+            return $this->response(200, true, "Successful", $data, []);
 
         } else {
 
@@ -77,11 +79,13 @@ class RimplenetGetUser
                     $wp_user_query = new WP_User_Query($args);
                     $get_users = $wp_user_query->get_results();
 
+                    $data=[];
                     foreach ($get_users as $get_user) {
                         unset($get_user->data->user_pass);
+                        $data[]=$this->userFormat($get_user);
                     }
 
-                    return $this->response(200, true, "Successful", $get_users, []);
+                    return $this->response(200, true, "Successful", $data, []);
                 }
 
             } catch (Exception $ex) {
@@ -135,6 +139,25 @@ class RimplenetGetUser
         }
 
         return false;
+    }
+
+    private function userFormat($user)
+    {
+
+        return [
+            "ID" => $user->data->ID,
+            "user_login" => $user->data->user_login,
+            "user_nicename" => $user->data->user_nicename,
+            "user_email" => $user->data->user_email,
+            "user_url" => $user->data->user_url,
+            "user_registered" => $user->data->user_registered,
+            "user_activation_key" => $user->data->user_activation_key,
+            "user_status" => $user->data->user_status,
+            "display_name" => $user->data->display_name,
+			"roles" => [
+				$user->roles,
+			],
+        ];
     }
 }
 
