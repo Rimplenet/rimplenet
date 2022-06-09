@@ -1,4 +1,4 @@
-<br>
-<span class="rimplenet_click_to_copy">
-  Hwll
-</span>
+
+<?php
+
+require plugin_dir_path(dirname(__FILE__)) . '/assets/php/get.php';
