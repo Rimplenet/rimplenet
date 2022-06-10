@@ -47,8 +47,8 @@ $all_wallets=$wallet_obj->response['data'];
 
 
 <h2> ACTIVE WALLETS</h2>
-<div class="table-responsive bg-white p-5 mr-3 ml-3">
-<table class="table table-sm table-borderless table-striped" style="width:100%" id="rimplenetmyTable">
+<div class="table-responsive bg-white p-5 mr-3 ml-3 rimplenet-bs5">
+<table class="table table-sm table-borderless table-striped rimplenet-bs5" style="width:100%" id="rimplenetmyTable">
 
 <thead>
  <tr>
