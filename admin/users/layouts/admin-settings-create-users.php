@@ -49,7 +49,7 @@ require plugin_dir_path(dirname(__FILE__)) . '/assets/php/create.php';
                 <input type="text" name="confirm_password" id="pwd2" class="form-input" placeholder="****">
             </div>
             <div class="control">
-                <button type="submit" class="button button-primary">Register</button>
+                <button type="submit" class="button button-primary submit-btn">Register</button>
             </div>
         </form>
     </div>
