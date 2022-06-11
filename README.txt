@@ -3,7 +3,7 @@ Contributors: nellalink
 Donate link: https://rimplenet.com/donate
 Tags: wallet-creator, ewallet, e-wallet, ebanking, e-banking, mlm, matrix, matrix-tree, investments, investment-plugin, fintech, loan-plugin-maker, woocommerce-payment-processor-maker
 Requires at least: 3.0.1
-Tested up to: 5.9
+Tested up to: 6.0
 Stable tag: 1.1.31
 Requires PHP: 5.6
 License: GPLv2 or later
