@@ -3,8 +3,8 @@ global $current_user,$wp;
 wp_get_current_user();
 // $referral_obj = new Rimplenet_referrals();
 
-$user_id = is_null(sanitize_text_field($_GET['rimplenet_user_id'])) ? sanitize_text_field($_GET['rimplenet_user_id']) : 0;
-$user_referral = is_null(sanitize_text_field($_GET['rimplenet_user_referral'])) ? sanitize_text_field($_GET['rimplenet_user_referral']) : 0;
+$user_id = sanitize_text_field($_GET['rimplenet_user_id'] ?? 0);
+$user_referral = sanitize_text_field($_GET['rimplenet_user_referral'] ?? 0);
 
 $referral_obj = new RimplenetCreateReferrals();
 // $referral_obj->createQuery();
