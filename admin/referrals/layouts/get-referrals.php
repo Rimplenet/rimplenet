@@ -2,7 +2,7 @@
 global $current_user,$wp;
 wp_get_current_user();
 
-$user_id = sanitize_text_field($_GET['rimplenet_user_id']);
+$user_id = sanitize_text_field($_GET['rimplenet_user_id']) ? sanitize_text_field($_GET['rimplenet_user_id']) : 0;
 
 $referral_obj = new RimplenetGetreferrals();
 $all_referrals = $referral_obj->getreferrals(['user_id' => $user_id])['data'];
