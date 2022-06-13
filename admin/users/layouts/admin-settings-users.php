@@ -3,6 +3,7 @@
 
 $dir = plugin_dir_url(dirname(__FILE__));
 require plugin_dir_path(dirname(__FILE__)) . '/assets/php/create.php';
+require plugin_dir_path(dirname(__FILE__)) . '/assets/php/update.php';
 ?>
 
 <div class="user-card">
@@ -16,26 +17,27 @@ require plugin_dir_path(dirname(__FILE__)) . '/assets/php/create.php';
                 <label for="fname">First Name
                 <span class="dashicons dashicons-editor-help rimplenet-admin-tooltip" title="First Name (Your birth name)"></span>
                 </label>
-                <input type="text" name="fname" id="fname" class="form-input" placeholder="First Name">
+                <input type="text" name="fname" id="fname" class="form-input" placeholder="First Name" value="<?= $user->first_name ?: '' ?>">
             </div>
             <div class="control">
                 <label for="lname">Last Name
                 <span class="dashicons dashicons-editor-help rimplenet-admin-tooltip" title="Last Name (Your Family name)"></span>
                 </label>
-                <input type="text" name="lname" id="lname" class="form-input" placeholder="Last Name">
+                <input type="text" name="lname" id="lname" class="form-input" placeholder="Last Name" value="<?= $user->last_name ?: '' ?>">
             </div>
             <div class="control">
                 <label for="lname">Username
                 <span class="dashicons dashicons-editor-help rimplenet-admin-tooltip" title="Username (Choose a preferred name u would like)"></span>
                 </label>
-                <input type="text" name="uname" id="uname" class="form-input" placeholder="Username">
+                <input type="text" name="uname" id="uname" class="form-input" placeholder="Username" value="<?= $user->display_name ?: '' ?>">
             </div>
             <div class="control">
                 <label for="email">Email
                 <span class="dashicons dashicons-editor-help rimplenet-admin-tooltip" title="Email Address, Please enter a valid email address"></span>
                 </label>
-                <input type="email" name="email" id="email" class="form-input" placeholder="Email">
+                <input type="email" name="email" id="email" class="form-input" placeholder="Email" value="<?= $user->user_email ?: '' ?>">
             </div>
+            <?php if(!isset($user)): ?>
             <div class="control">
                 <label for="pwd">Password
                 <span class="dashicons dashicons-editor-help rimplenet-admin-tooltip" title="Password(Choose a strong password to secure your account)"></span>
@@ -48,8 +50,11 @@ require plugin_dir_path(dirname(__FILE__)) . '/assets/php/create.php';
                 </label>
                 <input type="text" name="confirm_password" id="pwd2" class="form-input" placeholder="****">
             </div>
+            <?php endif; ?>
             <div class="control">
-                <button type="submit" class="button button-primary submit-btn">Register</button>
+                <input type="hidden" name="user_id" value="<?= $user->id ?: '' ?>">
+                <input type="submit" name="<?= $user ? 'update_user' : 'create_user' ?>" class="button button-primary submit-btn" value="<?= $user ? 'Update' : 'Register' ?>">
+                    
             </div>
         </form>
     </div>
