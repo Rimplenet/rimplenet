@@ -63,7 +63,11 @@ class RimplenetGetUser
                 } elseif ($user_access_token) {
                     if(!$this->authorization($id)) return $this->response(403, "failed", "Permission denied", [], ["unauthorize"=>"caller_id is not authorize"]);
 
-                    if($user_id !== null) return $this->response(200, true, "Successful", get_user_by('ID', $user_id), []);
+                    $get_single_user = get_user_by('ID', $user_id);
+                    unset($get_single_user->data->user_pass);
+                    $user_data = $this->userFormat($get_single_user);
+
+                    if($user_id !== null) return $this->response(200, true, "Successful", $user_data, []);
 
                     $total_users = count(get_users());
 
