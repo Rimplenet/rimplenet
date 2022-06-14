@@ -14,28 +14,27 @@
          <?php
             $active_tab = $_GET["tab"] ?? '';
             
-            if($active_tab == "api-settings")
+            if($active_tab == "update")
              {
                $api_settings_tab_active = "nav-tab-active";
-            //    $path_to_tab = plugin_dir_path( dirname( __FILE__ ) ) . "layouts/dashboard-overview.php";
+               $path_to_tab = plugin_dir_path( dirname( __FILE__ ) ) . "layouts/admin-settings-users.php";
             }
             elseif($active_tab == "create")
             {
                 $setup_tab_active = "nav-tab-active";
-                $path_to_tab = plugin_dir_path( dirname( __FILE__ ) ) . "layouts/admin-settings-create-users.php";
+                $path_to_tab = plugin_dir_path( dirname( __FILE__ ) ) . "layouts/admin-settings-users.php";
             }
             else
             { 
                 $active_tab  = "dashboard-overview";
                 $overview_tab_active = "nav-tab-active";
-                // $path_to_tab = plugin_dir_path( dirname( __FILE__ ) ) . "layouts/tab-dashboard-demo-data-setup.php";
                 $path_to_tab = plugin_dir_path( dirname( __FILE__ ) ) . "layouts/get-users.php";
-             }
+             }  
              
              //Set the url for each of the tab
              $overview_tab_url = add_query_arg( array( 'post_type'=>$_GET["post_type"], 'page'=>$_GET["page"], 'tab'=>'dashboard-overview', 'viewing_user'=>$current_user->ID), admin_url( "edit.php") );
              $setup_tab_url = add_query_arg( array( 'post_type'=>$_GET["post_type"], 'page'=>$_GET["page"], 'tab'=>'create', 'viewing_user'=>$current_user->ID), admin_url( "edit.php") );
-             $api_settings_tab_url = add_query_arg( array( 'post_type'=>$_GET["post_type"], 'page'=>$_GET["page"], 'tab'=>'api-settings', 'viewing_user'=>$current_user->ID), admin_url( "edit.php") );
+             $api_settings_tab_url = add_query_arg( array( 'post_type'=>$_GET["post_type"], 'page'=>$_GET["page"], 'tab'=>'update', 'viewing_user'=>$current_user->ID), admin_url( "edit.php") );
              
          ?>
          <style>
@@ -49,9 +48,9 @@
             <?php _e('New User', 'rimplenet'); ?>
         </a>
 
-        <a href="<?php echo $api_settings_tab_url; ?>" class="nav-tab <?php echo $api_settings_tab_active; ?>">
-            <?php _e('Rimplenet API Settings', 'rimplenet'); ?>
-        </a>
+        <!-- <a href="< ?php echo $api_settings_tab_url; ?>" class="nav-tab < ?php echo $api_settings_tab_active; ?>">
+            < ?php _e('Rimplenet API Settings', 'rimplenet'); ?>
+        </a> -->
         
         
     <!-- </h2> -->
