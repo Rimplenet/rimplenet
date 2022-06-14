@@ -52,7 +52,7 @@ require plugin_dir_path(dirname(__FILE__)) . '/assets/php/update.php';
             </div>
             <?php endif; ?>
             <div class="control">
-                <input type="hidden" name="user_id" value="<?= $user->id ?: '' ?>">
+                <input type="hidden" name="user_id" value="<?= $user->ID ?: '' ?>">
                 <input type="submit" name="<?= $user ? 'update_user' : 'create_user' ?>" class="button button-primary submit-btn" value="<?= $user ? 'Update' : 'Register' ?>">
                     
             </div>
