@@ -21,8 +21,10 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         } else {
             var_dump($wallets->response['error']);
         }
+    // }elseif (isset($_POST['rimplenet_search_user'])) {
     }
 }
+
 ?>
 
 
@@ -232,13 +234,23 @@ $dir = plugin_dir_url(dirname(__FILE__));
                             <label for="rimplenet_user"> Select User </label>
                         </th>
                         <td>
-                            <select name="rimplenet_user" id="rimplenet_user" class="form-control" style="width: 100%; height: 40px;" required="">
+                            <!-- <select name="rimplenet_user" id="rimplenet_user" class="form-control" style="width: 100%; height: 40px;" required="">
 
                                 <option value=""> Select User </option>
 
                                
 
-                            </select>
+                            </select> -->
+
+
+                            <div class="dropdown">
+                                <button onclick="myFunction()" class="btn">Click To Search For User</button>
+                                <div id="myDropdown" class="dropdown-content">
+                                    <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()" style="width:100%;max-width: 400px; height: 40px;">
+
+                                    <div id="showSearchResult"></div>
+                                </div>
+                            </div>
                         </td>
                     </tr>
 
@@ -266,3 +278,65 @@ $dir = plugin_dir_url(dirname(__FILE__));
         </form>
     </div>
 </div>
+
+<script>
+    site="<?= get_site_url() ?>";
+/* When the user clicks on the button,
+toggle between hiding and showing the dropdown content */
+function myFunction() {
+    e.preventDefault ()
+  document.getElementById("myDropdown").classList.toggle("show");
+}
+
+function filterFunction() {
+  var input, filter, ul, li, a, i;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  div = document.getElementById("myDropdown");
+  a = div.getElementsByTagName("a");
+  jQuery.ajax({
+        type: 'POST',
+        url: site+'/wp-json/rimplenet/v1/users/search',
+        data: {
+            'rimplenet_search_user':filter
+        },
+        success:function(res){
+
+            html=``
+            jQuery.each(jQuery(res), function(key, value) {
+                html += `<button style="background: white !important; color:black !important;" class="p-3 btn  btn-light mt-4 mr-3 ml-3" onclick="checkClick(${value.ID}, '${value.data.user_login} - ${value.data.user_email}')" href="#${value.ID}">${value.data.user_login} - ${value.data.user_email}</button>`
+            });
+            jQuery('#showSearchResult').html(html);
+            checkclick();
+            }
+
+
+
+    });
+   
+
+
+
+//   for (i = 0; i < a.length; i++) {
+//     txtValue = a[i].textContent || a[i].innerText;
+//     if (txtValue.toUpperCase().indexOf(filter) > -1) {
+//       a[i].style.display = "";
+//     } else {
+//       a[i].style.display = "none";
+//     }
+//   }
+}
+
+function checkClick(id, name) {
+    html =`<select name="rimplenet_user" id="rimplenet_user" class="form-control" style="width: 100%; height: 40px;" required="">
+
+<option value="${id}"> ${name} </option>
+
+
+
+</select>`
+
+div = document.getElementById("myDropdown");
+div.innerHTML = html
+}
+</script>
