@@ -16,49 +16,91 @@ class RimplenetLoginUser
         return ob_get_clean();
     }
 
-    public function login_user($user_email, $user_pass)
+    public function login_user($user_email, $user_pass, $token_expiration = null)
     {
 
         $validation = $this->validate($user_email, $user_pass);
 
         $is_user = wp_authenticate($user_email, $user_pass);
 
-        
         if (empty($this->validation_error) && is_wp_error($is_user)) {
             
             $this->validation_error[] = 'Invalid Credential';
         }
-        
-        if(!empty($this->validation_error)) return $this->response(400, "failed", "Validation error", [], $this->validation_error);
-        
-        if (empty($this->validation_error)) {
 
-            unset($is_user->data->user_pass);
-
-            $new = get_userdata($is_user->data->ID);
-            $check_role = get_userdata($is_user->data->ID);
-
-            $is_user->data->role = $check_role->wp_capabilities;
-
-            $iss = 'localhost';
-            $iat = time();
-            $exp = $iat + 3600;
-            $user_data = $is_user->data;
-
-            $secret_key = "user123";
-
-            $payload = json_encode([
-                'iss' => $iss,
-                'iat' => $iat,
-                'exp' => $exp,
-                'data' => $user_data
-            ]);
-
-            $jwt = JWT::encode($payload);
+        if ($token_expiration == null) {
             
-            return $this->response(200, true, "Login successful", ["access_token"=>$jwt], $this->validation_error);
+            if(!empty($this->validation_error)) return $this->response(400, "failed", "Validation error", [], $this->validation_error);
+            
+            if (empty($this->validation_error)) {
+    
+                unset($is_user->data->user_pass);
+    
+                $new = get_userdata($is_user->data->ID);
+                $check_role = get_userdata($is_user->data->ID);
+    
+                $is_user->data->role = $check_role->wp_capabilities;
+    
+                $iss = 'localhost';
+                $iat = time();
+                $exp = $iat + 3600;
+                $user_data = $is_user->data;
+    
+                $secret_key = "user123";
+    
+                $payload = json_encode([
+                    'iss' => $iss,
+                    'iat' => $iat,
+                    'exp' => $exp,
+                    'data' => $user_data
+                ]);
+    
+                $jwt = JWT::encode($payload);
+                
+                return $this->response(200, true, "Login successful", ["access_token"=>$jwt], []);
+    
+            }
 
+        } else {
+
+            if ($token_expiration == 'persistent') {
+
+                if(!empty($this->validation_error)) return $this->response(400, "failed", "Validation error", [], $this->validation_error);
+            
+                if (empty($this->validation_error)) {
+        
+                    unset($is_user->data->user_pass);
+        
+                    $new = get_userdata($is_user->data->ID);
+                    $check_role = get_userdata($is_user->data->ID);
+        
+                    $is_user->data->role = $check_role->wp_capabilities;
+        
+                    $iss = 'localhost';
+                    $iat = time();
+                    $exp = $iat + 15780000;
+                    $user_data = $is_user->data;
+        
+                    $secret_key = "user123";
+        
+                    $payload = json_encode([
+                        'iss' => $iss,
+                        'iat' => $iat,
+                        'exp' => $exp,
+                        'data' => $user_data
+                    ]);
+        
+                    $jwt = JWT::encode($payload);
+                    
+                    return $this->response(200, true, "Login successful", ["access_token"=>$jwt], []);
+        
+                }
+            } else {
+                $this->response(400, "failed", "Validation error", [], ['error'=>'unkown token_expiration']);
+            }
         }
+
+        
 
     }
 
