@@ -3,7 +3,7 @@ if (isset($_GET['user'])) :
     $init = new RimplenetGetUser();
     $id = sanitize_text_field($_GET['user']);
     $user = $init->get_users(null, $id);
-    $user = $user['data']->data;
+    $user = $user['data'];
 endif;
 
 if (isset($_POST) && isset($_POST['update_user'])) :   
@@ -17,10 +17,10 @@ if (isset($_POST) && isset($_POST['update_user'])) :
     extract($data); # extract $data aray to access all values as a variable
 
     $userVect = new RimplenetUpdateUser();
-    $update = $userVect->update_user(1, $user_id, $email, null, [
+    $update = $userVect->update_user($user_id, $email, [], [
         'first_name' => $fname,
         'last_name' => $lname
-    ]); 
+    ], null); 
 
     $error = '';
     # Account for error that may occur durning the create process
@@ -38,6 +38,7 @@ if (isset($_POST) && isset($_POST['update_user'])) :
         echo $message("Error", ucfirst(str_replace('_', ' ', $error)), 'error');
     else :
         echo $message("Success", $newUser['response_message'], 'success');
+        echo "<script>location.reload()</script>";
     endif;
 
 endif;
