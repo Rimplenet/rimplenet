@@ -6,6 +6,8 @@ if (isset($_GET['user'])) :
     $user = $user['data']->data;
 endif;
 
+echo json_encode($user);
+
 if (isset($_POST) && isset($_POST['update_user'])) :   
     $data = [];
 
@@ -17,9 +19,10 @@ if (isset($_POST) && isset($_POST['update_user'])) :
     extract($data); # extract $data aray to access all values as a variable
 
     $userVect = new RimplenetUpdateUser();
-    $update = $userVect->update_user(1, $user_id, $email, null, [
+    $update = $userVect->update_user(null, $user_id, $email, [], [
         'first_name' => $fname,
-        'last_name' => $lname
+        'last_name' => $lname,
+        ''
     ]); 
 
     $error = '';
