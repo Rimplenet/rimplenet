@@ -12,11 +12,11 @@ class RimplenetUpdateUser
 
     public function update_user_test() {
         ob_start();
-        var_dump($this->update_user(null, 43, "taiwo1@gmail.com", [], ["first_name"=>"toyyy","last_name"=>"toyyy"]));
+        var_dump($this->update_user(43, "taiwo1@gmail.com", [], ["first_name"=>"toyyy","last_name"=>"toyyy"], null));
         return ob_get_clean();
     }
 
-    public function update_user($access_token = null, $user_id, $user_email, $user_pass=[], $metas=[])
+    public function update_user($user_id, $user_email, $user_pass=[], $metas=[], $access_token = null)
     {
 
         $validation = $this->validate($user_id, $user_email, $user_pass);

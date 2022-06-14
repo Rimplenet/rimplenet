@@ -28,7 +28,6 @@ class RimplenetUpdateUserApi
 
         $user = new RimplenetUpdateUser();
         $update_user = $user->update_user(
-            $access_token,
             $request->get_param('user_id'),
             $request->get_param('user_email'),
             [
@@ -38,7 +37,8 @@ class RimplenetUpdateUserApi
             [
                 "first_name" => $request->get_param('first_name'),
                 "last_name" => $request->get_param('last_name')
-            ]
+            ],
+            $access_token
         );
         
         return new WP_REST_Response($update_user);
