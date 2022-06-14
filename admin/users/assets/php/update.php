@@ -1,19 +1,12 @@
 <?php
+if (isset($_GET['user'])) :
+    $init = new RimplenetGetUser();
+    $id = sanitize_text_field($_GET['user']);
+    $user = $init->get_users(null, $id);
+    $user = $user['data']->data;
+endif;
 
-# set response message in a function (sweet alert)
-$message = function ($title, $message, $type) {
-    $resp = '<script>';
-    $resp .= 'swal({
-        title: "' . $title . '",
-        text: "' . $message . '",
-        icon: "' . $type . '",
-      })';
-    $resp .= '</script>';
-
-    return $resp;
-};
-
-if (isset($_POST) && isset($_POST['create_user'])) :
+if (isset($_POST) && isset($_POST['update_user'])) :   
     $data = [];
 
     # pass all data in an array variable $data
@@ -23,18 +16,11 @@ if (isset($_POST) && isset($_POST['create_user'])) :
 
     extract($data); # extract $data aray to access all values as a variable
 
-    $user = new RimplenetCreateUser(); # create an insantiation on user class
-
-    $newUser = $user->create_user(
-        1,
-        $email,
-        $uname,
-        $password,
-        [
-            'first_name' => $fname,
-            'last_name' => $lname
-        ]
-    );
+    $userVect = new RimplenetUpdateUser();
+    $update = $userVect->update_user(1, $user_id, $email, null, [
+        'first_name' => $fname,
+        'last_name' => $lname
+    ]); 
 
     $error = '';
     # Account for error that may occur durning the create process
