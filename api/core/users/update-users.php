@@ -23,13 +23,18 @@ class RimplenetUpdateUserApi
 
     public function update_user(WP_REST_Request $request)
     {
+        $headers = getallheaders();
+        $access_token = $headers['Authorization'];
 
         $user = new RimplenetUpdateUser();
         $update_user = $user->update_user(
-            $request->get_param('caller_id'),
+            $access_token,
             $request->get_param('user_id'),
             $request->get_param('user_email'),
-            $request->get_param('user_pass'),
+            [
+                "old_user_pass" => $request->get_param('old_user_pass'),
+                "new_user_pass" => $request->get_param('new_user_pass')
+            ],
             [
                 "first_name" => $request->get_param('first_name'),
                 "last_name" => $request->get_param('last_name')
