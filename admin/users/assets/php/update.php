@@ -17,10 +17,10 @@ if (isset($_POST) && isset($_POST['update_user'])) :
     extract($data); # extract $data aray to access all values as a variable
 
     $userVect = new RimplenetUpdateUser();
-    $update = $userVect->update_user(null, $user_id, $email, [], [
+    $update = $userVect->update_user($user_id, $email, [], [
         'first_name' => $fname,
         'last_name' => $lname
-    ]); 
+    ], null); 
 
     $error = '';
     # Account for error that may occur durning the create process
