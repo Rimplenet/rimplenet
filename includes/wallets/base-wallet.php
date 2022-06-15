@@ -64,7 +64,7 @@ abstract class Base
 
         foreach ($prop as $key => $value) :
 
-            if ($key == 'r_a_b_w' || $key == 'r_b_b_w' || $key == 'e_a_w_p' || $key == 'min_withdrawal_amount' || $key == 'max_withdrawal_amount' || $key == 'inc_i_w_cl' || $key == 'wallet_symbol_pos') continue;
+            if ($key == 'r_a_b_w' || $key == 'r_b_b_w' || $key == 'e_a_w_p' || $key == 'min_withdrawal_amount' || $key == 'max_withdrawal_amount' || $key == 'inc_i_w_cl' || $key == 'wallet_symbol_pos' || $key = 'note') continue;
 
             if (is_bool($value) && !$value || is_bool($value) && $value) continue;
 
@@ -76,7 +76,7 @@ abstract class Base
         if (!empty($this->error)) {
             $this->response['message'] = "One or two fields are required";
             $this->response['error'] = $this->error;
-            return true;
+            return true; exit;
         }
 
         return false;
