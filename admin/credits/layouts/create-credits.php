@@ -284,7 +284,7 @@ $dir = plugin_dir_url(dirname(__FILE__));
 /* When the user clicks on the button,
 toggle between hiding and showing the dropdown content */
 function myFunction() {
-    e.preventDefault ()
+      
   document.getElementById("myDropdown").classList.toggle("show");
 }
 
