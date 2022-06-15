@@ -21,6 +21,7 @@ class RimplenetGetWallets extends Base
             $this->response['status_code'] = 200;
             $this->response['status'] = true;
             $this->response['data'] = $walletData;
+            return $walletData;
         endif;
     }
 
@@ -41,7 +42,7 @@ class RimplenetGetWallets extends Base
             $this->response['status_code'] = 200;
             $this->response['status'] = true;
             $this->response['data'] = $res;
-            return true;
+            return $res;
         else:
             $this->response['status_code'] = 404;
             $this->response['message'] = "Wallet not found";
