@@ -1,6 +1,6 @@
 <?php
 
-namespace Trait\Wallet;
+namespace Traits\Wallet;
 
 trait RimplenetWalletTrait
 {
