@@ -6,7 +6,7 @@ if (isset($_GET['user'])) :
     $user = $user['data'];
 endif;
 
-if (isset($_POST) && isset($_POST['update_user'])) :   
+if (isset($_POST) && isset($_POST['update_user']) && wp_verify_nonce($_POST['rimplenet_wallet_settings_nonce_field'], 'rimplenet_wallet_settings_nonce_field')) :   
     $data = [];
 
     # pass all data in an array variable $data

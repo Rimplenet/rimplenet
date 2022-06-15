@@ -13,6 +13,8 @@ require plugin_dir_path(dirname(__FILE__)) . '/assets/php/update.php';
     <input type="hidden" id="pluginUrl" value="<?= $dir ?>">
     <div class="form-container rt">
         <form action="" method="POST" id="form-container">
+            
+        <?php wp_nonce_field('rimplenet_wallet_settings_nonce_field', 'rimplenet_wallet_settings_nonce_field'); ?>
             <div class="control">
                 <label for="fname">First Name
                 <span class="dashicons dashicons-editor-help rimplenet-admin-tooltip" title="First Name (Your birth name)"></span>
@@ -52,8 +54,9 @@ require plugin_dir_path(dirname(__FILE__)) . '/assets/php/update.php';
             </div>
             <?php endif; ?>
             <div class="control">
+                <input type="submit" name="<?= isset($user) ? 'update_user' : 'new_user' ?>" class="button button-primary submit-btn" value="<?= isset($user) ? 'Update' : 'Register' ?>">
+                <input type="hidden" name="<?= !isset($user) ? 'create_user' : '' ?>">
                 <input type="hidden" name="user_id" value="<?= $user['ID'] ?? '' ?>">
-                <input type="submit" name="<?= isset($user) ? 'update_user' : 'create_user' ?>" class="button button-primary submit-btn" value="<?= isset($user) ? 'Update' : 'Register' ?>">
                     
             </div>
         </form>

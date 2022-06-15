@@ -6,7 +6,7 @@ trait RimplenetWalletTrait
 {
     /**
      * Get a user withdrawalble balance
-     * @param int $user_id id of the user e.g (4)
+     * @param mixed $user_id id of the user e.g (4/username)
      * @param string $wallet_id id of wallet e.g (USD)
      * @return int 
      */
@@ -28,7 +28,7 @@ trait RimplenetWalletTrait
 
     /**
      * Get a user Nonwithdrawalble balance
-     * @param int $user_id id of the user e.g (4)
+     * @param int|string $user_id id of the user e.g (4/username)
      * @param string $wallet_id id of wallet e.g (USD)
      * @return int 
      */
@@ -85,7 +85,7 @@ trait RimplenetWalletTrait
 
     /**
      * Get a user Total wallet balance
-     * @param int $user_id id of the user e.g (4)
+     * @param mixed $user_id id of the user e.g (4/username)
      * @param string $wallet_id id of wallet e.g (USD)
      * @return int 
      */
@@ -105,7 +105,7 @@ trait RimplenetWalletTrait
 
     /**
      * Check if a transaction already exists
-     * @param int $user_id id of the user e.g (4)
+     * @param mixed $user_id id of the user e.g (4/username)
      * @param int $external_txn_id
      * @return int 
      */
@@ -150,7 +150,7 @@ trait RimplenetWalletTrait
 
     /**
      * Record a transaction
-     * @param int $user_id id of the user e.g (4)
+     * @param mixed $user_id id of the user e.g (4/username)
      * @param int $amount amount to record
      * @param string $wallet_id id of wallet e.g (USD)
      * @param string $txn_type type of transaction to record (Dr/Cr)
@@ -211,7 +211,7 @@ trait RimplenetWalletTrait
 
     /**
      * Add mature funds to wallet
-     * @param int $user_id id of the user e.g (4)
+     * @param mixed $user_id id of the user e.g (4/username)
      * @param int $amount amount to record
      * @param string $wallet_id id of wallet e.g (USD)
      * @param string $note a description of the transaction
