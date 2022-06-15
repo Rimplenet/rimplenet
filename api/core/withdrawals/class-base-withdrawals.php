@@ -8,7 +8,7 @@ class Rimplenet_Base_Withdrawals_Api {
 
     private function load_required_files() {
    	 //Add Required Files to Load
-	//  require_once plugin_dir_path( dirname( __FILE__ ) ) . 'users/create-users.php';
+	 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'withdrawals/create-withdrawals.php';
 	//  require_once plugin_dir_path( dirname( __FILE__ ) ) . 'users/delete-users.php';
 	//  require_once plugin_dir_path( dirname( __FILE__ ) ) . 'users/get-users.php';
 	//  require_once plugin_dir_path( dirname( __FILE__ ) ) . 'users/search-users.php';
