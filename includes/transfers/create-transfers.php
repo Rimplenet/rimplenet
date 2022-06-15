@@ -45,7 +45,8 @@ class RimplenetCreateTransfer extends Transfers
             'user_non_transfer_bal' => $user_non_transfer_bal,
             'current_user_id' => $current_user_id,
             'current_user' => $current_user,
-            'min_transfer_amt' => $min_transfer_amt
+            'min_transfer_amt' => $min_transfer_amt,
+            "user_transfer_to" => $user_transfer_to
         ]);
     }
 
@@ -131,7 +132,7 @@ class RimplenetCreateTransfer extends Transfers
         $this->response = [
             'status_code' => 200,
             'status' => true,
-            'message' => '',
+            'message' => 'Transfer Successful',
             'data' => $transfer_info,
         ];
         return $transfer_info;
