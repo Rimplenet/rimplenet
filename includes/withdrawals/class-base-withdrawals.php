@@ -9,11 +9,8 @@ class Rimplenet_Base_Withdrawals {
 
     private function load_required_files() {
    	 //Add Required Files to Load
-	//  require_once plugin_dir_path( dirname( __FILE__ ) ) . 'wallets/base-wallet.php';
+	 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'withdrawals/base-withdrawal.php';
 	 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'withdrawals/create-withdrawals.php';
-	//  require_once plugin_dir_path( dirname( __FILE__ ) ) . 'wallets/get-wallets.php';
-	//  require_once plugin_dir_path( dirname( __FILE__ ) ) . 'wallets/update-wallets.php';
-	//  require_once plugin_dir_path( dirname( __FILE__ ) ) . 'wallets/delete-wallets.php';
     }
 	
 }
