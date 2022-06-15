@@ -16,10 +16,9 @@ class RimplenetCreateWithdrawals extends Base
 
 
         $prop = empty($req) ? $this->req : $req;
+        extract($prop);
 
-        $this->req = $this->prop;
-
-        $wallet_obj = $this->getWallets();
+        $wallet_obj = $this->getWallet($wallet_id);
 
 
 
@@ -38,13 +37,13 @@ class RimplenetCreateWithdrawals extends Base
          
         // $walllets = $wallet_obj->getWallets();
         $walllets = $wallet_obj;
-        $dec = $walllets[$wallet_id]['decimal'];
-        $min_wdr_amount = $walllets[$wallet_id]['min_wdr_amount'];
+        $dec = $walllets['wallet_decimal'];
+        $min_wdr_amount = $walllets['wallet_min_wdr_amount'];
         $min_wdr_amount_formatted = $this->getRimplenetWalletFormattedAmount($min_wdr_amount,$wallet_id);
-        $max_wdr_amount = $walllets[$wallet_id]['max_wdr_amount'];
+        $max_wdr_amount = $walllets['wallet_max_wdr_amount'];
         $max_wdr_amount_formatted = $this->getRimplenetWalletFormattedAmount($max_wdr_amount,$wallet_id);
-        $symbol = $walllets[$wallet_id]['symbol'];
-        $name = $walllets[$wallet_id]['name'];
+        $symbol = $walllets['wallet_symbol'];
+        $name = $walllets['wallet_name'];
             
           $balance = $symbol.number_format($balance,$dec);
         

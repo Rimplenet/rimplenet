@@ -41,6 +41,18 @@ abstract class Base
 
     public $query = null;
 
+
+    public function error()
+    {
+        $this->response = [
+            'status_code' => 400,
+            'status' => 'failed',
+            'message' => '',
+            'data' => [],
+            'error' => $this->response['error'] ?? []
+        ];
+    }
+
     /**
      * Check empty Fields
      * @return mixed
@@ -83,6 +95,7 @@ abstract class Base
             $this->response['message'] = "Wallet not found";
             $this->response['error'][] = 'Invalid Wallet Id';
             return false;
+            exit;
         endif;
     }
 

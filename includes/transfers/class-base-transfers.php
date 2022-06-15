@@ -11,9 +11,6 @@ class Rimplenet_Base_Transfers {
    	 //Add Required Files to Load
 	 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'transfers/base-transfers.php';
 	 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'transfers/create-transfers.php';
-	//  require_once plugin_dir_path( dirname( __FILE__ ) ) . 'transfers/get-transfers.php';
-	//  require_once plugin_dir_path( dirname( __FILE__ ) ) . 'transfers/update-transfers.php';
-	//  require_once plugin_dir_path( dirname( __FILE__ ) ) . 'transfers/delete-transfers.php';
     }
 	
 }
