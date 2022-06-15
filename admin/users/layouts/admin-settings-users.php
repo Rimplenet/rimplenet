@@ -53,7 +53,7 @@ require plugin_dir_path(dirname(__FILE__)) . '/assets/php/update.php';
             <?php endif; ?>
             <div class="control">
                 <input type="hidden" name="user_id" value="<?= $user['ID'] ?? '' ?>">
-                <input type="submit" name="<?= $user ? 'update_user' : 'create_user' ?>" class="button button-primary submit-btn" value="<?= $user ? 'Update' : 'Register' ?>">
+                <input type="submit" name="<?= isset($user) ? 'update_user' : 'create_user' ?>" class="button button-primary submit-btn" value="<?= isset($user) ? 'Update' : 'Register' ?>">
                     
             </div>
         </form>
