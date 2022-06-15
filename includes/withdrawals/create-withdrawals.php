@@ -10,30 +10,39 @@ class RimplenetCreateWithdrawals extends Base
 {
 
     use RimplenetWalletTrait;
-    protected function createWithdrawals(array $param = [])
+    protected function createWithdrawals(array $req = [])
     {
         // $request_id, $user_id, $amount_to_withdraw, $wallet_id, $wdr_dest, $wdr_dest_data, $note='Withdrawal',$extra_data=''
+
+
+        $prop = empty($req) ? $this->req : $req;
+
+        $this->req = $this->prop;
 
         $wallet_obj = $this->getWallets();
 
 
 
 
-        $wallet_obj = new Rimplenet_Wallets();
-        $all_wallets = $wallet_obj->getWallets();
+        // $wallet_obj = new Rimplenet_Wallets();
+        // $all_wallets = $wallet_obj->getWallets();
          
-        $user_wdr_bal = $wallet_obj->get_withdrawable_wallet_bal($user_id, $wallet_id);
-        $user_non_wdr_bal = $wallet_obj->get_nonwithdrawable_wallet_bal($user_id, $wallet_id);
+        // $user_wdr_bal = $wallet_obj->get_withdrawable_wallet_bal($user_id, $wallet_id);
+        $this->get_withdrawable_wallet_bal($user_id, $wallet_id);
+        // $user_non_wdr_bal = $wallet_obj->get_nonwithdrawable_wallet_bal($user_id, $wallet_id);
+        $this->get_nonwithdrawable_wallet_bal($user_id, $wallet_id);
         
-        $amount_to_withdraw_formatted = getRimplenetWalletFormattedAmount($amount_to_withdraw,$wallet_id);
+        // $amount_to_withdraw_formatted = getRimplenetWalletFormattedAmount($amount_to_withdraw,$wallet_id);
+        $this->getRimplenetWalletFormattedAmount($amount,$wallet_id,$include_data='');
          
          
-        $walllets = $wallet_obj->getWallets();
+        // $walllets = $wallet_obj->getWallets();
+        $walllets = $wallet_obj;
         $dec = $walllets[$wallet_id]['decimal'];
         $min_wdr_amount = $walllets[$wallet_id]['min_wdr_amount'];
-        $min_wdr_amount_formatted = getRimplenetWalletFormattedAmount($min_wdr_amount,$wallet_id);
+        $min_wdr_amount_formatted = $this->getRimplenetWalletFormattedAmount($min_wdr_amount,$wallet_id);
         $max_wdr_amount = $walllets[$wallet_id]['max_wdr_amount'];
-        $max_wdr_amount_formatted = getRimplenetWalletFormattedAmount($max_wdr_amount,$wallet_id);
+        $max_wdr_amount_formatted = $this->getRimplenetWalletFormattedAmount($max_wdr_amount,$wallet_id);
         $symbol = $walllets[$wallet_id]['symbol'];
         $name = $walllets[$wallet_id]['name'];
             
@@ -87,7 +96,7 @@ class RimplenetCreateWithdrawals extends Base
            $amount_to_withdraw_ready = $amount_to_withdraw * -1;
            $meta_input = $wdr_dest_data;
            
-           $txn_wdr_id = $wallet_obj->rimplenet_fund_user_mature_wallet($request_id,$user_id, $amount_to_withdraw_ready, $wallet_id, $note);
+           $txn_wdr_id = $this->rimplenet_fund_user_mature_wallet($request_id,$user_id, $amount_to_withdraw_ready, $wallet_id, $note);
            
            if (is_int($txn_wdr_id)) {
                
@@ -149,14 +158,5 @@ class RimplenetCreateWithdrawals extends Base
             exit;
         endif;
         return true;
-    }
-
-
-    public function getWallets()
-    {
-        $wallets = new RimplenetGetWallets();
-        $wallets->getWallets();
-
-        return $wallets->response;
     }
 }
