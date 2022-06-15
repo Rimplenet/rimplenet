@@ -13,7 +13,9 @@ class RimplenetCreateTransfer extends Transfers
     public function transfer($req = [])
     {
         $prop = empty($req) ? $this->req : $req;
+        $this->req = $prop;
         extract($prop);
+        if($this->checkEmpty()) return false;
 
         # Get current loggedin user (user from)
         $current_user = get_user_by('ID', $user_id);
