@@ -73,7 +73,7 @@ abstract class Base
     public function getWalletById(string $walletId)
     {
         global $wpdb;
-
+        $walletId = sanitize_text_field($walletId);
         $wallet = $wpdb->get_row("SELECT * FROM $wpdb->postmeta WHERE meta_key='rimplenet_wallet_id' AND meta_value='$walletId'");
 
         if ($wallet) :
