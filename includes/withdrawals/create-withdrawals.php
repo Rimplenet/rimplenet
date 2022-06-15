@@ -4,11 +4,20 @@
 
 // use Rimplenet_Wallets;
 use Withdrawals\Base;
+use Traits\Wallet\RimplenetWalletTrait;
 
-class RimplenetCreateCredits extends Base
+class RimplenetCreateWithdrawals extends Base
 {
+
+    use RimplenetWalletTrait;
     protected function createWithdrawals(array $param = [])
     {
+        // $request_id, $user_id, $amount_to_withdraw, $wallet_id, $wdr_dest, $wdr_dest_data, $note='Withdrawal',$extra_data=''
+
+        $wallet_obj = $this->getWallets();
+
+
+
 
         $wallet_obj = new Rimplenet_Wallets();
         $all_wallets = $wallet_obj->getWallets();
@@ -140,5 +149,14 @@ class RimplenetCreateCredits extends Base
             exit;
         endif;
         return true;
+    }
+
+
+    public function getWallets()
+    {
+        $wallets = new RimplenetGetWallets();
+        $wallets->getWallets();
+
+        return $wallets->response;
     }
 }
