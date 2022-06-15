@@ -17,27 +17,27 @@ if (isset($_POST) && isset($_POST['update_user'])) :
     extract($data); # extract $data aray to access all values as a variable
 
     $userVect = new RimplenetUpdateUser();
-    $update = $userVect->update_user(null, $user_id, $email, [], [
+    $update = $userVect->update_user($user_id, $email, [], [
         'first_name' => $fname,
         'last_name' => $lname
-    ]); 
+    ], null); 
 
     $error = '';
     # Account for error that may occur durning the create process
-    if (isset($newUser['error']) && isset($newUser['error'][0])) :
-        $error = $newUser['error'][0];
+    if (isset($update['error']) && isset($update['error'][0])) :
+        $error = $update['error'][0];
         foreach ($error as $key) :
             $error = $key[0];
         endforeach;
     endif;
 
     # Check the status code returned from create_user method
-    $code = (int) $newUser['status_code'];
+    $code = (int) $update['status_code'];
 
     if ($code == 400) :
         echo $message("Error", ucfirst(str_replace('_', ' ', $error)), 'error');
     else :
-        echo $message("Success", $newUser['response_message'], 'success');
+        echo $message("Success", $update['response_message'], 'success');
         echo "<script>location.reload()</script>";
     endif;
 
