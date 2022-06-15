@@ -31,12 +31,25 @@ class RimplenetCreateTransfer extends Transfers
         $dec = $wallet['wallet_decimal'];
         $symbol = $wallet['wallet_symbol'];
         $name = $walllet['wallet_name'];
-        $balance = $symbol.number_format($user_transfer_bal, $dec);
+        $balance = $symbol . number_format($user_transfer_bal, $dec);
     }
 
 
-    public function executeTransfer(Type $var = null)
+    public function executeTransfer($user_id, $wallet_id, $amount_to_transfer)
     {
-        # code...
+        if (empty($user_id) || empty($amount_to_transfer) || empty($wallet_id)  or empty($transfer_to_user)) :
+            $this->response['error'] = 'One or more compulsory field is empty';
+        elseif ($amount_to_transfer > $user_transfer_bal) :
+            $this->response['error'] = 'Amount to transfer - <strong>[' . $symbol . number_format($amount_to_transfer, $dec) . ']</strong> is larger than the amount in your mature wallet, input amount not more than the balance in your <strong>( ' . $name . ' mature wallet - [' . $symbol . number_format($user_transfer_bal, $dec) . '] ),</strong> the balance in your <strong>( ' . $name . ' immature wallet  - [' . $symbol . number_format($user_non_transfer_bal, $dec) . '] )</strong>  cannot be transferred until maturity';
+        elseif ($amount_to_transfer < $min_transfer_amt) :
+            $this->response['error'] = 'Requested amount [' . $amount_to_transfer . '] is below minimum transfer amount, input amount not less than ' . $min_transfer_amt;
+        elseif (!username_exists($user_transfer_to->user_login)) :
+            $this->response = 'User with the username <b>[' . $transfer_to_user . ']</b> does not exist, please crosscheck the username';
+        else:
+            $this->response['data'] = "Weldone All is working";
+            return $this->response;
+        endif;
+
+        return false;
     }
 }
