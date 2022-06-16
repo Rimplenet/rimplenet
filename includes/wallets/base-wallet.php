@@ -41,6 +41,18 @@ abstract class Base
 
     public $query = null;
 
+
+    public function error()
+    {
+        $this->response = [
+            'status_code' => 400,
+            'status' => 'failed',
+            'message' => '',
+            'data' => [],
+            'error' => $this->response['error'] ?? []
+        ];
+    }
+
     /**
      * Check empty Fields
      * @return mixed
@@ -52,7 +64,7 @@ abstract class Base
 
         foreach ($prop as $key => $value) :
 
-            if ($key == 'r_a_b_w' || $key == 'r_b_b_w' || $key == 'e_a_w_p' || $key == 'min_withdrawal_amount' || $key == 'max_withdrawal_amount' || $key == 'inc_i_w_cl' || $key == 'wallet_symbol_pos') continue;
+            if ($key == 'r_a_b_w' || $key == 'r_b_b_w' || $key == 'e_a_w_p' || $key == 'min_withdrawal_amount' || $key == 'max_withdrawal_amount' || $key == 'inc_i_w_cl' || $key == 'wallet_symbol_pos' || $key = 'note') continue;
 
             if (is_bool($value) && !$value || is_bool($value) && $value) continue;
 
@@ -64,7 +76,7 @@ abstract class Base
         if (!empty($this->error)) {
             $this->response['message'] = "One or two fields are required";
             $this->response['error'] = $this->error;
-            return true;
+            return true; exit;
         }
 
         return false;
@@ -73,7 +85,7 @@ abstract class Base
     public function getWalletById(string $walletId)
     {
         global $wpdb;
-
+        $walletId = sanitize_text_field($walletId);
         $wallet = $wpdb->get_row("SELECT * FROM $wpdb->postmeta WHERE meta_key='rimplenet_wallet_id' AND meta_value='$walletId'");
 
         if ($wallet) :
@@ -83,6 +95,7 @@ abstract class Base
             $this->response['message'] = "Wallet not found";
             $this->response['error'][] = 'Invalid Wallet Id';
             return false;
+            exit;
         endif;
     }
 

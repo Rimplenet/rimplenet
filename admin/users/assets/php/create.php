@@ -13,7 +13,7 @@ $message = function ($title, $message, $type) {
     return $resp;
 };
 
-if (isset($_POST) && isset($_POST['create_user'])) :
+if (isset($_POST) && isset($_POST['create_user']) && wp_verify_nonce($_POST['rimplenet_wallet_settings_nonce_field'], 'rimplenet_wallet_settings_nonce_field')) :
     $data = [];
 
     # pass all data in an array variable $data
@@ -26,7 +26,6 @@ if (isset($_POST) && isset($_POST['create_user'])) :
     $user = new RimplenetCreateUser(); # create an insantiation on user class
 
     $newUser = $user->create_user(
-        1,
         $email,
         $uname,
         $password,
@@ -35,6 +34,7 @@ if (isset($_POST) && isset($_POST['create_user'])) :
             'last_name' => $lname
         ]
     );
+    $user = null;
 
     $error = '';
     # Account for error that may occur durning the create process
