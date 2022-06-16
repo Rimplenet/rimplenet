@@ -15,7 +15,7 @@ class RimplenetCreateWithdrawals extends Base
 
   public $rules_data;
 
-  protected function createWithdrawals(array $req = [])
+  public function createWithdrawals(array $req = [])
   {
     // $request_id, $user_id, $amount_to_withdraw, $wallet_id, $wdr_dest, $wdr_dest_data, $note='Withdrawal',$extra_data=''
 
