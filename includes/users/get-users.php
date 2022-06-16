@@ -125,12 +125,12 @@ class RimplenetGetUser
 
     }
 
-    public function response($status_code, $status, $response_message, $data=[], $error=[])
+    public function response($status_code, $status, $message, $data=[], $error=[])
     {
         return [
             "status_code" => $status_code,
             "status" => $status,
-            "response_message" => $response_message,
+            "message" => $message,
             "data" => $data,
             "error" =>$error
         ];
@@ -151,6 +151,8 @@ class RimplenetGetUser
 
     private function userFormat($user)
     {
+
+        if (!isset($user)) return;
 
         return [
             "ID" => $user->data->ID,
