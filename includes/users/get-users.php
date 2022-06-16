@@ -152,7 +152,7 @@ class RimplenetGetUser
     private function userFormat($user)
     {
 
-        if (!isset($user)) return;
+        if (!isset($user->data)) return;
 
         return [
             "ID" => $user->data->ID,
