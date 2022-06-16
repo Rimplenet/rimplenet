@@ -12,40 +12,80 @@ class RimplenetDeleteUser
 
     public function delete_user_test() {
         ob_start();
-        var_dump($this->delete_user(2, 27));
+        var_dump($this->delete_user(47));
         return ob_get_clean();
     }
 
-    public function delete_user($caller_id, $user_id)
+    public function delete_user($user_id, $access_token = null)
     {
         // global $wpdb;
 
-        $validation = $this->validate($caller_id, $user_id);
+        $validation = $this->validate($user_id);
 
-        if(!empty($this->validation_error)) return $this->response(400, "failed", "Validation error", [], $this->validation_error);
+        if ($access_token == null) {
 
-        if (empty($this->validation_error)) {
-
-            if(!$this->authorization($caller_id)) return $this->response(403, "failed", "Permission denied", [], ["unauthorize"=>"caller_id is not authorize"]);
-
-            // $table='wp_users';
-            $deleted = wp_delete_user($user_id);
-
-            if ($deleted) {
-                return $this->response(200, true, "Deleted", [], []);
+            if(!empty($this->validation_error)) return $this->response(400, "failed", "Validation error", [], $this->validation_error);
+    
+            if (empty($this->validation_error)) {
+    
+                if(!$this->authorization(get_current_user_id())) return $this->response(403, "failed", "Permission denied", [], ["unauthorize"=>"caller_id is not authorize"]);
+    
+                // $table='wp_users';
+                $deleted = wp_delete_user($user_id);
+    
+                if ($deleted) {
+                    return $this->response(200, true, "Deleted", [], []);
+                }
+    
+                return $this->response(404, "Failed", "User not found", [], []);
+    
             }
 
-            return $this->response(404, "Failed", "User not found", [], []);
+        } else {
+
+            try {
+
+                $user_access_token = JWT::decode($access_token);
+                $id = json_decode($user_access_token)->data->ID;
+                
+                if ($user_access_token === "Expired token") {
+                    return $this->response(400, "failed", "Validation error", [], ["Expired token"]);
+                } elseif ($user_access_token === "Invalid signature") {
+                    return $this->response(400, "failed", "Validation error", [], ["Invalid signature"]);
+                } elseif ($user_access_token) {
+                    if(!$this->authorization($id)) return $this->response(403, "failed", "Permission denied", [], ["unauthorize"=>"caller_id is not authorize"]);
+
+                    if(!empty($this->validation_error)) return $this->response(400, "failed", "Validation error", [], $this->validation_error);
+    
+                    if (empty($this->validation_error)) {
+            
+                        $deleted = wp_delete_user($user_id);
+            
+                        if ($deleted) {
+                            return $this->response(200, true, "Deleted", [], []);
+                        }
+            
+                        return $this->response(404, "Failed", "User not found", [], []);
+            
+                    }
+                }
+
+            } catch (Exception $ex) {
+            
+                return $ex->getMessage();
+                return $this->response(400, "failed", "Validation error", [], [$ex->getMessage()]);
+
+            }
 
         }
 
+
     }
 
-    public function validate($caller_id, $user_id)
+    public function validate($user_id)
     {
 
         $user_id_error = [];
-        $caller_id_error = [];
 
         if ($user_id == '') {
             $user_id_error[] = 'user_id is required';
@@ -54,21 +94,14 @@ class RimplenetDeleteUser
             $this->validation_error[] = ['user_id' => $user_id_error];
         }
 
-        if ($caller_id == '') {
-            $caller_id_error[] = 'caller_id is required';
-        }
-        if (!empty($caller_id_error)) {
-            $this->validation_error[] = ['caller_id' => $caller_id_error];
-        }
-
     }
 
-    public function response($status_code, $status, $response_message, $data=[], $error=[])
+    public function response($status_code, $status, $message, $data=[], $error=[])
     {
         return [
             "status_code" => $status_code,
             "status" => $status,
-            "response_message" => $response_message,
+            "message" => $message,
             "data" => $data,
             "error" =>$error
         ];
