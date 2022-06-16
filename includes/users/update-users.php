@@ -12,7 +12,7 @@ class RimplenetUpdateUser
 
     public function update_user_test() {
         ob_start();
-        var_dump($this->update_user(43, "taiwo1@gmail.com", [], ["first_name"=>"toyyy","last_name"=>"toyyy"], null));
+        var_dump($this->update_user(48, "taiwo2@gmail.com", [], [], null));
         return ob_get_clean();
     }
 
@@ -22,10 +22,9 @@ class RimplenetUpdateUser
         $validation = $this->validate($user_id, $user_email, $user_pass);
 
         if ($access_token == null) {
+            if(!empty($this->validation_error)) return $this->response(400, "failed", "Validation error", [], $this->validation_error);
 
             if(!$this->authorization(get_current_user_id())) return $this->response(403, "failed", "Permission denied", [], ["unauthorize"=>"caller_id is not authorize"]);
-            
-            if(!empty($this->validation_error)) return $this->response(400, "failed", "Validation error", [], $this->validation_error);
             
             if (empty($this->validation_error)) {
     
@@ -55,6 +54,8 @@ class RimplenetUpdateUser
                 } elseif ($user_access_token === "Invalid signature") {
                     return $this->response(400, "failed", "Validation error", [], ["Invalid signature"]);
                 } elseif ($user_access_token) {
+                    if(!empty($this->validation_error)) return $this->response(400, "failed", "Validation error", [], $this->validation_error);
+
                     if(!$this->authorization($id)) return $this->response(403, "failed", "Permission denied", [], ["unauthorize"=>"caller_id is not authorize"]);
 
                     if (empty($this->validation_error)) {
@@ -85,7 +86,7 @@ class RimplenetUpdateUser
 
     }
 
-    public function validate($user_id, $user_email, $user_pass)
+    public function validate($user_id, $user_email, $user_pass=[])
     {
         $user = [];
 
@@ -105,40 +106,41 @@ class RimplenetUpdateUser
             $this->validation_error[] = ['user_id' => $user_id_error];
         }
 
-        if ($get_user = get_user_by('ID', $sanitize_user_id)) {
+        $get_user = get_user_by('ID', $sanitize_user_id);
+
+        if (!empty($get_user)) {
 
             $user['ID'] = $sanitize_user_id;
             
-            if ($sanitize_user_email == '') {
+            if ($sanitize_user_email == '' || $sanitize_user_email == $get_user->user_email) {
                 $user['user_email'] = $get_user->user_email;
             } else {
-                if (is_email($sanitize_user_email)) {
-                    $user['user_email'] = $sanitize_user_email;
-                } else {
+                if (email_exists($sanitize_user_email)) {
+                    $user_email_error[] = 'user_email already taken';
+                }
+                if (!is_email($sanitize_user_email)) {
                     $user_email_error[] = 'Invalid email';
                 }
+                $user['user_email'] = $sanitize_user_email;
             }
             if (!empty($user_email_error)) {
                 $this->validation_error[] = ['user_email' => $user_email_error];
             }
 
-            if (($sanitize_user_pass['old_user_pass'] && $sanitize_user_pass['new_user_pass'])) {
+            if (array_key_exists('old_user_pass', $sanitize_user_pass) && array_key_exists('new_user_pass', $sanitize_user_pass)) {
             
-                if (!wp_check_password($sanitize_user_pass['old_user_pass'], $get_user->user_pass, $user_id)) {
-                    $user_pass_error[] = 'Incorrect old password';
-                }
-                if ($sanitize_user_pass['new_user_pass'] && strlen($sanitize_user_pass['new_user_pass']) < 6) {
-                    $user_pass_error[] = 'Please enter at least 6 characters for the user_pass';
-                }
-                $user['user_pass'] = $sanitize_user_pass['new_user_pass'];
-                // if (preg_match('/.*[a-z]+.*/i', $user['user_pass']) == 0) {
-                //     $user_pass_error[] = 'user_pass needs at least one letter';
-                // }
-                // if (preg_match('/.*\d+.*/i', $user['user_pass']) == 0) {
-                //     $user_pass_error[] = 'user_pass needs at least one number';
-                // }
-                if (!empty($user_pass_error)) {
-                    $this->validation_error[] = ['user_pass' => $user_pass_error];
+                if ($sanitize_user_pass['old_user_pass'] != '' && $sanitize_user_pass['new_user_pass'] != '') {
+                    
+                    if (!wp_check_password($sanitize_user_pass['old_user_pass'], $get_user->user_pass, $user_id)) {
+                        $user_pass_error[] = 'Incorrect old password';
+                    }
+                    if ($sanitize_user_pass['new_user_pass'] && strlen($sanitize_user_pass['new_user_pass']) < 6) {
+                        $user_pass_error[] = 'Please enter at least 6 characters for the user_pass';
+                    }
+                    $user['user_pass'] = $sanitize_user_pass['new_user_pass'];
+                    if (!empty($user_pass_error)) {
+                        $this->validation_error[] = ['user_pass' => $user_pass_error];
+                    }
                 }
             }
 
