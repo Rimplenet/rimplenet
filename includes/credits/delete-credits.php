@@ -3,9 +3,9 @@ namespace Credits\DeleteCredits;
 
 use Credits\Base;
 
-abstract Class BaseCredits extends Base
+Class RimplenetDeleteCredits extends Base
 {
-    protected function deleteCredits(int $id, string $type = ''){
+    public function deleteCredits(int $id, string $type = ''){
 
         if($credits = $this->creditsExists($id, $type)):
             wp_delete_post($credits->post_id);

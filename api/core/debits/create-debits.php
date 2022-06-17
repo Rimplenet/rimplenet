@@ -1,8 +1,8 @@
 <?php
 
-use Debits\CreateDebits\BaseDebits;
+// use Debits\CreateDebits\BaseDebits;
 
-$createDebits = new class extends BaseDebits
+$createDebits = new class extends RimplenetCreateDebits
 {
 
     public function __construct()

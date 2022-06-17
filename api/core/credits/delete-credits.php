@@ -4,9 +4,8 @@
  * Delete
  */
 
-use Credits\DeleteCredits\BaseCredits;
 
-$DeleteCredits = new class extends BaseCredits
+$DeleteCredits = new class extends RimplenetDeleteCredits
 {
     public function __construct()
     {
