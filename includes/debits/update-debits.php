@@ -1,10 +1,10 @@
 <?php
 
-namespace Debits\UpdateDebits;
+// namespace Debits\UpdateDebits;
 
 use Debits\Base;
 
-abstract class BaseDebits extends Base
+class RimplenetUpdateDebits extends Base
 {
     /**
      * Update Transaction note

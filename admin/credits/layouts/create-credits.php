@@ -102,91 +102,12 @@ $all_wallets=$wallet_obj->response['data'];
 $dir = plugin_dir_url(dirname(__FILE__));
 ?>
 
-<div class="user-card">
-    <div class="form-container">
+<div class="rimplenet-bs5">
+    <div class="row">
+    <div class="form-container col-md-6">
         <img src="<?= $dir ?>/assets/img/wallet-concept-illustration_114360-1985.webp" alt="">
     </div>
-    <div class="form-container rt">
-
-               
-
-
-
-
-
-        <style>
-            #regForm {
-                /* background-color: #ffffff; */
-                /* margin: 100px auto; */
-                /* font-family: Raleway; */
-                /* padding: 40px; */
-                /* width: 70%; */
-                min-width: 300px;
-            }
-
-            h1 {
-                text-align: center;
-            }
-
-            /* input {
-                padding: 10px;
-                width: 100%;
-                font-size: 17px;
-                font-family: Raleway;
-                border: 1px solid #aaaaaa;
-            } */
-
-            /* Mark input boxes that gets an error on validation: */
-            input.invalid {
-                background-color: #ffdddd;
-            }
-
-            /* Hide all steps by default: */
-            .tab {
-                display: none;
-            }
-
-            button {
-                background-color: rgb(0 126 255);
-                color: #ffffff;
-                border: none;
-                padding: 10px 20px;
-                font-size: 17px;
-                /* font-family: Raleway; */
-                cursor: pointer;
-                /* padding-right: 50%; */
-            }
-
-            button:hover {
-                opacity: 0.8;
-            }
-
-            #prevBtn {
-                background-color: #bbbbbb;
-            }
-
-            /* Make circles that indicate the steps of the form: */
-            .step {
-                height: 15px;
-                width: 15px;
-                margin: 0 2px;
-                /* background-color: #bbbbbb; */
-                background-color: rgb(0 126 255);
-                border: none;
-                border-radius: 50%;
-                display: inline-block;
-                opacity: 0.5;
-            }
-
-            .step.active {
-                opacity: 1;
-            }
-
-            /* Mark the steps that are finished and valid: */
-            .step.finish {
-                background-color: #04AA6D;
-            }
-        </style>
+    <div class="form-container rt col-md-6">
 
 
         <form method="POST" style="max-width:700px; margin:auto;border:1px solid #ccc; border-radius:11px;padding: 13px;">
@@ -244,9 +165,10 @@ $dir = plugin_dir_url(dirname(__FILE__));
 
 
                             <div class="dropdown">
-                                <button onclick="myFunction()" class="btn">Click To Search For User</button>
+                                <span onclick="myFunction()" class="btn btn-primary">Click To Search For User</span>
+                                <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()" style="width:100%;max-width: 400px; height: 40px;">
                                 <div id="myDropdown" class="dropdown-content">
-                                    <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()" style="width:100%;max-width: 400px; height: 40px;">
+                                    <div id="searchresultinput"></div>
 
                                     <div id="showSearchResult"></div>
                                 </div>
@@ -277,6 +199,7 @@ $dir = plugin_dir_url(dirname(__FILE__));
             </center>
         </form>
     </div>
+    </div>
 </div>
 
 <script>
@@ -286,6 +209,9 @@ toggle between hiding and showing the dropdown content */
 function myFunction() {
       
   document.getElementById("myDropdown").classList.toggle("show");
+  document.getElementById("myInput").style.display="block";
+  div = document.getElementById("searchresultinput");
+  div.innerHTML=""
 }
 
 function filterFunction() {
@@ -307,7 +233,7 @@ function filterFunction() {
                 html += `<button style="background: white !important; color:black !important;" class="p-3 btn  btn-light mt-4 mr-3 ml-3" onclick="checkClick(${value.ID}, '${value.data.user_login} - ${value.data.user_email}')" href="#${value.ID}">${value.data.user_login} - ${value.data.user_email}</button>`
             });
             jQuery('#showSearchResult').html(html);
-            checkclick();
+            // checkClick();
             }
 
 
@@ -336,7 +262,9 @@ function checkClick(id, name) {
 
 </select>`
 
-div = document.getElementById("myDropdown");
+div = document.getElementById("searchresultinput");
 div.innerHTML = html
+document.getElementById("myInput").style.display="none";
+document.getElementById("showSearchResult").innerHTML=""
 }
 </script>

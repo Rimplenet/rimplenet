@@ -1,8 +1,7 @@
 <?php
 
-use Debits\UpdateDebits\BaseDebits;
 
-$updateDebits = new class extends BaseDebits
+$updateDebits = new class extends RimplenetUpdateDebits
 {
     public function __construct()
     {
