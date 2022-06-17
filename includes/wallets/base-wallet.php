@@ -33,7 +33,7 @@ abstract class Base
      */
     public $response = [
         'status_code' => 400,
-        'status' => 'failed',
+        'status' => false,
         'message' => ''
     ];
 
@@ -44,9 +44,8 @@ abstract class Base
     {
         $this->response = [
             'status_code' => 400,
-            'status' => 'failed',
+            'status' => false,
             'message' => '',
-            'data' => [],
             'error' => $this->response['error'] ?? $err
         ];
     }
