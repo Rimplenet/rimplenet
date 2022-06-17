@@ -217,6 +217,7 @@ class Rimplenet
 		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/wallets/class-base-wallets.php';
 		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/transfers/class-base-transfers.php';
 		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/withdrawals/class-base-withdrawals.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/user-wallet-balance/class-base-user-wallet-balance.php';
 		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/users/class-base-users.php';
 		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/credits/class-base-credits.php';
 		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/debits/class-base-debits.php';
