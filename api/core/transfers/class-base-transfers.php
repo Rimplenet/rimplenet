@@ -15,6 +15,7 @@ class Rimplenet_Base_Transfers_Api {
   private function load_required_files() {
    //Add Required Files to Load
    require_once plugin_dir_path( dirname( __FILE__ ) ) . 'transfers/create-transfers.php';
+   require_once plugin_dir_path( dirname( __FILE__ ) ) . 'transfers/get-transfers.php';
   }
 	
 }

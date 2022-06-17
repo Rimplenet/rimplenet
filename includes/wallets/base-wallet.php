@@ -34,22 +34,30 @@ abstract class Base
     public $response = [
         'status_code' => 400,
         'status' => 'failed',
-        'message' => '',
-        'data' => [],
-        'error' => []
+        'message' => ''
     ];
 
     public $query = null;
 
 
-    public function error()
+    public function error($err = '', $message = '', $status = 400)
     {
         $this->response = [
             'status_code' => 400,
             'status' => 'failed',
             'message' => '',
             'data' => [],
-            'error' => $this->response['error'] ?? []
+            'error' => $this->response['error'] ?? $err
+        ];
+    }
+
+    public function success($data, $message, $status = 200)
+    {
+        $this->response = [
+            'status_code' => $status,
+            'status' => true,
+            'message' => $message,
+            'data' => $data
         ];
     }
 
@@ -130,5 +138,10 @@ abstract class Base
                 'terms'    => static::WALLET_CAT_NAME,
             ]),
         ]);
+    }
+
+    protected function postMeta($field = '')
+    {
+        return get_post_meta($this->id, $field, true);
     }
 }
