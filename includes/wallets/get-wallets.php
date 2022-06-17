@@ -90,8 +90,4 @@ class RimplenetGetWallets extends Base
         return $res;
     }
 
-    private function postMeta($field = '')
-    {
-        return get_post_meta($this->id, $field, true);
-    }
 }
