@@ -22,10 +22,10 @@ class CreateTransfers extends RimplenetCreateTransfer
     public function api_create_transfers(WP_REST_Request $req)
     {
         $this->req = [
-            'user_id' => sanitize_text_field($req['user_id']),
-            'amount_to_transfer' => sanitize_text_field($req['amount_to_transfer']),
-            'transfer_to_user' => sanitize_text_field($req['transfer_to_user']),
-            'wallet_id' => sanitize_text_field($req['wallet_id']),
+            'user_id' => sanitize_text_field($req['user_id'] ?? ''),
+            'amount_to_transfer' => sanitize_text_field($req['amount_to_transfer'] ?? ''),
+            'transfer_to_user' => sanitize_text_field($req['transfer_to_user'] ?? ''),
+            'wallet_id' => sanitize_text_field($req['wallet_id'] ?? ''),
             'note' => sanitize_text_field($req['note'] ?? ''),
         ];
 
