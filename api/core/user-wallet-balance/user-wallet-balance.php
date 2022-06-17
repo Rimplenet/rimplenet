@@ -31,4 +31,4 @@ class User_Wallet_Balance extends RimplenetGetWalletBalance
     }
 }
 
-$CreateTransfers = new CreateTransfers();
+$User_Wallet_Balance  = new User_Wallet_Balance ();
