@@ -26,12 +26,12 @@ class CreateWithdrawals extends RimplenetCreateWithdrawals
         // $request_id, $user_id, $amount_to_withdraw, $wallet_id, $wdr_dest, $wdr_dest_data, $note='Withdrawal',$extra_data=''
         # Get and store all user inputs
         $this->req = [
-            'request_id'           => sanitize_text_field($req['request_id']),
-            'user_id'             => sanitize_text_field($req['user_id']),
-            'amount_to_withdraw'         => sanitize_text_field($req['amount_to_withdraw']),
-            'wallet_id'     => sanitize_text_field($req['wallet_id']),
-            'wdr_dest'           => sanitize_text_field($req['wdr_dest']),
-            'wdr_dest_data'           => sanitize_text_field($req['wdr_dest_data']),
+            'request_id'           => sanitize_text_field($req['request_id'] ?? ''),
+            'user_id'             => sanitize_text_field($req['user_id'] ?? ''),
+            'amount_to_withdraw'         => sanitize_text_field($req['amount_to_withdraw'] ?? ''),
+            'wallet_id'     => sanitize_text_field($req['wallet_id'] ?? ''),
+            'wdr_dest'           => sanitize_text_field($req['wdr_dest'] ?? ''),
+            'wdr_dest_data'           => sanitize_text_field($req['wdr_dest_data'] ?? ''),
             'note'        => sanitize_text_field($req['note']) ?? 'Withdrawal',
             'extra_data' => sanitize_text_field($req['extra_data']) ?? '',
         ];
