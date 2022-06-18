@@ -33,9 +33,7 @@ class RimplenetDeleteUser
                 // $table='wp_users';
                 $deleted = wp_delete_user($user_id);
     
-                if ($deleted) {
-                    return $this->response(200, true, "Deleted", [], []);
-                }
+                if ($deleted) return $this->response(200, true, "User Deleted", [], []);
     
                 return $this->response(404, "Failed", "User not found", [], []);
     
@@ -62,7 +60,7 @@ class RimplenetDeleteUser
                         $deleted = wp_delete_user($user_id);
             
                         if ($deleted) {
-                            return $this->response(200, true, "Deleted", [], []);
+                            return $this->response(200, true, "User Deleted", [], []);
                         }
             
                         return $this->response(404, "Failed", "User not found", [], []);

@@ -29,7 +29,12 @@ class RimplenetGetUser
             unset($get_single_user->data->user_pass);
             $user_data = $this->userFormat($get_single_user);
 
-            if($user_id !== null) return $this->response(200, true, "Successful", $user_data, []);
+            if($user_id !== null) {
+                
+                if ($user_data) return $this->response(200, true, "Successful", $user_data, []);
+
+                return $this->response(404, "Failed", "User not found", [], []);
+            }
 
             $total_users = count(get_users());
 
@@ -71,7 +76,12 @@ class RimplenetGetUser
                     unset($get_single_user->data->user_pass);
                     $user_data = $this->userFormat($get_single_user);
 
-                    if($user_id !== null) return $this->response(200, true, "Successful", $user_data, []);
+                    if($user_id !== null) {
+                
+                        if ($user_data) return $this->response(200, true, "Successful", $user_data, []);
+        
+                        return $this->response(404, "Failed", "User not found", [], []);
+                    }
 
                     $total_users = count(get_users());
 
