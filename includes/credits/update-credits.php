@@ -1,10 +1,10 @@
 <?php
 
-namespace Credits\UpdateCredits;
+// namespace Credits\UpdateCredits;
 
 use Credits\Base;
 
-abstract class BaseCredits extends Base
+class RimplenetUpdateCredits extends Base
 {
     /**
      * Update Transaction note
@@ -13,7 +13,7 @@ abstract class BaseCredits extends Base
      * @param string $type > Type of the transaction (debit / credit)
      * @return boolean
      */
-    protected function updateCredits(int $id = 0, $note = '', $type = '')
+    public function updateCredits(int $id = 0, $note = '', $type = '')
     {
         # assign param id to $id otherwise get id from class
         $id = $id !== 0 ? $id : $this->req['id'];

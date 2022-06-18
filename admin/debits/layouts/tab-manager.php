@@ -21,7 +21,7 @@
                $api_settings_tab_active = "nav-tab-active";
                $path_to_tab = plugin_dir_path( dirname( __FILE__ ) ) . "layouts/admin-settings-wallet.php";
              }
-            elseif($_GET["tab"] == "create-credit-tab")
+            elseif($_GET["tab"] == "create-debit-tab")
              {
                $setup_tab_active = "nav-tab-active";
                $path_to_tab = plugin_dir_path( dirname( __FILE__ ) ) . "layouts/create-debits.php";

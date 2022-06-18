@@ -2,7 +2,7 @@
 
 use Credits\GetCredits\BaseCredits;
 
-$getCredits = new Class extends BaseCredits
+$getCredits = new Class extends RimplenetGetCredits
 {
     public function __construct() {
         add_action('rest_api_init', [$this, 'register_api_routes']);

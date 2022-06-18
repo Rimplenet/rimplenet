@@ -4,9 +4,8 @@
  * Delete
  */
 
-use Debits\DeleteDebits\BaseDebits;
 
-$DeleteDebits = new class extends BaseDebits
+$DeleteDebits = new class extends RimplenetDeleteDebits
 {
     public function __construct()
     {

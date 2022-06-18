@@ -4,7 +4,7 @@
  */
 
 
-class CreateWithdrawals extends RimplenetCreateWithdrawals
+class GetWithdrawals extends RimplenetGetWithdrawals
 {
 
     public function __construct()
@@ -15,23 +15,23 @@ class CreateWithdrawals extends RimplenetCreateWithdrawals
     public function register_api_routes()
     {
         register_rest_route('/rimplenet/v1', 'withdrawals', [
-            'methods' => 'POST',
-            'callback' => [$this, 'api_create_withdrawal']
+            'methods' => 'GET',
+            'callback' => [$this, 'api_get_withdrawal']
         ]);
     }
 
-    public function api_create_withdrawal(WP_REST_Request $req)
+    public function api_get_withdrawal(WP_REST_Request $req)
     {
 
         // $request_id, $user_id, $amount_to_withdraw, $wallet_id, $wdr_dest, $wdr_dest_data, $note='Withdrawal',$extra_data=''
         # Get and store all user inputs
         $this->req = [
-            'request_id'           => sanitize_text_field($req['request_id'] ?? ''),
-            'user_id'             => sanitize_text_field($req['user_id'] ?? ''),
-            'amount_to_withdraw'         => sanitize_text_field($req['amount_to_withdraw'] ?? ''),
-            'wallet_id'     => sanitize_text_field($req['wallet_id'] ?? ''),
-            'wdr_dest'           => sanitize_text_field($req['wdr_dest'] ?? ''),
-            'wdr_dest_data'           => sanitize_text_field($req['wdr_dest_data'] ?? ''),
+            'request_id'           => sanitize_text_field($req['request_id']),
+            'user_id'             => sanitize_text_field($req['user_id']),
+            'amount_to_withdraw'         => sanitize_text_field($req['amount_to_withdraw']),
+            'wallet_id'     => sanitize_text_field($req['wallet_id']),
+            'wdr_dest'           => sanitize_text_field($req['wdr_dest']),
+            'wdr_dest_data'           => sanitize_text_field($req['wdr_dest_data']),
             'note'        => sanitize_text_field($req['note']) ?? 'Withdrawal',
             'extra_data' => sanitize_text_field($req['extra_data']) ?? '',
         ];
@@ -41,7 +41,7 @@ class CreateWithdrawals extends RimplenetCreateWithdrawals
     }
 }
 
-$CreateWithdrawals = new CreateWithdrawals();
+$GetWithdrawals = new GetWithdrawals();
 
 
 

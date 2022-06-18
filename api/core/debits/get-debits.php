@@ -2,7 +2,7 @@
 
 use Debits\GetDebits\BaseDebits;
 
-$getDebits = new Class extends BaseDebits
+$getDebits = new Class extends RimplenetGetDebits
 {
     public function __construct() {
         add_action('rest_api_init', [$this, 'register_api_routes']);

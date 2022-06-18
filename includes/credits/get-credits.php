@@ -1,11 +1,11 @@
 <?php
-namespace Credits\GetCredits;
+// namespace Credits\GetCredits;
 
 use Credits\Base;
 
-abstract class BaseCredits extends Base
+class RimplenetGetCredits extends Base
 {
-    protected function getCredits($id, $type)
+    public function getCredits($id, $type)
     {
         if($credits = $this->CreditsExists($id, $type)):
             $credits = get_post($credits->post_id);

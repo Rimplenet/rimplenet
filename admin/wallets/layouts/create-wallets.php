@@ -116,7 +116,7 @@ $dir = plugin_dir_url(dirname(__FILE__));
     <form method="POST">
             <h2>CREATE NEW WALLET</h2> <br>
             <input type="hidden" name="rimplenet_wallet_submitted" value="true" />
-            <? php // wp_nonce_field('rimplenet_wallet_settings_nonce_field', 'rimplenet_wallet_settings_nonce_field'); 
+            <?php // wp_nonce_field('rimplenet_wallet_settings_nonce_field', 'rimplenet_wallet_settings_nonce_field'); 
             ?>
 
             <table class="form-table">

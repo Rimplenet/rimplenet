@@ -1,11 +1,11 @@
 <?php
-namespace Debits\GetDebits;
+// namespace Debits\GetDebits;
 
 use Debits\Base;
 
-abstract class BaseDebits extends Base
+class RimplenetGetDebits extends Base
 {
-    protected function getDebits($id, $type)
+    public function getDebits($id, $type)
     {
         if($Debits = $this->debitsExists($id, $type)):
             $Debits = get_post($Debits->post_id);

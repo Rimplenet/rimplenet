@@ -1,13 +1,13 @@
 <?php
 
-namespace Debits\CreateDebits;
+// namespace Debits\CreateDebits;
 
-use Rimplenet_Wallets;
+// use Rimplenet_Wallets;
 use Debits\Base;
 
-abstract class BaseDebits extends Base
+class RimplenetCreateDebits extends Base
 {
-    protected function createDebits(array $param = [])
+    public function createDebits(array $param = [])
     {
 
         $prop = empty($param) ? $this->req : $param;
