@@ -23,7 +23,7 @@ class RimplenetGetWalletBalance extends RimplenetBalance
         return $this->response = [
                 'status_code' => 200,
                 'status' => true,
-                'response_message' => 'Wallet Balance retrieved',
+                'message' => 'Wallet Balance retrieved',
                 'data' => $data
             ];
 
