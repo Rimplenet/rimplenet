@@ -1,5 +1,5 @@
 <?php
-namespace Credits\DeleteCredits;
+// namespace Credits\DeleteCredits;
 
 use Credits\Base;
 
