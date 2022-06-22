@@ -18,9 +18,7 @@ class RimplenetGetWallets extends Base
         else :
             $wallet = get_post($wallet->post_id);
             $walletData = $this->walletFormat($wallet);
-            $this->response['status_code'] = 200;
-            $this->response['status'] = true;
-            $this->response['data'] = $walletData;
+            $this->success($walletData, "Wallet Retrieved");
             return $walletData;
         endif;
     }
@@ -36,17 +34,13 @@ class RimplenetGetWallets extends Base
         if ($this->query && $this->query->have_posts()):
             $posts = $this->query->get_posts();
             $res = [];
-            foreach($posts as $value):
-                $res[] = $this->walletFormat($value);
+            foreach($posts as $key => $value):
+                $posts[$key] = $this->walletFormat($value);
             endforeach;
-            $this->response['status_code'] = 200;
-            $this->response['status'] = true;
-            $this->response['data'] = $res;
-            return $res;
+            $this->success($posts, "Wallet Retrieved");
+            return $posts;
         else:
-            $this->response['status_code'] = 404;
-            $this->response['message'] = "Wallet not found";
-            $this->response['error'][] = "We are sorry we cannot retrieve any wallet at the moment";
+            $this->success(['We are sorry we cannot retrieve any wallet at the moment'], "Wallet Not found", 404);
         endif;
         return false;
     }

@@ -1,26 +1,42 @@
 <?php
-// namespace Credits\GetCredits;
+use Credits\Credits;
 
-use Credits\Base;
-
-class RimplenetGetCredits extends Base
+class RimplenetGetCredits extends Credits
 {
     public function getCredits($id, $type)
     {
+        if($id !== ''):
+            return $this->creditById($id, $type);
+        else:
+            return $this->getAllCredits();
+        endif;
+
+        return $this->response;
+    }
+
+    public function creditById($id, $type)
+    {
         if($credits = $this->CreditsExists($id, $type)):
             $credits = get_post($credits->post_id);
-            return $this->response = [
-                'status_code' => 200,
-                'status' => 'success',
-                'response_message' => 'Transaction retrieved',
-                'data' => $this->formatCredits($credits)
-            ];
+            return $this->success($this->formatCredits($credits), 'Transacrion Retrieved', 200);
         else:
-            $this->response['status_code'] = 404;
-            $this->response['response_message'] = "Transction not found";
-            $this->response['error'][] = 'Invalid Transaction Id '.$id;
+            return $this->error(['Invalid Transaction Id '.$id], 'Transaction not Found', 404);
         endif;
-        return $this->response;
+    }
+
+    public function getAllCredits()
+    {
+        $this->queryTxn('');
+        if($this->query && $this->query->have_posts()):
+            $posts = $this->query->get_posts();
+            foreach ($posts as $key => $post):
+                $posts[$key] = $this->formatCredits($post);
+            endforeach;
+            return $this->success($posts, 'Credits Retrieved');
+        else:
+            return $this->error("Sorry we couldnt retrieve any Credit at the moment", "No wallet Found", 404);
+        endif;
+        // return $this
     }
 
     protected function formatCredits($data)
@@ -28,24 +44,19 @@ class RimplenetGetCredits extends Base
         $this->id = $data->ID;
 
         $res = [
-            'amount'            => $this->creditsMeta('amount'),
-            'balance_after'     => $this->creditsMeta('balance_after'),
-            'balance_before'    => $this->creditsMeta('balance_before'),
-            'currency'          => $this->creditsMeta('currency'),
-            'funds_type'        => $this->creditsMeta('funds_type'),
-            'request_id'        => $this->creditsMeta('request_id'),
-            'total_balance_after' => $this->creditsMeta('total_balance_after'),
-            'total_balance_before' => $this->creditsMeta('total_balance_before'),
-            'Credits_request_id'       => $this->creditsMeta('Credits_request_id'),
-            'Credits_type'             => $this->creditsMeta('Credits_type'),
-            'note'                 => $this->creditsMeta('note'),
+            'amount'            => $this->postMeta('amount'),
+            'balance_after'     => $this->postMeta('balance_after'),
+            'balance_before'    => $this->postMeta('balance_before'),
+            'currency'          => $this->postMeta('currency'),
+            'funds_type'        => $this->postMeta('funds_type'),
+            'request_id'        => $this->postMeta('request_id'),
+            'total_balance_after' => $this->postMeta('total_balance_after'),
+            'total_balance_before' => $this->postMeta('total_balance_before'),
+            'Credits_request_id'       => $this->postMeta('Credits_request_id'),
+            'Credits_type'             => $this->postMeta('Credits_type'),
+            'note'                 => $this->postMeta('note'),
             'description'          => $data->post_title
         ];
         return $res;
-    }
-
-    private function creditsMeta($field= '', $id = '', $opt = true)
-    {
-        return get_post_meta($this->id ?? $id, $field, $opt);
     }
 }
