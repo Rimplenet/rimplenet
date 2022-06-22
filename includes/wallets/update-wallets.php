@@ -81,7 +81,7 @@ abstract class BaseWallet extends Base
     }
 
     /**
-     * Create Wallet
+     * Update Wallet
      */
     protected function updateWallet(array $req = [])
     {
@@ -96,17 +96,9 @@ abstract class BaseWallet extends Base
                 if ($key == 'wallet_id') continue;
                 update_post_meta($wallet->post_id, $key, $value);
             }
-            $this->response = [
-                'status_code' => 200,
-                'status' => 'success',
-                'response_message' => "Wallet was successfully Updated",
-                'data' => $wallet
-            ];
-            return true;
+            return $this->success($wallet, "Wallet was successfully Updated");
         else :
-            $this->response['error'][] = 'Wallet not found';
-            $this->response['status_code'] = 400;
-            $this->response['response_message'] = "Invalid Wallet";
+            $this->error('Wallet not found', "Invalid Wallet");
             return false;
         endif;
     }

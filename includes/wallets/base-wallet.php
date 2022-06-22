@@ -21,6 +21,8 @@ abstract class Base
     const MIN_AMOUNT = 0;
     const MAX_AMOUNT = 999999999;
     const WALLET_CAT_NAME = 'RIMPLENET WALLETS';
+    const DEBIT = 'DEBIT';
+    const CREDIT = 'CREDIT';
 
     // public function __construct(mixed $var = '')
     public function __construct($var = "")
@@ -45,7 +47,7 @@ abstract class Base
         $this->response = [
             'status_code' => 400,
             'status' => false,
-            'message' => '',
+            'message' => $message,
             'error' => $this->response['error'] ?? $err
         ];
     }
@@ -69,23 +71,21 @@ abstract class Base
         // return "hekko";
         $prop = empty($req) ? $this->req : $req;
 
+        
         foreach ($prop as $key => $value) :
-
-            if ($key == 'r_a_b_w' || $key == 'r_b_b_w' || $key == 'e_a_w_p' || $key == 'min_withdrawal_amount' || $key == 'max_withdrawal_amount' || $key == 'inc_i_w_cl' || $key == 'wallet_symbol_pos' || $key = 'note') continue;
-
+            
+            if ($key == 'r_a_b_w' || $key == 'r_b_b_w' || $key == 'e_a_w_p' || $key == 'min_withdrawal_amount' || $key == 'max_withdrawal_amount' || $key == 'inc_i_w_cl' || $key == 'wallet_symbol_pos' || $key == 'note') continue;
+            
             if (is_bool($value) && !$value || is_bool($value) && $value) continue;
-
+            
             if ($value == '')
-                $this->error[$key] = 'Field Cannot be empty';
+            $this->error[$key] = 'Field Cannot be empty';
         endforeach;
 
-
         if (!empty($this->error)) {
-            $this->response['message'] = "One or two fields are required";
-            $this->response['error'] = $this->error;
+            $this->error($this->error, "one or more field is required", 400);
             return true; exit;
         }
-
         return false;
     }
 
@@ -98,11 +98,8 @@ abstract class Base
         if ($wallet) :
             return $wallet;
         else :
-            $this->response['status_code'] = 404;
-            $this->response['message'] = "Wallet not found";
-            $this->response['error'][] = 'Invalid Wallet Id';
+            $this->error(["Invalid wallet Id"], "Wallet not found", 404);
             return false;
-            exit;
         endif;
     }
 
@@ -116,7 +113,7 @@ abstract class Base
         $exists = $wpdb->get_row("SELECT * FROM $wpdb->postmeta WHERE meta_key='rimplenet_wallet_id' AND meta_value='$this->wallet_id'");
 
         if ($exists)
-            $this->error[] = 'Transaction Already Exists';
+            $this->error[] = 'Wallet Already Exists';
         if (!empty($this->error)) return true;
         else return false;
     }
@@ -137,6 +134,30 @@ abstract class Base
                 'terms'    => static::WALLET_CAT_NAME,
             ]),
         ]);
+    }
+
+    public function queryTxn($page, $type = self::CREDIT)
+    {
+       $this->query = new WP_Query(
+            array(
+                'post_type' => 'rimplenettransaction',
+                'post_status' => 'any',
+                'author' => 'any',
+                'posts_per_page' => -1,
+                'paged' => 1,
+                'tax_query' => array(
+                    array(
+                        'taxonomy' => 'rimplenettransaction_type',
+                        'field'    => 'name',
+                        'terms'    =>  $type
+                    ),
+                ),
+            )
+        );
+    }
+    public function FunctionName(Type $var = null)
+    {
+        # code...
     }
 
     protected function postMeta($field = '')

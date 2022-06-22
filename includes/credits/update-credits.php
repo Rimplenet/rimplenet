@@ -2,9 +2,9 @@
 
 // namespace Credits\UpdateCredits;
 
-use Credits\Base;
+use Credits\Credits;
 
-class RimplenetUpdateCredits extends Base
+class RimplenetUpdateCredits extends Credits
 {
     /**
      * Update Transaction note

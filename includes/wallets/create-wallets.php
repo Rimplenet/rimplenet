@@ -1,6 +1,5 @@
 <?php
 
-// namespace Wallets\CreateWallets;
 use Wallets\Base;
 
 class RimplenetCreateWallets extends Base
@@ -97,19 +96,10 @@ class RimplenetCreateWallets extends Base
         # check if wallet already exist
         // return $this->walletExists();
         if ($this->walletExists()) :
-            $this->response['error'] = $this->error;
-            $this->response['status_code'] = 409;
-            $this->response['message'] = "Wallet already exists";
-            return false;
+            return $this->error($this->error, "Wallet Already Exists", 409);
         else :
             $wallet = $this->insertWallet();
-            $this->response = [
-                'status_code' => 201,
-                'status' => 'success',
-                'message' => "Wallet was successfully created",
-                'data' => $wallet
-            ];
-            return true;
+            return $this->success($wallet, "Wallet was successully created");
         endif;
     }
 

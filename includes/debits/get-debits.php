@@ -1,26 +1,44 @@
 <?php
 // namespace Debits\GetDebits;
 
-use Debits\Base;
+use Debits\Debits;
 
-class RimplenetGetDebits extends Base
+class RimplenetGetDebits extends Debits
 {
     public function getDebits($id, $type)
     {
-        if($Debits = $this->debitsExists($id, $type)):
-            $Debits = get_post($Debits->post_id);
-            return $this->response = [
-                'status_code' => 200,
-                'status' => 'success',
-                'response_message' => 'Transaction retrieved',
-                'data' => $this->formatDebits($Debits)
-            ];
+        if($id !== ''):
+            return $this->debitById($id, $type);
         else:
-            $this->response['status_code'] = 404;
-            $this->response['response_message'] = "Transction not found";
-            $this->response['error'][] = 'Invalid Transaction Id '.$id;
+            return $this->getAllDebits();
         endif;
+
         return $this->response;
+    }
+
+    public function debitById($id, $type)
+    {
+        if($credits = $this->debitsExists($id, $type)):
+            $credits = get_post($credits->post_id);
+            return $this->success($this->formatDebits($credits), 'Transacrion Retrieved', 200);
+        else:
+            return $this->error(['Invalid Transaction Id '.$id], 'Transaction not Found', 404);
+        endif;
+    }
+
+    public function getAllDebits()
+    {
+        $this->queryTxn('', self::DEBIT);
+        if($this->query && $this->query->have_posts()):
+            $posts = $this->query->get_posts();
+            foreach ($posts as $key => $post):
+                $posts[$key] = $this->formatDebits($post);
+            endforeach;
+            return $this->success($posts, 'Debits Retrieved');
+        else:
+            return $this->error("Sorry we couldnt retrieve any Debit at the moment", "No Debit Found", 404);
+        endif;
+        // return $this
     }
 
     protected function formatDebits($data)
@@ -28,24 +46,20 @@ class RimplenetGetDebits extends Base
         $this->id = $data->ID;
 
         $res = [
-            'amount'            => $this->debitsMeta('amount'),
-            'balance_after'     => $this->debitsMeta('balance_after'),
-            'balance_before'    => $this->debitsMeta('balance_before'),
-            'currency'          => $this->debitsMeta('currency'),
-            'funds_type'        => $this->debitsMeta('funds_type'),
-            'request_id'        => $this->debitsMeta('request_id'),
-            'total_balance_after' => $this->debitsMeta('total_balance_after'),
-            'total_balance_before' => $this->debitsMeta('total_balance_before'),
-            'Debits_request_id'       => $this->debitsMeta('Debits_request_id'),
-            'Debits_type'             => $this->debitsMeta('Debits_type'),
-            'note'                 => $this->debitsMeta('note'),
+            'amount'            => $this->postMeta('amount'),
+            'balance_after'     => $this->postMeta('balance_after'),
+            'balance_before'    => $this->postMeta('balance_before'),
+            'currency'          => $this->postMeta('currency'),
+            'funds_type'        => $this->postMeta('funds_type'),
+            'request_id'        => $this->postMeta('request_id'),
+            'total_balance_after' => $this->postMeta('total_balance_after'),
+            'total_balance_before' => $this->postMeta('total_balance_before'),
+            'Debits_request_id'       => $this->postMeta('Debits_request_id'),
+            'Debits_type'             => $this->postMeta('Debits_type'),
+            'note'                 => $this->postMeta('note'),
             'description'          => $data->post_title
         ];
+        
         return $res;
-    }
-
-    private function debitsMeta($field= '', $id = '', $opt = true)
-    {
-        return get_post_meta($this->id ?? $id, $field, $opt);
     }
 }
