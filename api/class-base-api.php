@@ -34,6 +34,7 @@ class Rimplenet_Api {
 	 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'api/core/referrals/class-base-referral.php';
 	 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'api/core/transactions/class-base-transactions.php';
 	 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'api/core/withdrawals/class-base-withdrawals.php';
+	 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'api/core/mail/class-base-mails.php';
     }
 	
 }
