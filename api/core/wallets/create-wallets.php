@@ -22,7 +22,6 @@ class CreateWallet extends RimplenetCreateWallets
 
     public function api_create_wallet(WP_REST_Request $req)
     {
-        do_action( 'rimplenet_api_request', $req);
         # Get and store all user inputs
         $this->req = [
             'wallet_name'           => sanitize_text_field($req['wallet_name']),
