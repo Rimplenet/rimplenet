@@ -50,6 +50,7 @@ abstract class Base
             'message' => $message,
             'error' => $this->response['error'] ?? $err
         ];
+        return false;
     }
 
     public function success($data, $message, $status = 200)
@@ -74,7 +75,7 @@ abstract class Base
         
         foreach ($prop as $key => $value) :
             
-            if ($key == 'r_a_b_w' || $key == 'r_b_b_w' || $key == 'e_a_w_p' || $key == 'min_withdrawal_amount' || $key == 'max_withdrawal_amount' || $key == 'inc_i_w_cl' || $key == 'wallet_symbol_pos' || $key == 'note') continue;
+            if ($key == 'r_a_b_w' || $key == 'r_b_b_w' || $key == 'e_a_w_p' || $key == 'min_withdrawal_amount' || $key == 'max_withdrawal_amount' || $key == 'inc_i_w_cl' || $key == 'wallet_symbol_pos' || $key == 'note' || $key == 'app_id') continue;
             
             if (is_bool($value) && !$value || is_bool($value) && $value) continue;
             
