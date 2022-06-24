@@ -1,17 +1,18 @@
 <?php
 
-// namespace Debits\CreateDebits;
+use Debits\Debits;
 
-// use Rimplenet_Wallets;
-use Debits\Base;
-
-class RimplenetCreateDebits extends Base
+class RimplenetCreateDebits extends Debits
 {
     public function createDebits(array $param = [])
     {
 
         $prop = empty($param) ? $this->req : $param;
         extract($prop);
+
+        if($this->checkEmpty($prop)) return;
+
+        if(!$this->getWalletById($wallet_id)) return;
 
         # Set transaction id
         $txn_id = $user_id . '_' . $request_id;
@@ -24,7 +25,7 @@ class RimplenetCreateDebits extends Base
         if (get_transient($recent_txn_transient_key)) return;
 
         # check if transaction already exist
-        // $this->txnExists($txn_id);
+        if($this->debitsExists($txn_id)) return;
 
         $key = 'user_withdrawable_bal_' . $wallet_id;
         $user_balance = get_user_meta($user_id, $key, true);
@@ -39,20 +40,20 @@ class RimplenetCreateDebits extends Base
         $RimplenetWallet = new Rimplenet_Wallets;
         $user_balance_total = $RimplenetWallet->get_total_wallet_bal($user_id, $wallet_id);
 
-        $new_balance  = $user_balance + $amount_to_add;
+        $new_balance  = $user_balance + $amount;
         $new_balance  = $new_balance;
 
         $update_bal = update_user_meta($user_id, $key, $new_balance);
 
         if ($update_bal) :
-            if ($amount_to_add > 0) :
+            if ($amount > 0) :
                 $tnx_type = self::CREDIT;
             else :
                 $tnx_type = self::DEBIT;
-                $amount_to_add = $amount_to_add * -1;
+                $amount = $amount * -1;
             endif;
 
-            $txn_add_bal_id = $RimplenetWallet->record_Txn($user_id, $amount_to_add, $wallet_id, $tnx_type, 'publish');
+            $txn_add_bal_id = $RimplenetWallet->record_Txn($user_id, $amount, $wallet_id, $tnx_type, 'publish');
 
             # add note if not empty
             if (!empty($note))  add_post_meta($txn_add_bal_id, 'note', $note);
@@ -66,17 +67,14 @@ class RimplenetCreateDebits extends Base
             update_post_meta($txn_add_bal_id, 'total_balance_after', $RimplenetWallet->get_total_wallet_bal($user_id, $wallet_id));
             update_post_meta($txn_add_bal_id, 'funds_type', $key);
         else :
-            $this->response['response_message'] = 'Unknown Error';
-            return false;
+            return $this->error('Unknown Error', "unknown error", 400);
         endif;
 
         if ($txn_add_bal_id > 0) {
             $result = $txn_add_bal_id;
-            return $result;
+            return $this->success(['id' => $result], "Transaction Completed", 200);
         } else {
-            $this->response['status_code'] = 409;
-            $this->response['response_message'] = "Transaction Already Executed";
-            return false;
+            return $this->error('Transaction Already Executed', 'Transaction Already Executed', 409);
         }
         return;
     }
@@ -91,12 +89,12 @@ class RimplenetCreateDebits extends Base
         global $wpdb;
         $row = $wpdb->get_row("SELECT * FROM $wpdb->postmeta WHERE meta_key='txn_request_id' AND meta_value='$value'");
         if ($row) :
-            $this->response['status_code'] = 409;
-            $this->response['response_message'] = "Transaction Already Executed";
-            $this->response['data']['txn_id'] = $row->post_id;
-            return false;
-            exit;
+            $this->error([
+                'txn_id' => $row->post_id,
+                'exist' => "Transaction already executed"
+            ], "Transaction already exists", 409);
+            return true;
         endif;
-        return true;
+        return false;
     }
 }

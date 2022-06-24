@@ -1,5 +1,5 @@
 <?php
-require 'jwt.php';
+// require 'jwt.php';
 
 class RimplenetLoginUser
 {

@@ -213,14 +213,20 @@ class Rimplenet
 		 */
 		require_once plugin_dir_path(dirname(__FILE__)) . 'public/class-rimplenet-public.php';
 		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/rimplenet-core-trait.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/mails/email-trait.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/mails/class-base-mails.php';
+		
 
+		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/users/jwt.php';
 		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/wallets/class-base-wallets.php';
 		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/transfers/class-base-transfers.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/credits/class-base-credits.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/debits/class-base-debits.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/api-keys/class-base-api-keys.php';
+
 		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/withdrawals/class-base-withdrawals.php';
 		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/user-wallet-balance/class-base-user-wallet-balance.php';
 		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/users/class-base-users.php';
-		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/credits/class-base-credits.php';
-		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/debits/class-base-debits.php';
 		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/auth/class-base-auth.php';
 		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/referrals/class-base-referrals.php';
 		require_once plugin_dir_path(dirname(__FILE__)) . 'api/class-base-api.php';

@@ -1,7 +1,4 @@
 <?php
-
-use Debits\GetDebits\BaseDebits;
-
 $getDebits = new Class extends RimplenetGetDebits
 {
     public function __construct() {
@@ -21,11 +18,10 @@ $getDebits = new Class extends RimplenetGetDebits
         # ================= set fields ============
         $wlt_id  = sanitize_text_field($req['debits_id']);
         $page      = $req['page'] ?? 1;
+        
+        $this->getDebits($wlt_id, 'debit');
+        return new WP_REST_Response($this->response, $this->response['status_code']);
 
-        if ($wlt_id !== '') :
-            return new WP_REST_Response($this->getDebits($wlt_id, 'debit'));
-        else:
-            return "Debit Frowning";
-        endif;
+
     }
 };

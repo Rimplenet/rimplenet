@@ -1,9 +1,8 @@
 <?php
-// namespace Credits\DeleteCredits;
 
-use Credits\Base;
+use Credits\Credits;
 
-Class RimplenetDeleteCredits extends Base
+Class RimplenetDeleteCredits extends Credits
 {
     public function deleteCredits(int $id, string $type = ''){
 
