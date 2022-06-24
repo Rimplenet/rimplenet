@@ -12,9 +12,7 @@ trait RimplenetEmailTrait
   public function sendVerifyEmailMail($email)
   {
     $to = $email;
-    $subject = 'Verify Your Email';
-    $message = 'A request was sent to create an account. Please If this was not you, no action is required';
-    $headers = 'just a test';
+    include(plugin_dir_path( dirname( __FILE__ ) ) . 'mail-templates/verify-email-mail.php');
 
     if (wp_mail( $to, $subject, $message )) {
         return true;
@@ -26,9 +24,7 @@ trait RimplenetEmailTrait
   public function sendResetPasswordMail($email)
   {
     $to = $email;
-    $subject = 'Password Reset Request';
-    $message = 'A request was sent to reset your password. Please If this was not you, no action is required';
-    $headers = 'just a test';
+    include(plugin_dir_path( dirname( __FILE__ ) ) . 'mail-templates/password-reset.php');
 
     if (wp_mail( $to, $subject, $message )) {
         return true;
