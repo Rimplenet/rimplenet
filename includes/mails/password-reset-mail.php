@@ -1,7 +1,7 @@
 <?php
 
 use Mails\Base;
-use Traits\Wallet\RimplenetEmailTrait;
+use Traits\Email\RimplenetEmailTrait;
 
 class RimplenetPasswordResetMail extends Base
 {
