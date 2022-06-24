@@ -11,6 +11,7 @@ class Rimplenet_Base_Mails {
    	 //Add Required Files to Load
 	 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'mails/base-mails.php';
 	 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'mails/password-reset-mail.php';
+     require_once plugin_dir_path( dirname( __FILE__ ) ) . 'mails/verify-email-mail.php';
 	//  require_once plugin_dir_path( dirname( __FILE__ ) ) . 'mails/update-mails.php';
 	//  require_once plugin_dir_path( dirname( __FILE__ ) ) . 'mails/get-mails.php'; 
 	//  require_once plugin_dir_path( dirname( __FILE__ ) ) . 'mails/delete-mails.php'; 

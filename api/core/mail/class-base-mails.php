@@ -17,6 +17,7 @@ class Rimplenet_Base_Mails_Api
 	{
 		//Add Required Files to Load
 		require_once plugin_dir_path(dirname(__FILE__)) . 'mail/password-reset-mail.php';
+        require_once plugin_dir_path(dirname(__FILE__)) . 'mail/verify-email-mail.php';
 	}
 }
 
