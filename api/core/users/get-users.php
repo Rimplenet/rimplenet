@@ -20,6 +20,8 @@ class RimplenetGetUserApi
 
     public function get_users(WP_REST_Request $request)
     {
+        do_action('rimplenet_api_request', $request, $allowed_roles=['administrator'], $action='rimplenet_get_users');
+
         $user_id = sanitize_text_field($request->get_param('user_id'));
 
         $headers = getallheaders();

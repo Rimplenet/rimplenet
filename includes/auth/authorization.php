@@ -28,7 +28,7 @@ class RimplenetAuthorization
                 } elseif ($user_access_token === "Invalid signature") {
                     return $this->response(400, "failed", "Validation error", [], ["Invalid signature"]);
                 } elseif ($user_access_token) {
-                    return $this->response(200, true, "Successful", [json_decode($user_access_token)], []);
+                    return $this->response(200, true, "Successful", json_decode($user_access_token), []);
                 }
 
             } catch (Exception $ex) {

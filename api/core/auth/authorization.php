@@ -5,6 +5,7 @@ class RimplenetAuthorizationApi
     public function __construct()
     {
         add_action('rest_api_init', array($this, 'register_api_routes'));
+        add_action( 'rimplenet_api_request', array($this, 'validate_jwt'), 10, 3 );
     }
 
     public function register_api_routes()
@@ -31,6 +32,27 @@ class RimplenetAuthorizationApi
         
         return new WP_REST_Response($get_auth);
 
+    }
+
+    public function validate_jwt( $request, $allowed_roles, $action ) {
+
+        $headers = getallheaders();
+        $access_token = $headers['Authorization'];
+
+        $auth = new RimplenetAuthorization();
+        $get_auth = $auth->authorization(
+            $access_token,
+        );
+
+        if (!empty($get_auth['error'])) {
+            echo json_encode($get_auth);
+            exit;
+        }
+
+        if($get_auth['data']->data->roles == ["administrator"]){
+            $this->ID = $get_auth['data']->data->ID;
+            return true;
+        }
     }
 }
 
