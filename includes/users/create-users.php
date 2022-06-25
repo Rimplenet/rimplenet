@@ -105,13 +105,13 @@ class RimplenetCreateUser
 	    $user['user_pass'] = $user_pass;
 
         if ($user['user_login'] == '') {
-            $user_login_error[] = 'user_login is required';
+            $user_login_error[] = 'username is required';
         }
         if (strlen($user['user_login']) < 4) {
-            $user_login_error[] = 'user_login must be atleast 4 chars';
+            $user_login_error[] = 'username must be atleast 4 chars';
         }
         if (username_exists($user['user_login'])) {
-            $user_login_error[] = 'user_login already taken';
+            $user_login_error[] = 'username already taken';
         }
         if (!empty($user_login_error)) {
             $this->validation_error[] = ['user_login' => $user_login_error];
@@ -131,10 +131,10 @@ class RimplenetCreateUser
         }
 
         if ($user['user_pass'] == '') {
-            $user_pass_error[] = 'user_pass is required';
+            $user_pass_error[] = 'user_password is required';
         }
         if (strlen($user['user_pass']) < 6) {
-            $user_pass_error[] = 'Please enter at least 6 characters for the user_pass';
+            $user_pass_error[] = 'Please enter at least 6 characters for the user_password';
         }
         // if (preg_match('/.*[a-z]+.*/i', $user['user_pass']) == 0) {
         //     $user_pass_error[] = 'user_pass needs at least one letter';

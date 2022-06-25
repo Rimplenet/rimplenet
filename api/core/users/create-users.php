@@ -21,7 +21,7 @@ class RimplenetCreateUserApi
 
     public function register_user(WP_REST_Request $request)
     {
-        do_action('rimplenet_api_request', $request, $allowed_roles=['administrator'], $action='rimplenet_get_users');
+        do_action('rimplenet_api_request_started', $request, $allowed_roles=['administrator'], $action='rimplenet_create_users');
 
         $headers = getallheaders();
         $access_token = $headers['Authorization'];
