@@ -45,6 +45,7 @@ class RimplenetAuthorizationApi
         );
 
         if (!empty($get_auth['error'])) {
+            status_header($get_auth['status_code']);
             echo json_encode($get_auth);
             exit;
         }
@@ -54,6 +55,7 @@ class RimplenetAuthorizationApi
             return true;
         }
     }
+    
 }
 
 $RimplenetAuthorizationApi = new RimplenetAuthorizationApi();

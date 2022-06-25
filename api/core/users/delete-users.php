@@ -23,6 +23,8 @@ class RimplenetDeleteUserApi
 
     public function delete_user(WP_REST_Request $request)
     {
+        do_action('rimplenet_api_request', $request, $allowed_roles=['administrator'], $action='rimplenet_get_users');
+        
         $user_id = sanitize_text_field($request->get_param('user_id'));
 
         $headers = getallheaders();
@@ -34,7 +36,7 @@ class RimplenetDeleteUserApi
             $access_token
         );
         
-        return new WP_REST_Response($delete_user);
+        return new WP_REST_Response($delete_user, $delete_user['status_code']);
     }
     
 }

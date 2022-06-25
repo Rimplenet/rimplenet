@@ -26,11 +26,11 @@ class RimplenetLoginUserApi
         $user = new RimplenetLoginUser();
         $login_user = $user->login_user(
             $request->get_param('user_email'),
-            $request->get_param('user_pass'),
+            $request->get_param('user_password'),
             $request->get_param('token_expiration'),
         );
         
-        return new WP_REST_Response($login_user);
+        return new WP_REST_Response($login_user, $login_user['status_code']);
 
     }
     
