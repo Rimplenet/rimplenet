@@ -5,7 +5,7 @@ class RimplenetAuthorizationApi
     public function __construct()
     {
         add_action('rest_api_init', array($this, 'register_api_routes'));
-        add_action( 'rimplenet_api_request', array($this, 'validate_jwt'), 10, 3 );
+        add_action( 'rimplenet_api_request_started', array($this, 'validate_jwt'), 1, 3 );
     }
 
     public function register_api_routes()
