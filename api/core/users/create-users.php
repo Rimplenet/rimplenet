@@ -28,8 +28,8 @@ class RimplenetCreateUserApi
         $user = new RimplenetCreateUser();
         $create_user = $user->create_user(
             $request->get_param('user_email'),
-            $request->get_param('user_login'),
-            $request->get_param('user_pass'),
+            $request->get_param('username'),
+            $request->get_param('user_password'),
             [
                 "first_name" => $request->get_param('first_name'),
                 "last_name" => $request->get_param('last_name')
