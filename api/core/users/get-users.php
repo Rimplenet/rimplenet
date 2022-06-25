@@ -33,7 +33,7 @@ class RimplenetGetUserApi
             $user_id ? $user_id : null,
         );
         
-        return new WP_REST_Response($get_user);
+        return new WP_REST_Response($get_user, $get_user->status_code);
 
     }
 }

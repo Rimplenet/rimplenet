@@ -23,6 +23,8 @@ class RimplenetUpdateUserApi
 
     public function update_user(WP_REST_Request $request)
     {
+        do_action('rimplenet_api_request', $request, $allowed_roles=['administrator'], $action='rimplenet_get_users');
+        
         $headers = getallheaders();
         $access_token = $headers['Authorization'];
 
@@ -41,7 +43,7 @@ class RimplenetUpdateUserApi
             $access_token
         );
         
-        return new WP_REST_Response($update_user);
+        return new WP_REST_Response($update_user, $update_user['status_code']);
         
     }
 

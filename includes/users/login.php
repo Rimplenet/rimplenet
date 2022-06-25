@@ -86,7 +86,7 @@ class RimplenetLoginUser
         
                 }
             } else {
-                $this->response(400, "failed", "Validation error", [], ['error'=>'unkown token_expiration']);
+                return $this->response(400, "failed", "Validation error", [], ['error'=>'unkown token_expiration']);
             }
         }
 
