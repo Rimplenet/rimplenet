@@ -36,15 +36,10 @@ class RimplenetLoginUser
     
                 unset($is_user->data->user_pass);
     
-                $new = get_userdata($is_user->data->ID);
-                $check_role = get_userdata($is_user->data->ID);
-    
-                $is_user->data->role = $check_role->wp_capabilities;
-    
                 $iss = 'localhost';
                 $iat = time();
                 $exp = $iat + 3600;
-                $user_data = $is_user->data;
+                $user_data = $this->userFormat($is_user);
     
                 $secret_key = "user123";
     
@@ -71,15 +66,10 @@ class RimplenetLoginUser
         
                     unset($is_user->data->user_pass);
         
-                    $new = get_userdata($is_user->data->ID);
-                    $check_role = get_userdata($is_user->data->ID);
-        
-                    $is_user->data->role = $check_role->wp_capabilities;
-        
                     $iss = 'localhost';
                     $iat = time();
                     $exp = $iat + 15780000;
-                    $user_data = $is_user->data;
+                    $user_data = $this->userFormat($is_user);
         
                     $secret_key = "user123";
         
@@ -139,6 +129,27 @@ class RimplenetLoginUser
             "message" => $message,
             "data" => $data,
             "error" =>$error
+        ];
+    }
+
+    private function userFormat($user)
+    {
+
+        if (!isset($user->data)) return;
+
+        return [
+            "ID" => $user->data->ID,
+            "user_login" => $user->data->user_login,
+            "user_nicename" => $user->data->user_nicename,
+            "user_email" => $user->data->user_email,
+            "user_url" => $user->data->user_url,
+            "user_registered" => $user->data->user_registered,
+            "user_activation_key" => $user->data->user_activation_key,
+            "user_status" => $user->data->user_status,
+            "display_name" => $user->data->display_name,
+            "first_name" => get_user_meta($user->data->ID, "first_name", true),
+            "last_name" => get_user_meta($user->data->ID, "last_name", true),
+			"roles" => $user->roles,
         ];
     }
     
