@@ -1,6 +1,6 @@
 <?php
 
-class Rimplenet_Base_Investment_Package_Api
+class Rimplenet_Base_Investment_Api
 {
 
 	private $plugin_name;
@@ -21,4 +21,4 @@ class Rimplenet_Base_Investment_Package_Api
 }
 
 
-$Rimplenet_Base_Investment_Package_Api = new Rimplenet_Base_Investment_Package_Api();
+$Rimplenet_Base_Investment_Api = new Rimplenet_Base_Investment_Api();
