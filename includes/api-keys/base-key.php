@@ -7,13 +7,8 @@ use Wallets\Base;
 
 class ApiKey extends Base
 {
-
-    protected $token;
-
-    public function __construct($token = null) {
-        if($token) $this->token = $token;
-        else $this->token = bin2hex(random_bytes(14));
-    }
+    
+    const API_KEYS= "API-KEYS";
 
     public function __call($method, $argc)
     {
@@ -48,20 +43,5 @@ class ApiKey extends Base
             # if token is not set
             return $this->error(["No Token"], "Token not Found", 404);
         endif;
-    }
-
-    protected static function apiKey($string = null)
-    {
-        $token = new ApiKey($string);
-        $hash = hash('sha256', md5('Riplenet'));
-        if(!$string)
-        return [
-            'key' => $token->token,
-            'hash' => base64_encode(openssl_encrypt($token->token, 'AES-256-CBC', $hash, 0, substr($hash, 0, 16)))
-        ];
-        return [
-            'hash' => $token->token,
-            'key' => openssl_decrypt(base64_decode($token->token), 'AES-256-CBC', $hash, 0, substr($hash, 0, 16))
-        ];
     }
 }

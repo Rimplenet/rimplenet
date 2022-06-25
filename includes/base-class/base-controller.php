@@ -3,7 +3,6 @@
 namespace Wallets;
 
 use WP_Query;
-use WP_Term;
 
 abstract class Base
 {
@@ -20,9 +19,10 @@ abstract class Base
     const POST_TYPE  = 'rimplenettransaction';
     const MIN_AMOUNT = 0;
     const MAX_AMOUNT = 999999999;
-    const WALLET_CAT_NAME = 'WALLETS';
+    const WAALLETS = 'RIMPLENET WALLETS';
     const DEBIT = 'DEBIT';
     const CREDIT = 'CREDIT';
+    const TRANSFERS = 'TRANSFERS';
 
     // public function __construct(mixed $var = '')
     public function __construct($var = "")
