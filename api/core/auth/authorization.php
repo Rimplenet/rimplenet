@@ -37,7 +37,7 @@ class RimplenetAuthorizationApi
     public function validate_jwt( $request, $allowed_roles, $action ) {
 
         $headers = getallheaders();
-        $access_token = $headers['Authorization'];
+        $access_token = $headers['Authorization'] ?? null;
 
         $auth = new RimplenetAuthorization();
         $get_auth = $auth->authorization(
