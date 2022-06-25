@@ -33,8 +33,8 @@ class RimplenetUpdateUserApi
             $request->get_param('user_id'),
             $request->get_param('user_email'),
             [
-                "old_user_pass" => $request->get_param('old_user_pass'),
-                "new_user_pass" => $request->get_param('new_user_pass')
+                "old_user_password" => $request->get_param('old_user_pass'),
+                "new_user_password" => $request->get_param('new_user_pass')
             ],
             [
                 "first_name" => $request->get_param('first_name'),

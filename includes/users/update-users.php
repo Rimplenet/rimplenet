@@ -135,7 +135,7 @@ class RimplenetUpdateUser
                         $user_pass_error[] = 'Incorrect old password';
                     }
                     if ($sanitize_user_pass['new_user_pass'] && strlen($sanitize_user_pass['new_user_pass']) < 6) {
-                        $user_pass_error[] = 'Please enter at least 6 characters for the user_pass';
+                        $user_pass_error[] = 'Please enter at least 6 characters for the user_password';
                     }
                     $user['user_pass'] = $sanitize_user_pass['new_user_pass'];
                     if (!empty($user_pass_error)) {

@@ -166,8 +166,7 @@ class RimplenetGetUser
 
         return [
             "ID" => $user->data->ID,
-            "user_login" => $user->data->user_login,
-            "user_nicename" => $user->data->user_nicename,
+            "username" => $user->data->user_login,
             "user_email" => $user->data->user_email,
             "user_url" => $user->data->user_url,
             "user_registered" => $user->data->user_registered,
@@ -176,9 +175,7 @@ class RimplenetGetUser
             "display_name" => $user->data->display_name,
             "first_name" => get_user_meta($user->data->ID, "first_name", true),
             "last_name" => get_user_meta($user->data->ID, "last_name", true),
-			"roles" => [
-				$user->roles,
-			],
+			"roles" => $user->roles,
         ];
     }
 }
