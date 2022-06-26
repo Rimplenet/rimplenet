@@ -25,7 +25,9 @@ class RimplenetCreateInvestment
             'post_type'     => 'rimplenettransaction'
         ]);
 
-        wp_set_object_terms($InvestmentId, 'investment', 'rimplenettransaction_type');
+        wp_set_object_terms($InvestmentId, 'INVESTMENTS', 'rimplenettransaction_type');
+
+        $roi_amount_to_be_paid_per_interval = ($data['amount_invested'] + $data['amount_to_repay_on_roi']) / $data['time_to_end_investment'];
 
         $save_investment = [
             'investment_name'                       => $data['investment_name'],
@@ -34,7 +36,7 @@ class RimplenetCreateInvestment
             'amount_invested'                       => $data['amount_invested'],
             'amount_to_repay_on_roi'                => $data['amount_to_repay_on_roi'],
             'roi_repayment_interval'                => $data['roi_repayment_interval'],
-            'roi_amount_to_be_paid_per_interval'    => $data['roi_amount_to_be_paid_per_interval'],
+            'roi_amount_to_be_paid_per_interval'    => $roi_amount_to_be_paid_per_interval,
             'time_to_end_investment'                => $data['time_to_end_investment'],
             'investment_group_id'                   => $data['investment_group_id']
         ];

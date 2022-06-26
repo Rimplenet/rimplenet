@@ -39,7 +39,7 @@ class RimplenetAuthorization
             }
         } else {
 
-            return $this->response(404, "failed", "Permission denied", [], ["unauthorize"=>"caller_id is not authorize"]);
+            return $this->response(401, "failed", "Permission denied", [], ["unauthorize"=>"caller_id is not authorize"]);
             
         }
 

@@ -21,7 +21,7 @@ class RimplenetCreateInvestmentApi
 
     public function create_investment(WP_REST_Request $request)
     {
-        do_action('rimplenet_api_request_started', $request, $allowed_roles=['administrator'], $action='rimplenet_create_investments');
+        do_action('rimplenet_api_request_started', $request, $allowed_roles=['administrator', 'subscriber'], $action='rimplenet_create_investments');
 
         $data = [
             'investment_name'                       => $request->get_param('investment_name'),
@@ -30,7 +30,6 @@ class RimplenetCreateInvestmentApi
             'amount_invested'                       => $request->get_param('amount_invested'),
             'amount_to_repay_on_roi'                => $request->get_param('amount_to_repay_on_roi'),
             'roi_repayment_interval'                => $request->get_param('roi_repayment_interval'),
-            'roi_amount_to_be_paid_per_interval'    => $request->get_param('roi_amount_to_be_paid_per_interval'),
             'time_to_end_investment'                => $request->get_param('time_to_end_investment'),
             'investment_group_id'                   => $request->get_param('investment_group_id')
         ];
