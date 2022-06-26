@@ -16,7 +16,7 @@ class Rimplenet_Base_Investment_Api
 	private function load_required_files()
 	{
 		//Add Required Files to Load
-		
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'investments/create-investments.php';
 	}
 }
 
