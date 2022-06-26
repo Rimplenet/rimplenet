@@ -50,9 +50,14 @@ class RimplenetAuthorizationApi
             exit;
         }
 
-        if($get_auth['data']->data->roles == ["administrator"]){
+        if(in_array($get_auth['data']->data->roles[0], $allowed_roles)){
             $this->ID = $get_auth['data']->data->ID;
             return true;
+        } else {
+            $response = $auth->response(401, "failed", "Permission denied", [], ["unauthorize"=>"caller_id is not authorize"]);
+            status_header($response['status_code']);
+            echo json_encode($response);
+            exit;
         }
     }
     
