@@ -3,7 +3,7 @@
 /**
  * Create wallet
  */
-class GetApiKey extends RimplenetApiKeys
+class GetApiKey extends RimplenetGetApiKeys
 {
 
     public function __construct()
@@ -21,9 +21,10 @@ class GetApiKey extends RimplenetApiKeys
 
     public function api_get_keys(WP_REST_Request $req)
     {
+        do_action('rimplenet_api_request_started', $request, $allowed_roles=['administrator'], $action='rimplenet_api_keys');
         $key = sanitize_text_field($req['api_key'] ?? '');
 
-        GetApiKey::decKey($key);
+        $this->getKeys($key);
         return new WP_Rest_Response($this->response, $this->response['status_code']);
 
     }
