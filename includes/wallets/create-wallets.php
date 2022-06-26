@@ -127,10 +127,10 @@ class RimplenetCreateWallets extends Base
             'rimplenet_max_withdrawal_amount'    => $max_withdrawal_amount,
             'rimplenet_min_withdrawal_amount'    => $min_withdrawal_amount,
             'rimplenet_wallet_symbol_position'  => $wallet_symbol_pos,
-            'include_in_woocommerce_currency_list'          => $inc_i_w_cl,
-            'enable_as_woocommerce_product_payment_wallet'  => $e_a_w_p,
-            'rimplenet_rules_after_wallet_withdrawal'       => $r_a_b_w,
-            'rimplenet_rules_before_wallet_withdrawal'      => $r_b_b_W,
+            // 'include_in_woocommerce_currency_list'          => $inc_i_w_cl,
+            // 'enable_as_woocommerce_product_payment_wallet'  => $e_a_w_p,
+            // 'rimplenet_rules_after_wallet_withdrawal'       => $r_a_b_w,
+            // 'rimplenet_rules_before_wallet_withdrawal'      => $r_b_b_W,
         ];
 
         foreach ($wallet_metas as $key => $value) {

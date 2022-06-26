@@ -33,10 +33,10 @@ class CreateWallet extends RimplenetCreateWallets
             'wallet_decimal'        => $req['wallet_decimal'] ?? 2,
             'max_withdrawal_amount' => $req['max_withdrawal_amount'] ?? CreateWallet::MAX_AMOUNT,
             'min_withdrawal_amount' => $req['min_withdrawal_amount'] ?? CreateWallet::MIN_AMOUNT,
-            'inc_i_w_cl'            => $req['inc_in_woocmrce_curr_list'] ?? false,
-            'e_a_w_p'               => $req['enable_as_woocmrce_pymt_wlt'] ?? false,
-            'r_b_b_w'               => sanitize_text_field($req['rules_before_withdrawal'] ?? ''),
-            'r_a_b_w'               => sanitize_text_field($req['rules_after_withdrawal'] ?? '')
+            // 'inc_i_w_cl'            => $req['inc_in_woocmrce_curr_list'] ?? false,
+            // 'e_a_w_p'               => $req['enable_as_woocmrce_pymt_wlt'] ?? false,
+            // // 'r_b_b_w'               => sanitize_text_field($req['rules_before_withdrawal'] ?? ''),
+            // // 'r_a_b_w'               => sanitize_text_field($req['rules_after_withdrawal'] ?? '')
         ];
         
         $this->createWallet();
