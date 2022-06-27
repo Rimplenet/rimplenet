@@ -24,7 +24,7 @@ class RimplenetUpdateUser
         if ($access_token == null) {
             if(!empty($this->validation_error)) return $this->response(400, "failed", "Validation error", [], $this->validation_error);
 
-            if(!$this->authorization(get_current_user_id())) return $this->response(403, "failed", "Permission denied", [], ["unauthorize"=>"caller_id is not authorize"]);
+            if(!$this->authorization(get_current_user_id())) return $this->response(403, "failed", "Permission denied", [], ["unauthorize"=>"caller_id is not authorized"]);
             
             if (empty($this->validation_error)) {
     
@@ -56,7 +56,7 @@ class RimplenetUpdateUser
                 } elseif ($user_access_token) {
                     if(!empty($this->validation_error)) return $this->response(400, "failed", "Validation error", [], $this->validation_error);
 
-                    if(!$this->authorization($id)) return $this->response(403, "failed", "Permission denied", [], ["unauthorize"=>"caller_id is not authorize"]);
+                    if(!$this->authorization($id)) return $this->response(403, "failed", "Permission denied", [], ["unauthorize"=>"Request is not authorized"]);
 
                     if (empty($this->validation_error)) {
     
