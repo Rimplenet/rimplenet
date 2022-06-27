@@ -23,7 +23,7 @@ class RimplenetGetUser
 
         if ($access_token == null) {
 
-            if(!$this->authorization(get_current_user_id())) return $this->response(403, "failed", "Permission denied", [], ["unauthorize"=>"caller_id is not authorize"]);
+            if(!$this->authorization(get_current_user_id())) return $this->response(403, "failed", "Permission denied", [], ["unauthorize"=>"caller_id is not authorized"]);
             
             $get_single_user = get_user_by('ID', $user_id);
             unset($get_single_user->data->user_pass);
@@ -70,7 +70,7 @@ class RimplenetGetUser
                 } elseif ($user_access_token === "Invalid signature") {
                     return $this->response(400, "failed", "Validation error", [], ["Invalid signature"]);
                 } elseif ($user_access_token) {
-                    if(!$this->authorization($id)) return $this->response(403, "failed", "Permission denied", [], ["unauthorize"=>"caller_id is not authorize"]);
+                    if(!$this->authorization($id)) return $this->response(403, "failed", "Permission denied", [], ["unauthorize"=>"Request is not authorized"]);
 
                     $get_single_user = get_user_by('ID', $user_id);
                     unset($get_single_user->data->user_pass);
