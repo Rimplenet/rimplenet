@@ -26,7 +26,7 @@ class RimplenetUpdateUserApi
         do_action('rimplenet_api_request_started', $request, $allowed_roles=['administrator'], $action='rimplenet_update_users');
         
         $headers = getallheaders();
-        $access_token = $headers['Authorization'];
+        $access_token = explode(" ", $headers['Authorization'])[1];
 
         $user = new RimplenetUpdateUser();
         $update_user = $user->update_user(

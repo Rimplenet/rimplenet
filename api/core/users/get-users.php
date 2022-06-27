@@ -25,7 +25,7 @@ class RimplenetGetUserApi
         $user_id = sanitize_text_field($request->get_param('user_id'));
 
         $headers = getallheaders();
-        $access_token = $headers['Authorization'];
+        $access_token = explode(" ", $headers['Authorization'])[1];
 
         $user = new RimplenetGetUser();
         $get_user = $user->get_users(

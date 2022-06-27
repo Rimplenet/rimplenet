@@ -139,8 +139,7 @@ class RimplenetLoginUser
 
         return [
             "ID" => $user->data->ID,
-            "user_login" => $user->data->user_login,
-            "user_nicename" => $user->data->user_nicename,
+            "username" => $user->data->user_login,
             "user_email" => $user->data->user_email,
             "user_url" => $user->data->user_url,
             "user_registered" => $user->data->user_registered,
