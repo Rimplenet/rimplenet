@@ -113,7 +113,7 @@ class RimplenetLoginUser
         }
 
         if ($user['user_pass'] == '') {
-            $user_pass_error[] = 'user_pass is required';
+            $user_pass_error[] = 'user_password is required';
         }
         if (!empty($user_pass_error)) {
             $this->validation_error[] = ['user_pass' => $user_pass_error];
@@ -141,11 +141,6 @@ class RimplenetLoginUser
             "ID" => $user->data->ID,
             "username" => $user->data->user_login,
             "user_email" => $user->data->user_email,
-            "user_url" => $user->data->user_url,
-            "user_registered" => $user->data->user_registered,
-            "user_activation_key" => $user->data->user_activation_key,
-            "user_status" => $user->data->user_status,
-            "display_name" => $user->data->display_name,
             "first_name" => get_user_meta($user->data->ID, "first_name", true),
             "last_name" => get_user_meta($user->data->ID, "last_name", true),
 			"roles" => $user->roles,
