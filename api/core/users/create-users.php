@@ -24,7 +24,7 @@ class RimplenetCreateUserApi
         do_action('rimplenet_api_request_started', $request, $allowed_roles=['administrator'], $action='rimplenet_create_users');
 
         $headers = getallheaders();
-        $access_token = $headers['Authorization'];
+        $access_token = explode(" ", $headers['Authorization'])[1];
 
         $user = new RimplenetCreateUser();
         $create_user = $user->create_user(
