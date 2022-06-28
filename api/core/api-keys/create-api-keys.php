@@ -22,8 +22,10 @@ class CreateApiKeys extends RimplenetApiKeys
     public function api_create_keys(WP_REST_Request $req)
     {
         $params = [
-            'name' => sanitize_text_field($req['app_name'] ?? ''),
-            'app_id' => sanitize_text_field($req['app_id'] ?? '')
+            'name' => sanitize_text_field(ucwords($req['app_name'] ?? '')),
+            'app_id' => sanitize_text_field($req['app_id'] ?? ''),
+            'action' => sanitize_text_field(strtolower($req['action'] ?? '')),
+            'key_type' => sanitize_text_field(strtolower($req['key_type'] ?? ''))
         ];
 
         CreateApiKeys::genkey($params);
