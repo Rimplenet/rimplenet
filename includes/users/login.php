@@ -138,7 +138,7 @@ class RimplenetLoginUser
         if (!isset($user->data)) return;
 
         return [
-            "ID" => $user->data->ID,
+            "ID" => intval($user->data->ID),
             "username" => $user->data->user_login,
             "user_email" => $user->data->user_email,
             "first_name" => get_user_meta($user->data->ID, "first_name", true),

@@ -96,7 +96,7 @@ class RimplenetUpdateUser
         $user_id_error = [];
         
         $sanitize_user_id = sanitize_text_field( $user_id );
-        $sanitize_user_email = sanitize_text_field($user_email);
+        $sanitize_user_email = strtolower(sanitize_text_field($user_email));
         $sanitize_user_pass = $user_pass;
 
         if ($sanitize_user_id == '') {

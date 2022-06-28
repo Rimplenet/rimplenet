@@ -100,12 +100,15 @@ class RimplenetCreateUser
         $user_pass_error = [];
 
 
-        $user['user_login'] = sanitize_text_field($user_login);
-	    $user['user_email'] = sanitize_text_field($user_email);
+        $user['user_login'] = strtolower(sanitize_text_field($user_login));
+	    $user['user_email'] = strtolower(sanitize_text_field($user_email));
 	    $user['user_pass'] = $user_pass;
 
         if ($user['user_login'] == '') {
             $user_login_error[] = 'username is required';
+        }
+        if (preg_match('/\s/', $user['user_login']) != 0) {
+            $user_login_error[] = 'username must not contain space';
         }
         if (strlen($user['user_login']) < 4) {
             $user_login_error[] = 'username must be atleast 4 chars';
