@@ -5,7 +5,7 @@ use ApiKey\ApiKey;
 class RimplenetGetApiKeys extends ApiKey
 {
 
-    public function getKeys($hash)
+    public function _getKeys($hash)
     {
         return $this->queryKeys();
     }
@@ -34,18 +34,20 @@ class RimplenetGetApiKeys extends ApiKey
             foreach ($apiKeys as $keys => $value) :
                 $this->id = $value->ID;
                 $apiKeys[$keys] = [
+                    'action'    => $this->postMeta('action'),
+                    'key_type'  => $this->postMeta('key_type'),
+                    'user_id'   => $this->postMeta('user_id'),
                     'uuid'      => $this->postMeta('uuid'),
                     'app_id'    => $this->postMeta('app_id'),
                     'name'      => $this->postMeta('name'),
                     'hash'      => $this->postMeta('hash'),
                     'key'       => $this->postMeta('key'),
-                    'password'  => $this->postMeta('password'),
                     'created'   => $this->postMeta('created')
                 ];
             endforeach;
-                $this->success($apiKeys, "Api keys retrieved");
+            $this->success($apiKeys, "Api keys retrieved");
             return $apiKeys;
-        else:
+        else :
             return $this->error("No api key was found", "Api key not found", 404);
         endif;
     }

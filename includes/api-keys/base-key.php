@@ -23,7 +23,7 @@ class ApiKey extends Base
 
     public function __construct()
     {
-        add_action('rimplenet_api_request_started', array($this, 'validate_api_key'), 1, 3);
+        // add_action('rimplenet_api_request_started', array($this, 'validate_api_key'), 1, 3);
     }
 
     /**
@@ -44,21 +44,46 @@ class ApiKey extends Base
         return $this->requireAdmin();
     }
 
+    /**
+     * Confirm user is an admin
+     * @return bool
+     */
     protected function requireAdmin()
     {
         # Get headers
         $header = apache_request_headers();
         # seperate Authorization name from token
         [$name, $token] = explode(' ', $header['Authorization']);
+        if ($name == 'Bearer') :
+            return $this->decodeBearer($token);
+        elseif ($name == "Basic") :
+            return $this->decodeBasic($token);
+        endif;
+    }
+
+    public function decodeBearer($token)
+    {
         # Verify authorization token
         $authorization = (new RimplenetAuthorization)->authorization($token);
         # get user from decoded data
         $this->user = $authorization['data']->user;
         # verify user from token is admin
-        if(!self::isAdministrator($this->user->roles)):
-            $this->error(['unauthorized' => 'You are not allowed to perform operation'], 'Authorization Denied', 401); return false;
+        if (!self::isAdministrator($this->user->roles)) :
+            $this->error(['unauthorized' => 'You are not allowed to perform operation'], 'Authorization Denied', 401);
+            return false;
         endif;
         return true;
+    }
+
+    public function decodeBasic($token)
+    {
+        $decrypted = \base64_decode($token);
+        [$username, $key] = explode(':', $decrypted);
+        $user = get_user_by('login', $username);
+        $isAdministrator = $user->caps['administrator'];
+        if(!$isAdministrator) return $this->error(['unauthorized' => "Authoriation denied"], 'Unauthorized', 401);
+        $this->success($user, 'o');
+        return false;
     }
 
     /**
