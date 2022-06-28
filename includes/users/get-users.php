@@ -31,7 +31,7 @@ class RimplenetGetUser
 
             if($user_id !== null) {
                 
-                if ($user_data) return $this->response(200, true, "Successful", $user_data, []);
+                if ($user_data) return $this->response(200, true, "User retrieved successfully", $user_data, []);
 
                 return $this->response(404, "Failed", "User not found", [], []);
             }
@@ -56,14 +56,14 @@ class RimplenetGetUser
                 $data[]=$this->userFormat($get_user);
             }
 
-            return $this->response(200, true, "Successful", $data, []);
+            return $this->response(200, true, "User retrieved successfully", $data, []);
 
         } else {
 
             try {
                     
                 $user_access_token = JWT::decode($access_token);
-                $id = json_decode($user_access_token)->data->ID;
+                $id = json_decode($user_access_token)->user->ID;
                 
                 if ($user_access_token === "Expired token") {
                     return $this->response(400, "failed", "Validation error", [], ["Expired token"]);
@@ -78,7 +78,7 @@ class RimplenetGetUser
 
                     if($user_id !== null) {
                 
-                        if ($user_data) return $this->response(200, true, "Successful", $user_data, []);
+                        if ($user_data) return $this->response(200, true, "User retrieved successfully", $user_data, []);
         
                         return $this->response(404, "Failed", "User not found", [], []);
                     }
@@ -103,7 +103,7 @@ class RimplenetGetUser
                         $data[]=$this->userFormat($get_user);
                     }
 
-                    return $this->response(200, true, "Successful", $data, []);
+                    return $this->response(200, true, "User retrieved successfully", $data, []);
                 }
 
             } catch (Exception $ex) {

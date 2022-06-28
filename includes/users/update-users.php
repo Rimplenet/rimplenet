@@ -39,7 +39,7 @@ class RimplenetUpdateUser
     
                 }
     
-                return $this->response(200, true, "User updated", ["id"=>$update_user], $this->validation_error);
+                return $this->response(200, true, "User updated successfully", ["id"=>$update_user], $this->validation_error);
     
             }
         } else {
@@ -47,7 +47,7 @@ class RimplenetUpdateUser
             try {
                     
                 $user_access_token = JWT::decode($access_token);
-                $id = json_decode($user_access_token)->data->ID;
+                $id = json_decode($user_access_token)->user->ID;
                 
                 if ($user_access_token === "Expired token") {
                     return $this->response(400, "failed", "Validation error", [], ["Expired token"]);
@@ -71,7 +71,7 @@ class RimplenetUpdateUser
             
                         }
             
-                        return $this->response(200, true, "User updated", ["id"=>$update_user], $this->validation_error);
+                        return $this->response(200, true, "User updated successfully", ["id"=>$update_user], $this->validation_error);
             
                     }
                 }
