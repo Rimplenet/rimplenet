@@ -33,7 +33,7 @@ class RimplenetDeleteUser
                 // $table='wp_users';
                 $deleted = wp_delete_user($user_id);
     
-                if ($deleted) return $this->response(200, true, "User Deleted", [], []);
+                if ($deleted) return $this->response(200, true, "User deleted successfully", [], []);
     
                 return $this->response(404, "Failed", "User not found", [], []);
     
@@ -44,7 +44,7 @@ class RimplenetDeleteUser
             try {
 
                 $user_access_token = JWT::decode($access_token);
-                $id = json_decode($user_access_token)->data->ID;
+                $id = json_decode($user_access_token)->user->ID;
                 
                 if ($user_access_token === "Expired token") {
                     return $this->response(400, "failed", "Validation error", [], ["Expired token"]);
@@ -60,7 +60,7 @@ class RimplenetDeleteUser
                         $deleted = wp_delete_user($user_id);
             
                         if ($deleted) {
-                            return $this->response(200, true, "User Deleted", [], []);
+                            return $this->response(200, true, "User deleted successfully", [], []);
                         }
             
                         return $this->response(404, "Failed", "User not found", [], []);

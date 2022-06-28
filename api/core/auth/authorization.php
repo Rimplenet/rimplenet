@@ -67,7 +67,7 @@ class RimplenetAuthorizationApi
             // $this->ID = $get_auth['data']->data->ID;
             return true;
         } else {
-            $response = $auth->response(401, "failed", "Permission denied", [], ["unauthorize"=>"caller_id is not authorize"]);
+            $response = $auth->response(401, "failed", "Permission denied", [], ["unauthorize"=>"Request is not authorized"]);
             status_header($response['status_code']);
             echo json_encode($response);
             exit;

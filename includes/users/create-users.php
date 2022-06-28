@@ -40,7 +40,7 @@ class RimplenetCreateUser
     
                 }
     
-                return $this->response(200, true, "New user create", ["id"=>$new_user], $this->validation_error);
+                return $this->response(200, true, "User created successfully", ["id"=>$new_user], $this->validation_error);
             
                 
             }
@@ -75,7 +75,7 @@ class RimplenetCreateUser
             
                         }
             
-                        return $this->response(200, true, "New user create", ["id"=>$new_user], $this->validation_error);
+                        return $this->response(200, true, "User created successfully", ["id"=>$new_user], $this->validation_error);
                     
                         
                     }
