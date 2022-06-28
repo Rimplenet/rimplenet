@@ -25,22 +25,14 @@ $RetrieveWallet = new class extends RimplenetGetWallets
         $wlt_id  = sanitize_text_field($req['wallet_id']);
         $page      = $req['page'] ?? 1;
 
-        $key = (object) apache_request_headers();
-
-        $obj = new RimplenetAuthorization;
-        $rimp = $obj->authorization(str_replace('Bearer ', '', $key->Authorization));
-
-
-        return new WP_REST_Response($rimp, $this->response['status_code']);
-
         # Check required
-        // if ($wlt_id !== '') :
-        //     # if wallet id is not empty return the wallet
-        //     $this->getWallet($wlt_id);
-        //     return new WP_REST_Response($this->response, $this->response['status_code']);
-        // else :
-        //     $this->getWallets();
-        //     return new WP_REST_Response($this->response, $this->response['status_code']);
-        // endif;
+        if ($wlt_id !== '') :
+            # if wallet id is not empty return the wallet
+            $this->getWallet($wlt_id);
+            return new WP_REST_Response($this->response, $this->response['status_code']);
+        else :
+            $this->getWallets();
+            return new WP_REST_Response($this->response, $this->response['status_code']);
+        endif;
     }
 };
