@@ -63,7 +63,7 @@ class RimplenetAuthorizationApi
             exit;
         }
 
-        if(in_array($get_auth['data']->data->roles[0], $allowed_roles)){
+        if(in_array($get_auth['data']->user->roles[0], $allowed_roles)){
             // $this->ID = $get_auth['data']->data->ID;
             return true;
         } else {
