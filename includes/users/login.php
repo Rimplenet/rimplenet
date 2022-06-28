@@ -77,7 +77,7 @@ class RimplenetLoginUser
                         'iss' => $iss,
                         'iat' => $iat,
                         'exp' => $exp,
-                        'data' => $user_data
+                        'user' => $user_data
                     ]);
         
                     $jwt = JWT::encode($payload);
