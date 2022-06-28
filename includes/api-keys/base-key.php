@@ -41,7 +41,6 @@ class ApiKey extends Base
 
     protected function pre()
     {
-        // return false;
         return $this->requireAdmin();
     }
 
@@ -49,42 +48,18 @@ class ApiKey extends Base
     {
         # Get headers
         $header = apache_request_headers();
-        [$name, $token] = $header['Authorization'];
+        # seperate Authorization name from token
+        [$name, $token] = explode(' ', $header['Authorization']);
+        # Verify authorization token
         $authorization = (new RimplenetAuthorization)->authorization($token);
-        $this->error($authorization); return false;
-        #Check authorization is set
-        if (isset($header['Authorization'])) :
-            #seperate token from bearer
-            $tokenx = explode(' ', $header['Authorization']);
-            # decode token
-            $token = json_decode(JWT::decode($tokenx[1]));
-            if (is_object($token)) :
-                return $this->data = $token->data;
-            else :
-                # if token is invalid
-                return $this->error([JWT::decode($tokenx[1])], "Token error", 400);
-            endif;
-        else :
-            # if token is not set
-            return $this->error(["No Token"], "Token not Found", 404);
+        # get user from decoded data
+        $this->user = $authorization['data']->user;
+        # verify user from token is admin
+        if(!self::isAdministrator($this->user->roles)):
+            $this->error(['unauthorized' => 'You are not allowed to perform operation'], 'Authorization Denied', 401); return false;
         endif;
+        return true;
     }
-
-    public function validate_api_key($request, $allowed_roles, $action)
-    {
-
-        $headers = getallheaders();
-        if (preg_match('/^Basic/', $headers['Authorization'])) :
-            self::success("Basic Tokken", '');
-            echo json_encode($this->response);
-            exit;
-        else :
-            $this->error("No Token");
-            echo json_encode($get_auth);
-            exit;
-        endif;
-    }
-
 
     /**
      * Validate token type provided is valid

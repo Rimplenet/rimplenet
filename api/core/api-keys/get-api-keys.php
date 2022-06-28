@@ -13,7 +13,7 @@ class GetApiKey extends RimplenetGetApiKeys
 
     public function register_api_routes()
     {
-        register_rest_route('/rimplenet/v1', 'api_keys', [
+        register_rest_route('/rimplenet/v1', 'api-keys', [
             'methods' => 'GET',
             'callback' => [$this, 'api_get_keys']
         ]);
