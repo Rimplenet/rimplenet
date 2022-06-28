@@ -45,7 +45,7 @@ abstract class Base
     public function error($err = '', $message = '', $status = 400)
     {
         $this->response = [
-            'status_code' => 400,
+            'status_code' => $status,
             'status' => false,
             'message' => $message,
             'error' => $this->response['error'] ?? $err
