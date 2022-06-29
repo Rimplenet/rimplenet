@@ -24,9 +24,6 @@ $updateDebits = new class extends RimplenetUpdateDebits
             'type' => 'debit'
         ];
 
-        if ($this->checkEmpty())
-            return new WP_REST_Response($this->response);
-
         $this->updateDebits();
         return new WP_REST_Response($this->response);
     }
