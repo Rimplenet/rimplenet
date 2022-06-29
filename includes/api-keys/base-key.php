@@ -5,6 +5,7 @@ namespace ApiKey;
 use JWT;
 use RimplenetAuthorization;
 use Wallets\Base;
+use WP_Query;
 
 class ApiKey extends Base
 {
@@ -81,8 +82,10 @@ class ApiKey extends Base
         [$username, $key] = explode(':', $decrypted);
         $user = get_user_by('login', $username);
         $isAdministrator = $user->caps['administrator'];
-        if(!$isAdministrator) return $this->error(['unauthorized' => "Authoriation denied"], 'Unauthorized', 401);
-        $this->success($user, 'o');
+        if (!$isAdministrator) return $this->error(['unauthorized' => "Authoriation denied"], 'Unauthorized', 401);
+        $posts = self::getPostByKey($key);
+        if(!$posts) return $this->error(['invalid' => 'Invalid Token'], 'Invalid Token');
+        $this->success($this->formatKey($posts), 'o');
         return false;
     }
 
@@ -104,5 +107,29 @@ class ApiKey extends Base
     protected static function isAdministrator(array $roles)
     {
         return in_array('administrator', $roles);
+    }
+
+    protected static function getPostByKey($key)
+    {
+        $key = htmlspecialchars(trim($key));
+        global $wpdb;
+        $data = $wpdb->get_results($wpdb->prepare("SELECT * FROM $wpdb->postmeta WHERE meta_key = 'key' AND meta_value = '".$key."' "));
+        return $data;
+    }
+
+    public function formatKey($key)
+    {
+        $this->id = $key[0]->post_id;
+        return [
+            'action'    => $this->postMeta('action'),
+            'key_type'  => $this->postMeta('key_type'),
+            'user_id'   => $this->postMeta('user_id'),
+            'uuid'      => $this->postMeta('uuid'),
+            'app_id'    => $this->postMeta('app_id'),
+            'name'      => $this->postMeta('name'),
+            'hash'      => $this->postMeta('hash'),
+            'key'       => $this->postMeta('key'),
+            'created'   => $this->postMeta('created')
+        ];
     }
 }

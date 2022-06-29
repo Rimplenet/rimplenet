@@ -19,7 +19,8 @@ class RimplenetUpdateDebits extends Debits
         $note = !empty($note) ? $note : $this->req['note'];
         # assign param type to $type otherwise get type from class
         $type = !empty($type) ? $type : $this->req['type'];
- 
+        
+        if ($this->checkEmpty(['debit_id' => $id, 'note' => $note])) return;
 
         # Check if the transaction has already been executed
         if ($this->debitsExists($id, $type)) :

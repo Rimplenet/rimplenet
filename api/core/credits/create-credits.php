@@ -20,6 +20,7 @@ $createCredits = new class extends RimplenetCreateCredits
 
     public function api_create_credits(WP_REST_Request $req)
     {
+
         $this->req = [
             'note'          => sanitize_text_field($req['note'] ?? ''),
             'user_id'       => sanitize_text_field($req['user_id']),
@@ -32,5 +33,10 @@ $createCredits = new class extends RimplenetCreateCredits
             return new WP_REST_Response($this->response, $this->response['status_code']);
        
 
+    }
+
+    public function validateAmount($amount)
+    {
+        return preg_match('/^\d.+/', $amount);
     }
 };
