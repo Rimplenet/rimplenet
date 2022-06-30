@@ -1,6 +1,7 @@
 <?php
 
 use Debits\Debits;
+use Res\Res;
 
 class RimplenetCreateDebits extends Debits
 {
@@ -67,14 +68,14 @@ class RimplenetCreateDebits extends Debits
             update_post_meta($txn_add_bal_id, 'total_balance_after', $RimplenetWallet->get_total_wallet_bal($user_id, $wallet_id));
             update_post_meta($txn_add_bal_id, 'funds_type', $key);
         else :
-            return $this->error('Unknown Error', "unknown error", 400);
+            return Res::error('Unknown Error', "unknown error", 400);
         endif;
 
         if ($txn_add_bal_id > 0) {
             $result = $txn_add_bal_id;
-            return $this->success(['id' => $result], "Transaction Completed", 200);
+            return Res::success(['id' => $result], "Transaction Completed", 200);
         } else {
-            return $this->error('Transaction Already Executed', 'Transaction Already Executed', 409);
+            return Res::error('Transaction Already Executed', 'Transaction Already Executed', 409);
         }
         return;
     }
@@ -89,7 +90,7 @@ class RimplenetCreateDebits extends Debits
         global $wpdb;
         $row = $wpdb->get_row("SELECT * FROM $wpdb->postmeta WHERE meta_key='txn_request_id' AND meta_value='$value'");
         if ($row) :
-            $this->error([
+            Res::error([
                 'txn_id' => $row->post_id,
                 'exist' => "Transaction already executed"
             ], "Transaction already exists", 409);
