@@ -1,6 +1,7 @@
 <?php
 
 use Credits\Credits;
+use Res\Res;
 
 Class RimplenetDeleteCredits extends Credits
 {
@@ -8,17 +9,9 @@ Class RimplenetDeleteCredits extends Credits
 
         if($credits = $this->creditsExists($id, $type)):
             wp_delete_post($credits->post_id);
-            $this->response = [
-                'status_code' => 200,
-                'status' => 'success',
-                'response_message' => 'Delete action completed',
-                'data' => ['Transaction '.$credits->post_id.' Deleted']
-            ];
-            return true;
+            return Res::success(["Transaction $credits->post_id Deleted"], "Credits Action Completed");
         else:
-            $this->response['status_code'] = 404;
-            $this->response['response_message'] = "Transaction not found";
-            $this->response['error'][] = "Operation cannot be completed";
+            return Res::success(["Operation cannot be completed"], "Credit not Found", 404);
         endif;
         return false;
         

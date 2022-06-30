@@ -29,10 +29,10 @@ $RetrieveWallet = new class extends RimplenetGetWallets
         if ($wlt_id !== '') :
             # if wallet id is not empty return the wallet
             $this->getWallet($wlt_id);
-            return new WP_REST_Response($this->response, $this->response['status_code']);
+            return new WP_REST_Response(self::$response, self::$response['status_code']);
         else :
             $this->getWallets();
-            return new WP_REST_Response($this->response, $this->response['status_code']);
+            return new WP_REST_Response(self::$response, self::$response['status_code']);
         endif;
     }
 };

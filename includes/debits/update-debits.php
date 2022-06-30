@@ -1,6 +1,7 @@
 <?php
 
 use Debits\Debits;
+use Res\Res;
 
 class RimplenetUpdateDebits extends Debits
 {
@@ -19,7 +20,7 @@ class RimplenetUpdateDebits extends Debits
         $note = !empty($note) ? $note : $this->req['note'];
         # assign param type to $type otherwise get type from class
         $type = !empty($type) ? $type : $this->req['type'];
-        
+
         if ($this->checkEmpty(['debit_id' => $id, 'note' => $note])) return;
 
         # Check if the transaction has already been executed
@@ -29,24 +30,16 @@ class RimplenetUpdateDebits extends Debits
             $txn =  $this->getDebitsToUpdate($id);
             if ($txn) :
                 update_post_meta($id, 'note', $note);
-                $this->response = [
-                    'status_code' => 200,
-                    'response_message' => 'Updated',
-                    'data' => ['note' => $note]
-                ];
+                Res::success(['note' => $note], 'Updated');
             else :
                 # create new post meta for transaction note is not exists before
                 add_post_meta($id, 'note', $note);
-                $this->response['status_code'] = 200;
-                $this->response['response_message'] = "Updated";
-                $this->response['data']['note'] = $note;
+                Res::success(['note' => $note], 'Updated');
             endif;
             return true;
         else :
             # if the transaction has not been executed before time return error false
-            $this->response['response_message'] = 'Transaction Not Found';
-            $this->response['error'][] = 'Transaction Not Found';
-            return false;
+            return Res::error(['error' => 'Transaction Not Found'], 'Not Found', 404);
         endif;
     }
 

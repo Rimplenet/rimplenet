@@ -22,6 +22,7 @@ class CreateWallet extends RimplenetCreateWallets
 
     public function api_create_wallet(WP_REST_Request $req)
     {
+        do_action('rimplenet_api_request_started', $req, $allowed_roles = ['administrator'], $action = 'create_rimplenet_wallets');
         # Get and store all user inputs
         $this->req = [
             'wallet_name'           => sanitize_text_field($req['wallet_name']),
@@ -40,7 +41,7 @@ class CreateWallet extends RimplenetCreateWallets
         ];
         
         $this->createWallet();
-        return new WP_REST_Response($this->response, $this->response['status_code']);
+        return new WP_REST_Response(self::$response, self::$response['status_code']);
     }
 }
 

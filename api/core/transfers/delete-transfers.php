@@ -18,6 +18,6 @@ $deleteTransfer = new class extends RimplenetDeleteTransfers
     {
         $id = sanitize_text_field($req['id']);
         $this->delete($id);
-        return new WP_REST_Response($this->response, $this->response['status_code']);
+        return new WP_REST_Response(self::$response, self::$response['status_code']);
     }
 };

@@ -1,16 +1,17 @@
 <?php
 
+use Res\Res;
 use Transfers\Transfers;
 
 class RimplenetDeleteTransfers extends Transfers
 {
     public function delete($transferId)
     {
-       $transfer = $this->getTransferById($transferId);
+        $transfer = $this->getTransferById($transferId);
 
-       if(!$transfer) return;
-       wp_delete_post($transfer->post_id, false );
-       $this->success(["Transder $transferId Successfully Deleted"], "Action Completed");
-       return true;
+        if (!$transfer) return Res::error("Transfer not Found", '', 404);
+        wp_delete_post($transfer->post_id, false);
+        Res::success(["Transder $transferId Successfully Deleted"], "Action Completed");
+        return true;
     }
 }
