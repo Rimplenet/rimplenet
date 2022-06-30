@@ -2,6 +2,7 @@
 // namespace Debits\GetDebits;
 
 use Debits\Debits;
+use Res\Res;
 
 class RimplenetGetDebits extends Debits
 {
@@ -20,9 +21,9 @@ class RimplenetGetDebits extends Debits
     {
         if($credits = $this->debitsExists($id, $type)):
             $credits = get_post($credits->post_id);
-            return $this->success($this->formatDebits($credits), 'Transacrion Retrieved', 200);
+            return Res::success($this->formatDebits($credits), 'Transacrion Retrieved', 200);
         else:
-            return $this->error(['Invalid Transaction Id '.$id], 'Transaction not Found', 404);
+            return Res::error(['Invalid Transaction Id '.$id], 'Transaction not Found', 404);
         endif;
     }
 
@@ -34,9 +35,9 @@ class RimplenetGetDebits extends Debits
             foreach ($posts as $key => $post):
                 $posts[$key] = $this->formatDebits($post);
             endforeach;
-            return $this->success($posts, 'Debits Retrieved');
+            return Res::success($posts, 'Debits Retrieved');
         else:
-            return $this->error("Sorry we couldnt retrieve any Debit at the moment", "No Debit Found", 404);
+            return Res::error("Sorry we couldnt retrieve any Debit at the moment", "No Debit Found", 404);
         endif;
         // return $this
     }

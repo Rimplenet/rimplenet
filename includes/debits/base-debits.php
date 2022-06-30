@@ -2,10 +2,9 @@
 
 namespace Debits;
 
-use Rimplenet_Wallets;
-use Wallets\Base;
+use Utils\Utils;
 
-abstract class Debits extends Base
+abstract class Debits extends Utils
 {
 
     /**

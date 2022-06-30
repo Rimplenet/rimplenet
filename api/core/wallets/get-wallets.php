@@ -20,27 +20,20 @@ $RetrieveWallet = new class extends RimplenetGetWallets
     public function retrieve_wallet(WP_REST_Request $req)
     {
         // $allowed_roes = []; 
-        do_action( 'rimplenet_api_request', $req, $allowed_roles = ['admin'], $action = 'get_rimplenet_wallets');
+        do_action('rimplenet_api_request_started', $req, $allowed_roles = ['administrator'], $action = 'get_rimplenet_wallets');
+        
         # ================= set fields ============
         $wlt_id  = sanitize_text_field($req['wallet_id']);
         $page      = $req['page'] ?? 1;
 
-        $key = (object) apache_request_headers();
-
-        $obj = new RimplenetAuthorization;
-        $rimp = $obj->authorization(str_replace('Bearer ', '', $key->Authorization));
-
-
-            return new WP_REST_Response($rimp, $this->response['status_code']);
-            
         # Check required
-        // if ($wlt_id !== '') :
-        //     # if wallet id is not empty return the wallet
-        //     $this->getWallet($wlt_id);
-        //     return new WP_REST_Response($this->response, $this->response['status_code']);
-        // else :
-        //     $this->getWallets();
-        //     return new WP_REST_Response($this->response, $this->response['status_code']);
-        // endif;
+        if ($wlt_id !== '') :
+            # if wallet id is not empty return the wallet
+            $this->getWallet($wlt_id);
+            return new WP_REST_Response(self::$response, self::$response['status_code']);
+        else :
+            $this->getWallets();
+            return new WP_REST_Response(self::$response, self::$response['status_code']);
+        endif;
     }
 };

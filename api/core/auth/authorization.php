@@ -34,12 +34,25 @@ class RimplenetAuthorizationApi
 
     }
 
-    public function validate_jwt( $request, $allowed_roles, $action ) {
-
+    public function validate_jwt($request, $allowed_roles, $action) 
+    {
+        
         $headers = getallheaders();
-        $access_token = explode(" ", $headers['Authorization'])[1] ?? null;
-
+        
         $auth = new RimplenetAuthorization();
+        
+        if (empty($allowed_roles)) return;
+        
+        if (!$headers['Authorization']) {
+            $response = $auth->response(401, "failed", "Permission denied", [], ["unauthorize"=>"No authorization provided"]);
+            status_header($response['status_code']);
+            echo json_encode($response);
+            exit;
+        }
+        
+        if (explode(" ", $headers['Authorization'])[0] != "Bearer") return;
+        
+        $access_token = explode(" ", $headers['Authorization'])[1] ?? null;
         $get_auth = $auth->authorization(
             $access_token,
         );
@@ -50,11 +63,11 @@ class RimplenetAuthorizationApi
             exit;
         }
 
-        if(in_array($get_auth['data']->data->roles[0], $allowed_roles)){
-            $this->ID = $get_auth['data']->data->ID;
+        if(in_array($get_auth['data']->user->roles[0], $allowed_roles)){
+            // $this->ID = $get_auth['data']->data->ID;
             return true;
         } else {
-            $response = $auth->response(401, "failed", "Permission denied", [], ["unauthorize"=>"caller_id is not authorize"]);
+            $response = $auth->response(401, "failed", "Permission denied", [], ["unauthorize"=>"Request is not authorized"]);
             status_header($response['status_code']);
             echo json_encode($response);
             exit;

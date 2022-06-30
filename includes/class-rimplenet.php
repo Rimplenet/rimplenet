@@ -218,6 +218,7 @@ class Rimplenet
 		
 
 		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/users/jwt.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/utils/class-base-utils.php';
 		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/wallets/class-base-wallets.php';
 		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/transfers/class-base-transfers.php';
 		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/credits/class-base-credits.php';

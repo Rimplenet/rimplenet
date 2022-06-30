@@ -16,11 +16,11 @@ $getDebits = new Class extends RimplenetGetDebits
     public function api_get_debits(WP_REST_Request $req)
     {
         # ================= set fields ============
-        $wlt_id  = sanitize_text_field($req['debits_id']);
+        $wlt_id  = sanitize_text_field($req['debits_id'] ?? '');
         $page      = $req['page'] ?? 1;
         
         $this->getDebits($wlt_id, 'debit');
-        return new WP_REST_Response($this->response, $this->response['status_code']);
+        return new WP_REST_Response(self::$response, self::$response['status_code']);
 
 
     }

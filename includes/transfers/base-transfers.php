@@ -1,9 +1,14 @@
 <?php
 namespace Transfers;
 
+use Res\Res;
 use RimplenetGetWallets;
+use Traits\Wallet\RimplenetWalletTrait;
 
-abstract class Transfers extends RimplenetGetWallets {
+class Transfers extends RimplenetGetWallets {
+
+    use RimplenetWalletTrait;
+    
     const TERMS = 'INTERNAL TRANSFER';
 
     public function getTransferById(int $transferID)
@@ -15,7 +20,7 @@ abstract class Transfers extends RimplenetGetWallets {
         if ($transfer) :
             return $transfer;
         else :
-            $this->error('Invalid Transfer Id', 'Transfer not found', 404);
+           Res::error('Invalid Transfer Id', 'Transfer not found', 404);
             return false;
             exit;
         endif;

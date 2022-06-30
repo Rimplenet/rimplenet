@@ -2,6 +2,7 @@
 // namespace Debits\DeleteDebits;
 
 use Debits\Debits;
+use Res\Res;
 
 Class RimplenetDeleteDebits extends Debits
 {
@@ -9,17 +10,9 @@ Class RimplenetDeleteDebits extends Debits
 
         if($Debits = $this->debitsExists($id, $type)):
             wp_delete_post($Debits->post_id);
-            $this->response = [
-                'status_code' => 200,
-                'status' => 'success',
-                'response_message' => 'Delete action completed',
-                'data' => ['Transaction '.$Debits->post_id.' Deleted']
-            ];
-            return true;
+            return Res::success(["Transaction $Debits->post_id Deleted"], "Debits Action Completed");
         else:
-            $this->response['status_code'] = 404;
-            $this->response['response_message'] = "Transaction not found";
-            $this->response['error'][] = "Operation cannot be completed";
+            return Res::success(["Operation cannot be completed"], "Debit not Found", 404);
         endif;
         return false;
         

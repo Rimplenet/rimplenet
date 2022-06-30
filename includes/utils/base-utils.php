@@ -1,10 +1,11 @@
 <?php
 
-namespace Wallets;
+namespace Utils;
 
+use Res\Res;
 use WP_Query;
 
-abstract class Base
+class Utils
 {
 
     /**
@@ -19,7 +20,7 @@ abstract class Base
     const POST_TYPE  = 'rimplenettransaction';
     const MIN_AMOUNT = 0;
     const MAX_AMOUNT = 999999999;
-    const WAALLETS = 'RIMPLENET WALLETS';
+    const WAALLETS = 'WALLETS';
     const DEBIT = 'DEBIT';
     const CREDIT = 'CREDIT';
     const TRANSFERS = 'TRANSFERS';
@@ -33,36 +34,13 @@ abstract class Base
     /**
      * @var array
      */
-    public $response = [
+    public static $response = [
         'status_code' => 400,
         'status' => false,
         'message' => ''
     ];
 
     public $query = null;
-
-
-    public function error($err = '', $message = '', $status = 400)
-    {
-        $this->response = [
-            'status_code' => 400,
-            'status' => false,
-            'message' => $message,
-            'error' => $this->response['error'] ?? $err
-        ];
-        return false;
-    }
-
-    public function success($data, $message, $status = 200)
-    {
-        $this->response = [
-            'status_code' => $status,
-            'status' => true,
-            'message' => $message,
-            'data' => $data
-        ];
-    }
-
     /**
      * Check empty Fields
      * @return mixed
@@ -84,7 +62,7 @@ abstract class Base
         endforeach;
 
         if (!empty($this->error)) {
-            $this->error($this->error, "one or more field is required", 400);
+           Res::error($this->error, "one or more field is required", 400);
             return true; exit;
         }
         return false;
@@ -99,7 +77,7 @@ abstract class Base
         if ($wallet) :
             return $wallet;
         else :
-            $this->error(["Invalid wallet Id"], "Wallet not found", 404);
+           Res::error(["Invalid wallet Id"], "Wallet not found", 404);
             return false;
         endif;
     }
@@ -132,7 +110,7 @@ abstract class Base
             'tax_query' => array([
                 'taxonomy' => self::TAXONOMY,
                 'field'    => 'name',
-                'terms'    => static::WALLET_CAT_NAME,
+                'terms'    => static::WAALLETS,
             ]),
         ]);
     }

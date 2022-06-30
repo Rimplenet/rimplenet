@@ -22,20 +22,22 @@ class RimplenetGetUser
 
 
         if ($access_token == null) {
-
-            if(!$this->authorization(get_current_user_id())) return $this->response(403, "failed", "Permission denied", [], ["unauthorize"=>"caller_id is not authorize"]);
             
             $get_single_user = get_user_by('ID', $user_id);
             unset($get_single_user->data->user_pass);
             $user_data = $this->userFormat($get_single_user);
-
+            
             if($user_id !== null) {
-                
-                if ($user_data) return $this->response(200, true, "Successful", $user_data, []);
-
-                return $this->response(404, "Failed", "User not found", [], []);
+                if ($this->authorization(get_current_user_id()) || get_current_user_id() == $user_id) {
+                    if ($user_data) return $this->response(200, true, "User retrieved successfully", $user_data, []);
+                    return $this->response(404, "Failed", "User not found", [], []);
+                } else {
+                    return $this->response(403, "failed", "Permission denied", [], ["unauthorize"=>"Request is not authorized"]);
+                }
             }
-
+            
+            if(!$this->authorization(get_current_user_id())) return $this->response(403, "failed", "Permission denied", [], ["unauthorize"=>"caller_id is not authorized"]);
+            
             $total_users = count(get_users());
 
             $offset = $users_per_page * ($page - 1);
@@ -56,33 +58,38 @@ class RimplenetGetUser
                 $data[]=$this->userFormat($get_user);
             }
 
-            return $this->response(200, true, "Successful", $data, []);
+            return $this->response(200, true, "User retrieved successfully", $data, []);
 
         } else {
 
             try {
                     
                 $user_access_token = JWT::decode($access_token);
-                $id = json_decode($user_access_token)->data->ID;
+                $id = json_decode($user_access_token)->user->ID;
                 
                 if ($user_access_token === "Expired token") {
                     return $this->response(400, "failed", "Validation error", [], ["Expired token"]);
                 } elseif ($user_access_token === "Invalid signature") {
                     return $this->response(400, "failed", "Validation error", [], ["Invalid signature"]);
                 } elseif ($user_access_token) {
-                    if(!$this->authorization($id)) return $this->response(403, "failed", "Permission denied", [], ["unauthorize"=>"caller_id is not authorize"]);
-
+                    
                     $get_single_user = get_user_by('ID', $user_id);
                     unset($get_single_user->data->user_pass);
                     $user_data = $this->userFormat($get_single_user);
-
+                    
                     if($user_id !== null) {
-                
-                        if ($user_data) return $this->response(200, true, "Successful", $user_data, []);
-        
-                        return $this->response(404, "Failed", "User not found", [], []);
+                        
+                        if ($this->authorization($id) || $id == $user_id) {
+                            if ($user_data) return $this->response(200, true, "User retrieved successfully", $user_data, []);
+                            return $this->response(404, "Failed", "User not found", [], []);
+                        } else {
+                            return $this->response(403, "failed", "Permission denied", [], ["unauthorize"=>"Request is not authorized"]);
+                        }
+                        
                     }
-
+                    
+                    if(!$this->authorization($id)) return $this->response(403, "failed", "Permission denied", [], ["unauthorize"=>"Request is not authorized"]);
+                    
                     $total_users = count(get_users());
 
                     $offset = $users_per_page * ($page - 1);
@@ -103,7 +110,7 @@ class RimplenetGetUser
                         $data[]=$this->userFormat($get_user);
                     }
 
-                    return $this->response(200, true, "Successful", $data, []);
+                    return $this->response(200, true, "User retrieved successfully", $data, []);
                 }
 
             } catch (Exception $ex) {
@@ -165,7 +172,7 @@ class RimplenetGetUser
         if (!isset($user->data)) return;
 
         return [
-            "ID" => $user->data->ID,
+            "ID" => intval($user->data->ID),
             "username" => $user->data->user_login,
             "user_email" => $user->data->user_email,
             "user_url" => $user->data->user_url,

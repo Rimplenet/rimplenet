@@ -24,7 +24,7 @@ class RimplenetUpdateUser
         if ($access_token == null) {
             if(!empty($this->validation_error)) return $this->response(400, "failed", "Validation error", [], $this->validation_error);
 
-            if(!$this->authorization(get_current_user_id())) return $this->response(403, "failed", "Permission denied", [], ["unauthorize"=>"caller_id is not authorize"]);
+            if(!$this->authorization(get_current_user_id())) return $this->response(403, "failed", "Permission denied", [], ["unauthorize"=>"caller_id is not authorized"]);
             
             if (empty($this->validation_error)) {
     
@@ -39,7 +39,7 @@ class RimplenetUpdateUser
     
                 }
     
-                return $this->response(200, true, "User updated", ["id"=>$update_user], $this->validation_error);
+                return $this->response(200, true, "User updated successfully", ["id"=>$update_user], $this->validation_error);
     
             }
         } else {
@@ -47,7 +47,7 @@ class RimplenetUpdateUser
             try {
                     
                 $user_access_token = JWT::decode($access_token);
-                $id = json_decode($user_access_token)->data->ID;
+                $id = json_decode($user_access_token)->user->ID;
                 
                 if ($user_access_token === "Expired token") {
                     return $this->response(400, "failed", "Validation error", [], ["Expired token"]);
@@ -56,7 +56,7 @@ class RimplenetUpdateUser
                 } elseif ($user_access_token) {
                     if(!empty($this->validation_error)) return $this->response(400, "failed", "Validation error", [], $this->validation_error);
 
-                    if(!$this->authorization($id)) return $this->response(403, "failed", "Permission denied", [], ["unauthorize"=>"caller_id is not authorize"]);
+                    if(!$this->authorization($id)) return $this->response(403, "failed", "Permission denied", [], ["unauthorize"=>"Request is not authorized"]);
 
                     if (empty($this->validation_error)) {
     
@@ -71,7 +71,7 @@ class RimplenetUpdateUser
             
                         }
             
-                        return $this->response(200, true, "User updated", ["id"=>$update_user], $this->validation_error);
+                        return $this->response(200, true, "User updated successfully", ["id"=>$update_user], $this->validation_error);
             
                     }
                 }
@@ -96,7 +96,7 @@ class RimplenetUpdateUser
         $user_id_error = [];
         
         $sanitize_user_id = sanitize_text_field( $user_id );
-        $sanitize_user_email = sanitize_text_field($user_email);
+        $sanitize_user_email = strtolower(sanitize_text_field($user_email));
         $sanitize_user_pass = $user_pass;
 
         if ($sanitize_user_id == '') {

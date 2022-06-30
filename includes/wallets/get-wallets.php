@@ -1,8 +1,9 @@
 <?php
 
-use Wallets\Base;
+use Res\Res;
+use Utils\Utils;
 
-class RimplenetGetWallets extends Base
+class RimplenetGetWallets extends Utils
 {
     /**
      * Get a single wallet based on wallet id
@@ -18,7 +19,7 @@ class RimplenetGetWallets extends Base
         else :
             $wallet = get_post($wallet->post_id);
             $walletData = $this->walletFormat($wallet);
-            $this->success($walletData, "Wallet Retrieved");
+           Res::success($walletData, "Wallet Retrieved");
             return $walletData;
         endif;
     }
@@ -37,10 +38,10 @@ class RimplenetGetWallets extends Base
             foreach($posts as $key => $value):
                 $posts[$key] = $this->walletFormat($value);
             endforeach;
-            $this->success($posts, "Wallet Retrieved");
+            Res::success($posts, "Wallet Retrieved");
             return $posts;
         else:
-            $this->success(['We are sorry we cannot retrieve any wallet at the moment'], "Wallet Not found", 404);
+            Res::success(['We are sorry we cannot retrieve any wallet at the moment'], "Wallet Not found", 404);
         endif;
         return false;
     }
@@ -49,11 +50,11 @@ class RimplenetGetWallets extends Base
     {
         $this->id = $wallet->ID;
 
-        $max_withdrawal = $this->postMeta('rimplenet_min_withdrawal_amount');
-        $max_withdrawal == '' && $max_withdrawal  = Base::MAX_AMOUNT;
-
-        $min_widhdrawal = $this->postMeta('rimplenet_max_withdrawal_amount');
-        $min_widhdrawal == '' && $min_widhdrawal  = Base::MIN_AMOUNT;
+        $min_withdrawal = $this->postMeta('rimplenet_min_withdrawal_amount');
+        $min_withdrawal == '' && $min_withdrawal  = Utils::MIN_AMOUNT;
+        
+        $max_withdrawal = $this->postMeta('rimplenet_max_withdrawal_amount');
+        $max_withdrawal == '' && $max_withdrawal  = Utils::MAX_AMOUNT;
 
         $inc_wlt_curr_list = $this->postMeta('include_in_woocommerce_currency_list');
         !$inc_wlt_curr_list ? $inc_wlt_curr_list = false :  $inc_wlt_curr_list = true;
@@ -67,19 +68,20 @@ class RimplenetGetWallets extends Base
             'wallet_name'      => $wallet->post_title,
             "wallet_symbol"    => $this->postMeta('rimplenet_wallet_symbol'),
             "wallet_max_wdr_amount"    => $max_withdrawal,
-            "wallet_min_wdr_amount"    => $min_widhdrawal,
+            "wallet_min_wdr_amount"    => $min_withdrawal,
             "wallet_symbol_position"     => $this->postMeta('rimplenet_wallet_symbol_position'),
             "wallet_decimal"           => $this->postMeta('rimplenet_wallet_decimal'),
             'wallet_note'              => $this->postMeta('rimplenet_wallet_note'),
-            'in_wc_curr_list'          => $inc_wlt_curr_list,
-            'enbl_as_wc_prdt_pymt_wlt'             => $enb_as_wcclst,
-            "include_in_withdrawal_form"           => "yes",
-            "rules_after_wallet_withdrawal" =>  $this->postMeta('rimplenet_rules_after_wallet_withdrawal'),
-            "rules_before_wallet_withdrawal" =>  $this->postMeta('rimplenet_rules_before_wallet_withdrawal'),
-            "action" => array(
-                "deposit" => "yes",
-                "withdraw" => "yes",
-            )
+            'wallet_type'              => $this->postMeta('rimplenet_wallet_type')
+            // 'in_wc_curr_list'          => $inc_wlt_curr_list,
+            // 'enbl_as_wc_prdt_pymt_wlt'             => $enb_as_wcclst,
+            // "include_in_withdrawal_form"           => "yes",
+            // "rules_after_wallet_withdrawal" =>  $this->postMeta('rimplenet_rules_after_wallet_withdrawal'),
+            // "rules_before_wallet_withdrawal" =>  $this->postMeta('rimplenet_rules_before_wallet_withdrawal'),
+            // "action" => array(
+            //     "deposit" => "yes",
+            //     "withdraw" => "yes",
+            // )
         ];
         return $res;
     }

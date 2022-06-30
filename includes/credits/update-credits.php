@@ -3,6 +3,7 @@
 // namespace Credits\UpdateCredits;
 
 use Credits\Credits;
+use Res\Res;
 
 class RimplenetUpdateCredits extends Credits
 {
@@ -30,24 +31,16 @@ class RimplenetUpdateCredits extends Credits
             $txn =  $this->getCreditsToUpdate($id);
             if ($txn) :
                 update_post_meta($id, 'note', $note);
-                $this->response = [
-                    'status_code' => 200,
-                    'response_message' => 'Updated',
-                    'data' => ['note' => $note]
-                ];
+                return Res::error(['note' => $note." Updated"], 'Note updated');
             else :
                 # create new post meta for transaction note is not exists before
                 add_post_meta($id, 'note', $note);
-                $this->response['status_code'] = 200;
-                $this->response['response_message'] = "Updated";
-                $this->response['data']['note'] = $note;
+                return Res::error(['note' => $note." Updated"], 'Note updated');
             endif;
             return true;
         else :
             # if the transaction has not been executed before time return error false
-            $this->response['response_message'] = 'Transaction Not Found';
-            $this->response['error'][] = 'Transaction Not Found';
-            return false;
+            return Res::error(['Transaction Not Found'], 'Transaction not Found', 404);
         endif;
     }
 

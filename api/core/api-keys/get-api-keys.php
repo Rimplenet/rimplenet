@@ -13,7 +13,7 @@ class GetApiKey extends RimplenetGetApiKeys
 
     public function register_api_routes()
     {
-        register_rest_route('/rimplenet/v1', 'api_keys', [
+        register_rest_route('/rimplenet/v1', 'api-keys', [
             'methods' => 'GET',
             'callback' => [$this, 'api_get_keys']
         ]);
@@ -25,7 +25,7 @@ class GetApiKey extends RimplenetGetApiKeys
         $key = sanitize_text_field($req['api_key'] ?? '');
 
         $this->getKeys($key);
-        return new WP_Rest_Response($this->response, $this->response['status_code']);
+        return new WP_Rest_Response(self::$response, self::$response['status_code']);
 
     }
 }

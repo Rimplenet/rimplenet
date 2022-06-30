@@ -22,7 +22,7 @@ class RimplenetCreateUser
 
         if ($access_token == null) {
 
-            if(!$this->authorization(get_current_user_id())) return $this->response(403, "failed", "Permission denied", [], ["unauthorize"=>"caller_id is not authorize"]);
+            if(!$this->authorization(get_current_user_id())) return $this->response(403, "failed", "Permission denied", [], ["unauthorize"=>"caller_id is not authorized"]);
     
             if(!empty($this->validation_error)) return $this->response(400, "failed", "Validation error", [], $this->validation_error);
             
@@ -40,7 +40,7 @@ class RimplenetCreateUser
     
                 }
     
-                return $this->response(200, true, "New user create", ["id"=>$new_user], $this->validation_error);
+                return $this->response(201, true, "User created successfully", ["id"=>$new_user], $this->validation_error);
             
                 
             }
@@ -50,14 +50,14 @@ class RimplenetCreateUser
             try {
 
                 $user_access_token = JWT::decode($access_token);
-                $id = json_decode($user_access_token)->data->ID;
+                $id = json_decode($user_access_token)->user->ID;
                 
                 if ($user_access_token === "Expired token") {
                     return $this->response(400, "failed", "Validation error", [], ["Expired token"]);
                 } elseif ($user_access_token === "Invalid signature") {
                     return $this->response(400, "failed", "Validation error", [], ["Invalid signature"]);
                 } elseif ($user_access_token) {
-                    if(!$this->authorization($id)) return $this->response(403, "failed", "Permission denied", [], ["unauthorize"=>"caller_id is not authorize"]);
+                    if(!$this->authorization($id)) return $this->response(403, "failed", "Permission denied", [], ["unauthorize"=>"Request is not authorized"]);
 
                     if(!empty($this->validation_error)) return $this->response(400, "failed", "Validation error", [], $this->validation_error);
             
@@ -75,7 +75,7 @@ class RimplenetCreateUser
             
                         }
             
-                        return $this->response(200, true, "New user create", ["id"=>$new_user], $this->validation_error);
+                        return $this->response(201, true, "User created successfully", ["id"=>$new_user], $this->validation_error);
                     
                         
                     }
@@ -100,12 +100,15 @@ class RimplenetCreateUser
         $user_pass_error = [];
 
 
-        $user['user_login'] = sanitize_text_field($user_login);
-	    $user['user_email'] = sanitize_text_field($user_email);
+        $user['user_login'] = strtolower(sanitize_text_field($user_login));
+	    $user['user_email'] = strtolower(sanitize_text_field($user_email));
 	    $user['user_pass'] = $user_pass;
 
         if ($user['user_login'] == '') {
             $user_login_error[] = 'username is required';
+        }
+        if (preg_match('/\s/', $user['user_login']) != 0) {
+            $user_login_error[] = 'username must not contain space';
         }
         if (strlen($user['user_login']) < 4) {
             $user_login_error[] = 'username must be atleast 4 chars';

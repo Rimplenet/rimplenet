@@ -1,25 +1,20 @@
 <?php
-use Wallets\Base;
 
-abstract class RimplenetDeleteWallets extends Base
+use Res\Res;
+use Utils\Utils;
+
+abstract class RimplenetDeleteWallets extends Utils
 {
     protected function deleteWallet(string $wallet_id){
         $wallet = $this->getWalletById($wallet_id);
 
         # check if wallet is valid
         if(!$wallet):
-            $this->response['status_code'] = 404;
-            $this->response['message'] = "Wallet not found";
-            $this->response['error'][] = "Operation cannot be completed";
-            return false;
+            return Res::error(['Operation cannot be completed', 'Wallet not found', 404]);
         else:
             // trash wallet
             wp_delete_post($wallet->post_id, false );
-            $this->response['status_code'] = 200;
-            $this->response['status'] = 'success';
-            $this->response['message'] = "$wallet_id wallet deleted";
-            $this->response['data'][] = "Operation completed";
-            return true;
+            return Res::success(['Operation completed'], "$wallet_id wallet deleted");
         endif;
         return true;
     }

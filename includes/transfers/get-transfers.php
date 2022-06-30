@@ -1,11 +1,9 @@
 <?php
 
-use Traits\Wallet\RimplenetWalletTrait;
 use Transfers\Transfers;
 
 class RimplenetGetTransfers extends Transfers
 {
-    use RimplenetWalletTrait;
 
     public function transfers($params = [])
     {

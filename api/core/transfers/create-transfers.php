@@ -30,7 +30,7 @@ class CreateTransfers extends RimplenetCreateTransfer
         ];
 
         $this->transfer();
-        return new WP_REST_Response($this->response, $this->response['status_code']);
+        return new WP_REST_Response(self::$response, self::$response['status_code']);
     }
 }
 

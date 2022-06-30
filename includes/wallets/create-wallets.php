@@ -1,8 +1,8 @@
 <?php
 
-use Wallets\Base;
-
-class RimplenetCreateWallets extends Base
+use Res\Res;
+use Utils\Utils;
+class RimplenetCreateWallets extends Utils
 {
     /**
      * validate fields for decimals and numbers
@@ -29,7 +29,7 @@ class RimplenetCreateWallets extends Base
         $this->checkMinMax('min_amount', $min_amount,);
 
         if (!empty($this->error)) :
-            $this->response['error'] = $this->error;
+            self::$response['error'] = $this->error;
             return true;
         endif;
 
@@ -89,17 +89,17 @@ class RimplenetCreateWallets extends Base
 
         $this->req = $this->prop;
 
-        if ($this->checkEmpty()) return $this->response;
-        if ($this->notFloatOrNumber()) return $this->response;
+        if ($this->checkEmpty()) return self::$response;
+        if ($this->notFloatOrNumber()) return self::$response;
 
 
         # check if wallet already exist
         // return $this->walletExists();
         if ($this->walletExists()) :
-            return $this->error($this->error, "Wallet Already Exists", 409);
+            return Res::error($this->error, "Wallet Already Exists", 409);
         else :
             $wallet = $this->insertWallet();
-            return $this->success($wallet, "Wallet was successully created");
+            return Res::success($wallet, "Wallet was successully created");
         endif;
     }
 
@@ -115,7 +115,7 @@ class RimplenetCreateWallets extends Base
             'post_status'   => 'publish',
             'post_type'     => self::POST_TYPE
         ]);
-        wp_set_object_terms($wlt_id, self::WALLET_CAT_NAME, self::TAXONOMY);
+        wp_set_object_terms($wlt_id, self::WALLETS, self::TAXONOMY);
         $wallet_metas = [
             'wallet_id'                          => $wlt_id,
             'rimplenet_wallet_name'              => $wallet_name,
