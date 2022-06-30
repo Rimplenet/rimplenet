@@ -24,7 +24,7 @@ class ApiKey extends Base
 
     public function __construct()
     {
-        // add_action('rimplenet_api_request_started', array($this, 'validate_api_key'), 1, 3);
+        // add_action('rimplenet_api_request_started', array($this, 'decodeBasic'), 1, 3);
     }
 
     /**
@@ -82,6 +82,7 @@ class ApiKey extends Base
         [$username, $key] = explode(':', $decrypted);
         $user = get_user_by('login', $username);
         $isAdministrator = $user->caps['administrator'];
+        echo json_encode($decrypted); exit;
         if (!$isAdministrator) return $this->error(['unauthorized' => "Authoriation denied"], 'Unauthorized', 401);
         $posts = self::getPostByKey($key);
         if(!$posts) return $this->error(['invalid' => 'Invalid Token'], 'Invalid Token');
@@ -119,17 +120,17 @@ class ApiKey extends Base
 
     public function formatKey($key)
     {
-        $this->id = $key[0]->post_id;
+        $postId = $key[0]->post_id;
         return [
-            'action'    => $this->postMeta('action'),
-            'key_type'  => $this->postMeta('key_type'),
-            'user_id'   => $this->postMeta('user_id'),
-            'uuid'      => $this->postMeta('uuid'),
-            'app_id'    => $this->postMeta('app_id'),
-            'name'      => $this->postMeta('name'),
-            'hash'      => $this->postMeta('hash'),
-            'key'       => $this->postMeta('key'),
-            'created'   => $this->postMeta('created')
+            'action'    => get_post_meta($postId, 'action', true),
+            'key_type'  => get_post_meta($postId, 'key_type', true),
+            'user_id'   => get_post_meta($postId, 'user_id', true),
+            'uuid'      => get_post_meta($postId, 'uuid', true),
+            'app_id'    => get_post_meta($postId, 'app_id', true),
+            'name'      => get_post_meta($postId, 'name', true),
+            'hash'      => get_post_meta($postId, 'hash', true),
+            'key'       => get_post_meta($postId, 'key', true),
+            'created'   => get_post_meta($postId, 'created', true)
         ];
     }
 }
