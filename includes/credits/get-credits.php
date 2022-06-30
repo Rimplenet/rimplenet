@@ -1,5 +1,6 @@
 <?php
 use Credits\Credits;
+use Res\Res;
 
 class RimplenetGetCredits extends Credits
 {
@@ -18,9 +19,9 @@ class RimplenetGetCredits extends Credits
     {
         if($credits = $this->CreditsExists($id, $type)):
             $credits = get_post($credits->post_id);
-            return $this->success($this->formatCredits($credits), 'Transacrion Retrieved', 200);
+            return Res::success($this->formatCredits($credits), 'Transacrion Retrieved', 200);
         else:
-            return $this->error(['Invalid Transaction Id '.$id], 'Transaction not Found', 404);
+            return Res::error(['Invalid Transaction Id '.$id], 'Transaction not Found', 404);
         endif;
     }
 
@@ -32,9 +33,9 @@ class RimplenetGetCredits extends Credits
             foreach ($posts as $key => $post):
                 $posts[$key] = $this->formatCredits($post);
             endforeach;
-            return $this->success($posts, 'Credits Retrieved');
+            return Res::success($posts, 'Credits Retrieved');
         else:
-            return $this->error("Sorry we couldnt retrieve any Credit at the moment", "No wallet Found", 404);
+            return Res::error("Sorry we couldnt retrieve any Credit at the moment", "No wallet Found", 404);
         endif;
         // return $this
     }

@@ -1,36 +1,9 @@
 <?php
 
 namespace Credits;
-
-use Rimplenet_Wallets;
-use Wallets\Base;
-
-abstract class Credits extends Base
+use Utils\Utils;
+abstract class Credits extends Utils
 {
-
-    /**
-     * Check empty and required fields
-     */
-    // protected function checkEmpty(array $req = [])
-    // {
-    //     # if req is not passed use req from parent
-    //     $prop = empty($req) ? $this->req : $req;
-
-    //     foreach ($prop as $key => $value) :
-    //         if ($key == 'note') continue;
-    //         if (empty($value))
-    //             $this->error[str_replace('_', ' ', $key)] = 'Field is required';
-    //     endforeach;
-
-    //     if (!empty($this->error)) {
-    //         $this->response['response_message'] = "One or two fields are required";
-    //         $this->response['error'] = $this->error;
-    //         return true;
-    //     }
-
-    //     return;
-    // }
-    
 
     /**
      * Check  if transaction has been executed before time

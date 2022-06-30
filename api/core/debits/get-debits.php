@@ -20,7 +20,7 @@ $getDebits = new Class extends RimplenetGetDebits
         $page      = $req['page'] ?? 1;
         
         $this->getDebits($wlt_id, 'debit');
-        return new WP_REST_Response($this->response, $this->response['status_code']);
+        return new WP_REST_Response(self::$response, self::$response['status_code']);
 
 
     }

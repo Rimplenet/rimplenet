@@ -18,6 +18,7 @@ $updateDebits = new class extends RimplenetUpdateDebits
 
     public function api_update_debits(WP_REST_Request $request)
     {
+        do_action('rimplenet_api_request_started', $req, $allowed_roles = ['administrator'], $action = 'update_rimplenet_debits');
         $this->req = [
             'id' => (int) $request['debits_id'],
             'note' => sanitize_text_field($request['note']),
@@ -25,6 +26,6 @@ $updateDebits = new class extends RimplenetUpdateDebits
         ];
 
         $this->updateDebits();
-        return new WP_REST_Response($this->response);
+        return new WP_REST_Response(self::$response, self::$response['status_code']);
     }
 };
