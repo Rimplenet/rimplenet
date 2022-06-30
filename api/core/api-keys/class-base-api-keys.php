@@ -21,7 +21,7 @@ class Rimplenet_Base_API_KEYS_Api
 		// [$a, $b] = explode(' ', $headers['Authorization']);
 		// if($a == 'Basic' || $a == 'Bearer'):
 		// 	if($a == 'Basic'): 
-		// 		// echo json_encode($b);
+		// 		echo json_encode($b);
 		// 	endif;
 		// else:
 		//     echo json_encode("No token");

@@ -279,4 +279,53 @@ trait RimplenetWalletTrait
 
         return $txn_add_bal_id;
     }
+    public function add_user_immature_funds_to_wallet($user_id, $amount_to_add, $wallet_id, $note = '', $tags = [])
+  {
+
+    $key = 'user_nonwithdrawable_bal_' . strtolower($wallet_id);
+    $user_balance = get_user_meta($user_id, $key, true);
+
+
+    if (!is_numeric($user_balance) and !is_int($user_balance)) {
+      $user_balance = 0;
+    }
+
+    if ($amount_to_add === 0) {
+      return; // don't transact 0
+    }
+    $bal_before = $user_balance;
+    $user_balance_total = $this->get_total_wallet_bal($user_id, $wallet_id);
+
+    $new_balance  = $user_balance + $amount_to_add;
+    $new_balance  = $new_balance;
+
+    do_action("before_add_user_immature_funds_to_wallet", $user_id, $amount_to_add, $wallet_id, $note, $tags);
+
+    update_user_meta($user_id, $key, $new_balance);
+
+
+    if ($amount_to_add > 0) {
+      $tnx_type = 'CREDIT';
+    } else {
+      $tnx_type = 'DEBIT';
+      $amount_to_add = $amount_to_add * -1;
+    }
+
+    $txn_add_bal_id = $this->record_Txn($user_id, $amount_to_add, $wallet_id, $tnx_type, 'publish');
+
+    if (!empty($note)) {
+      add_post_meta($txn_add_bal_id, 'note', $note);
+    }
+    update_post_meta($txn_add_bal_id, 'balance_before', $bal_before);
+    update_post_meta($txn_add_bal_id, 'balance_after', $new_balance);
+
+    update_post_meta($txn_add_bal_id, 'total_balance_before', $user_balance_total);
+    update_post_meta($txn_add_bal_id, 'total_balance_after', $this->get_total_wallet_bal($user_id, $wallet_id));
+
+    update_post_meta($txn_add_bal_id, 'funds_type', $key);
+
+    do_action("after_add_user_immature_funds_to_wallet", $txn_add_bal_id, $user_id, $amount_to_add, $wallet_id, $note, $tags, $tnx_type);
+
+    return $txn_add_bal_id;
+  }
 }
