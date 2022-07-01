@@ -26,12 +26,11 @@ $createDebits = new class extends RimplenetCreateDebits
             'note'          => sanitize_text_field($req['note'] ?? ''),
             'user_id'       => (int) $req['user_id'],
             'wallet_id'     => sanitize_text_field(strtolower($req['wallet_id'])),
-            'request_id'      => sanitize_text_field($req['request_id']),
-            'amount' => sanitize_text_field($req['amount']),
+            'request_id'    => sanitize_text_field($req['request_id']),
+            'amount'        => sanitize_text_field($req['amount']),
         ];
 
-         $this->createDebits();
-         return new WP_REST_Response(self::$response, self::$response['status_code']);
-
+        $this->createDebits();
+        return new WP_REST_Response(self::$response, self::$response['status_code']);
     }
 };

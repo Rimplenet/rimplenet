@@ -2,55 +2,41 @@
 
 namespace MLM;
 
-use WP_Query;
-use WP_Term;
+use Res\Res;
+use Utils\Utils;
 
-abstract class Base
+abstract class MLM
 {
-
-    /**
-     * @var array
-     */
-    public $error;
-
     /**
      * @var string
      */
-   
-    public function __construct($var = "")
+    const MLM_MATRIX = "MLM MATRIX";
+    
+    public static function mlm_exists($name)
     {
-        $this->var = $var;
+        global $wpdb;
+        $row = $wpdb->get_row("SELECT * FROM $wpdb->postmeta WHERE meta_key='matrix_name' OR meta_key='matrix_id' AND meta_value='$name'");
+        if ($row) :
+            Res::error([
+                'txn_id' => $row->post_id,
+                'exist' => "MlM already exists"
+            ], "MLM already exists", 409);
+            return true;
+        endif;
+        return false;
     }
 
-    /**
-     * @var array
-     */
-    public $response = [
-        'status_code' => 400,
-        'status' => false,
-        'message' => ''
-    ];
-
-    public $query = null;
-
-
-    public function error($err = '', $message = '', $status = 400)
+    public static function mlm_by_id($id)
     {
-        $this->response = [
-            'status_code' => 400,
-            'status' => false,
-            'message' => $message,
-            'error' => $this->response['error'] ?? $err
-        ];
-    }
-
-    public function success($data, $message, $status = 200)
-    {
-        $this->response = [
-            'status_code' => $status,
-            'status' => true,
-            'message' => $message,
-            'data' => $data
-        ];
+        global $wpdb;
+        $row = $wpdb->get_row("SELECT * FROM $wpdb->postmeta WHERE meta_key='matrix_id' AND meta_value='$id'");
+        if ($row) :
+            Res::error([
+                'txn_id' => $row->post_id,
+                'exist' => "MlM already exists"
+            ], "MLM already exists", 409);
+            return true;
+        endif;
+        return false;
     }
 }
