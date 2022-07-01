@@ -68,6 +68,24 @@ class Utils
         return false;
     }
 
+    public function isInt(array $params = [], $type = 'int')
+    {
+        foreach ($params as $key => $value) {
+            if($type == 'int'){
+                if($value == 0) $this->error[$key] = "$key cannot be zero";
+                if(!is_int($value)) $this->error[$key] = "$key requires an integer";
+            }elseif($type == 'amount'){
+                if(!is_numeric($value)) $this->error[$key] = "$key requires a valid amount";
+            }
+        }
+
+        if (!empty($this->error)) {
+            Res::error($this->error, "invalid input", 400);
+             return false;
+         }
+         return true;
+    }
+
     public function getWalletById(string $walletId)
     {
         global $wpdb;
