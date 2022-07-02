@@ -20,7 +20,7 @@ class Utils
     const POST_TYPE  = 'rimplenettransaction';
     const MIN_AMOUNT = 0;
     const MAX_AMOUNT = 999999999;
-    const WAALLETS = 'WALLETS';
+    const WALLETS = 'WALLETS';
     const DEBIT = 'DEBIT';
     const CREDIT = 'CREDIT';
     const TRANSFERS = 'TRANSFERS';
@@ -66,6 +66,24 @@ class Utils
             return true; exit;
         }
         return false;
+    }
+
+    public function isInt(array $params = [], $type = 'int')
+    {
+        foreach ($params as $key => $value) {
+            if($type == 'int'){
+                if($value == 0) $this->error[$key] = "$key cannot be zero";
+                if(!is_int($value)) $this->error[$key] = "$key requires an integer";
+            }elseif($type == 'amount'){
+                if(!is_numeric($value)) $this->error[$key] = "$key requires a valid amount";
+            }
+        }
+
+        if (!empty($this->error)) {
+            Res::error($this->error, "invalid input", 400);
+             return false;
+         }
+         return true;
     }
 
     public function getWalletById(string $walletId)
