@@ -31,7 +31,9 @@ class RimplenetCreateInvestmentApi
             'amount_to_repay_on_roi'                => $request->get_param('amount_to_repay_on_roi'),
             'roi_repayment_interval'                => $request->get_param('roi_repayment_interval'),
             'time_to_end_investment'                => $request->get_param('time_to_end_investment'),
-            'investment_group_id'                   => $request->get_param('investment_group_id')
+            'investment_group_id'                   => $request->get_param('investment_group_id'),
+            'investment_id'                         => $request->get_param('investment_id'),
+            'user_id'                               => $request->get_param('user_id')
         ];
 
         $investment = new RimplenetCreateInvestment();
