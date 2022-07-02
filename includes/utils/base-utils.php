@@ -20,7 +20,7 @@ class Utils
     const POST_TYPE  = 'rimplenettransaction';
     const MIN_AMOUNT = 0;
     const MAX_AMOUNT = 999999999;
-    const WAALLETS = 'WALLETS';
+    const WALLETS = 'WALLETS';
     const DEBIT = 'DEBIT';
     const CREDIT = 'CREDIT';
     const TRANSFERS = 'TRANSFERS';
