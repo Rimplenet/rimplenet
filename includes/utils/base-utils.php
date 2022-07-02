@@ -128,7 +128,7 @@ class Utils
             'tax_query' => array([
                 'taxonomy' => self::TAXONOMY,
                 'field'    => 'name',
-                'terms'    => static::WAALLETS,
+                'terms'    => static::WALLETS,
             ]),
         ]);
     }
