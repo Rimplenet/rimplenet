@@ -1,8 +1,4 @@
 <?php
-
-use Res\Res;
-use Transfers\Transfers;
-
 /**
  * Create Transfers
  */
@@ -55,7 +51,8 @@ class RimplenetCreateTransfer extends Transfers
             'symbol' => $symbol,
             'dec' => $dec,
             'name' => $name,
-            'balance' => $balance
+            'balance' => $balance,
+            'note' => ''
         ]);
     }
 

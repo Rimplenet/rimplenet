@@ -1,10 +1,5 @@
 <?php
 
-// namespace Credits\UpdateCredits;
-
-use Credits\Credits;
-use Res\Res;
-
 class RimplenetUpdateCredits extends Credits
 {
     /**

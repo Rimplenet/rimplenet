@@ -1,8 +1,5 @@
 <?php
 
-use Res\Res;
-use Utils\Utils;
-
 class RimplenetGetWallets extends Utils
 {
     /**

@@ -1,8 +1,4 @@
 <?php
-
-use Credits\Credits;
-use Res\Res;
-
 class RimplenetCreateCredits extends Credits
 {
     public function createCredits(array $param = [])

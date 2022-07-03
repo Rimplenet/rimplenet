@@ -1,9 +1,4 @@
 <?php
-// namespace Debits\DeleteDebits;
-
-use Debits\Debits;
-use Res\Res;
-
 Class RimplenetDeleteDebits extends Debits
 {
     protected function deleteDebits(int $id, string $type = ''){

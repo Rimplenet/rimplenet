@@ -1,10 +1,5 @@
 <?php
 
-use MLM\MLM;
-use Res\Res;
-use Utils\Utils;
-// use WP_Query;
-
 class RimplenetGetMlmMatrix extends Utils
 {
     public function getMlmMatrix()

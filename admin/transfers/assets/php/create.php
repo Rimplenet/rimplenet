@@ -8,9 +8,9 @@ $message = function ($title, $message, $type) {
         text: "' . $message . '",
         icon: "' . $type . '",
       })';
-      $resp.='
-      setTimeout(() => {location.reload()}, 1500)
-      ';
+    //   $resp.='
+    //   setTimeout(() => {location.reload()}, 1500)
+    //   ';
     $resp .= '</script>';
 
     return $resp;
@@ -53,7 +53,7 @@ if (isset($_POST) && isset($_POST['create_transfer']) && wp_verify_nonce($_POST[
     elseif($code == 404):
         echo $message("Error", ucfirst(str_replace('_', ' ', $error)), 'error');
     else :
-        echo $message("Success", $tInit::$response['response_message'], 'success');
+        echo $message("Success", $tInit::$response['message'], 'success');
     endif;
     exit;
 

@@ -1,12 +1,5 @@
 <?php
-
-namespace ApiKey;
-
-use JWT;
-use RimplenetAuthorization;
 use Wallets\Base;
-use WP_Query;
-
 class ApiKey extends Base
 {
 

@@ -1,7 +1,4 @@
 <?php
-
-namespace Credits;
-use Utils\Utils;
 abstract class Credits extends Utils
 {
 

@@ -1,7 +1,4 @@
 <?php
-use Credits\Credits;
-use Res\Res;
-
 class RimplenetGetCredits extends Credits
 {
     public function getCredits($id, $type)

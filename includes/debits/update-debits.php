@@ -1,8 +1,4 @@
 <?php
-
-use Debits\Debits;
-use Res\Res;
-
 class RimplenetUpdateDebits extends Debits
 {
     /**
