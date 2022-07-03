@@ -1,9 +1,4 @@
 <?php
-// namespace Debits\GetDebits;
-
-use Debits\Debits;
-use Res\Res;
-
 class RimplenetGetDebits extends Debits
 {
     public function getDebits($id, $type)

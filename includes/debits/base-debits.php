@@ -1,9 +1,4 @@
 <?php
-
-namespace Debits;
-
-use Utils\Utils;
-
 abstract class Debits extends Utils
 {
 

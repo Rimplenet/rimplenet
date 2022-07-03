@@ -1,8 +1,5 @@
 <?php
 
-use Res\Res;
-use Utils\Utils;
-
 abstract class RimplenetDeleteWallets extends Utils
 {
     protected function deleteWallet(string $wallet_id){

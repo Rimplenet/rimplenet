@@ -1,10 +1,5 @@
 <?php
 
-namespace MLM;
-
-use Res\Res;
-use Utils\Utils;
-
 abstract class MLM
 {
     /**

@@ -1,10 +1,5 @@
 <?php
 
-namespace Utils;
-
-use Res\Res;
-use WP_Query;
-
 class Utils
 {
 

@@ -1,9 +1,4 @@
 <?php
-
-namespace Res;
-
-use Utils\Utils;
-
 class Res
 {
 

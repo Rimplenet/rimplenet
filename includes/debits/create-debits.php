@@ -1,8 +1,4 @@
 <?php
-
-use Debits\Debits;
-use Res\Res;
-
 class RimplenetCreateDebits extends Debits
 {
     public function createDebits(array $param = [])

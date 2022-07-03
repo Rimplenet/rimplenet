@@ -1,7 +1,5 @@
 <?php
 
-use Transfers\Transfers;
-
 class RimplenetGetTransfers extends Transfers
 {
 
