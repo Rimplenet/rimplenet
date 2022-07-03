@@ -23,18 +23,21 @@ class RimplenetCreateTransfer extends Transfers
 
         # Get Other user (user to)
         $user_transfer_to = get_user_by('login', $transfer_to_user);
+        if(!$user_transfer_to) return Res::error(['Invalid User '.$transfer_to_user], 'Unable to reach '.$transfer_to_user);
         $transfer_to_user_id  = $user_transfer_to->ID;
+
+        # Get user wallet
+        $wallet = $this->getWallet($wallet_id);
+        if(!$wallet) return Res::error(['Invalid Wallet Provided'], 'Invalid Wallet', 404);
 
         $min_transfer_amt = 0;
         # Get user balance
         $user_transfer_bal = self::get_withdrawable_wallet_bal($user_id, $wallet_id);
         $user_non_transfer_bal = self::get_nonwithdrawable_wallet_bal($user_id, $wallet_id);
 
-        # Get user wallet
-        $walllet = $this->getWallet($wallet_id);
         $dec = $wallet['wallet_decimal'];
         $symbol = $wallet['wallet_symbol'];
-        $name = $walllet['wallet_name'];
+        $name = $wallet['wallet_name'];
         $balance = $symbol . number_format($user_transfer_bal, $dec);
 
         $exec = $this->executeTransfer([
@@ -48,7 +51,11 @@ class RimplenetCreateTransfer extends Transfers
             'current_user_id' => $current_user_id,
             'current_user' => $current_user,
             'min_transfer_amt' => $min_transfer_amt,
-            "user_transfer_to" => $user_transfer_to
+            "user_transfer_to" => $user_transfer_to,
+            'symbol' => $symbol,
+            'dec' => $dec,
+            'name' => $name,
+            'balance' => $balance
         ]);
     }
 
@@ -59,11 +66,11 @@ class RimplenetCreateTransfer extends Transfers
         if (empty($user_id) || empty($amount_to_transfer) || empty($wallet_id) || empty($transfer_to_user)) :
            return Res::error('One or more compulsory field is empty');
         elseif ($amount_to_transfer > $user_transfer_bal) :
-           return Res::error('Amount to transfer - [' . $symbol . number_format($amount_to_transfer, $dec) . '] is larger than the amount in your mature wallet, input amount not more than the balance in your ( ' . $name . ' mature wallet - [' . $symbol . number_format($user_transfer_bal, $dec) . '] ), the balance in your ( ' . $name . ' immature wallet  - [' . $symbol . number_format($user_non_transfer_bal, $dec) . '] )  cannot be transferred until maturity');
+           return Res::error('Amount to transfer - [' . $symbol . number_format($amount_to_transfer, $dec) . '] is larger than the amount in your mature wallet, input amount not more than the balance in your ( ' . $name . ' mature wallet - [' . $symbol . number_format($user_transfer_bal, $dec) . '] ), the balance in your ( ' . $name . ' immature wallet  - [' . $symbol . number_format($user_non_transfer_bal, $dec) . '] )  cannot be transferred until maturity', "Insufficient Balance");
         elseif ($amount_to_transfer < $min_transfer_amt) :
-           return Res::error('Requested amount [' . $amount_to_transfer . '] is below minimum transfer amount, input amount not less than ' . $min_transfer_amt);
+           return Res::error('Requested amount [' . $amount_to_transfer . '] is below minimum transfer amount, input amount not less than ' . $min_transfer_amt, "Request amount is below minimum transfer amount");
         elseif (!username_exists($user_transfer_to->user_login)) :
-           return Res::error('User with the username [' . $transfer_to_user . '] does not exist, please crosscheck the username');
+           return Res::error('User with the username [' . $transfer_to_user . '] does not exist, please crosscheck the username', "Username does not exist", 404);
         else :
             $transfer = $this->completeTransfer($param);
             return $transfer;

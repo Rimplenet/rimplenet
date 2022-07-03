@@ -121,6 +121,9 @@
   display: flex;
   margin: 5px 0;
 }
+.t-mb-l{
+  margin-bottom: 20px !important;
+}
 .transfer-conversation img{
   height: 30px;
   width: 30px;
@@ -135,6 +138,12 @@
   border-radius: 7px !important;
   padding: 7px !important;
   font-size: small;
+}
+.transfer-data.success{
+  background-color: #e4f7e5 !important;
+}
+.transfer-data.error{
+  background-color: #f7e4e4 !important;
 }
 .c-right{
   align-self: flex-end;

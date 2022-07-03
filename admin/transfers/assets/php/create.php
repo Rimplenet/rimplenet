@@ -8,12 +8,15 @@ $message = function ($title, $message, $type) {
         text: "' . $message . '",
         icon: "' . $type . '",
       })';
+      $resp.='
+      setTimeout(() => {location.reload()}, 1500)
+      ';
     $resp .= '</script>';
 
     return $resp;
 };
 
-if (isset($_POST) && isset($_POST['create_user']) && wp_verify_nonce($_POST['rimplenet_wallet_settings_nonce_field'], 'rimplenet_wallet_settings_nonce_field')) :
+if (isset($_POST) && isset($_POST['create_transfer']) && wp_verify_nonce($_POST['rimplenet_wallet_settings_nonce_field'], 'rimplenet_wallet_settings_nonce_field')) :
     $data = [];
 
     # pass all data in an array variable $data
@@ -23,35 +26,35 @@ if (isset($_POST) && isset($_POST['create_user']) && wp_verify_nonce($_POST['rim
 
     extract($data); # extract $data aray to access all values as a variable
 
-    $user = new RimplenetCreateUser(); # create an insantiation on user class
+    if(preg_match('/\d+/', $transfer_wallet)){
+        echo $message("Error", "Wallet cannot contain numbers".get_current_user_id(), 'error');
+        exit;
+    }
 
-    $newUser = $user->create_user(
-        $email,
-        $uname,
-        $password,
-        [
-            'first_name' => $fname,
-            'last_name' => $lname
-        ]
-    );
-    $user = null;
+    $tInit = new RimplenetCreateTransfer; # create an insantiation on Transfer class
+    $transfer = $tInit->transfer([
+        'user_id' => get_current_user_id(),
+        'amount_to_transfer' => (float) $transfer_amount,
+        'transfer_to_user' => (string) $transfer_user,
+        'wallet_id' => (string) $transfer_wallet
+    ]);
 
     $error = '';
     # Account for error that may occur durning the create process
-    if (isset($newUser['error']) && isset($newUser['error'][0])) :
-        $error = $newUser['error'][0];
-        foreach ($error as $key) :
-            $error = $key[0];
-        endforeach;
+    if (isset($tInit::$response['message'])) :
+        $error = $tInit::$response['message'];
     endif;
 
     # Check the status code returned from create_user method
-    $code = (int) $newUser['status_code'];
+    $code = (int) $tInit::$response['status_code'];
 
     if ($code == 400) :
         echo $message("Error", ucfirst(str_replace('_', ' ', $error)), 'error');
+    elseif($code == 404):
+        echo $message("Error", ucfirst(str_replace('_', ' ', $error)), 'error');
     else :
-        echo $message("Success", $newUser['response_message'], 'success');
+        echo $message("Success", $tInit::$response['response_message'], 'success');
     endif;
+    exit;
 
 endif;
