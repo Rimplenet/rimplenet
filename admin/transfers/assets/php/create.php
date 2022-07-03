@@ -8,9 +8,9 @@ $message = function ($title, $message, $type) {
         text: "' . $message . '",
         icon: "' . $type . '",
       })';
-    //   $resp.='
-    //   setTimeout(() => {location.reload()}, 1500)
-    //   ';
+      $resp.='
+      setTimeout(() => {location.reload()}, 1500)
+      ';
     $resp .= '</script>';
 
     return $resp;

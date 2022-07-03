@@ -148,3 +148,12 @@
 .c-right{
   align-self: flex-end;
 }
+
+@media only screen and (max-width: 500px){
+  .form-container:not(.rt){
+    display: none;
+  }
+}
+@media only screen and (max-width: 400px){
+  .transfer-chat-container{width: unset;}
+}
