@@ -6,10 +6,18 @@ class RimplenetCreateDebits extends Debits
 
         $prop = empty($param) ? $this->req : $param;
         extract($prop);
-
-        if($this->checkEmpty($prop)) return;
+        if(self::requires([
+            'user_id'    => "$user_id || int",
+            'wallet_id'  => "$wallet_id || alnum",
+            'request_id' => "$request_id || alnum",
+            'amount'     => "$amount || amount",
+        ])) return;
 
         if(!$this->getWalletById($wallet_id)) return;
+
+        # verify user exists
+        $userToCredit = get_user_by('ID', $user_id);
+        if(!$userToCredit) return Res::error(["Unable to reach $user_id"], "Invalid User credentials", 404);
 
         # Set transaction id
         $txn_id = $user_id . '_' . $request_id;
@@ -36,6 +44,8 @@ class RimplenetCreateDebits extends Debits
 
         $RimplenetWallet = new Rimplenet_Wallets;
         $user_balance_total = $RimplenetWallet->get_total_wallet_bal($user_id, $wallet_id);
+
+        $amount = "-$amount";
 
         $new_balance  = $user_balance + $amount;
         $new_balance  = $new_balance;

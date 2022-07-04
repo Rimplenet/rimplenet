@@ -27,7 +27,7 @@ if (isset($_POST) && isset($_POST['create_transfer']) && wp_verify_nonce($_POST[
     extract($data); # extract $data aray to access all values as a variable
 
     if(preg_match('/\d+/', $transfer_wallet)){
-        echo $message("Error", "Wallet cannot contain numbers".get_current_user_id(), 'error');
+        echo $message("Error", "Wallet cannot contain numbers", 'error');
         exit;
     }
 
@@ -48,9 +48,7 @@ if (isset($_POST) && isset($_POST['create_transfer']) && wp_verify_nonce($_POST[
     # Check the status code returned from create_user method
     $code = (int) $tInit::$response['status_code'];
 
-    if ($code == 400) :
-        echo $message("Error", ucfirst(str_replace('_', ' ', $error)), 'error');
-    elseif($code == 404):
+    if ($code >= 400) :
         echo $message("Error", ucfirst(str_replace('_', ' ', $error)), 'error');
     else :
         echo $message("Success", $tInit::$response['message'], 'success');
