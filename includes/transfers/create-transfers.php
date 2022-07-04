@@ -6,15 +6,21 @@ class RimplenetCreateTransfer extends Transfers
 {
     
     const TERMS = 'INTERNAL TRANSFER';
+    
     public function transfer($req = [])
     {
         $prop = empty($req) ? $this->req : $req;
         $this->req = $prop;
         extract($prop);
-        if ($this->checkEmpty()) return false;
+        if (self::requires([
+            'transfer_from_user' => "$transfer_from_user_id || int",
+            'amount_to_transfer' => "$amount_to_transfer || amount",
+            'transfer_to_user' => "$transfer_to_user || alnum",
+            'wallet_id' => "$wallet_id || alnum",
+        ])) return self::$response;
 
         # Get current loggedin user (user from)
-        $current_user = get_user_by('ID', $user_id);
+        $current_user = get_user_by('ID', $transfer_from_user_id);
         $current_user_id  = $current_user->ID;
 
         # Get Other user (user to)
@@ -28,8 +34,8 @@ class RimplenetCreateTransfer extends Transfers
 
         $min_transfer_amt = 0;
         # Get user balance
-        $user_transfer_bal = self::get_withdrawable_wallet_bal($user_id, $wallet_id);
-        $user_non_transfer_bal = self::get_nonwithdrawable_wallet_bal($user_id, $wallet_id);
+        $user_transfer_bal = self::get_withdrawable_wallet_bal($transfer_from_user_id, $wallet_id);
+        $user_non_transfer_bal = self::get_nonwithdrawable_wallet_bal($transfer_from_user_id, $wallet_id);
 
         $dec = $wallet['wallet_decimal'];
         $symbol = $wallet['wallet_symbol'];
@@ -37,7 +43,7 @@ class RimplenetCreateTransfer extends Transfers
         $balance = $symbol . number_format($user_transfer_bal, $dec);
 
         $exec = $this->executeTransfer([
-            'user_id' => $user_id,
+            'transfer_from_user_id' => $transfer_from_user_id,
             'wallet_id' => $wallet_id,
             'amount_to_transfer' => $amount_to_transfer,
             'transfer_to_user' => $transfer_to_user,
@@ -60,7 +66,7 @@ class RimplenetCreateTransfer extends Transfers
     public function executeTransfer($param = [])
     {
         extract($param);
-        if (empty($user_id) || empty($amount_to_transfer) || empty($wallet_id) || empty($transfer_to_user)) :
+        if (empty($transfer_from_user_id) || empty($amount_to_transfer) || empty($wallet_id) || empty($transfer_to_user)) :
            return Res::error('One or more compulsory field is empty');
         elseif ($amount_to_transfer > $user_transfer_bal) :
            return Res::error('Amount to transfer - [' . $symbol . number_format($amount_to_transfer, $dec) . '] is larger than the amount in your mature wallet, input amount not more than the balance in your ( ' . $name . ' mature wallet - [' . $symbol . number_format($user_transfer_bal, $dec) . '] ), the balance in your ( ' . $name . ' immature wallet  - [' . $symbol . number_format($user_non_transfer_bal, $dec) . '] )  cannot be transferred until maturity', "Insufficient Balance");
@@ -95,7 +101,7 @@ class RimplenetCreateTransfer extends Transfers
                     'post_title'   => $modified_title,
                     'post_status'   =>  'publish',
                     'meta_input' => array(
-                        'transfer_address_from' => $user_id,
+                        'transfer_address_from' => $transfer_from_user_id,
                         'note' => __("TRANSFER from $current_user->user_login $note"),
                     )
                 );
@@ -106,7 +112,7 @@ class RimplenetCreateTransfer extends Transfers
             //debit from user making the transfer
 
             $amount_to_debit_in_transfer = $amount_to_transfer * -1;
-            $txn_transfer_id2 = $this->add_user_mature_funds_to_wallet($user_id, $amount_to_debit_in_transfer, $wallet_id, $note);
+            $txn_transfer_id2 = $this->add_user_mature_funds_to_wallet($transfer_from_user_id, $amount_to_debit_in_transfer, $wallet_id, $note);
         }
 
 

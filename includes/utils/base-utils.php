@@ -6,7 +6,7 @@ class Utils
     /**
      * @var array
      */
-    public $error;
+    public static $error;
 
     /**
      * @var string
@@ -45,40 +45,51 @@ class Utils
         // return "hekko";
         $prop = empty($req) ? $this->req : $req;
 
-        
+
         foreach ($prop as $key => $value) :
-            
+
             if ($key == 'r_a_b_w' || $key == 'r_b_b_w' || $key == 'e_a_w_p' || $key == 'min_withdrawal_amount' || $key == 'max_withdrawal_amount' || $key == 'inc_i_w_cl' || $key == 'wallet_symbol_pos' || $key == 'note' || $key == 'app_id') continue;
-            
+
             if (is_bool($value) && !$value || is_bool($value) && $value) continue;
-            
+
             if ($value == '')
-            $this->error[$key] = 'Field Cannot be empty';
+                self::$error[$key] = 'Field Cannot be empty';
         endforeach;
 
-        if (!empty($this->error)) {
-           Res::error($this->error, "one or more field is required", 400);
-            return true; exit;
+        if (!empty(self::$error)) {
+            Res::error(self::$error, "one or more field is required", 400);
+            return true;
+            exit;
         }
         return false;
     }
 
-    public function isInt(array $params = [], $type = 'int')
+    public static function requires(array $params = [])
     {
         foreach ($params as $key => $value) {
-            if($type == 'int'){
-                if($value == 0) $this->error[$key] = "$key cannot be zero";
-                if(!is_int($value)) $this->error[$key] = "$key requires an integer";
-            }elseif($type == 'amount'){
-                if(!is_numeric($value)) $this->error[$key] = "$key requires a valid amount";
+            [$val, $type] = explode('||', $value);
+            $type = trim($type); $val = trim($val);
+            if ($val !== '') {
+                if ($type == 'int') {
+                    if ((int) $val == 0) self::$error[$key] = "$key cannot be zero";
+                    if (!preg_match('/^\d+$/', $val)) self::$error[$key] = "$key requires an integer";
+                } elseif ($type == 'amount') {
+                    if (!is_numeric($val)) self::$error[$key] = "$key requires a valid amount";
+                } elseif ($type == 'string') {
+                    if (!preg_match('/^([a-zA-Z])+$/', $val)) self::$error[$key] = $key . ' requires A-Za-z';
+                } elseif ($type == 'alnum') {
+                    if (!preg_match('/^[a-zA-Z]\.*/', $val)) self::$error[$key] = $key . ' Must start with an alphabet';
+                }
+            } else {
+                self::$error[$key] = 'Field Cannot be empty';
             }
         }
 
-        if (!empty($this->error)) {
-            Res::error($this->error, "invalid input", 400);
-             return false;
-         }
-         return true;
+        if (!empty(self::$error)) {
+            Res::error(self::$error, "invalid input", 400);
+            return true;
+        }
+        return false;
     }
 
     public function getWalletById(string $walletId)
@@ -90,7 +101,7 @@ class Utils
         if ($wallet) :
             return $wallet;
         else :
-           Res::error(["Invalid wallet Id"], "Wallet not found", 404);
+            Res::error(["Invalid wallet Id"], "Wallet not found", 404);
             return false;
         endif;
     }
@@ -130,7 +141,7 @@ class Utils
 
     public function queryTxn($page, $type = self::CREDIT)
     {
-       $this->query = new WP_Query(
+        $this->query = new WP_Query(
             array(
                 'post_type' => 'rimplenettransaction',
                 'post_status' => 'any',
@@ -146,10 +157,6 @@ class Utils
                 ),
             )
         );
-    }
-    public function FunctionName(Type $var = null)
-    {
-        # code...
     }
 
     protected function postMeta($field = '')

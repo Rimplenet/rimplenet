@@ -25,12 +25,12 @@ class CreateWallet extends RimplenetCreateWallets
         do_action('rimplenet_api_request_started', $req, $allowed_roles = ['administrator'], $action = 'create_rimplenet_wallets');
         # Get and store all user inputs
         $this->req = [
-            'wallet_name'           => sanitize_text_field($req['wallet_name']),
-            'wallet_id'             => sanitize_text_field($req['wallet_id']),
-            'wallet_symbol'         => sanitize_text_field($req['wallet_symbol']),
+            'wallet_name'           => sanitize_text_field($req['wallet_name'] ?? ''),
+            'wallet_id'             => sanitize_text_field($req['wallet_id'] ?? ''),
+            'wallet_symbol'         => sanitize_text_field($req['wallet_symbol'] ?? ''),
             'wallet_symbol_pos'     => sanitize_text_field($req['wallet_symbol_pos'] ?? 'left'),
-            'wallet_note'           => sanitize_text_field($req['wallet_note'] ?? $req['wallet_name']),
-            'wallet_type'           => sanitize_text_field($req['wallet_type']),
+            'wallet_note'           => sanitize_text_field($req['wallet_note'] ?? ''),
+            'wallet_type'           => sanitize_text_field($req['wallet_type'] ?? ''),
             'wallet_decimal'        => $req['wallet_decimal'] ?? 2,
             'max_withdrawal_amount' => $req['max_withdrawal_amount'] ?? CreateWallet::MAX_AMOUNT,
             'min_withdrawal_amount' => $req['min_withdrawal_amount'] ?? CreateWallet::MIN_AMOUNT,

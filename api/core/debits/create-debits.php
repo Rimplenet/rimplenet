@@ -24,7 +24,7 @@ $createDebits = new class extends RimplenetCreateDebits
 
         $this->req = [
             'note'          => sanitize_text_field($req['note'] ?? ''),
-            'user_id'       => (int) $req['user_id'],
+            'user_id'       => sanitize_text_field($req['user_id']),
             'wallet_id'     => sanitize_text_field(strtolower($req['wallet_id'])),
             'request_id'    => sanitize_text_field($req['request_id']),
             'amount'        => sanitize_text_field($req['amount']),
