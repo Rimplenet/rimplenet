@@ -1,9 +1,9 @@
 <?php
 
-use Mails\Base;
+use Emails\Base;
 use Traits\Email\RimplenetEmailTrait;
 
-class RimplenetVerifyEmailMail extends Base
+class RimplenetPasswordResetMail extends Base
 {
     use RimplenetEmailTrait;
    public function __construct()
@@ -13,8 +13,8 @@ class RimplenetVerifyEmailMail extends Base
 
    public function send($email)
    {
-        $sent=$this->sendVerifyEmailMail($email);
-        $message=$sent ? 'Verification Mail Email Sent' : 'Email Not Sent';
+        $sent=$this->sendResetPasswordMail($email);
+        $message=$sent ? 'Email Sent' : 'Password Reset Email Not Sent';
 
         $sent ? $this->success($sent, $message) : $this->error($sent, $message);
 

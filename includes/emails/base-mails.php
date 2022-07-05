@@ -1,6 +1,6 @@
 <?php
 
-namespace Mails;
+namespace Emails;
 
 use WP_Query;
 use WP_Term;
