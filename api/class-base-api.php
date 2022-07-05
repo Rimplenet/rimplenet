@@ -39,7 +39,7 @@ class Rimplenet_Api {
 	 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'api/core/withdrawals/class-base-withdrawals.php';
 	 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'api/core/investments/class-base-investments.php';
 	 
-	 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'api/core/mail/class-base-mails.php';
+	 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'api/core/emails/class-base-emails.php';
     }
 	
 }

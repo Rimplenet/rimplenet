@@ -1,6 +1,6 @@
 <?php
 
-class Rimplenet_Base_Mails_Api
+class Rimplenet_Base_Emails_Api
 {
 
 	private $plugin_name;
@@ -22,4 +22,4 @@ class Rimplenet_Base_Mails_Api
 }
 
 
-$Rimplenet_Base_Mails_Api = new Rimplenet_Base_Mails_Api();
+$Rimplenet_Base_Emails_Api = new Rimplenet_Base_Emails_Api();

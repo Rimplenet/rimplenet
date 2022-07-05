@@ -12,7 +12,7 @@ trait RimplenetEmailTrait
   public function sendVerifyEmailMail($email)
   {
     $to = $email;
-    include(plugin_dir_path( dirname( __FILE__ ) ) . 'mail-templates/verify-email-mail.php');
+    include(plugin_dir_path( dirname( __FILE__ ) ) . 'email-templates/verify-email-mail.php');
 
     if (wp_mail( $to, $subject, $message )) {
         return true;
@@ -24,7 +24,7 @@ trait RimplenetEmailTrait
   public function sendResetPasswordMail($email)
   {
     $to = $email;
-    include(plugin_dir_path( dirname( __FILE__ ) ) . 'mail-templates/password-reset.php');
+    include(plugin_dir_path( dirname( __FILE__ ) ) . 'email-templates/password-reset.php');
 
     if (wp_mail( $to, $subject, $message )) {
         return true;
@@ -36,7 +36,7 @@ trait RimplenetEmailTrait
   public function sendPasswordChange($email, $password)
   {
     $to = $email;
-    include(plugin_dir_path( dirname( __FILE__ ) ) . 'mail-templates/change-user-password.php');
+    include(plugin_dir_path( dirname( __FILE__ ) ) . 'email-templates/change-user-password.php');
 
     if (wp_mail( $to, $subject, $message )) {
         return true;
