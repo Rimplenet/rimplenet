@@ -32,4 +32,16 @@ trait RimplenetEmailTrait
         return false;
     }
   }
+
+  public function sendPasswordChange($email, $password)
+  {
+    $to = $email;
+    include(plugin_dir_path( dirname( __FILE__ ) ) . 'mail-templates/change-user-password.php');
+
+    if (wp_mail( $to, $subject, $message )) {
+        return true;
+    } else {
+        return false;
+    }
+  }
 }

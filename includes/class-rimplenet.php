@@ -213,8 +213,8 @@ class Rimplenet
 		 */
 		require_once plugin_dir_path(dirname(__FILE__)) . 'public/class-rimplenet-public.php';
 		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/rimplenet-core-trait.php';
-		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/mails/email-trait.php';
-		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/mails/class-base-mails.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/emails/email-trait.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/emails/class-base-emails.php';
 		
 
 		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/users/jwt.php';
