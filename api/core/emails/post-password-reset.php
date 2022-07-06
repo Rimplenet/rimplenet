@@ -29,7 +29,8 @@ $RimplenetPostPasswordResetMailApi = new class extends RimplenetPostPasswordRese
         ];
 
         // if ($wlt_id !== '') :
-            $this->send($email, $fire_email);
+            // $this->send($email, $fire_email);
+            $this->validate();
             return new WP_REST_Response($this->response, $this->response['status_code']);
     }
 };
