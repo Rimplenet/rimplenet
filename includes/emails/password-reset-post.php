@@ -24,6 +24,7 @@ class RimplenetPostPasswordResetMail extends Base
         if ($this->checkToken()) {
             if ($this->checkPasswordMatch()) {
                 $passwordchange=wp_set_password($password, $this->prop['user_id']);
+                delete_user_meta( $this->prop['user_id'], 'token_to_reset_password', $this->prop['token']);
                 $message="Password Changed Successfully";
                 $this->success($passwordchange, $message);
                 return $this->response;
