@@ -1,6 +1,6 @@
 <?php
 
-$RimplenetPostPasswordResetMailApi = new class extends RimplenetPostPasswordResetMail
+$UpdatePasswordResetMail = new class extends UpdatePasswordResetMail
 {
     public function __construct()
     {
@@ -9,7 +9,7 @@ $RimplenetPostPasswordResetMailApi = new class extends RimplenetPostPasswordRese
 
     public function register_api_routes()
     {
-        register_rest_route('rimplenet/v1', 'password-reset-mail', [
+        register_rest_route('rimplenet/v1', 'update-password', [
             'methods' => 'POST',
             'callback' => [$this, 'send_password_reset_mail']
         ]);
@@ -23,7 +23,8 @@ $RimplenetPostPasswordResetMailApi = new class extends RimplenetPostPasswordRese
 
         $this->req = [
             'email'          => sanitize_text_field($req['email_address'] ?? ''),
-            'password'       => sanitize_text_field($req['new_password']),
+            'password'       => sanitize_text_field($req['password']),
+            'new_password'       => sanitize_text_field($req['new_password']),
             'confirm_password'     => sanitize_text_field($req['confirm_password']),
             'token'      => sanitize_text_field($req['token_to_reset_password']),
         ];
