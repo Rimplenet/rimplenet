@@ -19,6 +19,7 @@ class Utils
     const DEBIT = 'DEBIT';
     const CREDIT = 'CREDIT';
     const TRANSFERS = 'TRANSFERS';
+    const LIMIT = 100;
 
     // public function __construct(mixed $var = '')
     public function __construct($var = "")
@@ -78,7 +79,9 @@ class Utils
                 } elseif ($type == 'string') {
                     if (!preg_match('/^([a-zA-Z])+$/', $val)) self::$error[$key] = $key . ' requires A-Za-z';
                 } elseif ($type == 'alnum') {
-                    if (!preg_match('/^[a-zA-Z]\.*/', $val)) self::$error[$key] = $key . ' Must start with an alphabet';
+                    if (!preg_match('/^[a-zA-Z]\.*/', $val)) self::$error[$key] = $key . ' Cannot start with a number';
+                }elseif($type == 'bool'){
+                    if (!is_bool($type))  self::$error[$key] = $key . ' Mustt be a boolean';
                 }
             } else {
                 self::$error[$key] = 'Field Cannot be empty';

@@ -22,7 +22,7 @@
             elseif($active_tab == "create")
             {
                 $setup_tab_active = "nav-tab-active";
-                $path_to_tab = plugin_dir_path( dirname( __FILE__ ) ) . "layouts/create-transfers.php";
+                $path_to_tab = plugin_dir_path( dirname( __FILE__ ) ) . "layouts/create-transfer-1.php";
             }
             else
             { 

@@ -105,8 +105,8 @@ class RimplenetCreateTransfer extends Transfers
                         'note' => __("TRANSFER from $current_user->user_login $note"),
                     )
                 );
-            wp_set_object_terms($txn_transfer_id1, 'TRANSFER', 'rimplenettransaction_type', true);
-            wp_set_object_terms($txn_transfer_id1, 'INTERNAL TRANSFER', 'rimplenettransaction_type', true);
+            // wp_set_object_terms($txn_transfer_id1, 'TRANSFER', 'rimplenettransaction_type', true);
+            wp_set_object_terms($txn_transfer_id1,  self::TRANSFERS, self::TAXONOMY, true);
             wp_update_post($args);
 
             //debit from user making the transfer
@@ -130,8 +130,8 @@ class RimplenetCreateTransfer extends Transfers
                         'note' => __("TRANSFER to $user_transfer_to->user_login $note"),
                     )
                 );
-            wp_set_object_terms($txn_transfer_id2, 'TRANSFER', 'rimplenettransaction_type', true);
-            wp_set_object_terms($txn_transfer_id2, 'INTERNAL TRANSFER', 'rimplenettransaction_type', true);
+                
+            wp_set_object_terms($txn_transfer_id1,  self::TRANSFERS, self::TAXONOMY, true);
             wp_update_post($args);
 
             $transfer_info = $txn_transfer_id2;
