@@ -10,7 +10,7 @@ $getCredits = new class extends RimplenetPasswordResetMail
     public function register_api_routes()
     {
         register_rest_route('rimplenet/v1', 'password-reset-mail', [
-            'methods' => 'POST',
+            'methods' => 'GET',
             'callback' => [$this, 'send_password_reset_mail']
         ]);
     }
@@ -19,9 +19,10 @@ $getCredits = new class extends RimplenetPasswordResetMail
     {
         # ================= set fields ============
         $email  = sanitize_text_field($req['email']);
+        $fire_email =sanitize_text_field($req['fire_email'] ?? false);
 
         // if ($wlt_id !== '') :
-            $this->send($email);
+            $this->send($email, $fire_email);
             return new WP_REST_Response($this->response, $this->response['status_code']);
     }
 };

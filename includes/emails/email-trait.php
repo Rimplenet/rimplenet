@@ -12,7 +12,7 @@ trait RimplenetEmailTrait
   public function sendVerifyEmailMail($email)
   {
     $to = $email;
-    include(plugin_dir_path( dirname( __FILE__ ) ) . 'email-templates/verify-email-mail.php');
+    include(plugin_dir_path( dirname( __FILE__ ) ) . 'emails/email-templates/verify-email-mail.php');
 
     if (wp_mail( $to, $subject, $message )) {
         return true;
@@ -24,7 +24,7 @@ trait RimplenetEmailTrait
   public function sendResetPasswordMail($email)
   {
     $to = $email;
-    include(plugin_dir_path( dirname( __FILE__ ) ) . 'email-templates/password-reset.php');
+    include(plugin_dir_path( dirname( __FILE__ ) ) . 'emails/email-templates/password-reset.php');
 
     if (wp_mail( $to, $subject, $message )) {
         return true;
@@ -36,12 +36,35 @@ trait RimplenetEmailTrait
   public function sendPasswordChange($email, $password)
   {
     $to = $email;
-    include(plugin_dir_path( dirname( __FILE__ ) ) . 'email-templates/change-user-password.php');
+    include(plugin_dir_path( dirname( __FILE__ ) ) . 'emails/email-templates/change-user-password.php');
 
     if (wp_mail( $to, $subject, $message )) {
         return true;
     } else {
         return false;
     }
+  }
+
+  public function generateToken()
+  {
+    // return openssl_random_pseudo_bytes(16);
+    //Generate a random string.
+    $token = openssl_random_pseudo_bytes(16);
+
+    //Convert the binary data into hexadecimal representation.
+    $token = bin2hex($token);
+
+    //Print it out for example purposes.
+    return $token;
+  }
+
+  public function storeResetToken($user_id, $token)
+  {
+    return add_user_meta($user_id ?? 1, 'token_to_reset_password', $token);
+  }
+
+  public function getResetToken()
+  {
+    # code...
   }
 }
