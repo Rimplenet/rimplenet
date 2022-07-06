@@ -53,4 +53,10 @@ abstract class Base
             'data' => $data
         ];
     }
+
+    public function getUserId($key, $value)
+    {
+        $user=get_user_by( $key, $value );
+        return $user->ID;
+    }
 }

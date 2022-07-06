@@ -1,6 +1,6 @@
 <?php
 
-$getCredits = new class extends RimplenetPasswordResetMail
+$RimplenetPostPasswordResetMailApi = new class extends RimplenetPostPasswordResetMail
 {
     public function __construct()
     {
@@ -10,7 +10,7 @@ $getCredits = new class extends RimplenetPasswordResetMail
     public function register_api_routes()
     {
         register_rest_route('rimplenet/v1', 'password-reset-mail', [
-            'methods' => 'GET',
+            'methods' => 'POST',
             'callback' => [$this, 'send_password_reset_mail']
         ]);
     }
@@ -20,6 +20,13 @@ $getCredits = new class extends RimplenetPasswordResetMail
         # ================= set fields ============
         $email  = sanitize_text_field($req['email']);
         $fire_email =sanitize_text_field($req['fire_email'] ?? false);
+
+        $this->req = [
+            'email'          => sanitize_text_field($req['email'] ?? ''),
+            'password'       => sanitize_text_field($req['password']),
+            'confirm_password'     => sanitize_text_field($req['confirm_password']),
+            'token'      => sanitize_text_field($req['token']),
+        ];
 
         // if ($wlt_id !== '') :
             $this->send($email, $fire_email);

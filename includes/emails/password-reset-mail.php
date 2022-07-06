@@ -11,13 +11,25 @@ class RimplenetPasswordResetMail extends Base
     # code...
    }
 
-   public function send($email)
+   public function send($email, $sendmail=false)
    {
-        $sent=$this->sendResetPasswordMail($email);
-        $message=$sent ? 'Email Sent' : 'Password Reset Email Not Sent';
 
-        $sent ? $this->success($sent, $message) : $this->error($sent, $message);
+     $user_id=$this->getUserId('email', $email);
 
-        return $this->response;
+
+
+     $sent['token_to_reset_password']=$this->generateToken();
+     $this->storeResetToken($user_id, $sent['token_to_reset_password']);
+        
+        if ($sendmail) {
+          $sent['mail']=$this->sendResetPasswordMail($email);
+          $message=$sent['mail'] ? 'Email Sent' : 'Password Reset Email Not Sent';
+          $sent['mail'] ? $this->success($sent, $message) : $this->error($sent, $message);
+          return $this->response;
+        }
+
+        $message=$sent['token_to_reset_password'] ? 'Token Generated' : 'Token Not Generated';
+        $sent['token_to_reset_password'] ? $this->success($sent, $message) : $this->error($sent, $message);
+          return $this->response;
    }
 }
