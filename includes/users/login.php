@@ -51,8 +51,16 @@ class RimplenetLoginUser
                 ]);
     
                 $jwt = JWT::encode($payload);
+
+                $data = [
+                    "access_token"  => $jwt,
+                    "user_id"       => $is_user->data->ID,
+                    "user_email"    => $is_user->data->user_email,
+                    "username"      => $is_user->data->user_login,
+                    "time_of_login" => time()
+                ];
                 
-                return $this->response(200, true, "Login successful", ["access_token"=>$jwt], []);
+                return $this->response(200, true, "Login successful", $data, []);
     
             }
 
@@ -81,8 +89,16 @@ class RimplenetLoginUser
                     ]);
         
                     $jwt = JWT::encode($payload);
+
+                    $data = [
+                        "access_token"  => $jwt,
+                        "user_id"       => $is_user->data->ID,
+                        "user_email"    => $is_user->data->user_email,
+                        "username"      => $is_user->data->user_login,
+                        "time_of_login" => time()
+                    ];
                     
-                    return $this->response(200, true, "Login successful", ["access_token"=>$jwt], []);
+                    return $this->response(200, true, "Login successful", $data, []);
         
                 }
             } else {

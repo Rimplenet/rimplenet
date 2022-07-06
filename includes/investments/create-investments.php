@@ -7,7 +7,7 @@ class RimplenetCreateInvestment
     public function __construct()
     {
         add_shortcode('rimplenet-create-investment', array($this, 'create_investment_test'));
-        add_action('init', array($this, 'process_investments_roi'));
+        // add_action('init', array($this, 'process_investments_roi'));
     }
 
     public function create_investment_test() {
@@ -30,7 +30,7 @@ class RimplenetCreateInvestment
         
         $debit->createDebits($params);
         
-        if (!empty($debit::$response['error'])) return $debit::$response;
+        // if (!empty($debit::$response['error'])) return $debit::$response;
         
         $txn_request_id = $params['user_id'].'_'.$params['request_id'];
         
@@ -72,14 +72,30 @@ class RimplenetCreateInvestment
 
     public function process_investments_roi()
     {
-        echo $this->availableInvestments();
+        if ($this->availableInvestments()->found_posts > 0) {
+
+            foreach ($this->availableInvestments()->get_posts() as $post) {
+                // echo $post->ID;
+                // echo get_post_meta($post->ID, 'investment_wallet', true);
+                $credit = new RimplenetCreateCredits;
+                $params = [
+                    "wallet_id"    => get_post_meta($post->ID, 'investment_wallet', true), 
+                    "amount"       => get_post_meta($post->ID, 'roi_amount_to_be_paid_per_interval', true),
+                    "request_id"   => 'investment_credit_'. get_post_meta($post->ID, 'investment_id', true),
+                    "user_id"      => get_post_meta($post->ID, 'user_id', true),
+                    "note"         => get_post_meta($post->ID, 'investment_description', true)
+                ];
+                
+                $credit->createCredits($params);
+            }
+        }
+        
     }
 
-    public function availableInvestments($investment_id = null)
+    public function availableInvestments()
     {
-        // global $wpdb;
-        // $wpdb->get_row("SELECT * FROM $wpdb->postmeta WHERE meta_key='investment_id'");
-        $investment = new WP_Query(
+
+        return new WP_Query(
             array(
                 'post_type' => 'rimplenettransaction',
                 'post_status' => 'publish',
@@ -93,7 +109,7 @@ class RimplenetCreateInvestment
                 ),
             )
         );
-        return $investment->found_posts;
+
     }
 
     public function response($status_code, $status, $message, $data=[], $error=[])
