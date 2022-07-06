@@ -1,9 +1,4 @@
 <?php
-
-use MLM\MLM;
-use Res\Res;
-use Utils\Utils;
-
 class RimplenetCreateMlmMatrix extends Utils
 {
 

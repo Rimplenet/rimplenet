@@ -1,9 +1,4 @@
 <?php
-
-namespace Debits;
-
-use Utils\Utils;
-
 abstract class Debits extends Utils
 {
 
@@ -16,6 +11,6 @@ abstract class Debits extends Utils
     protected function debitsExists(int $id, string $type= 'credit')
     {
         global $wpdb;
-        return $wpdb->get_row("SELECT * FROM $wpdb->postmeta WHERE post_id ='$id' AND meta_key='request_id' AND meta_value = '$type' ");
+        return $wpdb->get_row("SELECT * FROM $wpdb->postmeta WHERE post_id ='$id' AND meta_value = '$id' ");
     }
 }

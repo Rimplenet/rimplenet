@@ -1,8 +1,5 @@
 <?php
 
-use Credits\Credits;
-use Res\Res;
-
 Class RimplenetDeleteCredits extends Credits
 {
     public function deleteCredits(int $id, string $type = ''){

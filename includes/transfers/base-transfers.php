@@ -1,11 +1,7 @@
 <?php
-namespace Transfers;
-
-use Res\Res;
-use RimplenetGetWallets;
 use Traits\Wallet\RimplenetWalletTrait;
 
-class Transfers extends RimplenetGetWallets {
+class Transfers extends Utils {
 
     use RimplenetWalletTrait;
     

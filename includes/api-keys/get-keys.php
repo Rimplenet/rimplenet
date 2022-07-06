@@ -1,7 +1,4 @@
 <?php
-
-use ApiKey\ApiKey;
-
 class RimplenetGetApiKeys extends ApiKey
 {
 

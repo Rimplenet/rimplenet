@@ -1,8 +1,4 @@
 <?php
-
-use Res\Res;
-use Transfers\Transfers;
-
 class RimplenetDeleteTransfers extends Transfers
 {
     public function delete($transferId)

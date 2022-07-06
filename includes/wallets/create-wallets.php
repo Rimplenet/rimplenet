@@ -1,7 +1,4 @@
 <?php
-
-use Res\Res;
-use Utils\Utils;
 class RimplenetCreateWallets extends Utils
 {
     /**
@@ -87,9 +84,18 @@ class RimplenetCreateWallets extends Utils
         $this->prop = empty($req) ? $this->req : $req;
         $this->wallet_id = strtolower($this->prop['wallet_id']);
 
-        $this->req = $this->prop;
+        extract($this->prop);
 
-        if ($this->checkEmpty()) return self::$response;
+        if (self::requires([
+            'wallet_name'           =>  "$wallet_name || string",
+            'wallet_id'             =>  "$wallet_id || alnum",
+            'wallet_symbol'         =>  $wallet_symbol,
+            'wallet_symbol_pos'     =>  $wallet_symbol_pos ?? 'left',
+            'wallet_type'           =>  "$wallet_type || string",
+            'wallet_decimal'        => $wallet_decimal ?? 2 ." || int",
+            'max_withdrawal_amount' => $max_withdrawal_amount ?? CreateWallet::MAX_AMOUNT,
+            'min_withdrawal_amount' => $min_withdrawal_amount ?? CreateWallet::MIN_AMOUNT,
+        ])) return self::$response;
         if ($this->notFloatOrNumber()) return self::$response;
 
 

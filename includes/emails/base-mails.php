@@ -1,6 +1,6 @@
 <?php
 
-namespace Mails;
+namespace Emails;
 
 use WP_Query;
 use WP_Term;
@@ -52,5 +52,11 @@ abstract class Base
             'message' => $message,
             'data' => $data
         ];
+    }
+
+    public function getUserId($key, $value)
+    {
+        $user=get_user_by( $key, $value );
+        return $user->ID;
     }
 }
