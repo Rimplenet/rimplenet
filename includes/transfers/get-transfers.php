@@ -15,8 +15,8 @@ class RimplenetGetTransfers extends Transfers
             $this->query = new WP_Query([
                 'post_type' => self::POST_TYPE,
                 'post_status' => 'publish',
-                'posts_per_page' => -1,
-                'paged' => $page,
+                'posts_per_page' => Utils::LIMIT,
+                'paged' => $page ?? 1,
                 'tax_query' => array([
                     'taxonomy' => self::TAXONOMY,
                     'field'    => 'name',
@@ -28,10 +28,10 @@ class RimplenetGetTransfers extends Transfers
                 foreach ($posts as $key => $transfer) :
                     $posts[$key] = $this->formatTransfer($transfer);
                 endforeach;
-                $this->success($posts, 'Transfers Retrieved');
+                Res::success($posts, 'Transfers Retrieved');
                 return $posts;
             else :
-                $this->error(
+                Res::error(
                     'You have not made any transfer at the moment',
                     'No wallet Found',
                     404
@@ -46,17 +46,18 @@ class RimplenetGetTransfers extends Transfers
         if(!$transfer) return false;
         $transfer = get_post($transfer->post_id);
         $transferData = $this->formatTransfer($transfer);
-        $this->success($transferData, 'Transfer Retrieved');
+       Res::success($transferData, 'Transfer Retrieved');
         return $transferData;
     }
 
     public function formatTransfer($transfer)
     {
         $this->id = $transfer->ID;
+        $transferFrom = get_user_by('ID', $this->postMeta('transfer_address_from'));
         return (object) [
             'transferId' => $this->postMeta('alt_transfer_id'),
             'transferTo' => $this->postMeta('transfer_address_to'),
-            'transferFrom' => $this->postMeta('transfer_address_from'),
+            'transferFrom' => $transferFrom->user_login,
             'transferAmount' => $this->postMeta('amount'),
             'transferDesc' => $this->postMeta('note'),
             'transferType' => $this->postMeta('txn_type'),
