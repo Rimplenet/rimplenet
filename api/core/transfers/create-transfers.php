@@ -23,11 +23,11 @@ class CreateTransfers extends RimplenetCreateTransfer
     {
         do_action('rimplenet_api_request_started', $req, $allowed_roles = ['administrator'], $action = 'create_rimplenet_transfers');
         $this->req = [
-            'transfer_from_user_id' => sanitize_text_field($req['transfer_from_user_id'] ?? ''),
+            'transfer_from_user' => sanitize_text_field($req['transfer_from_user'] ?? ''),
             'amount_to_transfer' => sanitize_text_field($req['amount_to_transfer'] ?? ''),
             'transfer_to_user' => sanitize_text_field($req['transfer_to_user'] ?? ''),
             'wallet_id' => sanitize_text_field($req['wallet_id'] ?? ''),
-            'note' => sanitize_text_field($req['note'] ?? ''),
+            'note' => sanitize_text_field($req['note'] ?? 'Intrjk'),
         ];
 
         $this->transfer();

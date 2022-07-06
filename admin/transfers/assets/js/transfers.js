@@ -1,5 +1,6 @@
 (function( $ ) {
 	'use strict';
+  let rt_dir = $('#__rt_dir').val()
 let canSend = []
   const checkempty = (input = []) => {
     canSend = [];
@@ -27,6 +28,18 @@ let canSend = []
       document.querySelector('.transfer-form').submit()
     }
   })
+
+  $('#transfer-wallet').on('change', function(){
+    let selected = $(this).find(':selected')
+    $('span.wallet_symbol').text(selected.data('symbol'))
+  })
+
+  $('input.user-transfer').on('input', function(){
+    let bal = $(this).parent().find('.wallet_balance')
+    
+    bal.text($(this).val())
+  })
+
 
 
 })( jQuery );
