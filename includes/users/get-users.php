@@ -23,7 +23,7 @@ class RimplenetGetUser
 
         if ($access_token == null) {
             
-            $get_single_user = get_user_by('ID', $user_id);
+            $get_single_user = get_user_by('ID', $user_id) ? get_user_by('ID', $user_id) : get_user_by('login', $user_id);
             unset($get_single_user->data->user_pass);
             $user_data = $this->userFormat($get_single_user);
             
@@ -66,6 +66,7 @@ class RimplenetGetUser
                     
                 $user_access_token = JWT::decode($access_token);
                 $id = json_decode($user_access_token)->user->ID;
+                $username = json_decode($user_access_token)->user->username;
                 
                 if ($user_access_token === "Expired token") {
                     return $this->response(400, "failed", "Validation error", [], ["Expired token"]);
@@ -73,13 +74,13 @@ class RimplenetGetUser
                     return $this->response(400, "failed", "Validation error", [], ["Invalid signature"]);
                 } elseif ($user_access_token) {
                     
-                    $get_single_user = get_user_by('ID', $user_id);
+                    $get_single_user = get_user_by('ID', $user_id) ? get_user_by('ID', $user_id) : get_user_by('login', $user_id);
                     unset($get_single_user->data->user_pass);
                     $user_data = $this->userFormat($get_single_user);
                     
                     if($user_id !== null) {
                         
-                        if ($this->authorization($id) || $id == $user_id) {
+                        if ($this->authorization($id) || $id == $user_id || $username == $user_id) {
                             if ($user_data) return $this->response(200, true, "User retrieved successfully", $user_data, []);
                             return $this->response(404, "Failed", "User not found", [], []);
                         } else {
