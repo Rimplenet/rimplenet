@@ -1,6 +1,6 @@
 <?php
 
-$getCredits = new class extends RimplenetPasswordResetMail
+$RimplenetPasswordChangeMail = new class extends RimplenetPasswordChangeMail
 {
     public function __construct()
     {
@@ -9,7 +9,7 @@ $getCredits = new class extends RimplenetPasswordResetMail
 
     public function register_api_routes()
     {
-        register_rest_route('rimplenet/v1', 'password-reset', [
+        register_rest_route('rimplenet/v1', 'change-password', [
             'methods' => 'GET',
             'callback' => [$this, 'send_password_reset_mail']
         ]);

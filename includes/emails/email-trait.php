@@ -33,10 +33,10 @@ trait RimplenetEmailTrait
     }
   }
 
-  public function sendPasswordChange($email, $password)
+  public function sendPasswordChange($email, $token)
   {
     $to = $email;
-    include(plugin_dir_path( dirname( __FILE__ ) ) . 'emails/email-templates/change-user-password.php');
+    include(plugin_dir_path( dirname( __FILE__ ) ) . 'emails/email-templates/change-password.php');
 
     if (wp_mail( $to, $subject, $message )) {
         return true;
@@ -49,7 +49,7 @@ trait RimplenetEmailTrait
   {
     // return openssl_random_pseudo_bytes(16);
     //Generate a random string.
-    $token = openssl_random_pseudo_bytes(16);
+    $token = openssl_random_pseudo_bytes(3);
 
     //Convert the binary data into hexadecimal representation.
     $token = bin2hex($token);

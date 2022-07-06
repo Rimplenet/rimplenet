@@ -3,7 +3,7 @@
 use Emails\Base;
 use Traits\Email\RimplenetEmailTrait;
 
-class UpdatePasswordResetMail extends Base
+class   ChangePasswordMail extends Base
 {
 
     public $prop;
@@ -24,6 +24,7 @@ class UpdatePasswordResetMail extends Base
         if ($this->checkToken()) {
             if ($this->checkPasswordMatch() && $this->verifyPassword()) {
                 $passwordchange = wp_set_password($new_password, $this->prop['user_id']);
+                delete_user_meta( $this->prop['user_id'], 'token_to_reset_password', $this->prop['token']);
                 $message = "Password Changed Successfully";
                 $this->success($passwordchange, $message);
                 return $this->response;
@@ -60,7 +61,7 @@ class UpdatePasswordResetMail extends Base
     public function verifyPassword()
     {
         $user = get_user_by('email', $this->prop['email'] );
-        if ( $user && wp_check_password( $this->prop['password'], $user->data->user_pass, $user->ID ) ) {
+        if ( $user && wp_check_password( $this->prop['current_password'], $user->data->user_pass, $user->ID ) ) {
             return true;
         } else {
             return false;
