@@ -20,7 +20,7 @@ class RimplenetGetTransfers extends Transfers
                 'tax_query' => array([
                     'taxonomy' => self::TAXONOMY,
                     'field'    => 'name',
-                    'terms'    => self::TERMS,
+                    'terms'    => self::TRANSFERS,
                 ]),
             ]);
             if ($this->query && $this->query->have_posts()) :
@@ -54,10 +54,11 @@ class RimplenetGetTransfers extends Transfers
     {
         $this->id = $transfer->ID;
         $transferFrom = get_user_by('ID', $this->postMeta('transfer_address_from'));
+        $transferTo = get_user_by('ID', $this->postMeta('transfer_address_to'));
         return (object) [
             'transferId' => $this->postMeta('alt_transfer_id'),
-            'transferTo' => $this->postMeta('transfer_address_to'),
-            'transferFrom' => $transferFrom->user_login,
+            'transferTo' => $transferTo->user_login ?? '',
+            'transferFrom' =>  $transferFrom->user_login ?? '',
             'transferAmount' => $this->postMeta('amount'),
             'transferDesc' => $this->postMeta('note'),
             'transferType' => $this->postMeta('txn_type'),
@@ -65,7 +66,10 @@ class RimplenetGetTransfers extends Transfers
             'balanceAfter' => $this->postMeta('balance_after'),
             'totalBalanceBefore' => $this->postMeta('total_balance_before'),
             'totalBalanceAfter' => $this->postMeta('total_balance_after'),
-            'currency' => $this->postMeta('currency')
+            'symbol' => $this->postMeta('transfer_wallet_symbol'),
+            'currency' => $this->postMeta('currency'),
+            'dateRaw' => $transfer->post_modified,
+            'formattedDate' => date('Y M D h:i a', strtotime($transfer->post_modified))
         ];
     }
 }

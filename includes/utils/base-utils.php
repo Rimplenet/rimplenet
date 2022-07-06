@@ -77,7 +77,7 @@ class Utils
                 } elseif ($type == 'amount') {
                     if (!is_numeric($val)) self::$error[$key] = "$key requires a valid amount";
                 } elseif ($type == 'string') {
-                    if (!preg_match('/^([a-zA-Z])+$/', $val)) self::$error[$key] = $key . ' requires A-Za-z';
+                    if (!preg_match('/^([a-zA-Z ])+$/', $val)) self::$error[$key] = $key . ' requires A-Za-z';
                 } elseif ($type == 'alnum') {
                     if (!preg_match('/^[a-zA-Z]\.*/', $val)) self::$error[$key] = $key . ' Cannot start with a number';
                 }elseif($type == 'bool'){
@@ -132,7 +132,7 @@ class Utils
         $this->query = new WP_Query([
             'post_type' => self::POST_TYPE,
             'post_status' => 'publish',
-            'posts_per_page' => -1,
+            'posts_per_page' => 100,
             'paged' => $page,
             'tax_query' => array([
                 'taxonomy' => self::TAXONOMY,
