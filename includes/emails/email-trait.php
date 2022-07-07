@@ -21,7 +21,7 @@ trait RimplenetEmailTrait
     }
   }
 
-  public function sendResetPasswordMail($email)
+  public function sendResetPasswordMail($email, $token)
   {
     $to = $email;
     include(plugin_dir_path( dirname( __FILE__ ) ) . 'emails/email-templates/password-reset.php');
