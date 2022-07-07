@@ -24,3 +24,8 @@ function returnWalletHtml()
         return $options;
     endif;
 };
+
+if(isset($_GET['get_user'])){
+    $posts = sanitize_text_field();
+    $init = new RimplenetGetUser;
+}

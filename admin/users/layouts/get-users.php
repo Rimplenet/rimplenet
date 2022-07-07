@@ -25,7 +25,7 @@ require plugin_dir_path(dirname(__FILE__)) . '/assets/php/get.php';
 
             <?php if (!empty($users)) : foreach ($users as $user) : $id = $user['ID']; ?>
                     <tr>
-                        <td> <?= $user['user_login'] ?: '__' ?> </td>
+                        <td> <?= $user['username'] ?: '__' ?> </td>
                         <td> <?= $user['user_email'] ?: '__' ?> </td>
                         <td> <?= $user['display_name'] ?: '__' ?> </td>
                         <td> <?= $user['first_name'] ?: '__' ?> </td>
@@ -36,8 +36,8 @@ require plugin_dir_path(dirname(__FILE__)) . '/assets/php/get.php';
 
                             $editUrl = add_query_arg(array('post_type' => $_GET["post_type"], 'page' => 'users', 'tab' => 'update', 'viewing_user' => $current_user->ID, 'user' => $id), admin_url("edit.php"));
                             ?>
-                            <a href="<?= $editUrl ?: '__' ?>" target="_blank" class="btn-primary btn">Edit</a>
-                            <a href="#" target="_blank" class="btn-primary btn">Delete</a>
+                            <a href="<?= $editUrl ?: '__' ?>" target="_blank" class="btn-outline-primary btn btn-sm">Edit</a>
+                            <a href="#" target="_blank" class="btn-outline-danger btn btn-sm">Delete</a>
                         </td>
                     </tr>
             <?php endforeach;
