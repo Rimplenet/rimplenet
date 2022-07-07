@@ -1,6 +1,9 @@
 (function( $ ) {
 	'use strict';
   let rt_dir = $('#__rt_dir').val()
+
+  let baseUrl = window.location.origin
+  
 let canSend = []
   const checkempty = (input = []) => {
     canSend = [];
@@ -34,11 +37,18 @@ let canSend = []
     $('span.wallet_symbol').text(selected.data('symbol'))
   })
 
+  console.log('rimplenet_transfers_ajax_object.ajaxurl');
+
   $('input.user-transfer').on('input', function(){
+    let value = $(this).val()
     let bal = $(this).parent().find('.wallet_balance')
-    
     bal.text($(this).val())
+    $.ajax({
+      url: `${rimplenet_transfers_ajax_object.ajaxurl}transfers/assets/php/helpers.php?get_user`,
+      method: 'get'
+    })
   })
+
 
 
 

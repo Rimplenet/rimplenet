@@ -27,22 +27,26 @@ require plugin_dir_path(dirname(__FILE__)) . '/assets/php/get.php';
             <?php 
             if (isset($transfers['data']) && !empty($transfers['data']) && is_iterable($transfers['data'])) : 
                 foreach ($transfers['data'] as $transfer) :
+                    $type = $transferType ?? '';
+
                  extract( (array) $transfer); $id = $transferId; ?>
                     <tr>
                         <td> <?= $transferDesc ?: '__' ?> </td>
                         <td> <?= $transferFrom ?: '__' ?> </td>
                         <td> <?= $transferTo ?: '__' ?> </td>
                         <td> <?= $symbol.$transferAmount ?: '__' ?> </td>
-                        <td> <?= $transferType ?: '__' ?> </td>
+                        <td class="text-<?= $type == 'CREDIT' ? 'success' : 'danger' ?>"> <?= $transferType ?: '__' ?> </td>
                         <td> <?= strtoupper($currency) ?: '__' ?> </td>
                         <td> <?= $formattedDate ?: '__' ?> </td>
                         <td>
                         <?php
 
-                        $editUrl = add_query_arg(array('post_type' => $_GET["post_type"], 'page' => 'users', 'tab' => 'update', 'viewing_user' => $current_user->ID, 'user' => $id), admin_url("edit.php"));
+                            $viewUrl = add_query_arg(array('post_type' => $_GET["post_type"], 'page' => 'transfers', 'tab' => 'view_transfer', 'viewing_user' => get_current_user_id(), 'transfer' => $id), admin_url("edit.php"));
+                            $editUrl = add_query_arg(array('post' => $transferId, 'action' => 'edit'), admin_url("post.php"));
                         ?>
-                        <a href="<?= $editUrl ?: '__' ?>" target="_blank" class="btn-primary btn">Edit</a>
-                        <a href="#" target="_blank" class="btn-primary btn">Delete</a>
+                        <a href="<?= $viewUrl ?: '__' ?>" target="_blank" class="btn-outline-warning btn-sm btn">View</a>
+                        <a href="<?= $editUrl ?: '__' ?>" target="_blank" class="btn-outline-primary btn-sm btn">Edit</a>
+                        <a href="#" target="_blank" class="btn-outline-danger btn-sm btn">Delete</a>
                         </td>
                     </tr>
             <?php endforeach;  endif; ?>

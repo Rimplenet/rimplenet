@@ -14,26 +14,32 @@
          <?php
             $active_tab = $_GET["tab"] ?? '';
             
-            if($active_tab == "update")
+            if($active_tab == "view_transfer")
              {
                $api_settings_tab_active = "nav-tab-active";
-            //    $path_to_tab = plugin_dir_path( dirname( __FILE__ ) ) . "layouts/admin-settings-users.php";
+               $path_to_tab = plugin_dir_path( dirname( __FILE__ ) ) . "layouts/get-transfer.php";
             }
             elseif($active_tab == "create")
             {
                 $setup_tab_active = "nav-tab-active";
                 $path_to_tab = plugin_dir_path( dirname( __FILE__ ) ) . "layouts/create-transfer-1.php";
             }
+            elseif($active_tab == "transfers")
+            {
+                $transfers_tab_active = "nav-tab-active";
+                $path_to_tab = plugin_dir_path( dirname( __FILE__ ) ) . "layouts/get-transfers.php";
+            }
             else
             { 
                 $active_tab  = "dashboard-overview";
                 $overview_tab_active = "nav-tab-active";
-                $path_to_tab = plugin_dir_path( dirname( __FILE__ ) ) . "layouts/get-transfers.php";
+                $path_to_tab = plugin_dir_path( dirname( __FILE__ ) ) . "layouts/overview.php";
              }  
              
              //Set the url for each of the tab
              $overview_tab_url = add_query_arg( array( 'post_type'=>$_GET["post_type"], 'page'=>$_GET["page"], 'tab'=>'dashboard-overview', 'viewing_user'=>$current_user->ID), admin_url( "edit.php") );
              $setup_tab_url = add_query_arg( array( 'post_type'=>$_GET["post_type"], 'page'=>$_GET["page"], 'tab'=>'create', 'viewing_user'=>$current_user->ID), admin_url( "edit.php") );
+             $transfers_tab_url = add_query_arg( array( 'post_type'=>$_GET["post_type"], 'page'=>$_GET["page"], 'tab'=>'transfers', 'viewing_user'=>$current_user->ID), admin_url( "edit.php") );
              $api_settings_tab_url = add_query_arg( array( 'post_type'=>$_GET["post_type"], 'page'=>$_GET["page"], 'tab'=>'update', 'viewing_user'=>$current_user->ID), admin_url( "edit.php") );
              
          ?>
@@ -44,6 +50,9 @@
             <?php _e('Overview', 'rimplenet'); ?>
         </a>
         
+        <a href="<?php echo $transfers_tab_url; ?>" class="nav-tab <?php echo $transfers_tab_active; ?>">
+            <?php _e('Transfers', 'rimplenet'); ?>
+        </a>
         <a href="<?php echo $setup_tab_url; ?>" class="nav-tab <?php echo $setup_tab_active; ?>">
             <?php _e('Make Transfer', 'rimplenet'); ?>
         </a>

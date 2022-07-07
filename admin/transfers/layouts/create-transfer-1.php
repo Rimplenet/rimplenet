@@ -25,13 +25,13 @@ require plugin_dir_path(dirname(__FILE__)) . '/assets/php/helpers.php';
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label class="" for="autoSizingInputGroup">Wallet</label>
-                            <select class="form-select" aria-label="Default select example"  name="transfer_wallet"" id="transfer-wallet"
+                            <select class="form-select" aria-label="Default select example"  name="transfer_wallet"" id="transfer-wallet">
                                 <?= returnWalletHtml() ?>
                             </select>
                         </div>
                         <div class="col-md-6">
                             <label class="" for="autoSizingInputGroup">Amount</label>
-                            <input name="transfer_amount" type="number" id="transfer-amount" placeholder="Amount">
+                            <input name="transfer_amount" class="form-control" type="number" id="transfer-amount" placeholder="Amount">
                         </div>
 
                     </div>
