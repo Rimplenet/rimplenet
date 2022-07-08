@@ -33,7 +33,8 @@ class RimplenetCreateUserApi
             $request->get_param('user_password'),
             [
                 "first_name" => $request->get_param('first_name'),
-                "last_name" => $request->get_param('last_name')
+                "last_name" => $request->get_param('last_name'),
+                "phone_number" => $request->get_param('phone_number')
             ],
             $access_token
         );
