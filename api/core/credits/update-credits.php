@@ -1,7 +1,5 @@
 <?php
 
-// use Credits\UpdateCredits\BaseCredits;
-
 $updateCredits = new class extends RimplenetUpdateCredits
 {
     public function __construct()
@@ -19,18 +17,15 @@ $updateCredits = new class extends RimplenetUpdateCredits
 
     public function api_update_credits(WP_REST_Request $request)
     {
-        do_action('rimplenet_api_request_started', $req, $allowed_roles = ['administrator'], $action = 'update_rimplenet_credits');
+        do_action('rimplenet_api_request_started', $request, $allowed_roles = ['administrator'], $action = 'update_rimplenet_credits');
 
         $this->req = [
-            'id' => $request['credit_id'],
-            'note' => sanitize_text_field($request['note']),
+            'id' => $request['credit_id'] ?? '',
+            'note' => sanitize_text_field($request['note'] ?? ''),
             'type' => 'credit'
         ];
-
-        if ($this->checkEmpty())
-            return new WP_REST_Response($this->response);
-
+        // return $this->req;
         $this->updateCredits();
-        return new WP_REST_Response($this->response);
+        return new WP_REST_Response(self::$response, self::$response['status_code']);
     }
 };
