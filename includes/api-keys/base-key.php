@@ -1,6 +1,5 @@
 <?php
-use Wallets\Base;
-class ApiKey extends Base
+class ApiKey
 {
 
     /**
@@ -63,7 +62,7 @@ class ApiKey extends Base
         $this->user = $authorization['data']->user;
         # verify user from token is admin
         if (!self::isAdministrator($this->user->roles)) :
-            $this->error(['unauthorized' => 'You are not allowed to perform operation'], 'Authorization Denied', 401);
+           Res::error(['unauthorized' => 'You are not allowed to perform operation'], 'Authorization Denied', 401);
             return false;
         endif;
         return true;
