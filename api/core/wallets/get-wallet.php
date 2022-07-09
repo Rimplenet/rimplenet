@@ -11,7 +11,7 @@ $RetrieveWallet = new class extends RimplenetGetWallets
 
     public function register_api_routes()
     {
-        register_rest_route('/rimplenet/v1', 'wallets', [
+        register_rest_route('/rimplenet/v1', 'wallets/(?P<wallet>[a-zA-Z0-9_]+)', [
             'methods' => 'GET',
             'callback' => [$this, 'retrieve_wallet']
         ]);
@@ -22,7 +22,14 @@ $RetrieveWallet = new class extends RimplenetGetWallets
         // $allowed_roes = []; 
         do_action('rimplenet_api_request_started', $req, $allowed_roles = ['administrator'], $action = 'get_rimplenet_wallets');
 
-        $this->getWallets();
-        return new WP_REST_Response(self::$response, self::$response['status_code']);
+        # ================= set fields ============
+        $wlt_id  = sanitize_text_field($req['wallet'] ?? '');
+
+        # Check required
+        if ($wlt_id !== '') :
+            # if wallet id is not empty return the wallet
+            $this->getWallet($wlt_id);
+            return new WP_REST_Response(self::$response, self::$response['status_code']);
+        endif;
     }
 };

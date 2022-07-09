@@ -11,6 +11,7 @@ class Rimplenet_Base_Utils {
    	 //Add Required Files to Load
 	 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'utils/base-utils.php';
 	 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'utils/response.php';
+	 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'utils/token.php';
     }
 	
 }

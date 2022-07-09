@@ -82,6 +82,8 @@ class Utils
                     if (!preg_match('/^[a-zA-Z]\.*/', $val)) self::$error[$key] = $key . ' Cannot start with a number';
                 }elseif($type == 'bool'){
                     if (!is_bool($type))  self::$error[$key] = $key . ' Mustt be a boolean';
+                }elseif($type == 'strInt'){
+                    if (!preg_match('/\w+/', $val))  self::$error[$key] = $key . ' Invalid Chars';
                 }
             } else {
                 self::$error[$key] = 'Field Cannot be empty';
@@ -99,7 +101,7 @@ class Utils
     {
         global $wpdb;
         $walletId = sanitize_text_field($walletId);
-        $wallet = $wpdb->get_row("SELECT * FROM $wpdb->postmeta WHERE meta_key='rimplenet_wallet_id' AND meta_value='$walletId'");
+        $wallet = $wpdb->get_row("SELECT * FROM $wpdb->postmeta WHERE meta_key='rimplenet_wallet_id' AND meta_value='$walletId' OR post_id = '$walletId' AND meta_key='rimplenet_wallet_id'");
 
         if ($wallet) :
             return $wallet;
@@ -116,7 +118,7 @@ class Utils
     {
         global $wpdb;
 
-        $exists = $wpdb->get_row("SELECT * FROM $wpdb->postmeta WHERE meta_key='rimplenet_wallet_id' AND meta_value='$this->wallet_id'");
+        $exists = $wpdb->get_row("SELECT * FROM $wpdb->postmeta WHERE meta_key='rimplenet_wallet_id' AND meta_value='$this->wallet_id' OR post_id = '$walletId' AND meta_key='rimplenet_wallet_id'");
 
         if ($exists)
             $this->error[] = 'Wallet Already Exists';

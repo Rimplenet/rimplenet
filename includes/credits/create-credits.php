@@ -10,10 +10,13 @@ class RimplenetCreateCredits extends Credits
 
         if(self::requires([
             'user_id'    => "$user_id || int",
-            'wallet_id'  => "$wallet_id || alnum",
+            'wallet_id'  => "$wallet_id || strInt",
             'request_id' => "$request_id || alnum",
             'amount'     => "$amount || amount",
         ])) return;
+        
+        # check is user is not self crediting
+        if(self::isMyself($user_id)) return Res::error(['Operation Denied'], "Self crediting is not allowed", 401);
 
         if(!$this->getWalletById($wallet_id)) return;
 
@@ -105,28 +108,11 @@ class RimplenetCreateCredits extends Credits
         endif;
         return false;
     }
-}
 
-// $txn_loop = new WP_Query(
-//     array(
-//         'post_type' => 'rimplenettransaction',
-//         'post_status' => 'any',
-//         //                                 'author' => $user_id,
-//         'author' => 'any',
-//         'posts_per_page' => $posts_per_page,
-//         'paged' => $pageno,
-//         'tax_query' => array(
-//             'relation' => 'OR',
-//             //                                       array(
-//             //                                        'taxonomy' => 'rimplenettransaction_type',
-//             //                                        'field'    => 'name',
-//             //                                        'terms'    => array( 'CREDIT' ),
-//             //                                      ),
-//             array(
-//                 'taxonomy' => 'rimplenettransaction_type',
-//                 'field'    => 'name',
-//                 'terms'    => array('DEBIT'),
-//             ),
-//         ),
-//     )
-// );
+    public static function isMyself($userId)
+    {
+        $currentUser = Token::getUserByToken();
+        if($currentUser->ID == $userId) return true;
+        return false;
+    }
+}

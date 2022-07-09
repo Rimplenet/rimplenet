@@ -25,6 +25,6 @@ $DeleteCredits = new class extends RimplenetDeleteCredits
         do_action('rimplenet_api_request_started', $req, $allowed_roles = ['administrator'], $action = 'delete_rimplenet_credits');
 
         $this->deleteCredits($Credits['credits'], 'credit');
-        return new WP_REST_Response($this->response);
+        return new WP_REST_Response(self::$response);
     }
 };
