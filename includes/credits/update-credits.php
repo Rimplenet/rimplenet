@@ -17,6 +17,11 @@ class RimplenetUpdateCredits extends Credits
         $note = !empty($note) ? $note : $this->req['note'];
         # assign param type to $type otherwise get type from class
         $type = !empty($type) ? $type : $this->req['type'];
+
+        if(self::requires([
+            'credit_id' => $id,
+            'note' => $note
+        ])) return;
  
 
         # Check if the transaction has already been executed
