@@ -42,16 +42,18 @@ class RimplenetGetCredits extends Credits
         $this->id = $data->ID;
 
         $res = [
+            'id'            => $data->ID,
             'amount'            => $this->postMeta('amount'),
             'balance_after'     => $this->postMeta('balance_after'),
             'balance_before'    => $this->postMeta('balance_before'),
             'currency'          => $this->postMeta('currency'),
             'funds_type'        => $this->postMeta('funds_type'),
             'request_id'        => $this->postMeta('request_id'),
+            'request_id'        => $this->postMeta('txn_request_id'),
             'total_balance_after' => $this->postMeta('total_balance_after'),
             'total_balance_before' => $this->postMeta('total_balance_before'),
-            'Credits_request_id'       => $this->postMeta('Credits_request_id'),
-            'Credits_type'             => $this->postMeta('Credits_type'),
+            'credits_request_id'       => $this->postMeta('txn_request_id'),
+            'txn_type'             => $this->postMeta('txn_type'),
             'note'                 => $this->postMeta('note'),
             'description'          => $data->post_title
         ];

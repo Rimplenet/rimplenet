@@ -1,5 +1,5 @@
 <?php
-class RimplenetCreateCredits extends Credits
+class RimplenetCreateCredits extends Utils
 {
     public function createCredits(array $param = [])
     {

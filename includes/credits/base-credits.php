@@ -12,6 +12,6 @@ abstract class Credits extends Utils
     {
         global $wpdb;
         $type = strtoupper($type);
-        return $wpdb->get_row("SELECT * FROM $wpdb->postmeta WHERE post_id ='$id' AND meta_key='request_id' AND meta_value = '$type' ");
+        return $wpdb->get_row("SELECT * FROM $wpdb->postmeta WHERE post_id ='$id' AND meta_key='txn_type' AND meta_value = '$type' ");
     }
 }
