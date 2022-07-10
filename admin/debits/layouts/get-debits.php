@@ -6,7 +6,7 @@ wp_get_current_user();
 $credits = new RimplenetGetDebits();
 // $wallet_obj->createQuery();
 $credits->getAllDebits();
-$all_credits=$credits->response['data'];
+$all_credits=$credits::$response['data'];
 
 // var_dump($all_credits);
 // die;
