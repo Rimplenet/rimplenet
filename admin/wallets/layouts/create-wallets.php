@@ -12,27 +12,45 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             'wallet_note'           => sanitize_text_field($_POST['rimplenet_wallet_desc'] ?? $_POST['rimplenet_wallet_name']),
             'wallet_type'           => sanitize_text_field($_POST['rimplenet_wallet_type']),
             'wallet_decimal'        => intval($_POST['rimplenet_wallet_decimal']) ?? 2,
-            'max_withdrawal_amount' => intval($_POST['rimplenet_max_withdrawal_amount']) ?? CreateWallet::MAX_AMOUNT,
-            'min_withdrawal_amount' => intval($_POST['rimplenet_min_withdrawal_amount']) ?? CreateWallet::MIN_AMOUNT,
+            'max_withdrawal_amount' => intval($_POST['rimplenet_max_withdrawal_amount'] == "" ? CreateWallet::MAX_AMOUNT : $_POST['rimplenet_max_withdrawal_amount']) ?? CreateWallet::MAX_AMOUNT,
+            'min_withdrawal_amount' => intval($_POST['rimplenet_min_withdrawal_amount'] == "" ? CreateWallet::MIN_AMOUNT : $_POST['rimplenet_min_withdrawal_amount']) ?? CreateWallet::MIN_AMOUNT,
             // 'inc_i_w_cl'            => $_POST['rimplenet_inc_in_woocmrce_curr_list'] ?? false,
             // // 'e_a_w_p'               => $_POST['rimplenet_enable_as_woocmrce_pymt_wlt'] ?? false,
             // // 'r_b_b_w'               => sanitize_text_field($_POST['rimplenet_rules_before_withdrawal'] ?? ''),
             // // 'r_a_b_w'               => sanitize_text_field($_POST['rimplenet_rules_after_withdrawal'] ?? '')
         ];
 
+        // var_dump($req);
+        // die;
+
 
 
 
         $wallets = new RimplenetCreateWallets();
 
+        // var_dump($req);
+        // die;
         // var_dump($wallets->createWallet($req));
         // die;
-        if ($wallets->createWallet($req)) {
+        $wallets->req=$req;
+        $wallets->createWallet();
+        if ($wallets::$response['status']!=false) {
             echo '<div class="updated">
                <p>Your Wallet have been created successfully</p>
            </div> ';
         } else {
-            var_dump($wallets->response['error']);
+            // var_dump($wallets::$response);
+            foreach ($wallets::$response['error'] as $key => $value) {
+                echo "<div class='error'>
+               <p>".$wallets::$response['message'].": ".$value."</p>
+           </div> ";
+            }
+
+        // for ($i=0; $i < count($wallets::$response['error']); $i++) { 
+        //     echo "<div class='error'>
+        //        <p>".$wallets::$response['message'].": ".$wallets::$response['error'][$i]."</p>
+        //    </div> ";
+        // }
         }
     }
 }

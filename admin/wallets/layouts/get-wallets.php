@@ -6,7 +6,9 @@ wp_get_current_user();
 $wallet_obj = new RimplenetGetWallets();
 // $wallet_obj->createQuery();
 $wallet_obj->getWallets();
-$all_wallets=$wallet_obj->response['data'];
+// $all_wallets=$wallet_obj->response['data'];
+// $all_wallets=$wallet_obj->getWallets();
+$all_wallets=$wallet_obj::$response['data'];
 
 // var_dump($all_wallets);
 // die;
@@ -63,7 +65,9 @@ $all_wallets=$wallet_obj->response['data'];
  </tr>
 </thead>
  
-<tbody>
+<?php
+  if (is_array($all_wallets[0])) { ?>
+    <tbody>
 
 <?php
    foreach ($all_wallets as $key => $value) {
@@ -102,6 +106,14 @@ $all_wallets=$wallet_obj->response['data'];
  ?>
  
 </tbody>
+<?php    
+  }else{
+    echo "<tbody>$all_Wallets[0]</tbody>";
+
+  }
+?>
+
+
 
 <tfoot>
  <tr>
