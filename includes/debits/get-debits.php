@@ -42,6 +42,7 @@ class RimplenetGetDebits extends Debits
         $this->id = $data->ID;
 
         $res = [
+            'id'                => $data->ID,
             'amount'            => $this->postMeta('amount'),
             'balance_after'     => $this->postMeta('balance_after'),
             'balance_before'    => $this->postMeta('balance_before'),
@@ -50,8 +51,8 @@ class RimplenetGetDebits extends Debits
             'request_id'        => $this->postMeta('request_id'),
             'total_balance_after' => $this->postMeta('total_balance_after'),
             'total_balance_before' => $this->postMeta('total_balance_before'),
-            'Debits_request_id'       => $this->postMeta('Debits_request_id'),
-            'Debits_type'             => $this->postMeta('Debits_type'),
+            'debits_request_id'       => $this->postMeta('txn_request_id'),
+            'txn_type'             => $this->postMeta('txn_type'),
             'note'                 => $this->postMeta('note'),
             'description'          => $data->post_title
         ];
