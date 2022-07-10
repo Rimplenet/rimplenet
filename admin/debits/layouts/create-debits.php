@@ -8,18 +8,27 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             'user_id'       => (int) $_POST['rimplenet_user'],
             'wallet_id'     => sanitize_text_field(strtolower($_POST['rimplenet_wallet'])),
             'request_id'      => sanitize_text_field($_POST['request_id']) ?? rand(5, 6),
-            'amount_to_add' => floatval(str_replace('-', '', $_POST['rimplenet_amount'])),
+            'amount' => floatval(str_replace('-', '', $_POST['rimplenet_amount'])),
+            'request_id'=> sanitize_text_field($_POST['rimplenet_create_debit_nonce_field'])
         ];
         $wallets = new RimplenetCreateDebits();
 
-        // var_dump($wallets->createCredits($req));
+        // var_dump($req);
         // die;
-        if ($wallets->createDebits($req) && empty($wallets->response['error'])) {
+        // var_dump($wallets->createDebits($req));
+        // die;
+        $wallets->createDebits($req);
+        if (empty($wallets::$response['error'])) {
             echo '<div class="updated">
                <p>Debit has been created successfully</p>
            </div> ';
         } else {
-            var_dump($wallets->response['error']);
+            // var_dump($wallets::$response['error']);
+            foreach ($wallets::$response['error'] as $key => $value) {
+                echo "<div class='error'>
+               <p>".$wallets::$response['message'].": ".$value."</p>
+           </div> ";
+            }
         }
     }elseif (isset($_POST['rimplenet_search_user'])) {
         $users = new WP_User_Query( array(
@@ -43,7 +52,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 $wallet_obj = new RimplenetGetWallets();
 // $wallet_obj->createQuery();
 $wallet_obj->getWallets();
-$all_wallets=$wallet_obj->response['data'];
+// $all_wallets=$wallet_obj->response['data'];
+$all_wallets=$wallet_obj::$response['data'];
 
 ?>
 
@@ -134,9 +144,11 @@ $dir = plugin_dir_url(dirname(__FILE__));
                                     foreach($all_wallets as $wallet){
                                         $wallet_id_op = $wallet['post_id'] ?? '';
                                         $disp_info = $wallet['wallet_name'];
+
+                                        $walletID=$wallet['wallet_id'];
                                
                                 ?>
-                                <option value="<?php echo $wallet_id_op; ?>" > <?php echo $disp_info; ?> </option> 
+                                <option value="<?php echo $walletID; ?>" > <?php echo $disp_info; ?> - <?php echo $walletID; ?> </option> 
                                 <?php
                                
                                     }
