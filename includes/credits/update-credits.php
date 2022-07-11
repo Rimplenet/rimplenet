@@ -31,11 +31,11 @@ class RimplenetUpdateCredits extends Credits
             $txn =  $this->getCreditsToUpdate($id);
             if ($txn) :
                 update_post_meta($id, 'note', $note);
-                return Res::error(['note' => $note." Updated"], 'Note updated');
+                return Res::success(['note' => $note." Updated"], 'Note updated');
             else :
                 # create new post meta for transaction note is not exists before
                 add_post_meta($id, 'note', $note);
-                return Res::error(['note' => $note." Updated"], 'Note updated');
+                return Res::success(['note' => $note." Updated"], 'Note updated');
             endif;
             return true;
         else :
