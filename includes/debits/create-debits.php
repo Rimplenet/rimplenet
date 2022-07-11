@@ -20,17 +20,18 @@ class RimplenetCreateDebits extends Debits
         if(!$userToCredit) return Res::error(["Unable to reach $user_id"], "Invalid User credentials", 404);
 
         # Set transaction id
-        $txn_id = $user_id . '_' . $request_id;
+        $txn_id = $user_id . '_' . strtolower($request_id);
         # Set transient key
         $recent_txn_transient_key = "recent_txn_" . $txn_id;
+
+        # check if transaction already exist
+        if($this->debitsExists($txn_id)) return;
 
 
         # Chech transient key
         if ($GLOBALS[$recent_txn_transient_key] == "executing") return;
         if (get_transient($recent_txn_transient_key)) return;
 
-        # check if transaction already exist
-        if($this->debitsExists($txn_id)) return;
 
         $key = 'user_withdrawable_bal_' . $wallet_id;
         $user_balance = get_user_meta($user_id, $key, true);
@@ -94,6 +95,7 @@ class RimplenetCreateDebits extends Debits
     protected function debitsExists($value, string $type = '')
     {
         global $wpdb;
+        $value = strtolower($value);
         $row = $wpdb->get_row("SELECT * FROM $wpdb->postmeta WHERE meta_key='txn_request_id' AND meta_value='$value'");
         if ($row) :
             Res::error([
