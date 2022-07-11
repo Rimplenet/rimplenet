@@ -96,6 +96,7 @@ class RimplenetCreateWallets extends Utils
             'max_withdrawal_amount' => $max_withdrawal_amount ?? CreateWallet::MAX_AMOUNT,
             'min_withdrawal_amount' => $min_withdrawal_amount ?? CreateWallet::MIN_AMOUNT,
         ])) return self::$response;
+        // if(isset($max_withdrawal_amount) || isset($min_withdrawal_amount))
         if ($this->notFloatOrNumber()) return self::$response;
 
 
@@ -109,6 +110,7 @@ class RimplenetCreateWallets extends Utils
         endif;
     }
 
+    
     /**
      * Insert into DB
      */
