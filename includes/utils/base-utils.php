@@ -68,7 +68,10 @@ class Utils
     public static function requires(array $params = [])
     {
         foreach ($params as $key => $value) {
-            [$val, $type] = explode('||', $value);
+           $exploded = explode('||', $value);
+           $val = $exploded[0] ?? '';
+           $type = $exploded[1] ?? '';
+
             $type = trim($type); $val = trim($val);
             if ($val !== '') {
                 if ($type == 'int') {
@@ -118,7 +121,7 @@ class Utils
     {
         global $wpdb;
 
-        $exists = $wpdb->get_row("SELECT * FROM $wpdb->postmeta WHERE meta_key='rimplenet_wallet_id' AND meta_value='$this->wallet_id' OR post_id = '$walletId' AND meta_key='rimplenet_wallet_id'");
+        $exists = $wpdb->get_row("SELECT * FROM $wpdb->postmeta WHERE meta_key='rimplenet_wallet_id' AND meta_value='$this->wallet_id' OR post_id = '$this->wallet_id' AND meta_key='rimplenet_wallet_id'");
 
         if ($exists)
             $this->error[] = 'Wallet Already Exists';
