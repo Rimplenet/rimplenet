@@ -79,9 +79,9 @@ class Utils
                 } elseif ($type == 'string') {
                     if (!preg_match('/^([a-zA-Z ])+$/', $val)) self::$error[$key] = $key . ' requires A-Za-z';
                 } elseif ($type == 'alnum') {
-                    if (!preg_match('/^[a-zA-Z]\.*/', $val)) self::$error[$key] = $key . ' Cannot start with a number';
+                    if (!preg_match('/^[a-zA-Z0-9_]/', $val)) self::$error[$key] = $key . ' can contain aplhpabets, numbers and underscore';
                 }elseif($type == 'bool'){
-                    if (!is_bool($type))  self::$error[$key] = $key . ' Mustt be a boolean';
+                    if (!is_bool($type))  self::$error[$key] = $key . ' Must be a boolean';
                 }elseif($type == 'strInt'){
                     if (!preg_match('/\w+/', $val))  self::$error[$key] = $key . ' Invalid Chars';
                 }
