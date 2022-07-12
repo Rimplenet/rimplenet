@@ -9,7 +9,7 @@ $RimplenetPostPasswordResetMailApi = new class extends RimplenetPostPasswordRese
 
     public function register_api_routes()
     {
-        register_rest_route('rimplenet/v1', 'password-reset-mail', [
+        register_rest_route('rimplenet/v1', 'reset-password', [
             'methods' => 'POST',
             'callback' => [$this, 'send_password_reset_mail']
         ]);
