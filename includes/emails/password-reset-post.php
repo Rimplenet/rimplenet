@@ -24,7 +24,7 @@ class RimplenetPostPasswordResetMail extends Base
         if ($this->checkToken()) {
             if ($this->checkPasswordMatch()) {
                 $passwordchange=wp_set_password($password, $this->prop['user_id']);
-                delete_user_meta( $this->prop['user_id'], 'token_to_reset_password', $this->prop['token']);
+                delete_user_meta($this->prop['user_id'], 'token_to_reset_password', $this->prop['token']);
                 $message="Password Changed Successfully";
                 $this->success($passwordchange, $message);
                 return $this->response;
@@ -40,9 +40,13 @@ class RimplenetPostPasswordResetMail extends Base
 
     public function checkToken()
     {
-        $user = get_user_meta($this->prop['user_id'] ?? 1, 'token_to_reset_password');
+        $user = get_user_meta($this->prop['user_id'] ?? 1, 'token_to_reset_password', false);
 
-        if ($this->prop['token']==$user) {
+        // var_dump($user[0],$this->prop['token']);
+        // die;
+
+        if ($this->prop['token']==$user[0]) {
+            // die("omor");
             return true;
         }
 
