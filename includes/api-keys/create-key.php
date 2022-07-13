@@ -7,22 +7,22 @@ class RimplenetApiKeys extends ApiKey
      * @param array key params
      * @return bool|array|object
      */
-    public function _genkey( array $params)
+    public function genkey( array $params)
     {
         # Check for required Fields
         if ($this->checkEmpty($params)) return;
         # Validate api key type provided by user
         if(!self::isValidTokenType((string) $params['key_type'])) 
-        return self::error(['api_key_types' => self::$apiKeyTypes], "Invalid ApiKey Type");
+        return Res::error(['api_key_types' => self::$apiKeyTypes], "Invalid ApiKey Type");
         # Set the required user information gotten from JWT token
         $id = $this->user->ID;
          # Generate apiKey>application Password using WP function
         $key = WP_Application_Passwords::create_new_application_password($id, $params);
         # Throw error error occurs
-        if (isset($key->errors)) return ApiKey::error($key, "Error", 409);
+        if (isset($key->errors)) return Res::error($key, "Error", 409);
         # return array of jey generated and save in DB
         $key = self::createKey(array_merge($key[1], $params));
-        return ApiKey::success($key, "Api Ky Generated");
+        return Res::success($key, "Api Ky Generated");
     }
     
     protected function createKey(array $data)
@@ -34,7 +34,7 @@ class RimplenetApiKeys extends ApiKey
             'post_title'    => $data['name'],
             'post_content'  => "",
             'post_status'   => 'publish',
-            'post_type'     => self::POST_TYPE
+            'post_type'     => Utils::POST_TYPE
         ]);
 
         $username = $this->user->user_login;
@@ -42,7 +42,7 @@ class RimplenetApiKeys extends ApiKey
 
         $hash = base64_encode("$username:$app_password");
 
-        wp_set_object_terms($keyId, self::API_KEYS, self::TAXONOMY);
+        wp_set_object_terms($keyId, self::API_KEYS, Utils::TAXONOMY);
 
 
         $response = [

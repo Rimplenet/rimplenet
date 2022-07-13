@@ -2,7 +2,7 @@
 class RimplenetGetApiKeys extends ApiKey
 {
 
-    public function _getKeys($hash)
+    public function getKeys($hash)
     {
         return $this->queryKeys();
     }

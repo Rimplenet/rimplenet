@@ -77,8 +77,8 @@ class ApiKey
         echo json_encode($decrypted); exit;
         if (!$isAdministrator) return $this->error(['unauthorized' => "Authoriation denied"], 'Unauthorized', 401);
         $posts = self::getPostByKey($key);
-        if(!$posts) return $this->error(['invalid' => 'Invalid Token'], 'Invalid Token');
-        $this->success($this->formatKey($posts), 'o');
+        if(!$posts) return Res::error(['invalid' => 'Invalid Token'], 'Invalid Token');
+        Res::success($this->formatKey($posts), 'o');
         return false;
     }
 

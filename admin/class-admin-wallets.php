@@ -56,8 +56,8 @@ class Rimplenet_Admin_Wallets{
      
     function save_wallet_settings($post_id, $post, $update){
         
-      $rimplenettransaction_type = sanitize_text_field($_POST['rimplenettransaction_type']);
-      $rimplenet_wallet_id = sanitize_text_field( $_POST['rimplenet_wallet_id'] );
+      $rimplenettransaction_type = sanitize_text_field($_POST['rimplenettransaction_type'] ?? '');
+      $rimplenet_wallet_id = sanitize_text_field( $_POST['rimplenet_wallet_id'] ?? '');
       if(!empty($rimplenet_wallet_id) OR $rimplenettransaction_type=="rimplenet-wallets"){ 
         $WALLET_CAT_NAME = 'RIMPLENET WALLETS';
         wp_set_object_terms($post_id, $WALLET_CAT_NAME, 'rimplenettransaction_type');

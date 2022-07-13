@@ -1,4 +1,5 @@
 <?php
+
 class RimplenetCreateDebits extends Debits
 {
     public function createDebits(array $param = [])
@@ -8,7 +9,7 @@ class RimplenetCreateDebits extends Debits
         extract($prop);
         if(self::requires([
             'user_id'    => "$user_id || int",
-            'wallet_id'  => "$wallet_id || alnum",
+            'wallet_id'  => "$wallet_id || string",
             'request_id' => "$request_id || alnum",
             'amount'     => "$amount || amount",
         ])) return;
@@ -29,8 +30,10 @@ class RimplenetCreateDebits extends Debits
 
 
         # Chech transient key
-        if ($GLOBALS[$recent_txn_transient_key] == "executing") return;
-        if (get_transient($recent_txn_transient_key)) return;
+        if(isset($GLOBALS[$recent_txn_transient_key])){
+            if ($GLOBALS[$recent_txn_transient_key] == "executing") return;
+            if (get_transient($recent_txn_transient_key)) return;
+        }
 
 
         $key = 'user_withdrawable_bal_' . $wallet_id;
@@ -43,8 +46,8 @@ class RimplenetCreateDebits extends Debits
         $bal_before = $user_balance;
         // return $user_balance_total;
 
-        $RimplenetWallet = new Rimplenet_Wallets;
-        $user_balance_total = $RimplenetWallet->get_total_wallet_bal($user_id, $wallet_id);
+        // $RimplenetWallet = new Rimplenet_Wallets;
+        $user_balance_total = $this->get_total_wallet_bal($user_id, $wallet_id);
 
         $amount = "-$amount";
 
@@ -61,7 +64,7 @@ class RimplenetCreateDebits extends Debits
                 $amount = $amount * -1;
             endif;
 
-            $txn_add_bal_id = $RimplenetWallet->record_Txn($user_id, $amount, $wallet_id, $tnx_type, 'publish');
+            $txn_add_bal_id = $this->record_Txn($user_id, $amount, $wallet_id, $tnx_type, 'publish');
 
             # add note if not empty
             if (!empty($note))  add_post_meta($txn_add_bal_id, 'note', $note);
@@ -72,7 +75,7 @@ class RimplenetCreateDebits extends Debits
             update_post_meta($txn_add_bal_id, 'balance_after', $new_balance);
 
             update_post_meta($txn_add_bal_id, 'total_balance_before', $user_balance_total);
-            update_post_meta($txn_add_bal_id, 'total_balance_after', $RimplenetWallet->get_total_wallet_bal($user_id, $wallet_id));
+            update_post_meta($txn_add_bal_id, 'total_balance_after', $this->get_total_wallet_bal($user_id, $wallet_id));
             update_post_meta($txn_add_bal_id, 'funds_type', $key);
         else :
             return Res::error('Unknown Error', "unknown error", 400);
