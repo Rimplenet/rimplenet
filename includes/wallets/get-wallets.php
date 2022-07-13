@@ -7,7 +7,7 @@ class RimplenetGetWallets extends Utils
      * @param string $walletId id of wallet to get
      * @return array>boolean
      */
-    protected function getWallet(string $walletId)
+    public function getWallet(string $walletId)
     {
         $wallet = $this->getWalletById($walletId);
 
