@@ -288,4 +288,22 @@ div.innerHTML = html
 document.getElementById("myInput").style.display="none";
 document.getElementById("showSearchResult").innerHTML=""
 }
+
+
+
+(function( $ ) {
+	// 'use strict';
+
+$(document).ready(function() {
+    $('#rimplenet_credit_debit_submit_form').submit(function() {
+        if (rimplenet_user && rimplenet_user.length > 0 && rimplenet_user.value !=="") {
+            // everything's fine...
+        } else {
+            alert('Please select a User');
+            return false;
+        }
+    });
+});
+
+})( jQuery );
 </script>
