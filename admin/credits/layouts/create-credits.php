@@ -280,7 +280,7 @@ document.getElementById("showSearchResult").innerHTML=""
 
 
 let submitBtn=document.getElementById("rimplenet_credit_debit_submit_form")
-let rimplenet_user=document.getElementById("rimplenet_user");
+
 // submitBtn.addEventListener('');
 
 (function( $ ) {
@@ -288,6 +288,7 @@ let rimplenet_user=document.getElementById("rimplenet_user");
 
 $(document).ready(function() {
     $('#rimplenet_credit_debit_submit_form').submit(function() {
+        let rimplenet_user=document.getElementById("rimplenet_user");
         if (rimplenet_user && rimplenet_user.length > 0 && rimplenet_user.value !=="") {
             // everything's fine...
         } else {
