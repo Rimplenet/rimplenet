@@ -1,6 +1,11 @@
 <?php
-class RimplenetCreateCredits extends Utils
+
+use Traits\Wallet\RimplenetWalletTrait;
+
+class RimplenetCreateCredits extends RimplenetGetWallets
 {
+    use RimplenetWalletTrait;
+
     public function createCredits(array $param = [])
     {
         // do checks
@@ -34,8 +39,10 @@ class RimplenetCreateCredits extends Utils
 
 
         # Chech transient key
-        if ($GLOBALS[$recent_txn_transient_key] == "executing") return;
-        if (get_transient($recent_txn_transient_key)) return;
+        if(isset($GLOBALS[$recent_txn_transient_key])){
+            if ($GLOBALS[$recent_txn_transient_key] == "executing") return;
+            if (get_transient($recent_txn_transient_key)) return;
+        }
 
         
         $key = 'user_withdrawable_bal_' . $wallet_id;
@@ -48,8 +55,7 @@ class RimplenetCreateCredits extends Utils
         $bal_before = $user_balance;
         // return $user_balance_total;
 
-        $RimplenetWallet = new Rimplenet_Wallets;
-        $user_balance_total = $RimplenetWallet->get_total_wallet_bal($user_id, $wallet_id);
+        $user_balance_total = $this->get_total_wallet_bal($user_id, $wallet_id);
 
         $new_balance  = $user_balance + $amount;
         $new_balance  = $new_balance;
@@ -64,7 +70,7 @@ class RimplenetCreateCredits extends Utils
                 $amount = $amount * -1;
             endif;
 
-            $txn_add_bal_id = $RimplenetWallet->record_Txn($user_id, $amount, $wallet_id, $tnx_type, 'publish');
+            $txn_add_bal_id = $this->record_Txn($user_id, $amount, $wallet_id, $tnx_type, 'publish');
 
             # add note if not empty
             if (!empty($note))  add_post_meta($txn_add_bal_id, 'note', $note);
@@ -75,7 +81,7 @@ class RimplenetCreateCredits extends Utils
             update_post_meta($txn_add_bal_id, 'balance_after', $new_balance);
 
             update_post_meta($txn_add_bal_id, 'total_balance_before', $user_balance_total);
-            update_post_meta($txn_add_bal_id, 'total_balance_after', $RimplenetWallet->get_total_wallet_bal($user_id, $wallet_id));
+            update_post_meta($txn_add_bal_id, 'total_balance_after', $this->get_total_wallet_bal($user_id, $wallet_id));
             update_post_meta($txn_add_bal_id, 'funds_type', $key);
         else :
             return Res::error(['Unknown Error'], "unknown error", 400);
