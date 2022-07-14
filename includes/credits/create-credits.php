@@ -6,45 +6,47 @@ class RimplenetCreateCredits extends RimplenetGetWallets
 {
     use RimplenetWalletTrait;
 
-    public function createCredits(array $param = [])
+    public function createCredits(array $param = [], $isApi = false)
     {
         // do checks
 
         $prop = empty($param) ? $this->req : $param;
         extract($prop);
 
-        if(self::requires([
+        if (self::requires([
             'user_id'    => "$user_id || int",
             'wallet_id'  => "$wallet_id || strInt",
             'request_id' => "$request_id || alnum",
             'amount'     => "$amount || amount",
         ])) return;
-        
-        # check is user is not self crediting
-        if(self::isMyself($user_id)) return Res::error(['Operation Denied'], "Self crediting is not allowed", 401);
 
-        if(!$this->getWalletById($wallet_id)) return;
+        # check is user is not self crediting
+        if ($isApi) :
+            if (self::isMyself($user_id)) return Res::error(['Operation Denied'], "Self crediting is not allowed", 401);
+        endif;
+
+        if (!$this->getWalletById($wallet_id)) return;
 
         # verify user exists
         $userToCredit = get_user_by('ID', $user_id);
-        if(!$userToCredit) return Res::error(["Unable to reach $user_id"], "Invalid User credentials", 404);
+        if (!$userToCredit) return Res::error(["Unable to reach $user_id"], "Invalid User credentials", 404);
 
         # Set transaction id
         $txn_id = $user_id . '_' .  strtolower($request_id);
         # Set transient key
-        $recent_txn_transient_key = "recent_txn_" . $txn_id; 
-        
+        $recent_txn_transient_key = "recent_txn_" . $txn_id;
+
         # check if transaction already exist
-        if($this->creditsExists($txn_id)) return;
+        if ($this->creditsExists($txn_id)) return;
 
 
         # Chech transient key
-        if(isset($GLOBALS[$recent_txn_transient_key])){
+        if (isset($GLOBALS[$recent_txn_transient_key])) {
             if ($GLOBALS[$recent_txn_transient_key] == "executing") return;
             if (get_transient($recent_txn_transient_key)) return;
         }
 
-        
+
         $key = 'user_withdrawable_bal_' . $wallet_id;
         $user_balance = get_user_meta($user_id, $key, true);
 
@@ -120,7 +122,7 @@ class RimplenetCreateCredits extends RimplenetGetWallets
     public static function isMyself($userId)
     {
         $currentUser = Token::getUserByToken();
-        if($currentUser->ID == $userId) return true;
+        if ($currentUser->ID == $userId) return true;
         return false;
     }
 }
