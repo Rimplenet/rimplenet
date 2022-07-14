@@ -52,13 +52,21 @@ class RimplenetGetUser
             $wp_user_query = new WP_User_Query($args);
             $get_users = $wp_user_query->get_results();
 
-            $data = [];
+            $users = [];
             foreach ($get_users as $get_user) {
                 unset($get_user->data->user_pass);
-                $data[]=$this->userFormat($get_user);
+                $users[]=$this->userFormat($get_user);
             }
 
-            return $this->response(200, true, "User retrieved successfully", $data, []);
+            $data = [
+                'others' => [
+                    'totalPages' => $total_pages,
+                    'currentPage' => intval($page)
+                ],
+                'users' => $users
+            ];
+
+            return $this->pageResponse(200, true, "User retrieved successfully", $data, []);
 
         } else {
 
@@ -105,13 +113,21 @@ class RimplenetGetUser
                     $wp_user_query = new WP_User_Query($args);
                     $get_users = $wp_user_query->get_results();
 
-                    $data=[];
+                    $users = [];
                     foreach ($get_users as $get_user) {
                         unset($get_user->data->user_pass);
-                        $data[]=$this->userFormat($get_user);
+                        $users[]=$this->userFormat($get_user);
                     }
 
-                    return $this->response(200, true, "User retrieved successfully", $data, []);
+                    $data = [
+                        'others' => [
+                            'totalPages' => $total_pages,
+                            'currentPage' => intval($page)
+                        ],
+                        'users' => $users
+                    ];
+
+                    return $this->pageResponse(200, true, "User retrieved successfully", $data, []);
                 }
 
             } catch (Exception $ex) {
@@ -141,6 +157,23 @@ class RimplenetGetUser
             $this->validation_error[] = ['access_token' => $access_token_error];
         }
 
+    }
+
+    public function pageResponse($status_code, $status, $message, $data=[], $error=[])
+    {
+        return [
+            "status_code" => $status_code,
+            "status" => $status,
+            "message" => $message,
+            "data" => [
+                "others" => [
+                    "totalPages" => $data["others"]["totalPages"],
+                    "currentPage" => $data["others"]["currentPage"]
+                ],
+                "users" => $data["users"]
+            ],
+            "error" =>$error
+        ];
     }
 
     public function response($status_code, $status, $message, $data=[], $error=[])
@@ -183,6 +216,7 @@ class RimplenetGetUser
             "display_name" => $user->data->display_name,
             "first_name" => get_user_meta($user->data->ID, "first_name", true),
             "last_name" => get_user_meta($user->data->ID, "last_name", true),
+            "phone_number" => get_user_meta($user->data->ID, "phone_number", true),
 			"roles" => $user->roles,
         ];
     }

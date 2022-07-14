@@ -70,7 +70,7 @@ class RimplenetCreateUser
                             
                             foreach($metas as $meta_key=>$meta_value) {
                                 
-                                add_user_meta($new_user, $meta_key, $meta_value);
+                                update_user_meta($new_user, $meta_key, $meta_value);
                             }
             
                         }
