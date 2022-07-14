@@ -5,11 +5,11 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 
         $req = [
             'note'          => sanitize_text_field($_POST['rimplenet_credit_debit_note'] ?? ''),
-            'user_id'       => (int) $_POST['rimplenet_user'],
+            'user_id'       => (int) $_POST['rimplenet_user'] ?? '',
             'wallet_id'     => sanitize_text_field(strtolower($_POST['rimplenet_wallet'])),
             'request_id'      => sanitize_text_field($_POST['request_id']) ?? rand(5, 6),
             'amount' => floatval(str_replace('-', '', $_POST['rimplenet_amount'])),
-            'request_id'=> sanitize_text_field($_POST['rimplenet_create_debit_nonce_field'])
+            'request_id'=> sanitize_text_field("request".$_POST['rimplenet_create_debit_nonce_field'])
         ];
         $wallets = new RimplenetCreateDebits();
 
@@ -296,7 +296,7 @@ document.getElementById("showSearchResult").innerHTML=""
 
 $(document).ready(function() {
     $('#rimplenet_credit_debit_submit_form').submit(function() {
-        let rimplenet_user=document.getElementById("rimplenet_user");
+        rimplenet_user=document.getElementById("rimplenet_user");
         if (rimplenet_user && rimplenet_user.length > 0 && rimplenet_user.value !=="") {
             // everything's fine...
         } else {
