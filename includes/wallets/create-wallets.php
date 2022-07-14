@@ -88,7 +88,7 @@ class RimplenetCreateWallets extends Utils
 
         if (self::requires([
             'wallet_name'           =>  "$wallet_name || string",
-            'wallet_id'             =>  "$wallet_id || alnum",
+            'wallet_id'             =>  "$wallet_id || string",
             'wallet_symbol'         =>  $wallet_symbol,
             'wallet_symbol_pos'     =>  $wallet_symbol_pos ?? 'left',
             'wallet_type'           =>  "$wallet_type || string",

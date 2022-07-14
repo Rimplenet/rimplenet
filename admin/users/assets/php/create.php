@@ -51,7 +51,7 @@ if (isset($_POST) && isset($_POST['create_user']) && wp_verify_nonce($_POST['rim
     if ($code == 400) :
         echo $message("Error", ucfirst(str_replace('_', ' ', $error)), 'error');
     else :
-        echo $message("Success", $newUser['response_message'], 'success');
+        echo $message("Success", $newUser['message'], 'success');
     endif;
 
 endif;

@@ -33,7 +33,7 @@ $all_credits=$credits::$response['data'];
 
 <?php
    foreach ($all_credits as $key => $value) {
-       
+    $edit_wallet_link = '<a href="'.get_edit_post_link($value['id']).'" target="_blank" class="btn-primary btn">Edit Debit</a>';
 
 ?>
  

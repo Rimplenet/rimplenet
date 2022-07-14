@@ -1,43 +1,52 @@
 <?php
-class RimplenetCreateCredits extends Utils
+
+use Traits\Wallet\RimplenetWalletTrait;
+
+class RimplenetCreateCredits extends RimplenetGetWallets
 {
-    public function createCredits(array $param = [])
+    use RimplenetWalletTrait;
+
+    public function createCredits(array $param = [], $isApi = false)
     {
         // do checks
 
         $prop = empty($param) ? $this->req : $param;
         extract($prop);
 
-        if(self::requires([
+        if (self::requires([
             'user_id'    => "$user_id || int",
             'wallet_id'  => "$wallet_id || strInt",
             'request_id' => "$request_id || alnum",
             'amount'     => "$amount || amount",
         ])) return;
-        
-        # check is user is not self crediting
-        if(self::isMyself($user_id)) return Res::error(['Operation Denied'], "Self crediting is not allowed", 401);
 
-        if(!$this->getWalletById($wallet_id)) return;
+        # check is user is not self crediting
+        if ($isApi) :
+            if (self::isMyself($user_id)) return Res::error(['Operation Denied'], "Self crediting is not allowed", 401);
+        endif;
+
+        if (!$this->getWalletById($wallet_id)) return;
 
         # verify user exists
         $userToCredit = get_user_by('ID', $user_id);
-        if(!$userToCredit) return Res::error(["Unable to reach $user_id"], "Invalid User credentials", 404);
+        if (!$userToCredit) return Res::error(["Unable to reach $user_id"], "Invalid User credentials", 404);
 
         # Set transaction id
         $txn_id = $user_id . '_' .  strtolower($request_id);
         # Set transient key
-        $recent_txn_transient_key = "recent_txn_" . $txn_id; 
-        
+        $recent_txn_transient_key = "recent_txn_" . $txn_id;
+
         # check if transaction already exist
-        if($this->creditsExists($txn_id)) return;
+        if ($this->creditsExists($txn_id)) return;
 
 
         # Chech transient key
-        if ($GLOBALS[$recent_txn_transient_key] == "executing") return;
-        if (get_transient($recent_txn_transient_key)) return;
+        if (isset($GLOBALS[$recent_txn_transient_key])) {
+            if ($GLOBALS[$recent_txn_transient_key] == "executing") return;
+            if (get_transient($recent_txn_transient_key)) return;
+        }
 
-        
+
         $key = 'user_withdrawable_bal_' . $wallet_id;
         $user_balance = get_user_meta($user_id, $key, true);
 
@@ -48,8 +57,7 @@ class RimplenetCreateCredits extends Utils
         $bal_before = $user_balance;
         // return $user_balance_total;
 
-        $RimplenetWallet = new Rimplenet_Wallets;
-        $user_balance_total = $RimplenetWallet->get_total_wallet_bal($user_id, $wallet_id);
+        $user_balance_total = $this->get_total_wallet_bal($user_id, $wallet_id);
 
         $new_balance  = $user_balance + $amount;
         $new_balance  = $new_balance;
@@ -64,7 +72,7 @@ class RimplenetCreateCredits extends Utils
                 $amount = $amount * -1;
             endif;
 
-            $txn_add_bal_id = $RimplenetWallet->record_Txn($user_id, $amount, $wallet_id, $tnx_type, 'publish');
+            $txn_add_bal_id = $this->record_Txn($user_id, $amount, $wallet_id, $tnx_type, 'publish');
 
             # add note if not empty
             if (!empty($note))  add_post_meta($txn_add_bal_id, 'note', $note);
@@ -75,7 +83,7 @@ class RimplenetCreateCredits extends Utils
             update_post_meta($txn_add_bal_id, 'balance_after', $new_balance);
 
             update_post_meta($txn_add_bal_id, 'total_balance_before', $user_balance_total);
-            update_post_meta($txn_add_bal_id, 'total_balance_after', $RimplenetWallet->get_total_wallet_bal($user_id, $wallet_id));
+            update_post_meta($txn_add_bal_id, 'total_balance_after', $this->get_total_wallet_bal($user_id, $wallet_id));
             update_post_meta($txn_add_bal_id, 'funds_type', $key);
         else :
             return Res::error(['Unknown Error'], "unknown error", 400);
@@ -114,7 +122,7 @@ class RimplenetCreateCredits extends Utils
     public static function isMyself($userId)
     {
         $currentUser = Token::getUserByToken();
-        if($currentUser->ID == $userId) return true;
+        if ($currentUser->ID == $userId) return true;
         return false;
     }
 }

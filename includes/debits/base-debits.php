@@ -1,7 +1,9 @@
 <?php
-abstract class Debits extends Utils
-{
 
+class Debits extends RimplenetGetWallets
+{
+    
+    use Traits\Wallet\RimplenetWalletTrait;
     /**
      * Check  if transaction has been executed before time
      * @param int $id > id of transaction

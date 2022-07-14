@@ -80,9 +80,9 @@ class Utils
                 } elseif ($type == 'amount') {
                     if (!is_numeric($val)) self::$error[$key] = "$key requires a valid amount";
                 } elseif ($type == 'string') {
-                    if (!preg_match('/^([a-zA-Z ])+$/', $val)) self::$error[$key] = $key . ' requires A-Za-z';
+                    if (!preg_match('/^([a-zA-Z_ ])+$/', $val)) self::$error[$key] = $key . ' requires only alphabets';
                 } elseif ($type == 'alnum') {
-                    if (!preg_match('/^[a-zA-Z0-9_]/', $val)) self::$error[$key] = $key . ' can contain aplhpabets, numbers and underscore';
+                    if (!preg_match('/^[a-zA-Z0-9_]+$/', $val)) self::$error[$key] = $key . ' can contain aplhpabets, numbers and underscore';
                 }elseif($type == 'bool'){
                     if (!is_bool($type))  self::$error[$key] = $key . ' Must be a boolean';
                 }elseif($type == 'strInt'){

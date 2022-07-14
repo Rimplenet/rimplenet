@@ -52,7 +52,7 @@ class Rimplenet_Admin_Matrix{
      
     function save_matrix_settings($post_id, $post, $update){
         
-      $rimplenettransaction_type = sanitize_text_field($_POST['rimplenettransaction_type']);
+      $rimplenettransaction_type = sanitize_text_field($_POST['rimplenettransaction_type'] ?? '');
       if($rimplenettransaction_type=="rimplenet-mlm-matrix"){ 
         $MATRIX_CAT_NAME = 'RIMPLENET MLM MATRIX';
         wp_set_object_terms($post_id, $MATRIX_CAT_NAME, 'rimplenettransaction_type');
