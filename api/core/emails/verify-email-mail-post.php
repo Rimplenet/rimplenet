@@ -1,6 +1,6 @@
 <?php
 
-$getCredits = new class extends RimplenetVerifyEmailMail
+$getCredits = new class extends VerifyEmailMail
 {
     public function __construct()
     {
@@ -10,7 +10,7 @@ $getCredits = new class extends RimplenetVerifyEmailMail
     public function register_api_routes()
     {
         register_rest_route('rimplenet/v1', 'verify-email-address', [
-            'methods' => 'GET',
+            'methods' => 'POST',
             'callback' => [$this, 'send_verify_email_mail']
         ]);
     }
@@ -18,10 +18,11 @@ $getCredits = new class extends RimplenetVerifyEmailMail
     public function send_verify_email_mail(WP_REST_Request $req)
     {
         # ================= set fields ============
-        $email  = sanitize_text_field($req['email']);
+        $data['email']  = sanitize_text_field($req['email']);
+        $data['token']  = sanitize_text_field($req['token_to_verify_email']);
 
         // if ($wlt_id !== '') :
-            $this->send($email);
+            $this->validate($data);
             return new WP_REST_Response($this->response, $this->response['status_code']);
     }
 };

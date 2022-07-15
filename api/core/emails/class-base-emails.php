@@ -21,6 +21,7 @@ class Rimplenet_Base_Emails_Api
 		require_once plugin_dir_path(dirname(__FILE__)) . 'emails/change-password.php';
 		require_once plugin_dir_path(dirname(__FILE__)) . 'emails/change-password-post.php';
         require_once plugin_dir_path(dirname(__FILE__)) . 'emails/verify-email-mail.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'emails/verify-email-mail-post.php';
 	}
 }
 

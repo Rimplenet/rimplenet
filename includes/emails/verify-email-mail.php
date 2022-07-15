@@ -5,19 +5,31 @@ use Traits\Email\RimplenetEmailTrait;
 
 class RimplenetVerifyEmailMail extends Base
 {
-    use RimplenetEmailTrait;
-   public function __construct()
-   {
-    # code...
-   }
+     use RimplenetEmailTrait;
+     public function __construct()
+     {
+          # code...
+     }
 
-   public function send($email)
-   {
-        $sent=$this->sendVerifyEmailMail($email);
-        $message=$sent ? 'Verification Mail Email Sent' : 'Email Not Sent';
+     public function send($email, $sendmail = false)
+     {
 
-        $sent ? $this->success($sent, $message) : $this->error($sent, $message);
+          $user_id = $this->getUserId('email', $email);
 
-        return $this->response;
-   }
+          $sent['token_to_verify_email'] = $this->generateToken();
+          $this->storeverifyToken($user_id, $sent['token_to_verify_email']);
+
+          if ($sendmail) {
+               $sent = $this->sendVerifyEmailMail($email, $sent['token_to_verify_email']);
+               $message = $sent ? 'Verification Mail Email Sent' : 'Email Not Sent';
+
+               $sent ? $this->success($sent, $message) : $this->error($sent, $message);
+
+               return $this->response;
+          }
+
+          $message = $sent['token_to_verify_email'] ? 'Token Generated' : 'Token Not Generated';
+          $sent['token_to_verify_email'] ? $this->success($sent, $message) : $this->error($sent, $message);
+          return $this->response;
+     }
 }
