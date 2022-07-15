@@ -13,11 +13,8 @@ class RimplenetGetWithdrawals extends Base
 
   public function getWithdrawals(array $req = [])
   {
-
-    $prop = empty($req) ? $this->req : $req;
-    extract($prop);
-
-   
+    self::$response['data']=$this->fetchWithdrawals();
+    return self::$response['data'];
   }
 
   public function getWithdrawal()
@@ -25,5 +22,10 @@ class RimplenetGetWithdrawals extends Base
     # code...
   }
 
+
+  public function formatData(Type $var = null)
+  {
+    # code...
+  }
 
 }
