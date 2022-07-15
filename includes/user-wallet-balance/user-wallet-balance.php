@@ -20,7 +20,7 @@ class RimplenetGetWalletBalance extends RimplenetBalance
             $data[$value]=$this->get_withdrawable_wallet_bal($user_id, $value) + $this->get_nonwithdrawable_wallet_bal($user_id, $value);
         }
 
-        return $this->response = [
+        return self::$response = [
                 'status_code' => 200,
                 'status' => true,
                 'message' => 'Wallet Balance retrieved',
