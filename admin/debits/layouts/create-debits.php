@@ -129,7 +129,7 @@ $dir = plugin_dir_url(dirname(__FILE__));
     <div class="form-container rt col-md-6">
 
 
-        <form method="POST" style="max-width:700px; margin:auto;border:1px solid #ccc; border-radius:11px;padding: 13px;">
+        <form method="POST" id="rimplenet_credit_debit_submit_form" style="max-width:700px; margin:auto;border:1px solid #ccc; border-radius:11px;padding: 13px;">
             <table class="form-table">
                 <tbody>
 
@@ -291,20 +291,24 @@ document.getElementById("showSearchResult").innerHTML=""
 
 
 
-(function( $ ) {
+let submitBtn=document.getElementById("rimplenet_credit_debit_submit_form");
+
+// submitBtn.addEventListener('');
+
+(function($) {
 	// 'use strict';
 
-$(document).ready(function() {
-    $('#rimplenet_credit_debit_submit_form').submit(function() {
-        rimplenet_user=document.getElementById("rimplenet_user");
-        if (rimplenet_user && rimplenet_user.length > 0 && rimplenet_user.value !=="") {
-            // everything's fine...
-        } else {
-            alert('Please select a User');
-            return false;
-        }
+    $(document).ready(function() {
+        $('#rimplenet_credit_debit_submit_form').submit(function() {
+            rimplenet_user=document.getElementById("rimplenet_user");
+            if (rimplenet_user && rimplenet_user.length > 0 && rimplenet_user.value !=="") {
+                // everything's fine...
+            } else {
+                alert('Please select a User');
+                return false;
+            }
+        });
     });
-});
 
 })( jQuery );
 </script>
