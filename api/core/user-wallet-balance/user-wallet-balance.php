@@ -28,7 +28,7 @@ class User_Wallet_Balance extends RimplenetGetWalletBalance
         ];
 
         $this->getWalletBalance();
-        return new WP_REST_Response($this->response, $this->response['status_code']);
+        return new WP_REST_Response(self::$response, self::$response['status_code']);
     }
 }
 

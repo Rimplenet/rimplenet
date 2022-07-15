@@ -132,167 +132,12 @@ $dir = plugin_dir_url(dirname(__FILE__));
 ?>
 
 <div class="user-card">
+
+
     <div class="form-container">
         <img src="<?= $dir ?>/assets/img/wallet-concept-illustration_114360-1985.webp" alt="">
     </div>
     <div class="form-container rt">
-
-        <!--         
-    <form method="POST">
-            <h2>CREATE NEW WALLET</h2> <br>
-            <input type="hidden" name="rimplenet_wallet_submitted" value="true" />
-            <?php // wp_nonce_field('rimplenet_wallet_settings_nonce_field', 'rimplenet_wallet_settings_nonce_field'); 
-            ?>
-
-            <table class="form-table">
-                <tbody>
-
-                    <tr>
-                        <th><label for="rimplenet_wallet_name"> Wallet Name </label></th>
-                        <td><input name="rimplenet_wallet_name" id="rimplenet_wallet_name" style="width: 100%;max-width: 400px; height: 40px;" type="text" value="<?php echo get_option('rimplenet_wallet_name'); ?>" placeholder="e.g United Bunny Wallet" class="regular-text" required style="<?php echo $input_width; ?>" /></td>
-                    </tr>
-                    <tr>
-                        <th><label for="rimplenet_wallet_desc"> Wallet Description </label></th>
-                        <td>
-                            <textarea id="rimplenet_wallet_desc" style="width: 100%;max-width: 400px; height: 40px;" name="rimplenet_wallet_desc" placeholder="Description here" style="<?php echo $input_width; ?>"></textarea>
-
-                        </td>
-                    </tr>
-                    <tr>
-                        <th><label for="rimplenet_wallet_symbol"> Wallet Symbol <span class="dashicons dashicons-editor-help rimplenet-admin-tooltip" title="Wallet Symbol of the Wallet e.g $ for Dollars, ₦ for Naira,  ₿  for Bitcoin or maybe ETH for Ethereum"></span></label></th>
-                        <td><input name="rimplenet_wallet_symbol" id="rimplenet_wallet_symbol" style="width: 100%;max-width: 400px; height: 40px;" type="text" value="<?php echo get_option('rimplenet_wallet_symbol'); ?>" placeholder="e.g $" class="regular-text" required style="<?php echo $input_width; ?>" /></td>
-                    </tr>
-
-                    <tr>
-                        <th><label for="rimplenet_wallet_decimal"> Wallet Decimal <span class="dashicons dashicons-editor-help rimplenet-admin-tooltip" title="Wallet Decimal of the Wallet, it sometimes 2 is for fiat currecny wallet &amp; 6 or more for cryptocurrency wallet"></span> </label></th>
-                        <td><input name="rimplenet_wallet_decimal" id="rimplenet_wallet_decimal" style="width: 100%;max-width: 400px; height: 40px;" type="number" min="1" value="<?php echo get_option('rimplenet_wallet_decimal'); ?>" placeholder="e.g 2" class="regular-text" style="<?php echo $input_width; ?>" /></td>
-                    </tr>
-
-                    <tr>
-                        <th><label for="rimplenet_wallet_decimal"> Wallet Type </label></th>
-                        <td><select name="rimplenet_wallet_type" id="rimplenet_wallet_type" style="width: 100%;max-width: 400px; height: 40px;" required="">
-                                <option value=""> Select Wallet Type </option>
-                                <option value="fiat" selected=""> Fiat Currency Wallet </option>
-                                <option value="crypto"> Cryptocurrency Wallet </option>
-                            </select>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <th><label for="rimplenet_min_withdrawal_amount"> Wallet Minimum Withdrawal Amount </label></th>
-                        <td><input name="rimplenet_min_withdrawal_amount" id="rimplenet_min_withdrawal_amount" style="width: 100%;max-width: 400px; height: 40px;" type="text" value="<?php echo get_option('rimplenet_min_withdrawal_amount'); ?>" placeholder="e.g 10" class="regular-text" style="<?php echo $input_width; ?>" /></td>
-                    </tr>
-
-                    <tr>
-                        <th><label for="rimplenet_max_withdrawal_amount"> Wallet Maximum Withdrawal Amount </label></th>
-                        <td><input name="rimplenet_max_withdrawal_amount" id="rimplenet_max_withdrawal_amount" style="width: 100%;max-width: 400px; height: 40px;" type="text" value="<?php echo get_option('rimplenet_max_withdrawal_amount'); ?>" placeholder="e.g 99.99" class="regular-text" style="<?php echo $input_width; ?>" /></td>
-                    </tr>
-
-                    <tr>
-                        <th><label for="rimplenet_wallet_id"> Wallet ID <span class="dashicons dashicons-editor-help rimplenet-admin-tooltip" title="Wallet ID should be unique for each of your created wallet, wallet id should be lowercase alphabets and underscore (blank space is not allowed) e.g btc for United State Dollars, ngn for Nigerian Naira , btc for Bitcoin, you can as well use savings_wallet"></span> </label></th>
-                        <td><input name="rimplenet_wallet_id" id="rimplenet_wallet_id" style="width: 100%;max-width: 400px; height: 40px;" type="text" value="<?php echo get_option('rimplenet_wallet_id'); ?>" placeholder="e.g usd" class="regular-text" required style="<?php echo $input_width; ?>" /></td>
-                    </tr>
-
-                    <tr>
-                        <th scope="row">Wallet Symbol Display Position</th>
-                        <td>
-                            <fieldset>
-                                <legend class="screen-reader-text"><span>Wallet Symbol Display Position</span></legend>
-                                <label><input type="radio" name="rimplenet_wallet_symbol_position" value="left" checked="checked">
-                                    <span class="">Left - (Suitable for Fiat Wallet) </span></label> <br>
-
-                                <label><input type="radio" name="rimplenet_wallet_symbol_position" value="right">
-                                    <span class=""> Right - (Suitable for crytocurrency wallet) </span></label> <br>
-
-                            </fieldset>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <th scope="row">Include in Withdrawal Form</th>
-                        <td>
-                            <fieldset>
-                                <legend class="screen-reader-text"><span>Include in Withdrawal Form</span></legend>
-                                <label><input type="radio" name="include_in_withdrawal_form" value="yes" checked="checked">
-                                    <span class="">Yes Include - (This will show in Withdrawal form.) </span></label> <br>
-
-                                <label><input type="radio" name="include_in_withdrawal_form" value="no">
-                                    <span class=""> No, Don't Include - (This will not show in Withdrawal form) </span></label> <br>
-
-                            </fieldset>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <th scope="row">Include in Woocommerce Currencies</th>
-                        <td>
-                            <fieldset>
-                                <legend class="screen-reader-text"><span>Include in Woocommerce Currencies</span></legend>
-                                <label><input type="radio" name="include_in_woocommerce_currency_list" value="yes" checked="checked">
-                                    <span class="">Yes Include - (This will show in Woocommerce Currency List, be careful as some payment processors may not recognized it.) </span></label> <br>
-
-                                <label><input type="radio" name="include_in_woocommerce_currency_list" value="no">
-                                    <span class=""> No, Don't Include - (This will not show in Woocommerce Currency List) </span></label> <br>
-
-                            </fieldset>
-                        </td>
-
-                    </tr>
-
-
-                    <tr>
-                        <th scope="row">Include as Woocommerce Product Payment Wallet</th>
-                        <td>
-                            <fieldset>
-                                <legend class="screen-reader-text"><span>Include as Woocommerce Product Payment Wallet</span></legend>
-                                <label><input type="radio" name="include_in_woocommerce_product_payment_wallet" value="yes" checked="checked">
-                                    <span class="">Yes Include - (This will show in Woocommerce Product Payment Wallet) </span></label> <br>
-
-                                <label><input type="radio" name="include_in_woocommerce_product_payment_wallet" value="no">
-                                    <span class=""> No, Don't Include - (This will not show as Woocommerce Product Payment Wallet) </span></label> <br>
-
-                            </fieldset>
-                        </td>
-
-                    </tr>
-
-
-                    <tr>
-                        <td>
-                            <h2>WALLET RULES</h2>
-                        </td>
-                    </tr>
-
-
-                    <tr>
-                        <th><label for="rimplenet_rules_before_wallet_withdrawal"> Rules to Achieve before User Qualifies to Withdraw from this wallet </label></th>
-                        <td>
-                            <textarea name="rimplenet_rules_before_wallet_withdrawal" id="rimplenet_rules_before_wallet_withdrawal" style="<?php echo $input_width; ?>"></textarea>
-
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <th><label for="rimplenet_rules_after_wallet_withdrawal"> Rules to Apply to User after Withdrawal </label></th>
-                        <td>
-                            <textarea name="rimplenet_rules_after_wallet_withdrawal" id="rimplenet_rules_after_wallet_withdrawal" style="<?php echo $input_width; ?>"></textarea>
-
-                        </td>
-                    </tr>
-
-                </tbody>
-            </table>
-
-            <p class="submit">
-                <input type="submit" name="submit" id="submit" class="button button-primary" value="CREATE WALLET">
-            </p>
-        </form> -->
-
-
-
-
-
-
         <style>
             #regForm {
                 /* background-color: #ffffff; */
@@ -373,106 +218,142 @@ $dir = plugin_dir_url(dirname(__FILE__));
         </style>
 
 
-        <form id="regForm" method="POST">
-            <!-- One "tab" for each step in the form: -->
-            <div class="tab">
-                <h2>CREATE NEW WALLET</h2> <br>
-                <input type="hidden" name="rimplenet_wallet_submitted" value="true" />
-                <?php wp_nonce_field('rimplenet_wallet_settings_nonce_field', 'rimplenet_wallet_settings_nonce_field'); ?>
-                <table class="form-table">
-                    <tbody>
-
-                        <tr>
-                            <th><label for="rimplenet_wallet_name required"> Wallet Name  <sup class="required-red"><strong>*</strong></sup></label></th>
-                            <td><input name="rimplenet_wallet_name" id="rimplenet_wallet_name" style="width: 100%;max-width: 400px; height: 40px;" type="text" value="<?php echo get_option('rimplenet_wallet_name'); ?>" placeholder="e.g United Bunny Wallet" class="regular-text" required style="<?php echo $input_width; ?>" /></td>
-                        </tr>
-                        <tr>
-                            <th><label for="rimplenet_wallet_desc"> Wallet Description <sup class="required-red"><strong>*</strong></sup> </label></th>
-                            <td>
-                                <textarea id="rimplenet_wallet_desc" style="width: 100%;max-width: 400px; height: 40px;" name="rimplenet_wallet_desc" placeholder="Description here" style="<?php echo $input_width; ?>"></textarea>
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <th><label for="rimplenet_wallet_symbol"> Wallet Symbol <sup class="required-red"><strong>*</strong></sup><span class="dashicons dashicons-editor-help rimplenet-admin-tooltip" title="Wallet Symbol of the Wallet e.g $ for Dollars, ₦ for Naira,  ₿  for Bitcoin or maybe ETH for Ethereum"></span></label></th>
-                            <td><input name="rimplenet_wallet_symbol" id="rimplenet_wallet_symbol" style="width: 100%;max-width: 400px; height: 40px;" type="text" value="<?php echo get_option('rimplenet_wallet_symbol'); ?>" placeholder="e.g $" class="regular-text" required style="<?php echo $input_width; ?>" /></td>
-                        </tr>
-
-                        <tr>
-                            <th><label for="rimplenet_wallet_decimal"> Wallet Decimal <sup class="required-red"><strong>*</strong></sup><span class="dashicons dashicons-editor-help rimplenet-admin-tooltip" title="Wallet Decimal of the Wallet, it sometimes 2 is for fiat currecny wallet &amp; 6 or more for cryptocurrency wallet"></span> </label></th>
-                            <td><input name="rimplenet_wallet_decimal" id="rimplenet_wallet_decimal" style="width: 100%;max-width: 400px; height: 40px;" type="number" min="1" value="<?php echo get_option('rimplenet_wallet_decimal'); ?>" placeholder="e.g 2" class="regular-text" style="<?php echo $input_width; ?>" /></td>
-                        </tr>
-
-                        <tr>
-                            <th><label for="rimplenet_wallet_decimal"> Wallet Type <sup class="required-red"><strong>*</strong></sup> </label></th>
-                            <td><select name="rimplenet_wallet_type" id="rimplenet_wallet_type" style="width: 100%;max-width: 400px; height: 40px;" required="">
-                                    <option value=""> Select Wallet Type </option>
-                                    <option value="fiat" selected=""> Fiat Currency Wallet </option>
-                                    <option value="crypto"> Cryptocurrency Wallet </option>
-                                </select>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <th><label for="rimplenet_min_withdrawal_amount"> Wallet Minimum Withdrawal Amount </label></th>
-                            <td><input name="rimplenet_min_withdrawal_amount" id="rimplenet_min_withdrawal_amount" style="width: 100%;max-width: 400px; height: 40px;" type="text" value="<?php echo get_option('rimplenet_min_withdrawal_amount'); ?>" placeholder="e.g 10" class="regular-text" style="<?php echo $input_width; ?>" /></td>
-                        </tr>
-
-                        <tr>
-                            <th><label for="rimplenet_max_withdrawal_amount"> Wallet Maximum Withdrawal Amount </label></th>
-                            <td><input name="rimplenet_max_withdrawal_amount" id="rimplenet_max_withdrawal_amount" style="width: 100%;max-width: 400px; height: 40px;" type="text" value="<?php echo get_option('rimplenet_max_withdrawal_amount'); ?>" placeholder="e.g 99.99" class="regular-text" style="<?php echo $input_width; ?>" /></td>
-                        </tr>
-
-                        <tr>
-                            <th><label for="rimplenet_wallet_id"> Wallet ID <sup class="required-red"><strong>*</strong></sup><span class="dashicons dashicons-editor-help rimplenet-admin-tooltip" title="Wallet ID should be unique for each of your created wallet, wallet id should be lowercase alphabets and underscore (blank space is not allowed) e.g btc for United State Dollars, ngn for Nigerian Naira , btc for Bitcoin, you can as well use savings_wallet"></span> </label></th>
-                            <td><input name="rimplenet_wallet_id" id="rimplenet_wallet_id" style="width: 100%;max-width: 400px; height: 40px;" type="text" value="<?php echo get_option('rimplenet_wallet_id'); ?>" placeholder="e.g usd" class="regular-text" required style="<?php echo $input_width; ?>" /></td>
-                        </tr>
-
-
-                    </tbody>
-                </table>
-            </div>
+        <form action="" method="POST" class="rimplenet-withdrawal-form" id="rimplenet-withdrawal-form" style="max-width:700px; margin:auto;border:1px solid #ccc; border-radius:11px;padding: 13px;"> 
+           <div class="clearfix"></div><br>
+            <div class="row">
+             <div class="col-md-6">
+               <label for="rimplenet_withdrawal_wallet"> <strong> Choose Wallet </strong> </label>
+               <select name="rimplenet_withdrawal_wallet" id="rimplenet_withdrawal_wallet" class="rimplenet_withdrawal_wallet rimplenet-select" required="">
+                   <?php
+                     
+                     if($wallet_id=='all'){
+                        
+                        foreach($all_wallets as $wallet){
+                          $wallet_id_op = $wallet['id'];
+                          if($wallet['include_in_withdrawal_form']=='yes'){
+                           $user_wdr_bal = $wallet_obj->get_withdrawable_wallet_bal($user_id, $wallet_id_op);
+                           $dec = $wallet['decimal'];
+                           $symbol = $wallet['symbol'];
+                           $symbol_position = $all_wallets[$wallet_id_op]['symbol_position'];
+                           
+                           $disp_info = getRimplenetWalletFormattedAmount($user_wdr_bal,$wallet_id_op,'wallet_name');
+                           
+                          ?>
+                            <option value="<?php echo $wallet_id_op; ?>"> <?php echo $disp_info; ?> </option> 
+                        <?php
+                           }
+                         }
+                         
+                         
+                     }
+                     else{
+                         $withdrawal_wallets_op = explode(",",$wallet_id);
+                         foreach($withdrawal_wallets_op as $wallet_id_op){
+                           $wallet_id_op = trim($wallet_id_op);
+                           $user_wdr_bal = $wallet_obj->get_withdrawable_wallet_bal($user_id, $wallet_id_op);
+                           $dec = $all_wallets[$wallet_id_op]['decimal'];
+                           $symbol = $all_wallets[$wallet_id_op]['symbol'];
+                           $symbol_position = $all_wallets[$wallet_id_op]['symbol_position'];
+                           
+                           $disp_info = getRimplenetWalletFormattedAmount($user_wdr_bal,$wallet_id_op,'wallet_name');
+                           
+                         ?>
+                        <option value="<?php echo $wallet_id_op; ?>"> <?php echo $disp_info; ?> </option> 
+                    <?php
+                         }
+                     }
+                     ?>
+                </select>
+                <!--<p style="float:right;"><small>SWAP FEE ~ 0.009 ETH</small></p>-->
+             </div>
+             
            
-            <div class="tab">
-                <table class="form-table">
-                    <tbody>
-
-                        <tr>
-                            <th scope="row">Wallet Symbol Display Position</th>
-                            <td>
-                                <fieldset>
-                                    <legend class="screen-reader-text"><span>Wallet Symbol Display Position</span></legend>
-                                    <label><input type="radio" name="rimplenet_wallet_symbol_position" value="left" checked="checked">
-                                        <span class="">Left - (Suitable for Fiat Wallet) </span></label> <br>
-
-                                    <label><input type="radio" name="rimplenet_wallet_symbol_position" value="right">
-                                        <span class=""> Right - (Suitable for crytocurrency wallet) </span></label> <br>
-
-                                </fieldset>
-                            </td>
-                        </tr>
-
-                       
-                    </tbody>
-                </table>
-            </div>
-           
-
-
-            <div style="overflow:auto;">
-                <div style="
-                /* float:right; */
-                ">
-                    <button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
-                    <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
+             
+             <div class="col-md-6">
+                  <label for="rimplenet_amount_to_withdraw"> <strong> <?php echo $wdr_amt_text_label; ?> </strong> </label>
+                  <input name="rimplenet_amount_to_withdraw" id="rimplenet_amount_to_withdraw" class="rimplenet_amount_to_withdraw rimplenet-input" placeholder="<?php echo $wdr_amt_text_placeholder; ?>" type="text" min="<?php echo $min_price; ?>" max="<?php echo $max_price; ?>"  value="" required="">       
+                  <!--<p class="mb-0 text-right">1 USD ~ 0.0001 ETH <a href="#">Expected rate - No extra
+                    fees</a></p>-->
+                  <?php 
+                   do_action('rimplenet_withdrawal_form_before_withdrawal_destination',$wallet_id, $user_id,$title,$button_text);  
+                   $placeholder_text = apply_filters( 'rimplenet_withdrawal_field_placeholder', $wdr_dest_text_placeholder, $wallet_id,$user_id, $title,$button_text);
+                  ?> 
+             </div>
+            
+            <div class="clearfix"></div><br> 
+            
+              <?php if($wdr_dest=="bank"){ ?>
+                <div class="col-md-6">
+                  <label for="rimplenet_withdrawal_bank"> <strong> Bank </strong> </label>
+                  <!--<select name="rimplenet_withdrawal_bank" id="rimplenet_withdrawal_bank" class="rimplenet_withdrawal_bank rimplenet-select" required="">
+                   <option value="Other"> Other </option> 
+                  </select>
+                  -->
+                  <input type="text" name="rimplenet_withdrawal_bank" id="rimplenet_withdrawal_bank" class="rimplenet_withdrawal_bank rimplenet-input" placeholder="Bank Name" value="" required="">       
+                  
+                  <!--<p style="float:right;"><small>Bottom Text ~ 0.009 ETH</small></p>-->
                 </div>
+
+             <div class="col-md-6">
+                  <label for="rimplenet_withdrawal_account_number"> <strong> Account Number </strong> </label>
+                  <input name="rimplenet_withdrawal_account_number" id="rimplenet_withdrawal_account_number" class="rimplenet_withdrawal_account_number rimplenet-input" placeholder="<?php echo $wdr_amt_text_placeholder; ?>" type="text" min="<?php echo $min_price; ?>" max="<?php echo $max_price; ?>"  value="" required="">       
+                  <!--<p class="mb-0 text-right">1 USD ~ 0.0001 ETH <a href="#">Expected rate - No extra
+                    fees</a></p>-->
+             </div>
+             
+             <div class="col-md-12">
+                  <label for="rimplenet_withdrawal_account_name"> <strong> Account Name </strong> </label>
+                  <input name="rimplenet_withdrawal_account_name" id="rimplenet_withdrawal_account_name" class="rimplenet_withdrawal_account_name rimplenet-input" placeholder="John Doe" type="text" value="" required="">       
+                  <!--<p class="mb-0 text-right">1 USD ~ 0.0001 ETH <a href="#">Expected rate - No extra
+                    fees</a></p>-->
+             </div>
+             
+             <?php }
+               elseif($wdr_dest=="crypto_address"){
+             ?>
+             
+              
+             <div class="col-md-12">
+                  <label for="rimplenet_withdrawal_crypto_address"> <strong> Crypto Address </strong> </label>
+                  <input name="rimplenet_withdrawal_crypto_address" id="rimplenet_withdrawal_crypto_address" class="rimplenet_withdrawal_crypto_address rimplenet-input" placeholder="<?php echo $crypto_address_placeholder; ?>" type="text" value="" required="">       
+                  <!--<p class="mb-0 text-right">1 USD ~ 0.0001 ETH <a href="#">Expected rate - No extra
+                    fees</a></p>-->
+             </div>
+             <?php }
+               else{
+             ?>
+             
+            
+            <div class="clearfix"></div><br> 
+            <div class="col-md-12">
+             <label for="rimplenet_withdrawal_destination"><strong> <?php echo $wdr_dest_text_label; ?></strong> </label>
+             <textarea name="rimplenet_withdrawal_destination" id="rimplenet_withdrawal_destination" class="rimplenet_withdrawal_destination rimplenet-textarea" rows="3" placeholder="<?php echo $wdr_dest_text_placeholder; ?>" required></textarea>
             </div>
-            <!-- Circles which indicates the steps of the form: -->
-            <div style="text-align:center;margin-top:40px;">
-                <span class="step"></span>
-                <span class="step"></span>
-                <!-- <span class="step"></span> -->
+            <?php } ?>
+            <?php do_action('rimplenet_withdrawal_form_after_withdrawal_destination', $wallet_id, $user_id, $title,$button_text);  ?>
+            
+            <div class="clearfix"></div><br> 
+            
+            <div class="col-md-12">
+             <label for="rimplenet_withdrawal_note"><strong> <?php echo $wdr_note_text_label; ?></strong> </label>
+             <input type="text" name="rimplenet_withdrawal_note" id="rimplenet_withdrawal_note" class="rimplenet_withdrawal_note rimplenet-input" placeholder="<?php echo $wdr_note_text_placeholder; ?>" maxlength="30" value=""> 
             </div>
+            <?php do_action('rimplenet_withdrawal_form_after_withdrawal_note', $wallet_id, $user_id, $title,$button_text);  ?>
+            
+             
+            <div class="clearfix"></div><br> 
+             <div class="col-md-12">
+                <?php wp_nonce_field( 'rimplenet_wallet_withdrawal_nonce', 'rimplenet_wallet_withdrawal_nonce' ); ?>
+                <div class="clearfix"></div>
+                <br>
+                <center>
+                    
+                  <input name="request_id" type="hidden" value="<?php echo time(); ?>" required=""> 
+                  <input class="rimplenet-button rimplenet_submit_withdrawal_form" id="rimplenet_submit_withdrawal_form" value="<?php echo $button_text; ?>" type="submit" >
+                </center>
+             </div>
+            
+           </div>  
         </form>
     </div>
 </div>
