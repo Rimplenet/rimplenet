@@ -17,7 +17,13 @@ class RimplenetGetWalletBalance extends RimplenetBalance
 
         $data =array();
         foreach ($wallet_id as $key => $value) {
-            $data[$value]=$this->get_withdrawable_wallet_bal($user_id, $value) + $this->get_nonwithdrawable_wallet_bal($user_id, $value);
+            if ($this->walletExists()) {
+                $data[$value]=$this->get_withdrawable_wallet_bal($user_id, $value) + $this->get_nonwithdrawable_wallet_bal($user_id, $value);
+            }else{
+                continue;
+            }
+                // return Res::error($this->error, "Wallet Already Exists", 409);
+            // $data[$value]=$this->get_withdrawable_wallet_bal($user_id, $value) + $this->get_nonwithdrawable_wallet_bal($user_id, $value);
         }
 
         return self::$response = [
