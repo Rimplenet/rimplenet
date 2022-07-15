@@ -41,7 +41,7 @@ $all_credits=$credits::$response['data'];
    <!-- <td><?php echo $value['wallet_name']; ?></td> -->
    <td><?php echo $value['description']; ?></td>
    <td><?php echo $value['note']; ?></td>
-   <td><?php echo $value['amount']; ?></td>
+   <td><?php echo $value['currency'].' '.$value['amount']; ?></td>
    <td><?php echo $value['balance_before']; ?></td>
    <td><?php echo $value['balance_after']; ?></td>
    <td><?php echo $value['currency']; ?></td>

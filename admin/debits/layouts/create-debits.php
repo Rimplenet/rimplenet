@@ -7,7 +7,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
             'note'          => sanitize_text_field($_POST['rimplenet_credit_debit_note'] ?? ''),
             'user_id'       => (int) $_POST['rimplenet_user'] ?? '',
             'wallet_id'     => sanitize_text_field(strtolower($_POST['rimplenet_wallet'])),
-            'request_id'      => sanitize_text_field($_POST['request_id']) ?? rand(5, 6),
+            // 'request_id'      => sanitize_text_field($_POST['request_id']) ?? rand(5, 6),
             'amount' => floatval(str_replace('-', '', $_POST['rimplenet_amount'])),
             'request_id'=> sanitize_text_field("request".$_POST['rimplenet_create_debit_nonce_field'])
         ];
