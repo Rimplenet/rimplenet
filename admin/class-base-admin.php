@@ -9,6 +9,7 @@ class Rimplenet_Base_Admin {
     private function load_required_files() {
    	 //Add Required Files to Load
 	 require_once plugin_dir_path(dirname( __FILE__ ) ) . '/admin/wallets/class-base-wallets.php';
+	 require_once plugin_dir_path(dirname( __FILE__ ) ) . '/admin/withdrawals/class-base-withdrawals.php';
 	 require_once plugin_dir_path(dirname( __FILE__ ) ) . '/admin/credits/class-base-credits.php';
 	 require_once plugin_dir_path(dirname( __FILE__ ) ) . '/admin/debits/class-base-debits.php';
 	 require_once plugin_dir_path(dirname( __FILE__ ) ) . '/admin/users/class-base-users.php';

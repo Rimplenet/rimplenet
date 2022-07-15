@@ -308,17 +308,17 @@ if(!empty($redirect_url)){
             
             <div class="clearfix"></div><br> 
             
-            <?php if($wdr_dest=="bank"){ ?>
-             <div class="col-md-6">
-               <label for="rimplenet_withdrawal_bank"> <strong> Bank </strong> </label>
-               <!--<select name="rimplenet_withdrawal_bank" id="rimplenet_withdrawal_bank" class="rimplenet_withdrawal_bank rimplenet-select" required="">
+              <?php if($wdr_dest=="bank"){ ?>
+                <div class="col-md-6">
+                  <label for="rimplenet_withdrawal_bank"> <strong> Bank </strong> </label>
+                  <!--<select name="rimplenet_withdrawal_bank" id="rimplenet_withdrawal_bank" class="rimplenet_withdrawal_bank rimplenet-select" required="">
                    <option value="Other"> Other </option> 
-                </select>
-                -->
-                <input type="text" name="rimplenet_withdrawal_bank" id="rimplenet_withdrawal_bank" class="rimplenet_withdrawal_bank rimplenet-input" placeholder="Bank Name" value="" required="">       
+                  </select>
+                  -->
+                  <input type="text" name="rimplenet_withdrawal_bank" id="rimplenet_withdrawal_bank" class="rimplenet_withdrawal_bank rimplenet-input" placeholder="Bank Name" value="" required="">       
                   
-                <!--<p style="float:right;"><small>Bottom Text ~ 0.009 ETH</small></p>-->
-             </div>
+                  <!--<p style="float:right;"><small>Bottom Text ~ 0.009 ETH</small></p>-->
+                </div>
 
              <div class="col-md-6">
                   <label for="rimplenet_withdrawal_account_number"> <strong> Account Number </strong> </label>
