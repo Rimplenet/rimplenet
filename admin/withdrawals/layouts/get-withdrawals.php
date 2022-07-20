@@ -48,7 +48,7 @@ $withdrawal=$wallet_obj::$response['data'];
 
 
 
-<h2> ACTIVE WALLETS</h2>
+<h2> All Withdrawals</h2>
 <div class="table-responsive bg-white p-5 mr-3 ml-3 rimplenet-bs5">
   <?php 
 if( $withdrawal->have_posts() ){
