@@ -56,7 +56,8 @@ abstract class Base
 
     public function getUserId($key, $value)
     {
-        $user=get_user_by( $key, $value );
+        // $user=get_user_by( $key, $value );
+        $user=get_user_by_email($value);
         return $user->ID;
     }
 }
