@@ -14,6 +14,11 @@ class RimplenetVerifyEmailMail extends Base
      public function send($email, $sendmail = false)
      {
 
+          if ($this->checkIfEmpty($email)) {
+               $this->error(false, 'email not parsed');
+               return false;
+          }
+
           $user_id = $this->getUserId('email', $email);
 
           $sent['token_to_verify_email'] = $this->generateToken();
@@ -31,5 +36,14 @@ class RimplenetVerifyEmailMail extends Base
           $message = $sent['token_to_verify_email'] ? 'Token Generated' : 'Token Not Generated';
           $sent['token_to_verify_email'] ? $this->success($sent, $message) : $this->error($sent, $message);
           return $this->response;
+     }
+
+     public function checkIfEmpty($email)
+     {
+          if (empty($email)) {
+               return true;
+          }
+
+          return false;
      }
 }
