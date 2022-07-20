@@ -59,7 +59,7 @@ abstract class Base
         // $user=get_user_by( $key, $value );
         $user=get_user_by_email($value);
 
-        var_dump($user);
+        var_dump($user, $value);
         die;
         return $user->ID;
     }
