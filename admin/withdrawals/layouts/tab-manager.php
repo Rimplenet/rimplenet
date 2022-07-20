@@ -16,13 +16,12 @@
             $_GET["tab"]=$_GET["tab"] ?? "";
             $active_tab = $_GET["tab"] ;
             
-            // if($_GET["tab"] == "api-settings")
-            //  {
-            //    $api_settings_tab_active = "nav-tab-active";
-            //    $path_to_tab = plugin_dir_path( dirname( __FILE__ ) ) . "layouts/admin-settings-wallet.php";
-            //  }
-            // else
-            if($_GET["tab"] == "create")
+            if($_GET["tab"] == "api-settings")
+             {
+               $api_settings_tab_active = "nav-tab-active";
+               $path_to_tab = plugin_dir_path( dirname( __FILE__ ) ) . "layouts/withdrawal-request-txns.php";
+             }
+            elseif($_GET["tab"] == "create")
              {
                $setup_tab_active = "nav-tab-active";
                $path_to_tab = plugin_dir_path( dirname( __FILE__ ) ) . "layouts/create-withdrawals.php";
@@ -51,9 +50,9 @@
             <?php _e('Create Withdrawal', 'rimplenet'); ?>
         </a>
 
-        <!-- <a href="<?php echo $api_settings_tab_url; ?>" class="nav-tab <?php echo $api_settings_tab_active; ?>">
+        <a href="<?php echo $api_settings_tab_url; ?>" class="nav-tab <?php echo $api_settings_tab_active; ?>">
             <?php _e('Withdrawal Settings', 'rimplenet'); ?>
-        </a> -->
+        </a>
         
         
     </h2>
