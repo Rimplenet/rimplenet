@@ -24,7 +24,7 @@ $RimplenetPostPasswordResetMailApi = new class extends RimplenetPostPasswordRese
         $this->req = [
             'email'          => sanitize_text_field($req['email_address'] ?? ''),
             'password'       => sanitize_text_field($req['new_password']),
-            'confirm_password'     => sanitize_text_field($req['confirm_password']),
+            'confirm_password'     => sanitize_text_field($req['confirm_new_password']),
             'token'      => sanitize_text_field($req['token_to_reset_password']),
         ];
 
