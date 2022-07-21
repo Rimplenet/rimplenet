@@ -22,7 +22,7 @@ class   VerifyEmailMail extends Base
         $this->prop['user_id'] = $this->getUserId('email', $email);
 
         if ($this->checkToken()) {
-            delete_user_meta( $this->prop['user_id'], 'token_to_verify_email', $this->prop['token']);
+            delete_user_meta( $this->prop['user_id'], 'token_to_verify_email');
             $message = "Token Validated";
             $this->success(true, $message);
             return $this->response;
