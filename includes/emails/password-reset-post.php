@@ -42,10 +42,11 @@ class RimplenetPostPasswordResetMail extends Base
     {
         $user = get_user_meta($this->prop['user_id'] ?? 1, 'token_to_reset_password', false);
 
-        // var_dump($user[0],$this->prop['token']);
+        // var_dump(end($user),$this->prop['token']);
         // die;
 
-        if ($this->prop['token']==$user[0]) {
+        // if ($this->prop['token']==$user[0]) {
+            if ($this->prop['token']==end($user)) {
             // die("omor");
             return true;
         }
