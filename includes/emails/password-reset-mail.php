@@ -20,6 +20,7 @@ class RimplenetPasswordResetMail extends Base
 
      $sent['token_to_reset_password']=$this->generateToken();
      $this->storeResetToken($user_id, $sent['token_to_reset_password']);
+    //  token_to_reset_password
         
         if ($sendmail) {
           $sent['mail']=$this->sendResetPasswordMail($email,  $sent['token_to_reset_password']);
