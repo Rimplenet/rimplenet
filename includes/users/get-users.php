@@ -217,6 +217,7 @@ class RimplenetGetUser
             "first_name" => get_user_meta($user->data->ID, "first_name", true),
             "last_name" => get_user_meta($user->data->ID, "last_name", true),
             "phone_number" => get_user_meta($user->data->ID, "phone_number", true),
+            "email_address_verified" => get_user_meta($user->data->ID, "nll_user_email_address_verifed", true),
 			"roles" => $user->roles,
         ];
     }
