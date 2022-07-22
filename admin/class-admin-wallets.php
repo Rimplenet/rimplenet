@@ -68,9 +68,9 @@ class Rimplenet_Admin_Wallets{
         $rimplenet_max_withdrawal_amount = sanitize_text_field( $_POST['rimplenet_max_withdrawal_amount'] );
         $rimplenet_wallet_symbol = sanitize_text_field( $_POST['rimplenet_wallet_symbol'] );
         $rimplenet_wallet_symbol_position = sanitize_text_field( $_POST['rimplenet_wallet_symbol_position'] );
-        $include_in_withdrawal_form = sanitize_text_field( $_POST['include_in_withdrawal_form'] );
-        $include_in_woocommerce_currency_list = sanitize_text_field( $_POST['include_in_woocommerce_currency_list'] );
-        $enable_as_woocommerce_product_payment_wallet = sanitize_text_field( $_POST['enable_as_woocommerce_product_payment_wallet'] );
+        $include_in_withdrawal_form = sanitize_text_field( $_POST['include_in_withdrawal_form'] ?? '' );
+        $include_in_woocommerce_currency_list = sanitize_text_field( $_POST['include_in_woocommerce_currency_list'] ?? '');
+        $enable_as_woocommerce_product_payment_wallet = sanitize_text_field( $_POST['enable_as_woocommerce_product_payment_wallet'] ?? '');
         $rimplenet_wallet_id = sanitize_text_field( $_POST['rimplenet_wallet_id'] );
         $rimplenet_wallet_type = sanitize_text_field( $_POST['rimplenet_wallet_type'] );
         $rimplenet_wallet_note = sanitize_text_field( $_POST['rimplenet_wallet_note'] );
@@ -91,8 +91,8 @@ class Rimplenet_Admin_Wallets{
               
               'rimplenettransaction_type' => 'rimplenet-wallets',
             
-              'rimplenet_rules_before_wallet_withdrawal' => $rimplenet_rules_before_wallet_withdrawal,
-              'rimplenet_rules_after_wallet_withdrawal' => $rimplenet_rules_after_wallet_withdrawal,
+              'rimplenet_rules_before_wallet_withdrawal' => $rimplenet_rules_before_wallet_withdrawal ?? '',
+              'rimplenet_rules_after_wallet_withdrawal' => $rimplenet_rules_after_wallet_withdrawal ?? '',
             );
             
          foreach ($metas as $key => $value) {
