@@ -250,7 +250,7 @@ $dir = plugin_dir_url(dirname(__FILE__));
 
 
 
-                <?php if ($wdr_dest == "bank") { ?>
+                <?php if (isset($wdr_dest) && $wdr_dest == "bank") { ?>
                     <tr>
                         <th>
                             <label for="rimplenet_withdrawal_bank"> <strong> Bank </strong> </label>
@@ -282,7 +282,7 @@ $dir = plugin_dir_url(dirname(__FILE__));
                         </td><br>
                     </tr>
 
-                <?php } elseif ($wdr_dest == "crypto_address") {
+                <?php } elseif (isset($wdr_dest) && $wdr_dest == "crypto_address") {
                 ?>
 
 
