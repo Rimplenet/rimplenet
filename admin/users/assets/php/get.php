@@ -7,4 +7,4 @@ $current_user = wp_get_current_user();
 
 $instance = new RimplenetGetUser();
 $users = $instance->get_users();
-$users = $users['data'];
+$users = $users['data']['users'];
