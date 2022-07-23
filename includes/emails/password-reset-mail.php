@@ -16,6 +16,10 @@ class RimplenetPasswordResetMail extends Base
 
      $user_id=$this->getUserId('email', $email);
 
+     if (is_null($user_id)) {
+      return $this->error(401, "User not found");
+     }
+
 
 
      $sent['token_to_reset_password']=$this->generateToken();
