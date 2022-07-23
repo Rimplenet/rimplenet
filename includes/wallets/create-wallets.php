@@ -22,8 +22,8 @@ class RimplenetCreateWallets extends Utils
 
         extract($this->item);
 
-        $this->checkMinMax('max_amount', $max_amount,);
-        $this->checkMinMax('min_amount', $min_amount,);
+        $this->checkMinMax('max_amount', $max_amount);
+        $this->checkMinMax('min_amount', $min_amount);
 
         if (!empty($this->error)) :
             self::$response['error'] = $this->error;
