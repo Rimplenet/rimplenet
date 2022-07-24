@@ -21,6 +21,10 @@ class RimplenetVerifyEmailMail extends Base
 
           $user_id = $this->getUserId('email', $email);
 
+          if (!$user_id) {
+               return $this->error(401, "User not found");
+              }
+
           $sent['token_to_verify_email'] = $this->generateToken();
           $this->storeverifyToken($user_id, $sent['token_to_verify_email']);
 
