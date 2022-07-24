@@ -16,7 +16,7 @@ class RimplenetPasswordResetMail extends Base
 
      $user_id=$this->getUserId('email', $email);
 
-     if (is_null($user_id)) {
+     if (!$user_id) {
       return $this->error(401, "User not found");
      }
 

@@ -61,6 +61,10 @@ abstract class Base
 
         // var_dump($user, $value);
         // die;
-        return $user->ID;
+        if ($user) {
+            return $user->ID;
+        }
+
+        return false;
     }
 }
