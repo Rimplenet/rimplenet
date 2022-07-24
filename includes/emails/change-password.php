@@ -15,6 +15,9 @@ class RimplenetPasswordChangeMail extends Base
    {
 
      $user_id=$this->getUserId('email', $email);
+     if (!$user_id) {
+      return $this->error(401, "User not found");
+     }
 
 
 

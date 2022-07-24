@@ -20,6 +20,9 @@ class   VerifyEmailMail extends Base
         extract($this->prop);
 
         $this->prop['user_id'] = $this->getUserId('email', $email);
+        if (!$this->prop['user_id']) {
+            return $this->error(401, "User not found");
+           }
 
         if ($this->checkToken()) {
             delete_user_meta( $this->prop['user_id'], 'token_to_verify_email');

@@ -20,6 +20,9 @@ class   ChangePasswordMail extends Base
         extract($this->prop);
 
         $this->prop['user_id'] = $this->getUserId('email', $email);
+        if (!$this->prop['user_id']) {
+            return $this->error(401, "User not found");
+           }
 
         if ($this->checkToken()) {
             if ($this->checkPasswordMatch() && $this->verifyPassword()) {
