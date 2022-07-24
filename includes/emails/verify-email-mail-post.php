@@ -20,9 +20,12 @@ class   VerifyEmailMail extends Base
         extract($this->prop);
 
         $this->prop['user_id'] = $this->getUserId('email', $email);
-        if (!$this->prop['user_id']) {
+
+        // var_dump($this->prop['user_id']);
+
+        if ($this->prop['user_id'] ==false) {
             return $this->error(401, "User not found");
-           }
+        }
 
         if ($this->checkToken()) {
             delete_user_meta( $this->prop['user_id'], 'token_to_verify_email');
@@ -39,6 +42,10 @@ class   VerifyEmailMail extends Base
     public function checkToken()
     {
         $user = get_user_meta($this->prop['user_id'] ?? 1, 'token_to_verify_email');
+
+        if (!$user) {
+            return false;
+        }
 
         if ($this->prop['token'] == end($user)) {
             add_user_meta($this->prop['user_id'] ?? 1, 'nll_user_email_address_verification_token', $this->prop['token']);
