@@ -19,7 +19,7 @@ $getCredits = new class extends VerifyEmailMail
     {
         # ================= set fields ============
         $data['email']  = sanitize_text_field($req['email_address']);
-        $data['token']  = sanitize_text_field($req['token_to_verify_email']);
+        $data['token']  = sanitize_text_field($req['token_to_verify_email_address']);
 
         // if ($wlt_id !== '') :
             $this->validate($data);
