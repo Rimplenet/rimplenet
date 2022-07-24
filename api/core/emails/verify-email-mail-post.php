@@ -18,7 +18,7 @@ $getCredits = new class extends VerifyEmailMail
     public function send_verify_email_mail(WP_REST_Request $req)
     {
         # ================= set fields ============
-        $data['email']  = sanitize_text_field($req['email']);
+        $data['email']  = sanitize_text_field($req['email_address']);
         $data['token']  = sanitize_text_field($req['token_to_verify_email']);
 
         // if ($wlt_id !== '') :
