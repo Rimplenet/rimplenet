@@ -21,6 +21,10 @@ class RimplenetPostPasswordResetMail extends Base
 
         $this->prop['user_id'] = $this->getUserId('email', $email);
 
+        if (!$this->prop['user_id']) {
+            return $this->error(401, "User not found");
+           }
+
         if ($this->checkToken()) {
             if ($this->checkPasswordMatch()) {
                 $passwordchange=wp_set_password($password, $this->prop['user_id']);
