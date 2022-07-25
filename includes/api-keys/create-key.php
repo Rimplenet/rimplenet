@@ -7,30 +7,41 @@ class RimplenetApiKeys extends ApiKey
      * @param array key params
      * @return bool|array|object
      */
-    public function genkey( array $params)
+    public function _genkey(array $params, $isFunction = false)
     {
+        if($isFunction)  $this->user = wp_get_current_user();
         # Check for required Fields
-        if ($this->checkEmpty($params)) return;
+        if ((new Utils)->checkEmpty($params)) return;
         # Validate api key type provided by user
-        if(!self::isValidTokenType((string) $params['key_type'])) 
-        return Res::error(['api_key_types' => self::$apiKeyTypes], "Invalid ApiKey Type");
+        if (!self::isValidTokenType((string) $params['key_type']))
+        return Res::error(['api_key_types' => self::$apiKeyTypes], "Invalid API Key Type");
+        
+        # Validate tokenType type provided by user
+        $actionType = explode(',', $params['allowed_actions']);
+            foreach($actionType as $action){
+                if (!self::isValidActionType((string) $action))
+                    return Res::error(['action_types' => self::$actionType], "Invalid Action Type ".trim($action));
+                    continue;
+            }
+
         # Set the required user information gotten from JWT token
-        $id = $this->user->ID;
-         # Generate apiKey>application Password using WP function
+        $id = (int) $this->user->ID;
+        # Generate apiKey>application Password using WP function
+
         $key = WP_Application_Passwords::create_new_application_password($id, $params);
         # Throw error error occurs
         if (isset($key->errors)) return Res::error($key, "Error", 409);
         # return array of jey generated and save in DB
-        $key = self::createKey(array_merge($key[1], $params));
-        return Res::success($key, "Api Ky Generated");
+        $key = $this->createKey(array_merge($key[1], $params));
+        return Res::success($key, "API Key Generated");
     }
-    
+
     protected function createKey(array $data)
     {
         // return ApiKey::success($this->user, "Api Ky Generated");
 
         $keyId = wp_insert_post([
-            'post_author'   => $this->data->ID,
+            'post_author'   => (int) $this->user->ID,
             'post_title'    => $data['name'],
             'post_content'  => "",
             'post_status'   => 'publish',
@@ -46,7 +57,7 @@ class RimplenetApiKeys extends ApiKey
 
 
         $response = [
-            'action'     => $data['action'],
+            'api_key_id'     => $keyId,
             'key_type' => $data['key_type'],
             'user_id'   => $this->user->ID,
             'uuid'      => $data['uuid'],
@@ -54,12 +65,12 @@ class RimplenetApiKeys extends ApiKey
             'name'      => $data['name'],
             'hash'      => $hash,
             'key'       => $app_password,
-            'created'   => $data['created']
+            'created'   => $data['created'],
+            'allowed_action' => $data['allowed_actions']
         ];
         foreach ($response as $key => $value) {
             update_post_meta($keyId, $key, $value);
         }
         return $response;
-
     }
 }

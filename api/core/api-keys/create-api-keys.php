@@ -27,11 +27,11 @@ class CreateApiKeys extends RimplenetApiKeys
             'name' => sanitize_text_field(ucwords($req['app_name'] ?? '')),
             'app_id' => sanitize_text_field($req['app_id'] ?? ''),
             'action' => sanitize_text_field(strtolower($req['action'] ?? '')),
-            'key_type' => sanitize_text_field(strtolower($req['key_type'] ?? ''))
+            'key_type' => sanitize_text_field(strtolower($req['key_type'] ?? '')),
+            'allowed_actions' => sanitize_text_field(strtolower($req['allowed_actions'] ?? '')),
         ];
-
         CreateApiKeys::genkey($params);
-        return new WP_Rest_Response($this->response, $this->response['status_code']);
+        return new WP_Rest_Response(Utils::$response, Utils::$response['status_code']);
 
     }
 }

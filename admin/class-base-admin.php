@@ -15,6 +15,7 @@ class Rimplenet_Base_Admin {
 	 require_once plugin_dir_path(dirname( __FILE__ ) ) . '/admin/users/class-base-users.php';
 	 require_once plugin_dir_path(dirname( __FILE__ ) ) . '/admin/referrals/class-base-referrals.php';
 	 require_once plugin_dir_path(dirname( __FILE__ ) ) . '/admin/transfers/class-base-transfers.php';
+	 require_once plugin_dir_path(dirname( __FILE__ ) ) . '/admin/api-keys/class-base-api-keys.php';
 	
     }
 	
