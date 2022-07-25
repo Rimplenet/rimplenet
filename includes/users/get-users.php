@@ -205,21 +205,20 @@ class RimplenetGetUser
 
         if (!isset($user->data)) return;
 
-        return [
-            "ID" => intval($user->data->ID),
+        $user_data = [
+            "id" => intval($user->data->ID),
             "username" => $user->data->user_login,
             "user_email" => $user->data->user_email,
-            "user_url" => $user->data->user_url,
-            "user_registered" => $user->data->user_registered,
-            "user_activation_key" => $user->data->user_activation_key,
-            "user_status" => $user->data->user_status,
+            "user_created_at" => $user->data->user_registered,
             "display_name" => $user->data->display_name,
             "first_name" => get_user_meta($user->data->ID, "first_name", true),
             "last_name" => get_user_meta($user->data->ID, "last_name", true),
-            "phone_number" => get_user_meta($user->data->ID, "phone_number", true),
-            "email_address_verified" => get_user_meta($user->data->ID, "nll_user_email_address_verifed", true),
 			"roles" => $user->roles,
         ];
+
+        $filter_data = apply_filters( 'rimplenet_user_filtered_data', $user_data, $user_data['id'], $user_data['display_name']);
+
+        return $filter_data;
     }
 }
 
