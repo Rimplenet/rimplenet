@@ -34,6 +34,8 @@ class CreateApiKeys extends RimplenetApiKeys
         return new WP_Rest_Response(Utils::$response, Utils::$response['status_code']);
 
     }
+
+    
 }
 
 $CreateApiKeys = new CreateApiKeys();

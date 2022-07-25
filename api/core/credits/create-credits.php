@@ -1,6 +1,5 @@
 <?php
 
-// use Credits\CreateCredits\BaseCredits;
 
 $createCredits = new class extends RimplenetCreateCredits
 {

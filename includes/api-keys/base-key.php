@@ -88,9 +88,9 @@ class ApiKey
      * @param string $token authoization bearer token
      * @return bool
      */
-    public function decodeBasic($token)
+    public function decodeBasic($token, $isApi = true)
     {
-        $decrypted = \base64_decode($token);
+        $decrypted = \base64_decode($token); 
         [$username, $key] = explode(':', $decrypted);
         $user = get_user_by('login', $username);
         # chek if user exists
@@ -98,10 +98,13 @@ class ApiKey
         $isAdministrator = $user->caps['administrator'];
 
         # chek if user is Administrator
-        if (!$isAdministrator) return $this->error(['unauthorized' => "Authoriation denied"], 'Unauthorized', 401);
+        if (!$isAdministrator) return Res::error(['unauthorized' => "Authoriation denied"], 'Unauthorized', 401);
         $posts = self::getPostByKey($key);
         if (!$posts) return Res::error(['invalid' => 'Invalid Token'], 'Invalid Token');
-        Res::success($this->formatKey($posts), 'o');
+        # format API key data
+        $formatted = $this->formatKey($posts);
+        if(!$isApi) return $formatted;
+        Res::success($formatted, 'o');
         return false;
     }
 
@@ -110,7 +113,7 @@ class ApiKey
      * @param string $tokenType
      * @return bool
      */
-    protected static function isValidTokenType(string $tokenType)
+    protected static function isValidPermission(string $tokenType)
     {
         return in_array($tokenType, self::$apiKeyTypes);
     }
@@ -146,27 +149,37 @@ class ApiKey
     /**
      * Set API key Permission
      * @param string $actions > actions to be allowed on API key
-     * @param string $permission > Permisson set to API key
+     * @param string $permission > permission set to API key
      * @return
      */
-    public function approveKey(string $actions, string $permisson)
+    public function getPermission(string $actions, string $permission)
     {
+        # confirm permission is valid
+        if(!$this->isValidPermission($permission)) 
+        return Res::error(['permissions' => [self::$apiKeyTypes], "Invalid Permission Type $permission"]);
+
+        # is the action is not empty
         if ($actions !== '') :
+            $this->permission = $permission;
             # convert action string to an array
             $actions = explode(',', str_replace(' ', '',$actions));
-
+            $actions = array_map([$this, 'applyAffix'], $actions);
+            return $actions;
         endif;
     }
 
     /**
      * 
      */
-    public function applyAction($action)
+    public function applyAffix($action)
     {
-        // $actions = [];
-        // if(in_array(strtolower($action), self::$actionType)){
-
-        // }
+        $affix = '';
+        $permission = $this->permission;
+        if($permission == 'read-only') $affix = 'get';
+        if($permission == 'write-only') $affix = 'create';
+        if($permission == 'read-write') $affix = 'all';
+        $action = str_replace('_', '_'.$affix.'_' ,$action);
+        return $action;
     }
 
     public function formatKey($key)
@@ -174,8 +187,8 @@ class ApiKey
         $postId = $key[0]->post_id;
         return [
             'action'    => get_post_meta($postId, 'action', true),
-            'allowedAction'    => get_post_meta($postId, 'allowed_action', true),
-            'keyType'  => get_post_meta($postId, 'key_type', true),
+            'allowedActions'    => get_post_meta($postId, 'allowed_action', true),
+            'permission'  => get_post_meta($postId, 'key_type', true),
             'userId'   => get_post_meta($postId, 'user_id', true),
             'uuid'      => get_post_meta($postId, 'uuid', true),
             'appId'    => get_post_meta($postId, 'app_id', true),
