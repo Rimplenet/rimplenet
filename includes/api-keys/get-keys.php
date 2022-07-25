@@ -2,7 +2,7 @@
 class RimplenetGetApiKeys extends ApiKey
 {
 
-    public function getKeys($hash)
+    public function _getKeys($hash)
     {
         return $this->queryKeys();
     }
@@ -31,26 +31,27 @@ class RimplenetGetApiKeys extends ApiKey
             foreach ($apiKeys as $keys => $value) :
                 $this->id = $value->ID;
                 $apiKeys[$keys] = [
-                    'action'    => $this->postMeta('action'),
-                    'key_type'  => $this->postMeta('key_type'),
-                    'user_id'   => $this->postMeta('user_id'),
-                    'uuid'      => $this->postMeta('uuid'),
-                    'app_id'    => $this->postMeta('app_id'),
-                    'name'      => $this->postMeta('name'),
-                    'hash'      => $this->postMeta('hash'),
-                    'key'       => $this->postMeta('key'),
-                    'created'   => $this->postMeta('created')
+                    'action'    => $this->api_key_metas('action'),
+                    'allowedAction' => $this->api_key_metas('allowed_action'),
+                    'keyType'  => $this->api_key_metas('key_type'),
+                    'userId'   => $this->api_key_metas('user_id'),
+                    'uuid'      => $this->api_key_metas('uuid'),
+                    'appId'    => $this->api_key_metas('app_id'),
+                    'name'      => $this->api_key_metas('name'),
+                    'hash'      => $this->api_key_metas('hash'),
+                    'key'       => $this->api_key_metas('key'),
+                    'created'   => $this->api_key_metas('created')
                 ];
             endforeach;
-            $this->success($apiKeys, "Api keys retrieved");
+            Res::success($apiKeys, "Api keys retrieved");
             return $apiKeys;
         else :
-            return $this->error("No api key was found", "Api key not found", 404);
+            return Res::error("No api key was found", "Api key not found", 404);
         endif;
     }
 
-    // public function api_key_metas($param)
-    // {
-    //     return 
-    // }
+    public function api_key_metas($param)
+    {
+        return  get_post_meta($this->id, $param, true);
+    }
 }

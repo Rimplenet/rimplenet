@@ -7,14 +7,17 @@ $RetrieveWallet = new class extends RimplenetGetWallets
     public function __construct()
     {
         add_action('rest_api_init', [$this, 'register_api_routes']);
-    }
 
+        
+    }
+    
     public function register_api_routes()
     {
         register_rest_route('/rimplenet/v1', 'wallets', [
             'methods' => 'GET',
             'callback' => [$this, 'retrieve_wallet']
         ]);
+
     }
 
     public function retrieve_wallet(WP_REST_Request $req)

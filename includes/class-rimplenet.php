@@ -27,6 +27,7 @@
  * @subpackage Rimplenet_Mlm/includes
  * @author     Tech Celebrity <techcelebrity@bunnyviolablue.com>
  */
+
 class Rimplenet
 {
 
