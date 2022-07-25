@@ -13,7 +13,7 @@ class RimplenetApiKeys extends ApiKey
         # Check for required Fields
         if ((new Utils)->checkEmpty($params)) return;
         # Validate api key type provided by user
-        if (!self::isValidTokenType((string) $params['key_type']))
+        if (!self::isValidPermission((string) $params['key_type']))
         return Res::error(['api_key_types' => self::$apiKeyTypes], "Invalid API Key Type");
         
         # Validate tokenType type provided by user
