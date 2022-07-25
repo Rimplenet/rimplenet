@@ -9,7 +9,7 @@ trait RimplenetEmailTrait
     # code...
   }
 
-  public function sendVerifyEmailMail($email)
+  public function sendVerifyEmailMail($email, $token)
   {
     $to = $email;
     include(plugin_dir_path( dirname( __FILE__ ) ) . 'emails/email-templates/verify-email-mail.php');
