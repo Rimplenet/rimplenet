@@ -94,13 +94,28 @@ class ApiKey
         [$username, $key] = explode(':', $decrypted);
         $user = get_user_by('login', $username);
         # chek if user exists
-        if (!$user) return Res::error(['authorization' => 'Authorization Denied'], 'Invalid Token', 401);
+        if (!$user) return Res::error([
+            'credentials' => 'Authorization Denied',
+            'recommendation' => [
+                'username' => 'Re-visit the specified username',
+                'password' => 'Confirm password matches',
+            ]
+        ], 'Invalid Token', 401);
         $isAdministrator = $user->caps['administrator'];
 
         # chek if user is Administrator
-        if (!$isAdministrator) return Res::error(['unauthorized' => "Authoriation denied"], 'Unauthorized', 401);
+        if (!$isAdministrator) return Res::error([
+            'unauthorized' => "Authoriation denied",
+            'recommendation' => 'Ensure API Key is authorized by an administrator'
+        ], 'Unauthorized', 403);
         $posts = self::getPostByKey($key);
-        if (!$posts) return Res::error(['invalid' => 'Invalid Token'], 'Invalid Token');
+        if (!$posts) return Res::error([
+            'invalid' => 'Invalid Token',
+            'recommendation' => [
+                'username' => 'Re-visit the specified username',
+                'password' => 'Confirm password matches'
+            ]
+        ], 'Invalid Token');
         # format API key data
         $formatted = $this->formatKey($posts);
         if(!$isApi) return $formatted;
