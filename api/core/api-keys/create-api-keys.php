@@ -22,7 +22,7 @@ class CreateApiKeys extends RimplenetApiKeys
     public function api_create_keys(WP_REST_Request $req)
     {
         
-        // do_action('rimplenet_api_request_started', $req, $allowed_roles = ['administrator'], $action = 'get_rimplenet_create_api_key');
+        do_action('rimplenet_api_request_started', $req, $allowed_roles = ['administrator'], $action = '');
         $params = [
             'name' => sanitize_text_field(ucwords($req['app_name'] ?? '')),
             'app_id' => sanitize_text_field($req['app_id'] ?? ''),

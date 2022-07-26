@@ -22,7 +22,7 @@ $DeleteDebits = new class extends RimplenetDeleteDebits
 
     public function api_delete_debits($Debits)
     {
-        do_action('rimplenet_api_request_started', $Debits, $allowed_roles = ['administrator'], $action = 'delete_rimplenet_debits');
+        do_action('rimplenet_api_request_started', $Debits, $allowed_roles = ['administrator'], $action = 'rimplenet_debits');
         $this->deleteDebits($Debits['Debits'], 'debit');
         return new WP_REST_Response(self::$response, self::$response['status_code']);
     }
