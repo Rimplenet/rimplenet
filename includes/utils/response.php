@@ -10,6 +10,7 @@ class Res
             'message' => $message,
             'error' => Utils::$response['error'] ?? $err
         ];
+        status_header(Utils::$response['status_code']);
         return false;
     }
 
@@ -21,6 +22,7 @@ class Res
             'message' => $message,
             'data' => $data
         ];
+        status_header(Utils::$response['status_code']);
         return true;
     }
 }

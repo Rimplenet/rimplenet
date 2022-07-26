@@ -25,7 +25,9 @@ class APIkeyPermission
     {
         if (empty($allowed_roles)) return;
 
-        $headers = getallheaders();
+        # Check if an authorization is passed in the header
+        $headers = $this->hasAuthorization();
+
         [$a, $b] = explode(' ', $headers['Authorization']);
         if ($a == 'Basic' || $a == 'Bearer') :
             if ($a == 'Basic') :
@@ -42,14 +44,20 @@ class APIkeyPermission
                 return;
             endif;
         else :
-            echo json_encode("No token");
+            Res::error([
+                'token' => 'No Tokem',
+                'recommendation' => 'Provide an authorization header'
+            ], 'Permission Denied', 403);
+            echo json_encode(Utils::$response);
             exit;
         endif;
     }
 
     /**
      * Authorize API key
-     * @param
+     * @param string $action > API Key action
+     * @param object $key > API Key information
+     * @return void
      */
     public function authorizeKey($action, $key)
     {
@@ -59,11 +67,43 @@ class APIkeyPermission
                 'permissionType' => $key->permission,
                 'permissions' => $permisson,
                 'permission' => 'Permission Denied for ' . $action,
+                'recommendation' => 'Set allowed actions withing the given permissions list'
             ], 'Permission Denied', 403);
             echo json_encode(Utils::$response);
-            status_header(Utils::$response['status_code']);
             exit;
         }
+    }
+
+    /**
+     * Ensure authorization header is present
+     */
+    public function hasAuthorization()
+    {
+        $headers = getallheaders();
+        if(!isset($headers['Authorization'])):
+            Res::error([
+                'authorization' => 'An authorization is required',
+                'recommendation' => 'Provide an authorization header'
+            ], 'Permission Denied', 403);
+            echo json_encode(Utils::$response);
+            exit;
+        endif;
+        
+        $auth = explode(' ', $headers['Authorization']);
+        
+        # Account for possible errors..
+        # Sometimes if no header is passed... using PostMan.
+        # Authorization returns Basic without a value
+        if(count($auth) < 2):
+            Res::error([
+                'authorization' => 'An authorization is required',
+                'recommendation' => 'Provide an authorization header'
+            ], 'Permission Denied', 403);
+            echo json_encode(Utils::$response);
+            exit;
+        endif;
+
+        return $headers;
     }
 }
 
