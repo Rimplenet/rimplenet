@@ -5,7 +5,7 @@ class RimplenetUpdateDebits extends Debits
      * Update Transaction note
      * @param int $id transaction id > ID of transaction to update
      * @param string $note > Value to update note
-     * @param string $type > Type of the transaction (debit / credit)
+     * @param string $type > Type of the transaction (debit / debits)
      * @return boolean
      */
     protected function updateDebits(int $id = 0, $note = '', $type = '')
@@ -24,6 +24,9 @@ class RimplenetUpdateDebits extends Debits
 
             # if transaction is executed proceed to update transaction note
             $txn =  $this->getDebitsToUpdate($id);
+
+            do_action('rimplenet_hooks_and_monitors_on_started', $action = 'rimplenet_update_debits', $auth = null, $request = ['debit_id' => $id, 'note' => $note]);
+
             if ($txn) :
                 update_post_meta($id, 'note', $note);
                 Res::success(['note' => $note], 'Updated');
