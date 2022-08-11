@@ -16,12 +16,12 @@ class RimplenetLoginUser
         return ob_get_clean();
     }
 
-    public function login_user($user_email, $user_pass, $token_expiration = null)
+    public function login_user($user_email, $user_password, $token_expiration = null)
     {
 
-        $validation = $this->validate($user_email, $user_pass);
+        $validation = $this->validate($user_email, $user_password);
 
-        $is_user = wp_authenticate($user_email, $user_pass);
+        $is_user = wp_authenticate($user_email, $user_password);
 
         if (empty($this->validation_error) && is_wp_error($is_user)) {
             
@@ -33,7 +33,15 @@ class RimplenetLoginUser
             if(!empty($this->validation_error)) return $this->response(400, "failed", "Validation error", [], $this->validation_error);
             
             if (empty($this->validation_error)) {
-    
+
+                $request = [
+                    "user_email" => $user_email,
+                    "user_password" => $user_password,
+                    "token_expiration" => $token_expiration
+                ];
+                
+                do_action('rimplenet_hooks_and_monitors_on_started', $action='rimplenet_login_user', $auth=null ,$request);
+
                 unset($is_user->data->user_pass);
     
                 $iss = 'localhost';

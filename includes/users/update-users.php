@@ -27,6 +27,14 @@ class RimplenetUpdateUser
             if(!$this->authorization(get_current_user_id())) return $this->response(403, "failed", "Permission denied", [], ["unauthorize"=>"caller_id is not authorized"]);
             
             if (empty($this->validation_error)) {
+
+                $request = [
+                    "user_email" => $user_email,
+                    "user_password" => $user_pass,
+                    "metas" => $metas
+                ];
+                
+                do_action('rimplenet_hooks_and_monitors_on_started', $action='rimplenet_update_users', $auth=null ,$request);
     
                 $update_user = wp_update_user($validation);
     

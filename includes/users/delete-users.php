@@ -27,6 +27,12 @@ class RimplenetDeleteUser
             if(!empty($this->validation_error)) return $this->response(400, "failed", "Validation error", [], $this->validation_error);
     
             if (empty($this->validation_error)) {
+
+                $request = [
+                    "user_id" => $user_id
+                ];
+                
+                do_action('rimplenet_hooks_and_monitors_on_started', $action='rimplenet_delete_users', $auth=null ,$request);
     
                 if(!$this->authorization(get_current_user_id())) return $this->response(403, "failed", "Permission denied", [], ["unauthorize"=>"caller_id is not authorized"]);
     

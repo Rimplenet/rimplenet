@@ -66,6 +66,12 @@ class RimplenetGetUser
                 'users' => $users
             ];
 
+            $request = [
+                "user_id" => $user_id
+            ];
+            
+            do_action('rimplenet_hooks_and_monitors_on_started', $action='rimplenet_get_users', $auth=null ,$request);
+
             return $this->pageResponse(200, true, "User retrieved successfully", $data, []);
 
         } else {
