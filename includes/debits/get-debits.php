@@ -6,6 +6,8 @@ class RimplenetGetDebits extends Debits
         if($id !== ''):
             return $this->debitById($id, $type);
         else:
+            do_action('rimplenet_hooks_and_monitors_on_started', $action = 'rimplenet_get_debits', $auth = null, $request = ['debit_id' => $id]);
+
             return $this->getAllDebits();
         endif;
 

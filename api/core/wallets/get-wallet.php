@@ -20,7 +20,7 @@ $RetrieveWallet = new class extends RimplenetGetWallets
     public function retrieve_wallet(WP_REST_Request $req)
     {
         // $allowed_roes = []; 
-        do_action('rimplenet_api_request_started', $req, $allowed_roles = ['administrator'], $action = 'rimplenet_wallets');
+        do_action('rimplenet_api_request_started', $req, $allowed_roles = ['administrator'], $action = 'rimplenet_get_wallets');
 
         # ================= set fields ============
         $wlt_id  = sanitize_text_field($req['wallet'] ?? '');

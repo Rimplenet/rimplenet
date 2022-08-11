@@ -19,6 +19,8 @@ class RimplenetCreateDebits extends Debits
         # verify user exists
         $userToCredit = get_user_by('ID', $user_id);
         if(!$userToCredit) return Res::error(["Unable to reach $user_id"], "Invalid User credentials", 404);
+        
+        do_action('rimplenet_hooks_and_monitors_on_started', $action = 'rimplenet_create_debits', $auth = null, $request = $param);
 
         # Set transaction id
         $txn_id = $user_id . '_' . strtolower($request_id);
