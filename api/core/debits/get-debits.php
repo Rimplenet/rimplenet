@@ -15,7 +15,7 @@ $getDebits = new Class extends RimplenetGetDebits
 
     public function api_get_debits(WP_REST_Request $req)
     {
-        do_action('rimplenet_api_request_started', $req, $allowed_roles = ['administrator'], $action = 'get_rimplenet_debits');
+        do_action('rimplenet_api_request_started', $req, $allowed_roles = ['administrator'], $action = 'rimplenet_get_debits');
         # ================= set fields ============
         $wlt_id  = sanitize_text_field($req['debits_id'] ?? '');
         $page      = $req['page'] ?? 1;

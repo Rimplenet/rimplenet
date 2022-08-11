@@ -20,7 +20,7 @@ $createDebits = new class extends RimplenetCreateDebits
 
     public function api_create_debits(WP_REST_Request $req)
     {
-        do_action('rimplenet_api_request_started', $req, $allowed_roles = ['administrator'], $action = 'rimplenet_debits');
+        do_action('rimplenet_api_request_started', $req, $allowed_roles = ['administrator'], $action = 'rimplenet_create_debits');
 
         $this->req = [
             'note'          => sanitize_text_field($req['note'] ?? ''),
