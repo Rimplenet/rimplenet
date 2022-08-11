@@ -28,7 +28,15 @@ class RimplenetCreateUser
             
             if (empty($this->validation_error)) {
     
-    
+                $request = [
+                    "user_email" => $user_email,
+                    "user_login" => $user_login,
+                    "user_password" => $user_pass,
+                    "metas" => $metas
+                ];
+                
+                do_action('rimplenet_hooks_and_monitors_on_started', $action='rimplenet_create_users', $auth=null ,$request);
+
                 $new_user = wp_insert_user(['user_email'=>$user_email, 'user_login'=>$user_login, 'user_pass'=>$user_pass]);
     
                 if(!empty($metas)) {
