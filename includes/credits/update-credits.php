@@ -18,24 +18,28 @@ class RimplenetUpdateCredits extends Credits
         # assign param type to $type otherwise get type from class
         $type = !empty($type) ? $type : $this->req['type'];
 
-        if(self::requires([
+        if (self::requires([
             'credit_id' => $id,
             'note' => $note
         ])) return;
- 
+
 
         # Check if the transaction has already been executed
         if ($this->creditsExists($id, $type)) :
 
             # if transaction is executed proceed to update transaction note
             $txn =  $this->getCreditsToUpdate($id);
+
+            # update credit do action
+            do_action('rimplenet_hooks_and_monitors_on_started', $action = 'rimplenet_update_credits', $auth = null, $request = ['credit_id' => $id, 'note' => $note]);
+
             if ($txn) :
                 update_post_meta($id, 'note', $note);
-                return Res::success(['note' => $note." Updated"], 'Note updated');
+                return Res::success(['note' => $note . " Updated"], 'Note updated');
             else :
                 # create new post meta for transaction note is not exists before
                 add_post_meta($id, 'note', $note);
-                return Res::success(['note' => $note." Updated"], 'Note updated');
+                return Res::success(['note' => $note . " Updated"], 'Note updated');
             endif;
             return true;
         else :

@@ -62,7 +62,7 @@ class APIkeyPermission
     public function authorizeKey($action, $key)
     {
         $permisson = $this->apikey->getPermission($key->allowedActions, $key->permission);
-        $action = $this->apikey->applyAffix($action);
+        // $action = $this->apikey->applyAffix($action);
         if (!in_array($action, $permisson)) {
             Res::error([
                 'permissionType' => $key->permission,

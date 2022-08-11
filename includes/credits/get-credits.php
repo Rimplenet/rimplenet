@@ -3,9 +3,15 @@ class RimplenetGetCredits extends Credits
 {
     public function getCredits($id, $type)
     {
-        if($id !== ''):
+        if ($id !== '') :
+            # get single credit
+            do_action('rimplenet_hooks_and_monitors_on_started', $action = 'rimplenet_get_credit', $auth = null, $request = ['credit_id' => $id]);
+
             return $this->creditById($id, $type);
-        else:
+        else :
+            # get all credits
+            do_action('rimplenet_hooks_and_monitors_on_started', $action = 'rimplenet_get_credits', $auth = null, $request = []);
+
             return $this->getAllCredits();
         endif;
 
@@ -14,24 +20,24 @@ class RimplenetGetCredits extends Credits
 
     public function creditById($id, $type)
     {
-        if($credits = $this->CreditsExists($id, $type)):
+        if ($credits = $this->CreditsExists($id, $type)) :
             $credits = get_post($credits->post_id);
             return Res::success($this->formatCredits($credits), 'Transacrion Retrieved', 200);
-        else:
-            return Res::error(['Invalid Transaction Id '.$id], 'Transaction not Found', 404);
+        else :
+            return Res::error(['Invalid Transaction Id ' . $id], 'Transaction not Found', 404);
         endif;
     }
 
     public function getAllCredits()
     {
         $this->queryTxn('');
-        if($this->query && $this->query->have_posts()):
+        if ($this->query && $this->query->have_posts()) :
             $posts = $this->query->get_posts();
-            foreach ($posts as $key => $post):
+            foreach ($posts as $key => $post) :
                 $posts[$key] = $this->formatCredits($post);
             endforeach;
             return Res::success($posts, 'Credits Retrieved');
-        else:
+        else :
             return Res::error("Sorry we couldnt retrieve any Credit at the moment", "No wallet Found", 404);
         endif;
         // return $this
