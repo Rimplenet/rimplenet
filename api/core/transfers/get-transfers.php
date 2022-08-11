@@ -16,7 +16,7 @@ $GetTransfers = new class extends RimplenetGetTransfers
 
     public function api_get_transfers(WP_REST_Request $req)
     {
-        do_action('rimplenet_api_request_started', $req, $allowed_roles = ['administrator'], $action = 'rimplenet_transfers');
+        do_action('rimplenet_api_request_started', $req, $allowed_roles = ['administrator'], $action = 'rimplenet_get_transfers');
         $param = [
             'transfer_id' => sanitize_text_field($req['transfer_id']),
             'user_id' => sanitize_text_field($req['userId']),
