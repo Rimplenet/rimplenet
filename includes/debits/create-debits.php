@@ -7,20 +7,21 @@ class RimplenetCreateDebits extends Debits
 
         $prop = empty($param) ? $this->req : $param;
         extract($prop);
-        if(self::requires([
+        if (self::requires([
             'user_id'    => "$user_id || int",
             'wallet_id'  => "$wallet_id || string",
             'request_id' => "$request_id || alnum",
             'amount'     => "$amount || amount",
         ])) return;
 
-        if(!$this->getWalletById($wallet_id)) return;
+        do_action('rimplenet_hooks_and_monitors_on_started', $action = 'rimplenet_create_debits', $auth = null, $request = $param);
+
+        if (!$this->getWalletById($wallet_id)) return;
 
         # verify user exists
         $userToCredit = get_user_by('ID', $user_id);
-        if(!$userToCredit) return Res::error(["Unable to reach $user_id"], "Invalid User credentials", 404);
-        
-        do_action('rimplenet_hooks_and_monitors_on_started', $action = 'rimplenet_create_debits', $auth = null, $request = $param);
+        if (!$userToCredit) return Res::error(["Unable to reach $user_id"], "Invalid User credentials", 404);
+
 
         # Set transaction id
         $txn_id = $user_id . '_' . strtolower($request_id);
@@ -28,11 +29,11 @@ class RimplenetCreateDebits extends Debits
         $recent_txn_transient_key = "recent_txn_" . $txn_id;
 
         # check if transaction already exist
-        if($this->debitsExists($txn_id)) return;
+        if ($this->debitsExists($txn_id)) return;
 
 
         # Chech transient key
-        if(isset($GLOBALS[$recent_txn_transient_key])){
+        if (isset($GLOBALS[$recent_txn_transient_key])) {
             if ($GLOBALS[$recent_txn_transient_key] == "executing") return;
             if (get_transient($recent_txn_transient_key)) return;
         }
@@ -80,13 +81,37 @@ class RimplenetCreateDebits extends Debits
             update_post_meta($txn_add_bal_id, 'total_balance_after', $this->get_total_wallet_bal($user_id, $wallet_id));
             update_post_meta($txn_add_bal_id, 'funds_type', $key);
         else :
+            #  action hook
+            $param['action'] = "failed";
+            do_action(
+                'rimplenet_hooks_and_monitors_on_finished',
+                $action = 'rimplenet_create_debits',
+                $auth = null,
+                $request = $param
+            );
             return Res::error('Unknown Error', "unknown error", 400);
         endif;
 
         if ($txn_add_bal_id > 0) {
+            # action hook
+            $param['action'] = "success";
+            do_action(
+                'rimplenet_hooks_and_monitors_on_finished',
+                $action = 'rimplenet_create_debits',
+                $auth = null,
+                $request = $param
+            );
             $result = $txn_add_bal_id;
             return Res::success(['id' => $result], "Transaction Completed", 200);
         } else {
+            # action hook
+            $param['action'] = "failed";
+            do_action(
+                'rimplenet_hooks_and_monitors_on_finished',
+                $action = 'rimplenet_create_debits',
+                $auth = null,
+                $request = $param
+            );
             return Res::error('Transaction Already Executed', 'Transaction Already Executed', 409);
         }
         return;
