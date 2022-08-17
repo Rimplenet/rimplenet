@@ -3,11 +3,11 @@ class RimplenetGetDebits extends Debits
 {
     public function getDebits($id, $type)
     {
-        if($id !== ''):
+        if ($id !== '') :
+            do_action('rimplenet_hooks_and_monitors_on_started', $action = 'rimplenet_get_debit', $auth = null, $request = ['debit_id' => $id]);
             return $this->debitById($id, $type);
-        else:
+        else :
             do_action('rimplenet_hooks_and_monitors_on_started', $action = 'rimplenet_get_debits', $auth = null, $request = ['debit_id' => $id]);
-
             return $this->getAllDebits();
         endif;
 
@@ -16,24 +16,57 @@ class RimplenetGetDebits extends Debits
 
     public function debitById($id, $type)
     {
-        if($credits = $this->debitsExists($id, $type)):
-            $credits = get_post($credits->post_id);
-            return Res::success($this->formatDebits($credits), 'Transacrion Retrieved', 200);
-        else:
-            return Res::error(['Invalid Transaction Id '.$id], 'Transaction not Found', 404);
+        if ($debits = $this->debitsExists($id, $type)) :
+            $debits = get_post($debits->post_id);
+            $debit = $this->formatDebits($debits);
+            # action hook
+            $param['action'] = "success";
+            do_action(
+                'rimplenet_hooks_and_monitors_on_finished',
+                $action = 'rimplenet_get_debit',
+                $auth = null,
+                $request = $param
+            );
+            return Res::success($debit, 'Transacrion Retrieved', 200);
+        else :
+            # action hook
+            $param['action'] = "failed";
+            do_action(
+                'rimplenet_hooks_and_monitors_on_finished',
+                $action = 'rimplenet_get_debit',
+                $auth = null,
+                $request = $param
+            );
+            return Res::error(['Invalid Transaction Id ' . $id], 'Transaction not Found', 404);
         endif;
     }
 
     public function getAllDebits()
     {
         $this->queryTxn('', self::DEBIT);
-        if($this->query && $this->query->have_posts()):
+        if ($this->query && $this->query->have_posts()) :
             $posts = $this->query->get_posts();
-            foreach ($posts as $key => $post):
+            foreach ($posts as $key => $post) :
                 $posts[$key] = $this->formatDebits($post);
             endforeach;
+            # action hook
+            $param['action'] = "success";
+            do_action(
+                'rimplenet_hooks_and_monitors_on_finished',
+                $action = 'rimplenet_get_debits',
+                $auth = null,
+                $request = $param
+            );
             return Res::success($posts, 'Debits Retrieved');
-        else:
+        else :
+            # action hook
+            $param['action'] = "failed";
+            do_action(
+                'rimplenet_hooks_and_monitors_on_finished',
+                $action = 'rimplenet_get_debits',
+                $auth = null,
+                $request = $param
+            );
             return Res::error("Sorry we couldnt retrieve any Debit at the moment", "No Debit Found", 404);
         endif;
         // return $this
@@ -58,7 +91,7 @@ class RimplenetGetDebits extends Debits
             'note'                 => $this->postMeta('note'),
             'description'          => $data->post_title
         ];
-        
+
         return $res;
     }
 }

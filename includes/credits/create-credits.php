@@ -32,7 +32,7 @@ class RimplenetCreateCredits extends RimplenetGetWallets
         if (!$userToCredit) return Res::error(["Unable to reach $user_id"], "Invalid User credentials", 404);
 
         #added do action
-        do_action('rimplenet_hooks_and_monitors_on_started', $action='rimplenet_create_credits', $auth = null ,$request = $param);
+        do_action('rimplenet_hooks_and_monitors_on_started', $action = 'rimplenet_create_credits', $auth = null, $request = $param);
 
         # Set transaction id
         $txn_id = $user_id . '_' .  strtolower($request_id);
@@ -94,11 +94,34 @@ class RimplenetCreateCredits extends RimplenetGetWallets
 
         if ($txn_add_bal_id > 0) {
             $result = $txn_add_bal_id;
+
+            # action on finished
+            $param['action'] = "success";
+            do_action(
+                'rimplenet_hooks_and_monitors_on_finished',
+                $action = 'rimplenet_create_credits',
+                $auth = null,
+                $request = $param
+            );
+
             return Res::success(['id' => $result], "Transaction Completed", 200);
         } else {
+            $param['action'] = "already executed";
+            do_action(
+                'rimplenet_hooks_and_monitors_on_finished',
+                $action = 'rimplenet_create_credits',
+                $auth = null,
+                $request = $param
+            );
             return Res::error('Transaction Already Executed', 'Transaction Already Executed', 409);
         }
-
+        $param['action'] = "failed";
+        do_action(
+            'rimplenet_hooks_and_monitors_on_finished',
+            $action = 'rimplenet_create_credits',
+            $auth = null,
+            $request = $param
+        );
         return;
     }
 

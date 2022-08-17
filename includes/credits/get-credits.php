@@ -22,8 +22,26 @@ class RimplenetGetCredits extends Credits
     {
         if ($credits = $this->CreditsExists($id, $type)) :
             $credits = get_post($credits->post_id);
-            return Res::success($this->formatCredits($credits), 'Transacrion Retrieved', 200);
+            # Format credits
+            $credits = $this->formatCredits($credits);
+            # get Credits action hook
+            $param['action'] = "success";
+            do_action(
+                'rimplenet_hooks_and_monitors_on_finished',
+                $action = 'rimplenet_get_credit',
+                $auth = null,
+                $request = $param
+            );
+            return Res::success($credits, 'Transacrion Retrieved', 200);
         else :
+            # get Credits action hook
+            $param['action'] = "failed";
+                do_action(
+                    'rimplenet_hooks_and_monitors_on_finished',
+                    $action = 'rimplenet_get_credit',
+                    $auth = null,
+                    $request = $param
+                );
             return Res::error(['Invalid Transaction Id ' . $id], 'Transaction not Found', 404);
         endif;
     }
@@ -36,8 +54,24 @@ class RimplenetGetCredits extends Credits
             foreach ($posts as $key => $post) :
                 $posts[$key] = $this->formatCredits($post);
             endforeach;
+            # get Credits action hook
+            $param['action'] = "success";
+                do_action(
+                    'rimplenet_hooks_and_monitors_on_finished',
+                    $action = 'rimplenet_get_credits',
+                    $auth = null,
+                    $request = $param
+                );
             return Res::success($posts, 'Credits Retrieved');
         else :
+            # Update Credits action hook
+            $param['action'] = "failed";
+                do_action(
+                    'rimplenet_hooks_and_monitors_on_finished',
+                    $action = 'rimplenet_get_credits',
+                    $auth = null,
+                    $request = $param
+                );
             return Res::error("Sorry we couldnt retrieve any Credit at the moment", "No wallet Found", 404);
         endif;
         // return $this
