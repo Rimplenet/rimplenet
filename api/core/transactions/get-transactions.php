@@ -97,7 +97,7 @@ class RetrieveTransactions{
                   'post_type' => 'rimplenettransaction', 
                   'post_status' => 'any',
                   'author' => $user_id ,
-                  'posts_per_page'=>$posts_per_page,
+                  'posts_per_page'=>$posts_per_page ?? 15,
                   'paged'=>$pageno,
                   'tax_query' => array(
                       'relation' => 'OR',
@@ -120,7 +120,7 @@ class RetrieveTransactions{
                   'post_type' => 'rimplenettransaction', 
                   'post_status' => 'any',
                 //   'author' => $user_id ,
-                  'posts_per_page'=>$posts_per_page,
+                  'posts_per_page'=>$posts_per_page ?? 15,
                   'paged'=>$pageno,
                   'tax_query' => array(
                       'relation' => 'OR',
