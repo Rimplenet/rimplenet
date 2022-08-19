@@ -32,7 +32,7 @@ class RimplenetCreateCredits extends RimplenetGetWallets
         if (!$userToCredit) return Res::error(["Unable to reach $user_id"], "Invalid User credentials", 404);
 
         #added do action
-        do_action('rimplenet_hooks_and_monitors_on_started', $action = 'rimplenet_create_credits', $auth = null, $request = $param);
+        do_action('rimplenet_hooks_and_monitors_on_started', $action = 'rimplenet_create_credits', $auth = null, $request = $prop);
 
         # Set transaction id
         $txn_id = $user_id . '_' .  strtolower($request_id);
@@ -40,7 +40,7 @@ class RimplenetCreateCredits extends RimplenetGetWallets
         $recent_txn_transient_key = "recent_txn_" . $txn_id;
 
         # check if transaction already exist
-        if ($this->creditsExists($txn_id)) return;
+        if ($this->creditsExists($txn_id,'', $prop)) return;
 
 
         # Chech transient key
@@ -96,31 +96,31 @@ class RimplenetCreateCredits extends RimplenetGetWallets
             $result = $txn_add_bal_id;
 
             # action on finished
-            $param['action'] = "success";
+            $prop['action'] = "success";
             do_action(
                 'rimplenet_hooks_and_monitors_on_finished',
                 $action = 'rimplenet_create_credits',
                 $auth = null,
-                $request = $param
+                $request = $prop
             );
 
             return Res::success(['id' => $result], "Transaction Completed", 200);
         } else {
-            $param['action'] = "already executed";
+            $prop['action'] = "already executed";
             do_action(
                 'rimplenet_hooks_and_monitors_on_finished',
                 $action = 'rimplenet_create_credits',
                 $auth = null,
-                $request = $param
+                $request = $prop
             );
             return Res::error('Transaction Already Executed', 'Transaction Already Executed', 409);
         }
-        $param['action'] = "failed";
+        $prop['action'] = "failed";
         do_action(
             'rimplenet_hooks_and_monitors_on_finished',
             $action = 'rimplenet_create_credits',
             $auth = null,
-            $request = $param
+            $request = $prop
         );
         return;
     }
@@ -130,12 +130,19 @@ class RimplenetCreateCredits extends RimplenetGetWallets
      * Check Transaction Exists
      * @return
      */
-    protected function creditsExists($value, string $type = '')
+    protected function creditsExists($value, string $type = '', array $param = [])
     {
         global $wpdb;
         $value = strtolower($value);
         $row = $wpdb->get_row("SELECT * FROM $wpdb->postmeta WHERE meta_key='txn_request_id' AND meta_value='$value'");
         if ($row) :
+            $param['action'] = "already executed";
+            do_action(
+                'rimplenet_hooks_and_monitors_on_finished',
+                $action = 'rimplenet_create_credits',
+                $auth = null,
+                $param
+            );
             Res::error([
                 'txn_id' => $row->post_id,
                 'exist' => "Transaction already executed"

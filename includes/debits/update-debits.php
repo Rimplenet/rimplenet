@@ -17,7 +17,9 @@ class RimplenetUpdateDebits extends Debits
         # assign param type to $type otherwise get type from class
         $type = !empty($type) ? $type : $this->req['type'];
 
+        $request = ['debit_id' => $id, 'note' => $note];
         if ($this->checkEmpty(['debit_id' => $id, 'note' => $note])) return;
+
 
         # Check if the transaction has already been executed
         if ($this->debitsExists($id, $type)) :
@@ -25,7 +27,7 @@ class RimplenetUpdateDebits extends Debits
             # if transaction is executed proceed to update transaction note
             $txn =  $this->getDebitsToUpdate($id);
 
-            do_action('rimplenet_hooks_and_monitors_on_started', $action = 'rimplenet_update_debits', $auth = null, $request = ['debit_id' => $id, 'note' => $note]);
+            do_action('rimplenet_hooks_and_monitors_on_started', $action = 'rimplenet_update_debits', $auth = null, $request);
 
             if ($txn) :
                 update_post_meta($id, 'note', $note);

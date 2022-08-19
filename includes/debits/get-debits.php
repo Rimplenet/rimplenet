@@ -7,7 +7,7 @@ class RimplenetGetDebits extends Debits
             do_action('rimplenet_hooks_and_monitors_on_started', $action = 'rimplenet_get_debit', $auth = null, $request = ['debit_id' => $id]);
             return $this->debitById($id, $type);
         else :
-            do_action('rimplenet_hooks_and_monitors_on_started', $action = 'rimplenet_get_debits', $auth = null, $request = ['debit_id' => $id]);
+            do_action('rimplenet_hooks_and_monitors_on_started', $action = 'rimplenet_get_debits', $auth = null, []);
             return $this->getAllDebits();
         endif;
 
@@ -21,6 +21,7 @@ class RimplenetGetDebits extends Debits
             $debit = $this->formatDebits($debits);
             # action hook
             $param['action'] = "success";
+            $param['debit'] = $debit;
             do_action(
                 'rimplenet_hooks_and_monitors_on_finished',
                 $action = 'rimplenet_get_debit',
@@ -31,6 +32,7 @@ class RimplenetGetDebits extends Debits
         else :
             # action hook
             $param['action'] = "failed";
+            $param['debit_id'] = $id;
             do_action(
                 'rimplenet_hooks_and_monitors_on_finished',
                 $action = 'rimplenet_get_debit',
@@ -51,6 +53,7 @@ class RimplenetGetDebits extends Debits
             endforeach;
             # action hook
             $param['action'] = "success";
+            $param['debits'] = $posts;
             do_action(
                 'rimplenet_hooks_and_monitors_on_finished',
                 $action = 'rimplenet_get_debits',
