@@ -5,12 +5,12 @@ class RimplenetGetCredits extends Credits
     {
         if ($id !== '') :
             # get single credit
-            do_action('rimplenet_hooks_and_monitors_on_started', $action = 'rimplenet_get_credit', $auth = null, $request = ['credit_id' => $id]);
+            do_action('rimplenet_hooks_and_monitors_on_started', 'rimplenet_get_credit', null, ['credit_id' => $id]);
 
             return $this->creditById($id, $type);
         else :
             # get all credits
-            do_action('rimplenet_hooks_and_monitors_on_started', $action = 'rimplenet_get_credits', $auth = null, $request = []);
+            do_action('rimplenet_hooks_and_monitors_on_started', 'rimplenet_get_credits', null, []);
 
             return $this->getAllCredits();
         endif;
@@ -29,9 +29,9 @@ class RimplenetGetCredits extends Credits
             $param['credit'] = $credits;
             do_action(
                 'rimplenet_hooks_and_monitors_on_finished',
-                $action = 'rimplenet_get_credit',
-                $auth = null,
-                $request = $param
+                'rimplenet_get_credit',
+                null,
+                $param
             );
             return Res::success($credits, 'Transacrion Retrieved', 200);
         else :
@@ -39,9 +39,9 @@ class RimplenetGetCredits extends Credits
             $param['action'] = "failed";
                 do_action(
                     'rimplenet_hooks_and_monitors_on_finished',
-                    $action = 'rimplenet_get_credit',
-                    $auth = null,
-                    $request = $param
+                    'rimplenet_get_credit',
+                    null,
+                    $param
                 );
             return Res::error(['Invalid Transaction Id ' . $id], 'Transaction not Found', 404);
         endif;
@@ -60,9 +60,9 @@ class RimplenetGetCredits extends Credits
             $param['credits'] = $posts;
                 do_action(
                     'rimplenet_hooks_and_monitors_on_finished',
-                    $action = 'rimplenet_get_credits',
-                    $auth = null,
-                    $request = $param
+                    'rimplenet_get_credits',
+                    null,
+                    $param
                 );
             return Res::success($posts, 'Credits Retrieved');
         else :
@@ -70,9 +70,9 @@ class RimplenetGetCredits extends Credits
             $param['action'] = "failed";
                 do_action(
                     'rimplenet_hooks_and_monitors_on_finished',
-                    $action = 'rimplenet_get_credits',
-                    $auth = null,
-                    $request = $param
+                    'rimplenet_get_credits',
+                    null,
+                    $param
                 );
             return Res::error("Sorry we couldnt retrieve any Credit at the moment", "No wallet Found", 404);
         endif;

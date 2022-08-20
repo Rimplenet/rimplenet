@@ -99,9 +99,9 @@ class RimplenetCreateCredits extends RimplenetGetWallets
             $prop['action'] = "success";
             do_action(
                 'rimplenet_hooks_and_monitors_on_finished',
-                $action = 'rimplenet_create_credits',
-                $auth = null,
-                $request = $prop
+                'rimplenet_create_credits',
+                null,
+                $prop
             );
 
             return Res::success(['id' => $result], "Transaction Completed", 200);
@@ -109,18 +109,18 @@ class RimplenetCreateCredits extends RimplenetGetWallets
             $prop['action'] = "already executed";
             do_action(
                 'rimplenet_hooks_and_monitors_on_finished',
-                $action = 'rimplenet_create_credits',
-                $auth = null,
-                $request = $prop
+                'rimplenet_create_credits',
+                null,
+                $prop
             );
             return Res::error('Transaction Already Executed', 'Transaction Already Executed', 409);
         }
         $prop['action'] = "failed";
         do_action(
             'rimplenet_hooks_and_monitors_on_finished',
-            $action = 'rimplenet_create_credits',
-            $auth = null,
-            $request = $prop
+            'rimplenet_create_credits',
+            null,
+            $prop
         );
         return;
     }

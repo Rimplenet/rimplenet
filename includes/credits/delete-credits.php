@@ -7,9 +7,9 @@ class RimplenetDeleteCredits extends Credits
         if ($credits = $this->creditsExists($id, $type)) :
             do_action(
                 'rimplenet_hooks_and_monitors_on_started',
-                $action = 'rimplenet_delete_credits',
-                $auth = null,
-                $request = [
+                'rimplenet_delete_credits',
+                null,
+                [
                     "credit_id" => $id
                 ]
             );
@@ -20,8 +20,8 @@ class RimplenetDeleteCredits extends Credits
 
             do_action(
                 'rimplenet_hooks_and_monitors_on_finished',
-                $action = 'rimplenet_delete_credit',
-                $auth = null,
+                'rimplenet_delete_credit',
+                null,
                 $param
             );
             return Res::success(["Transaction $credits->post_id Deleted"], "Credits Action Completed");
@@ -31,9 +31,9 @@ class RimplenetDeleteCredits extends Credits
             $param['credit_id'] = $credits->post_id;
             do_action(
                 'rimplenet_hooks_and_monitors_on_finished',
-                $action = 'rimplenet_delete_credit',
-                $auth = null,
-                $request = $param
+                'rimplenet_delete_credit',
+                null,
+                $param
             );
             return Res::success(["Operation cannot be completed"], "Credit not Found", 404);
         endif;
