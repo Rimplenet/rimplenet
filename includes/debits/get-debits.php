@@ -4,10 +4,10 @@ class RimplenetGetDebits extends Debits
     public function getDebits($id, $type)
     {
         if ($id !== '') :
-            do_action('rimplenet_hooks_and_monitors_on_started', $action = 'rimplenet_get_debit', $auth = null, $request = ['debit_id' => $id]);
+            do_action('rimplenet_hooks_and_monitors_on_started', 'rimplenet_get_debit', null, ['debit_id' => $id]);
             return $this->debitById($id, $type);
         else :
-            do_action('rimplenet_hooks_and_monitors_on_started', $action = 'rimplenet_get_debits', $auth = null, []);
+            do_action('rimplenet_hooks_and_monitors_on_started', 'rimplenet_get_debits', null, []);
             return $this->getAllDebits();
         endif;
 
@@ -24,9 +24,9 @@ class RimplenetGetDebits extends Debits
             $param['debit'] = $debit;
             do_action(
                 'rimplenet_hooks_and_monitors_on_finished',
-                $action = 'rimplenet_get_debit',
-                $auth = null,
-                $request = $param
+                'rimplenet_get_debit',
+                null,
+                $param
             );
             return Res::success($debit, 'Transacrion Retrieved', 200);
         else :
@@ -35,9 +35,9 @@ class RimplenetGetDebits extends Debits
             $param['debit_id'] = $id;
             do_action(
                 'rimplenet_hooks_and_monitors_on_finished',
-                $action = 'rimplenet_get_debit',
-                $auth = null,
-                $request = $param
+                'rimplenet_get_debit',
+                null,
+                $param
             );
             return Res::error(['Invalid Transaction Id ' . $id], 'Transaction not Found', 404);
         endif;
@@ -56,9 +56,9 @@ class RimplenetGetDebits extends Debits
             $param['debits'] = $posts;
             do_action(
                 'rimplenet_hooks_and_monitors_on_finished',
-                $action = 'rimplenet_get_debits',
-                $auth = null,
-                $request = $param
+                'rimplenet_get_debits',
+                null,
+                $param
             );
             return Res::success($posts, 'Debits Retrieved');
         else :
@@ -66,9 +66,9 @@ class RimplenetGetDebits extends Debits
             $param['action'] = "failed";
             do_action(
                 'rimplenet_hooks_and_monitors_on_finished',
-                $action = 'rimplenet_get_debits',
-                $auth = null,
-                $request = $param
+                'rimplenet_get_debits',
+                null,
+                $param
             );
             return Res::error("Sorry we couldnt retrieve any Debit at the moment", "No Debit Found", 404);
         endif;

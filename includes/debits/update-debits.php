@@ -27,7 +27,7 @@ class RimplenetUpdateDebits extends Debits
             # if transaction is executed proceed to update transaction note
             $txn =  $this->getDebitsToUpdate($id);
 
-            do_action('rimplenet_hooks_and_monitors_on_started', $action = 'rimplenet_update_debits', $auth = null, $request);
+            do_action('rimplenet_hooks_and_monitors_on_started', 'rimplenet_update_debits', null, $request);
 
             if ($txn) :
                 update_post_meta($id, 'note', $note);

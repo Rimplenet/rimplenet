@@ -14,7 +14,7 @@ class RimplenetCreateDebits extends Debits
             'amount'     => "$amount || amount",
         ])) return;
 
-        do_action('rimplenet_hooks_and_monitors_on_started', $action = 'rimplenet_create_debits', $auth = null, $prop);
+        do_action('rimplenet_hooks_and_monitors_on_started', 'rimplenet_create_debits', null, $prop);
 
         if (!$this->getWalletById($wallet_id)) return;
 
@@ -85,8 +85,8 @@ class RimplenetCreateDebits extends Debits
             $param['action'] = "failed";
             do_action(
                 'rimplenet_hooks_and_monitors_on_finished',
-                $action = 'rimplenet_create_debits',
-                $auth = null,
+                'rimplenet_create_debits',
+                null,
                 $request = $param
             );
             return Res::error('Unknown Error', "unknown error", 400);
@@ -97,9 +97,9 @@ class RimplenetCreateDebits extends Debits
             $param['action'] = "success";
             do_action(
                 'rimplenet_hooks_and_monitors_on_finished',
-                $action = 'rimplenet_create_debits',
-                $auth = null,
-                $request = $param
+                'rimplenet_create_debits',
+                null,
+                $param
             );
             $result = $txn_add_bal_id;
             return Res::success(['id' => $result], "Transaction Completed", 200);
@@ -108,9 +108,9 @@ class RimplenetCreateDebits extends Debits
             $param['action'] = "failed";
             do_action(
                 'rimplenet_hooks_and_monitors_on_finished',
-                $action = 'rimplenet_create_debits',
-                $auth = null,
-                $request = $param
+                'rimplenet_create_debits',
+                null,
+                $param
             );
             return Res::error('Transaction Already Executed', 'Transaction Already Executed', 409);
         }
@@ -131,8 +131,8 @@ class RimplenetCreateDebits extends Debits
             $param['action'] = "already executed";
             do_action(
                 'rimplenet_hooks_and_monitors_on_finished',
-                $action = 'rimplenet_create_debits',
-                $auth = null,
+                'rimplenet_create_debits',
+                null,
                 $param
             );
             Res::error([
