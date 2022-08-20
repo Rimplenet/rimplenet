@@ -26,6 +26,7 @@ class RimplenetGetCredits extends Credits
             $credits = $this->formatCredits($credits);
             # get Credits action hook
             $param['action'] = "success";
+            $param['credit'] = $credits;
             do_action(
                 'rimplenet_hooks_and_monitors_on_finished',
                 $action = 'rimplenet_get_credit',
@@ -56,6 +57,7 @@ class RimplenetGetCredits extends Credits
             endforeach;
             # get Credits action hook
             $param['action'] = "success";
+            $param['credits'] = $posts;
                 do_action(
                     'rimplenet_hooks_and_monitors_on_finished',
                     $action = 'rimplenet_get_credits',

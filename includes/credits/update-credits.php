@@ -23,8 +23,9 @@ class RimplenetUpdateCredits extends Credits
             'note' => $note
         ])) return;
 
+        $request = ['credit_id' => $id, 'note' => $note];
         # update credit do action
-        do_action('rimplenet_hooks_and_monitors_on_started', $action = 'rimplenet_update_credits', $auth = null, $request = ['credit_id' => $id, 'note' => $note]);
+        do_action('rimplenet_hooks_and_monitors_on_started', $action = 'rimplenet_update_credits', $auth = null, $request);
 
 
         # Check if the transaction has already been executed
@@ -38,12 +39,12 @@ class RimplenetUpdateCredits extends Credits
                 update_post_meta($id, 'note', $note);
 
                 #  Updated Credit on ended do action
-                $param['action'] = "success";
+                $$request['action'] = "success";
                 do_action(
                     'rimplenet_hooks_and_monitors_on_finished',
                     $action = 'rimplenet_update_credit',
                     $auth = null,
-                    $request = $param
+                    $request
                 );
                 return Res::success(['note' => $note . " Updated"], 'Note updated');
             else :
@@ -51,24 +52,24 @@ class RimplenetUpdateCredits extends Credits
                 add_post_meta($id, 'note', $note);
 
                 # update credits action hook
-                $param['action'] = "success";
+                $request['action'] = "success";
                 do_action(
                     'rimplenet_hooks_and_monitors_on_finished',
                     $action = 'rimplenet_update_credit',
                     $auth = null,
-                    $request = $param
+                    $request
                 );
                 return Res::success(['note' => $note . " Updated"], 'Note updated');
             endif;
             return true;
         else :
             # Update Credits action hook
-            $param['action'] = "failed";
+            $request['action'] = "failed";
             do_action(
                 'rimplenet_hooks_and_monitors_on_finished',
                 $action = 'rimplenet_update_credit',
                 $auth = null,
-                $request = $param
+                $request
             );
             # if the transaction has not been executed before time return error false
             return Res::error(['Transaction Not Found'], 'Transaction not Found', 404);

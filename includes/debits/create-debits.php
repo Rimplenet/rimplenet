@@ -14,7 +14,7 @@ class RimplenetCreateDebits extends Debits
             'amount'     => "$amount || amount",
         ])) return;
 
-        do_action('rimplenet_hooks_and_monitors_on_started', $action = 'rimplenet_create_debits', $auth = null, $request = $param);
+        do_action('rimplenet_hooks_and_monitors_on_started', $action = 'rimplenet_create_debits', $auth = null, $prop);
 
         if (!$this->getWalletById($wallet_id)) return;
 
@@ -29,7 +29,7 @@ class RimplenetCreateDebits extends Debits
         $recent_txn_transient_key = "recent_txn_" . $txn_id;
 
         # check if transaction already exist
-        if ($this->debitsExists($txn_id)) return;
+        if ($this->debitsExists($txn_id, '', $prop)) return;
 
 
         # Chech transient key
@@ -122,12 +122,19 @@ class RimplenetCreateDebits extends Debits
      * Check Transaction Exists
      * @return
      */
-    protected function debitsExists($value, string $type = '')
+    protected function debitsExists($value, string $type = '', array $param = [])
     {
         global $wpdb;
         $value = strtolower($value);
         $row = $wpdb->get_row("SELECT * FROM $wpdb->postmeta WHERE meta_key='txn_request_id' AND meta_value='$value'");
         if ($row) :
+            $param['action'] = "already executed";
+            do_action(
+                'rimplenet_hooks_and_monitors_on_finished',
+                $action = 'rimplenet_create_debits',
+                $auth = null,
+                $param
+            );
             Res::error([
                 'txn_id' => $row->post_id,
                 'exist' => "Transaction already executed"

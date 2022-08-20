@@ -16,16 +16,19 @@ class RimplenetDeleteCredits extends Credits
             wp_delete_post($credits->post_id);
             # Update Credits action hook
             $param['action'] = "success";
+            $param['credit_id'] = $credits->post_id;
+
             do_action(
                 'rimplenet_hooks_and_monitors_on_finished',
                 $action = 'rimplenet_delete_credit',
                 $auth = null,
-                $request = $param
+                $param
             );
             return Res::success(["Transaction $credits->post_id Deleted"], "Credits Action Completed");
         else :
             # Update Credits action hook
             $param['action'] = "failed";
+            $param['credit_id'] = $credits->post_id;
             do_action(
                 'rimplenet_hooks_and_monitors_on_finished',
                 $action = 'rimplenet_delete_credit',
