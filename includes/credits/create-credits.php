@@ -32,7 +32,7 @@ class RimplenetCreateCredits extends RimplenetGetWallets
         if (!$userToCredit) return Res::error(["Unable to reach $user_id"], "Invalid User credentials", 404);
 
         #added do action
-        do_action('rimplenet_hooks_and_monitors_on_started', $action = 'rimplenet_create_credits', $auth = null, $request = $prop);
+        do_action('rimplenet_hooks_and_monitors_on_started', 'rimplenet_create_credits', null,  $prop);
 
         # Set transaction id
         $txn_id = $user_id . '_' .  strtolower($request_id);
@@ -40,7 +40,7 @@ class RimplenetCreateCredits extends RimplenetGetWallets
         $recent_txn_transient_key = "recent_txn_" . $txn_id;
 
         # check if transaction already exist
-        if ($this->creditsExists($txn_id,'', $prop)) return;
+        if ($this->creditsExists($txn_id, '', $prop)) return;
 
 
         # Chech transient key
@@ -139,8 +139,8 @@ class RimplenetCreateCredits extends RimplenetGetWallets
             $param['action'] = "already executed";
             do_action(
                 'rimplenet_hooks_and_monitors_on_finished',
-                $action = 'rimplenet_create_credits',
-                $auth = null,
+                'rimplenet_create_credits',
+                null,
                 $param
             );
             Res::error([
