@@ -57,7 +57,7 @@ abstract class BaseWallet extends Base
 
         $repeat = function ($type, $mssg) {
             if (isset($this->error[$type]))
-                $this->error[$type] = [...$this->error[$type], $mssg];
+                $this->error[$type] = array_push($this->error[$type], $mssg); # [...$this->error[$type], $mssg];
             else $this->error[$type] = $mssg;
         };
 
