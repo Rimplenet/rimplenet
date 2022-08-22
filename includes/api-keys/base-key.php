@@ -54,7 +54,9 @@ class ApiKey
         # Get headers
         $header = apache_request_headers();
         # seperate Authorization name from token
-        [$name, $token] = explode(' ', $header['Authorization']);
+        $authorization = explode(' ', $header['Authorization']);
+        $name = $authorization[0];
+        $token = end($authorization);
         if ($name == 'Bearer') :
             return $this->decodeBearer($token);
         elseif ($name == "Basic") :
@@ -90,8 +92,10 @@ class ApiKey
      */
     public function decodeBasic($token, $isApi = true)
     {
-        $decrypted = \base64_decode($token); 
-        [$username, $key] = explode(':', $decrypted);
+        $decrypted = \base64_decode($token);
+        $decData = explode(':', $decrypted);
+        $username = $decData[0];
+        $key = end($decData);
         $user = get_user_by('login', $username);
         # chek if user exists
         if (!$user) return Res::error([
@@ -202,7 +206,7 @@ class ApiKey
         $postId = $key[0]->post_id;
         return [
             'action'    => get_post_meta($postId, 'action', true),
-            'allowedActions'    => get_post_meta($postId, 'allowed_action', true),
+            'allowedActions' => get_post_meta($postId, 'allowed_action', true),
             'permission'  => get_post_meta($postId, 'key_type', true),
             'userId'   => get_post_meta($postId, 'user_id', true),
             'uuid'      => get_post_meta($postId, 'uuid', true),
