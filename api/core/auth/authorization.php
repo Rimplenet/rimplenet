@@ -27,7 +27,7 @@ class RimplenetAuthorizationApi
 
         $auth = new RimplenetAuthorization();
         $get_auth = $auth->authorization(
-            $access_token,
+            $access_token
         );
         
         return new WP_REST_Response($get_auth);
@@ -54,7 +54,7 @@ class RimplenetAuthorizationApi
         
         $access_token = explode(" ", $headers['Authorization'])[1] ?? null;
         $get_auth = $auth->authorization(
-            $access_token,
+            $access_token
         );
 
         if (!empty($get_auth['error'])) {

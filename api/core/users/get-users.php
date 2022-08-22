@@ -32,7 +32,7 @@ class RimplenetGetUserApi
         $get_user = $user->get_users(
             $access_token,
             $user_id ? $user_id : null,
-            $page ? $page : 1,
+            $page ? $page : 1
         );
         
         return new WP_REST_Response($get_user, $get_user['status_code']);
