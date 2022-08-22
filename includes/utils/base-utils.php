@@ -124,8 +124,8 @@ class Utils
         $exists = $wpdb->get_row("SELECT * FROM $wpdb->postmeta WHERE meta_key='rimplenet_wallet_id' AND meta_value='$this->wallet_id' OR post_id = '$this->wallet_id' AND meta_key='rimplenet_wallet_id'");
 
         if ($exists)
-            $this->error[] = 'Wallet Already Exists';
-        if (!empty($this->error)) return true;
+            self::$error[] = 'Wallet Already Exists';
+        if (!empty(self::$error)) return true;
         else return false;
     }
 
