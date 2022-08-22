@@ -223,6 +223,7 @@ class Rimplenet
 		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/wallets/class-base-wallets.php';
 		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/mlm-matrix/class-base-mlm-matrix.php';
 		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/transfers/class-base-transfers.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/transactions/class-base-transactions.php';
 		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/credits/class-base-credits.php';
 		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/debits/class-base-debits.php';
 		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/api-keys/class-base-api-keys.php';
