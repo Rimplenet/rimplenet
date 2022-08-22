@@ -17,7 +17,7 @@ class RimplenetCreateWallets extends Utils
 
         foreach ($this->item as $key => $value) {
             if (is_float($value) || is_int($value)) continue;
-            $this->error[$key] = 'Requires a number or decimal';
+            self::$error[$key] = 'Requires a number or decimal';
         }
 
         extract($this->item);
@@ -25,8 +25,8 @@ class RimplenetCreateWallets extends Utils
         $this->checkMinMax('max_amount', $max_amount);
         $this->checkMinMax('min_amount', $min_amount);
 
-        if (!empty($this->error)) :
-            self::$response['error'] = $this->error;
+        if (!empty(self::$error)) :
+            self::$response['error'] = self::$error;
             return true;
         endif;
 
@@ -52,10 +52,11 @@ class RimplenetCreateWallets extends Utils
         $gtMssg = 'Equality Error'; # Minnimum withdrawal message
 
         $repeat = function ($type, $mssg) {
-            if (isset($this->error[$type]))
-                $this->error[$type] = array_push($this->error[$type], $mssg);
-                // $this->error[$type] = [...$this->error[$type], $mssg];
-            else $this->error[$type] = $mssg;
+            if (isset(self::$error[$type])) :
+                self::$error[$type] = array_push(self::$error[$type], $mssg);
+            // self::$error[$type] = [...self::$error[$type], $mssg];
+            else : self::$error[$type] = $mssg;
+            endif;
         };
 
         # Check max
@@ -93,7 +94,7 @@ class RimplenetCreateWallets extends Utils
             'wallet_symbol'         =>  $wallet_symbol,
             'wallet_symbol_pos'     =>  $wallet_symbol_pos ?? 'left',
             'wallet_type'           =>  "$wallet_type || string",
-            'wallet_decimal'        => $wallet_decimal ?? 2 ." || int",
+            'wallet_decimal'        => $wallet_decimal ?? 2 . " || int",
             'max_withdrawal_amount' => $max_withdrawal_amount ?? CreateWallet::MAX_AMOUNT,
             'min_withdrawal_amount' => $min_withdrawal_amount ?? CreateWallet::MIN_AMOUNT,
         ])) return self::$response;
@@ -104,14 +105,14 @@ class RimplenetCreateWallets extends Utils
         # check if wallet already exist
         // return $this->walletExists();
         if ($this->walletExists()) :
-            return Res::error($this->error, "Wallet Already Exists", 409);
+            return Res::error(self::$error, "Wallet Already Exists", 409);
         else :
             $wallet = $this->insertWallet();
             return Res::success($wallet, "Wallet was successully created");
         endif;
     }
 
-    
+
     /**
      * Insert into DB
      */
