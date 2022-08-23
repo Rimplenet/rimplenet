@@ -1,4 +1,3 @@
-<!-- do_action('rimplenet_hooks_and_monitors_on_started', $action='rimplenet_create_credits', $auth = null ,$request = $param); -->
 <?php
 use Traits\Wallet\RimplenetWalletTrait;
 class RimplenetGetTransactions extends RimplenetGetWallets

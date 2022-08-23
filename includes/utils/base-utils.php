@@ -36,6 +36,12 @@ class Utils
         'message' => ''
     ];
 
+    // public static $error = [
+    //     'status_code' => 400,
+    //     'status' => false,
+    //     'message' => ''
+    // ];
+
     public $query = null;
     /**
      * Check empty Fields
