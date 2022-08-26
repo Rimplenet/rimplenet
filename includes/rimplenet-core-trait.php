@@ -66,9 +66,9 @@ trait RimplenetWalletTrait
 
         $wallet = $this->getWallet($wallet_id);
 
-        $dec = $wallet['wallet_decimal'];
-        $symbol = $wallet['wallet_symbol'];
-        $symbol_position = $wallet['wallet_symbol_position'];
+        $dec = $wallet['wallet_decimal'] ?? '';
+        $symbol = $wallet['wallet_symbol'] ?? '';
+        $symbol_position = $wallet['wallet_symbol_position'] ?? '';
 
         if ($symbol_position == 'right') {
             $disp_info = number_format($amount, $dec) . " " . $symbol;;
