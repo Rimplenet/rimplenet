@@ -13,7 +13,7 @@ trait RimplenetEmailTrait
   {
     $to = $email;
     include(plugin_dir_path( dirname( __FILE__ ) ) . 'emails/email-templates/verify-email-mail.php');
-
+    
     if (wp_mail( $to, $subject, $message )) {
         return true;
     } else {

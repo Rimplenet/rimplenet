@@ -19,7 +19,7 @@ $getCredits = new class extends RimplenetVerifyEmailMail
     {
         # ================= set fields ============
         $email  = sanitize_text_field($req['email_address']);
-        $fire_email  = sanitize_text_field($req['ire_email'] ?? false);
+        $fire_email =sanitize_text_field($req['fire_email'] ?? false);
 
         // if ($wlt_id !== '') :
             $this->send($email, $fire_email);
