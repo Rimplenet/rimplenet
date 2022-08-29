@@ -29,12 +29,18 @@ class RimplenetVerifyEmailMail extends Base
           $this->storeverifyToken($user_id, $sent['token_to_verify_email']);
 
           if ($sendmail) {
-               $sent = $this->sendVerifyEmailMail($email, $sent['token_to_verify_email']);
+
+               $sent['mail']=$this->sendVerifyEmailMail($email, $sent['token_to_verify_email']);
                $message = $sent ? 'Verification Mail Email Sent' : 'Email Not Sent';
-
-               $sent ? $this->success($sent, $message) : $this->error($sent, $message);
-
+               $sent['mail'] ? $this->success($sent, $message) : $this->error($sent, $message);
                return $this->response;
+
+               // $sent = $this->sendVerifyEmailMail($email, $sent['token_to_verify_email']);
+               // $message = $sent ? 'Verification Mail Email Sent' : 'Email Not Sent';
+
+               // $sent ? $this->success($sent, $message) : $this->error($sent, $message);
+
+               // return $this->response;
           }
 
           $message = $sent['token_to_verify_email'] ? 'Token Generated' : 'Token Not Generated';
