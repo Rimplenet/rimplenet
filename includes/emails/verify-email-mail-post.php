@@ -47,10 +47,14 @@ class   VerifyEmailMail extends Base
             return false;
         }
 
+        // var_dump(add_user_meta($this->prop['user_id'], 'nll_user_email_address_verification_token', $this->prop['token']), $this->prop, end($user));
+        // var_dump(add_user_meta($this->prop['user_id'], 'nll_user_email_address_verifed', 'yes'));
+        // die;
+
         if ($this->prop['token'] == end($user)) {
-            add_user_meta($this->prop['user_id'] ?? 1, 'nll_user_email_address_verification_token', $this->prop['token']);
-            add_user_meta($this->prop['user_id'] ?? 1, 'nll_user_email_address_verifed', 'yes');
-            return true;
+            add_user_meta($this->prop['user_id'], 'nll_user_email_address_verification_token', $this->prop['token']);
+            return add_user_meta($this->prop['user_id'], 'nll_user_email_address_verified', 'yes');
+            // return true;
         }
 
         return false;

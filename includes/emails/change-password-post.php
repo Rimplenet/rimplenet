@@ -45,9 +45,12 @@ class   ChangePasswordMail extends Base
     {
         $user = get_user_meta($this->prop['user_id'] ?? 1, 'token_to_reset_password');
 
-        if ($this->prop['token'] == $user) {
+
+        
+        if ($this->prop['token'] == end($user)) {
             return true;
         }
+
 
         return false;
     }
@@ -63,7 +66,9 @@ class   ChangePasswordMail extends Base
 
     public function verifyPassword()
     {
+        
         $user = get_user_by('email', $this->prop['email'] );
+
         if ( $user && wp_check_password( $this->prop['current_password'], $user->data->user_pass, $user->ID ) ) {
             return true;
         } else {
