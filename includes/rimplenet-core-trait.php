@@ -184,6 +184,8 @@ trait RimplenetWalletTrait
             ),
         );
 
+        
+
 
         $new_txn = wp_insert_post($new_txn_args);
 
@@ -223,7 +225,7 @@ trait RimplenetWalletTrait
 
         if (!empty($tags['txn_ref'])) {
             $external_txn_id = $tags['txn_ref'];
-            $ext_txn_id = rimplenet_txn_exist($user_id, $external_txn_id);
+            $ext_txn_id = $this->rimplenet_txn_exist($user_id, $external_txn_id);
             if ($ext_txn_id > 1) {
                 return $ext_txn_id;
             }
@@ -234,6 +236,8 @@ trait RimplenetWalletTrait
             return; // don't transact 0
         }
 
+        
+
         $key = 'user_withdrawable_bal_' . strtolower($wallet_id);
         $user_balance = get_user_meta($user_id, $key, true);
 
@@ -241,16 +245,25 @@ trait RimplenetWalletTrait
             $user_balance = 0;
         }
 
+        
+
         $bal_before = $user_balance;
         $user_balance_total = $this->get_total_wallet_bal($user_id, $wallet_id);
-
-        $new_balance  = $user_balance + $amount_to_add;
+        
+        
+        
+        // var_dump($amount_to_add, $user_balance);
+        // die("DS");
+        $new_balance  = intval($user_balance) + intval($amount_to_add);
         $new_balance  = $new_balance;
-
-
+        // var_dump($new_balance);
         do_action("before_add_user_mature_funds_to_wallet", $user_id, $amount_to_add, $wallet_id, $note, $tags);
 
+        
+
+        
         update_user_meta($user_id, $key, $new_balance);
+        
 
         if ($amount_to_add > 0) {
             $tnx_type = 'CREDIT';
@@ -259,11 +272,14 @@ trait RimplenetWalletTrait
             $amount_to_add = $amount_to_add * -1;
         }
 
+        
         $txn_add_bal_id = $this->record_Txn($user_id, $amount_to_add, $wallet_id, $tnx_type, 'publish');
+        
 
         if (!empty($note)) {
             add_post_meta($txn_add_bal_id, 'note', $note);
         }
+        
         update_post_meta($txn_add_bal_id, 'balance_before', $bal_before);
         update_post_meta($txn_add_bal_id, 'balance_after', $new_balance);
 
@@ -277,6 +293,7 @@ trait RimplenetWalletTrait
 
         do_action("after_add_user_mature_funds_to_wallet", $txn_add_bal_id, $user_id, $amount_to_add, $wallet_id, $note, $tags, $tnx_type);
 
+        // die("sd");
         return $txn_add_bal_id;
     }
 
@@ -329,5 +346,34 @@ trait RimplenetWalletTrait
         do_action("after_add_user_immature_funds_to_wallet", $txn_add_bal_id, $user_id, $amount_to_add, $wallet_id, $note, $tags, $tnx_type);
 
         return $txn_add_bal_id;
+    }
+
+    public function getWalletById(string $walletId)
+    {
+        global $wpdb;
+        $walletId = sanitize_text_field($walletId);
+        $wallet = $wpdb->get_row("SELECT * FROM $wpdb->postmeta WHERE meta_key='rimplenet_wallet_id' AND meta_value='$walletId' OR post_id = '$walletId' AND meta_key='rimplenet_wallet_id'");
+
+        if ($wallet) :
+            return $wallet;
+        else :
+            // Res::error(["Invalid wallet Id"], "Wallet not found", 404);
+            return false;
+        endif;
+    }
+
+
+    public function getWallet(string $walletId)
+    {
+        $wallet = $this->getWalletById($walletId);
+
+        if (!$wallet) :
+            return false;
+        else :
+            $wallet = get_post($wallet->post_id);
+            $walletData = $this->walletFormat($wallet);
+           Res::success($walletData, "Wallet Retrieved");
+            return $walletData;
+        endif;
     }
 }
