@@ -18,7 +18,7 @@ class RimplenetGetWalletBalance extends RimplenetBalance
         $data =array();
         foreach ($wallet_id as $key => $value) {
             // $this->wallet_id = $value;
-            if ($this->getWallet($value)) {
+            if ($this->getWalletById($value)) {
                 $data[$value]=$this->get_withdrawable_wallet_bal($user_id, $value) + $this->get_nonwithdrawable_wallet_bal($user_id, $value);
                 if ($formatted=="yes") {
                     $data['formatted'][$value]= $this->getRimplenetWalletFormattedAmount($this->get_withdrawable_wallet_bal($user_id, $value) + $this->get_nonwithdrawable_wallet_bal($user_id, $value), $value);
