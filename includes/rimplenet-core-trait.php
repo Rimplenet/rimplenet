@@ -372,7 +372,7 @@ trait RimplenetWalletTrait
         else :
             $wallet = get_post($wallet->post_id);
             $walletData = $this->walletFormat($wallet);
-           Res::success($walletData, "Wallet Retrieved");
+        //    Res::success($walletData, "Wallet Retrieved");
             return $walletData;
         endif;
     }
