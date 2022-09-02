@@ -4,8 +4,21 @@ class RimplenetAuthorizationApi
 {
     public function __construct()
     {
+        /**
+         *===================== BRUIZ ========================
+         * Check if secret key exists else generate a new one
+         * ============== Updated on sept 02 2022 ============
+         */
+        $nll_auth_secret_key = get_option('nll_auth_secret_key');
+        if(!$nll_auth_secret_key){
+            $key = password_hash(random_bytes(24), PASSWORD_BCRYPT).hash_hmac('sha256', random_bytes(24), rand());
+            add_option('nll_auth_secret_key', $key);
+        }
+
+
         add_action('rest_api_init', array($this, 'register_api_routes'));
         add_action( 'rimplenet_api_request_started', array($this, 'validate_jwt'), 1, 3 );
+
     }
 
     public function register_api_routes()
