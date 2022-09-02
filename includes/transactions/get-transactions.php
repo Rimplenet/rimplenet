@@ -118,10 +118,12 @@ class RimplenetGetTransactions extends RimplenetGetWallets
         $wallet_id = get_post_meta($txn_id, 'currency', true);
   
         $all_rimplenet_wallets = $this->getWallets();
-        
+        // var_dump($all_rimplenet_wallets);
+        // die;
         $data[$key]->wallet_symbol = $all_rimplenet_wallets[$wallet_id]['symbol'];
         $data[$key]->wallet_decimal = $all_rimplenet_wallets[$wallet_id]['decimal'];
         $data[$key]->wallet_decimal = $all_rimplenet_wallets[$wallet_id]['decimal'];
+        $data[$key]->wallet_id = $all_rimplenet_wallets[$wallet_id]['wallet_id'];
         
         
         $data[$key]->amount = get_post_meta($txn_id, 'amount', true);
@@ -202,7 +204,7 @@ class RimplenetGetTransactions extends RimplenetGetWallets
         //get some info here to retun or some nice date like belo
 
         if (!empty($pageno)) {
-          $pageno = sanitize_text_field($_GET['pageno']);
+          $pageno = sanitize_text_field($_GET['pageno'] ?? 1);
          }else{
           $pageno = 1;
          }
