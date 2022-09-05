@@ -104,7 +104,7 @@ class RimplenetCreateCredits extends RimplenetGetWallets
                 $prop
             );
 
-            return Res::success(['id' => $result], "Transaction Completed", 200);
+            return Res::success(['transaction_id' => $result], "Transaction Completed", 200);
         } else {
             $prop['action'] = "already executed";
             do_action(

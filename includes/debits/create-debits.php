@@ -102,7 +102,7 @@ class RimplenetCreateDebits extends Debits
                 $param
             );
             $result = $txn_add_bal_id;
-            return Res::success(['id' => $result], "Transaction Completed", 200);
+            return Res::success(['transaction_id' => $result], "Transaction Completed", 200);
         } else {
             # action hook
             $param['action'] = "failed";
