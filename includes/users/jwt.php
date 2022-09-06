@@ -2,10 +2,23 @@
 
 class JWT
 {
+    public static $AUTH_KEY;
+    public function __construct() {
+        self::$AUTH_KEY = get_option('nll_auth_secret_key');
+    }
 
+    /**
+     * -------------- NOTE BRUIZ ------------------------
+     * Since methods below are static method which are probably not instantiated before
+     * initializing and $AUTH_KEY is set within constructor i.e Methods statically called
+     * will ignore the constructor to stay on a safer side, instatiate JWT to get token
+     * ================ Updated on Sept 2 2022 ================
+     */
     public static function encode($payload) {
 
-        $secret = "7b9f363fda9c1abe7ece40ac21e4f58421adcf9ada713f500eccab611564ec6";
+        $jwt = new JWT;
+
+        $secret = $jwt::$AUTH_KEY;
         // Create the token header
         $header = json_encode([
             'typ' => 'JWT',
@@ -33,7 +46,8 @@ class JWT
 
     public static function decode($access_token) {
 
-        $secret = "7b9f363fda9c1abe7ece40ac21e4f58421adcf9ada713f500eccab611564ec6";
+        $jwt = new JWT;
+        $secret = $jwt::$AUTH_KEY;
         // split the token
         $tokenParts = explode('.', $access_token);
         $header = base64_decode($tokenParts[0]);
