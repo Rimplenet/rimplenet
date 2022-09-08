@@ -166,13 +166,18 @@ class RimplenetGetTransactions extends RimplenetGetWallets
         $data[$key]->date_time = get_the_date('D, M j, Y', $txn_id) . '<br>' . get_the_date('g:i A', $txn_id);
         $wallet_id = get_post_meta($txn_id, 'currency', true);
 
-        $all_rimplenet_wallets = $this->getWallets();
-        // var_dump($all_rimplenet_wallets);
+        // $all_rimplenet_wallets = $this->getWallets();
+        // var_dump($all_rimplenet_wallets, $wallet_id);
         // die;
-        $data[$key]->wallet_symbol = $all_rimplenet_wallets[$wallet_id]['symbol'];
-        $data[$key]->wallet_decimal = $all_rimplenet_wallets[$wallet_id]['decimal'];
-        $data[$key]->wallet_decimal = $all_rimplenet_wallets[$wallet_id]['decimal'];
-        $data[$key]->wallet_id = $all_rimplenet_wallets[$wallet_id]['wallet_id'];
+        $wallet = $this->getWallet($wallet_id);
+        // $data[$key]->wallet_symbol = $all_rimplenet_wallets[$wallet_id]['symbol'];
+        // $data[$key]->wallet_decimal = $all_rimplenet_wallets[$wallet_id]['decimal'];
+        // $data[$key]->wallet_decimal = $all_rimplenet_wallets[$wallet_id]['decimal'];
+        // $data[$key]->wallet_id = $all_rimplenet_wallets[$wallet_id]['wallet_id'];
+        $data[$key]->wallet_symbol = $wallet['wallet_symbol'];
+        $data[$key]->wallet_decimal = $wallet['wallet_decimal'];
+        // $data[$key]->wallet_decimal = $all_rimplenet_wallets[$wallet_id]['decimal'];
+        $data[$key]->wallet_id = $wallet_id;
 
 
         $data[$key]->amount = get_post_meta($txn_id, 'amount', true);
@@ -191,13 +196,16 @@ class RimplenetGetTransactions extends RimplenetGetWallets
       $data->date_time = get_the_date('D, M j, Y', $txn_id) . '<br>' . get_the_date('g:i A', $txn_id);
       $wallet_id = get_post_meta($txn_id, 'currency', true);
 
-      $all_rimplenet_wallets = $this->getWallets();
-      // var_dump($all_rimplenet_wallets);
-      // die;
-      $data->wallet_symbol = $all_rimplenet_wallets[$wallet_id]['symbol'];
-      $data->wallet_decimal = $all_rimplenet_wallets[$wallet_id]['decimal'];
-      $data->wallet_decimal = $all_rimplenet_wallets[$wallet_id]['decimal'];
-      $data->wallet_id = $all_rimplenet_wallets[$wallet_id]['wallet_id'];
+      
+      $wallet = $this->getWallet($wallet_id);
+      // $data[$key]->wallet_symbol = $all_rimplenet_wallets[$wallet_id]['symbol'];
+      // $data[$key]->wallet_decimal = $all_rimplenet_wallets[$wallet_id]['decimal'];
+      // $data[$key]->wallet_decimal = $all_rimplenet_wallets[$wallet_id]['decimal'];
+      // $data[$key]->wallet_id = $all_rimplenet_wallets[$wallet_id]['wallet_id'];
+      $data->wallet_symbol = $wallet['wallet_symbol'];
+      $data->wallet_decimal = $wallet['wallet_decimal'];
+      // $data[$key]->wallet_decimal = $all_rimplenet_wallets[$wallet_id]['decimal'];
+      $data->wallet_id = $wallet_id;
 
 
       $data->amount = get_post_meta($txn_id, 'amount', true);
