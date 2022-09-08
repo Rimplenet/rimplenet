@@ -18,7 +18,15 @@ class RetrieveTransactions extends RimplenetGetTransactions
   
     
   public function api_retrieve_txns(WP_REST_Request $request ) {
-    return $this->getTransactionsOld($request);
+
+    $param = [
+      'transaction_id' => sanitize_text_field($request['transaction_id']) ?? false,
+      'user_id' => sanitize_text_field($request['user_id']) ?? false,
+      'type' => sanitize_text_field($request['type'] ?? false),
+      'id' => sanitize_text_field($request['id'] ?? false),
+  ];
+    // return $this->getTransactionsOld($request);
+    return $this->getTransactions($param);
      
      
 
