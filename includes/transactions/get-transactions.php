@@ -169,6 +169,8 @@ class RimplenetGetTransactions extends RimplenetGetWallets
         // var_dump($value);
         // die;
         $txn_id = $value->ID;
+        $data[$key]->transaction_id=$value->ID;
+      unset($value->ID);
 
 
         $data[$key]->date_time = get_the_date('D, M j, Y', $txn_id) . '<br>' . get_the_date('g:i A', $txn_id);
@@ -199,6 +201,8 @@ class RimplenetGetTransactions extends RimplenetGetWallets
       }
     } else {
       $txn_id = $data->ID;
+      $data->transaction_id=$data->ID;
+      unset($data->ID);
 
 
       $data->date_time = get_the_date('D, M j, Y', $txn_id) . '<br>' . get_the_date('g:i A', $txn_id);
