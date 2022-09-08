@@ -162,6 +162,11 @@ class RimplenetGetTransactions extends RimplenetGetWallets
 
   public function formatTransactions($data)
   {
+    
+
+    if (is_null($data)) {
+      return false;
+    }
 
     if (is_array($data)) {
       foreach ($data as $key => $value) {
