@@ -185,12 +185,12 @@ class RimplenetGetTransactions extends RimplenetGetWallets
         // $data[$key]->wallet_decimal = $all_rimplenet_wallets[$wallet_id]['decimal'];
         // $data[$key]->wallet_id = $all_rimplenet_wallets[$wallet_id]['wallet_id'];
         $data[$key]->wallet_symbol = $wallet['wallet_symbol'];
-        $data[$key]->wallet_decimal = $wallet['wallet_decimal'];
+        $data[$key]->wallet_decimal = intval($wallet['wallet_decimal']);
         // $data[$key]->wallet_decimal = $all_rimplenet_wallets[$wallet_id]['decimal'];
         $data[$key]->wallet_id = $wallet_id;
 
 
-        $data[$key]->amount = get_post_meta($txn_id, 'amount', true);
+        $data[$key]->amount = intval(get_post_meta($txn_id, 'amount', true));
         $data[$key]->txn_type = get_post_meta($txn_id, 'txn_type', true);
 
         $data[$key]->amount_formatted_disp = $this->getRimplenetWalletFormattedAmount($data[$key]->amount, $wallet_id);
@@ -215,12 +215,12 @@ class RimplenetGetTransactions extends RimplenetGetWallets
       // $data[$key]->wallet_decimal = $all_rimplenet_wallets[$wallet_id]['decimal'];
       // $data[$key]->wallet_id = $all_rimplenet_wallets[$wallet_id]['wallet_id'];
       $data->wallet_symbol = $wallet['wallet_symbol'];
-      $data->wallet_decimal = $wallet['wallet_decimal'];
+      $data->wallet_decimal = intval($wallet['wallet_decimal']);
       // $data[$key]->wallet_decimal = $all_rimplenet_wallets[$wallet_id]['decimal'];
       $data->wallet_id = $wallet_id;
 
 
-      $data->amount = get_post_meta($txn_id, 'amount', true);
+      $data->amount = intval(get_post_meta($txn_id, 'amount', true));
       $data->txn_type = get_post_meta($txn_id, 'txn_type', true);
 
       $data->amount_formatted_disp = $this->getRimplenetWalletFormattedAmount($data->amount, $wallet_id);
