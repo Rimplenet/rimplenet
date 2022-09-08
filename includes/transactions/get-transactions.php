@@ -22,12 +22,20 @@ class RimplenetGetTransactions extends RimplenetGetWallets
     //   do_action('rimplenet_hooks_and_monitors_on_started', $action = 'rimplenet_get_transactions', $auth = null, $request = ['credit_id' => $id]);
     //   $txn_loop = $this->getTransactionsByUser($user_id, $posts_per_page, $pageno);
     // }else 
+    // var_dump($transaction_id);
+    // die;
     if ($transaction_id !== false && !empty($transaction_id)) {
       $txn_loop = $this->getTransactionByID($transaction_id);
       // var_dump($txn_loop);
       // die;
       // die("Fs");
-    } else {
+    } elseif ($user_id) {
+      $txn_loop=$this->getTransactionsByUser($user_id, 10, $pageno??1);
+      if ($txn_loop->have_posts()) {
+        $txn_loop = $txn_loop->get_posts();
+      }
+    }
+    else {
       do_action('rimplenet_hooks_and_monitors_on_started', $action = 'rimplenet_get_transactions', $auth = null, $request = ['credit_id' => $id]);
       $txn_loop = $this->getAllTransactions($posts_per_page, $pageno);
       // $txn_loop=$txn_loop
