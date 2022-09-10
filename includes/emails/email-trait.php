@@ -60,12 +60,12 @@ trait RimplenetEmailTrait
 
   public function storeResetToken($user_id, $token)
   {
-    return add_user_meta($user_id ?? 1, 'token_to_reset_password', $token);
+    return add_user_meta($user_id, 'token_to_reset_password', $token);
   }
 
   public function storeverifyToken($user_id, $token)
   {
-    return add_user_meta($user_id ?? 1, 'token_to_verify_email', $token);
+    return add_user_meta($user_id, 'token_to_verify_email', $token);
   }
 
   public function getResetToken()
