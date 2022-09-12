@@ -66,7 +66,7 @@ trait RimplenetWalletTrait
 
         $wallet = $this->getWallet($wallet_id);
 
-        $dec = $wallet['wallet_decimal'] ?? 0   ;
+        $dec = $wallet['wallet_decimal'] ?? 0;
         $symbol = $wallet['wallet_symbol'] ?? '';
         $symbol_position = $wallet['wallet_symbol_position'] ?? '';
 
@@ -184,7 +184,7 @@ trait RimplenetWalletTrait
             ),
         );
 
-        
+
 
 
         $new_txn = wp_insert_post($new_txn_args);
@@ -236,7 +236,7 @@ trait RimplenetWalletTrait
             return; // don't transact 0
         }
 
-        
+
 
         $key = 'user_withdrawable_bal_' . strtolower($wallet_id);
         $user_balance = get_user_meta($user_id, $key, true);
@@ -245,13 +245,13 @@ trait RimplenetWalletTrait
             $user_balance = 0;
         }
 
-        
+
 
         $bal_before = $user_balance;
         $user_balance_total = $this->get_total_wallet_bal($user_id, $wallet_id);
-        
-        
-        
+
+
+
         // var_dump($amount_to_add, $user_balance);
         // die("DS");
         $new_balance  = intval($user_balance) + intval($amount_to_add);
@@ -259,11 +259,11 @@ trait RimplenetWalletTrait
         // var_dump($new_balance);
         do_action("before_add_user_mature_funds_to_wallet", $user_id, $amount_to_add, $wallet_id, $note, $tags);
 
-        
 
-        
+
+
         update_user_meta($user_id, $key, $new_balance);
-        
+
 
         if ($amount_to_add > 0) {
             $tnx_type = 'CREDIT';
@@ -272,14 +272,14 @@ trait RimplenetWalletTrait
             $amount_to_add = $amount_to_add * -1;
         }
 
-        
+
         $txn_add_bal_id = $this->record_Txn($user_id, $amount_to_add, $wallet_id, $tnx_type, 'publish');
-        
+
 
         if (!empty($note)) {
             add_post_meta($txn_add_bal_id, 'note', $note);
         }
-        
+
         update_post_meta($txn_add_bal_id, 'balance_before', $bal_before);
         update_post_meta($txn_add_bal_id, 'balance_after', $new_balance);
 
@@ -297,7 +297,7 @@ trait RimplenetWalletTrait
         return $txn_add_bal_id;
     }
 
-    
+
     public function add_user_immature_funds_to_wallet($user_id, $amount_to_add, $wallet_id, $note = '', $tags = [])
     {
 
@@ -372,7 +372,7 @@ trait RimplenetWalletTrait
         else :
             $wallet = get_post($wallet->post_id);
             $walletData = $this->walletFormat($wallet);
-        //    Res::success($walletData, "Wallet Retrieved");
+            //    Res::success($walletData, "Wallet Retrieved");
             return $walletData;
         endif;
     }
@@ -383,7 +383,7 @@ trait RimplenetWalletTrait
 
         $min_withdrawal = $this->postMeta('rimplenet_min_withdrawal_amount');
         $min_withdrawal == '' && $min_withdrawal  = Utils::MIN_AMOUNT;
-        
+
         $max_withdrawal = $this->postMeta('rimplenet_max_withdrawal_amount');
         $max_withdrawal == '' && $max_withdrawal  = Utils::MAX_AMOUNT;
 
@@ -394,7 +394,7 @@ trait RimplenetWalletTrait
         !$enb_as_wcclst ? $enb_as_wcclst = false : $enb_as_wcclst = true;
 
         $res = [
-            'post_id'=>$this->id,
+            'post_id' => $this->id,
             'wallet_id'        => $this->postMeta('rimplenet_wallet_id'),
             'wallet_name'      => $wallet->post_title,
             "wallet_symbol"    => $this->postMeta('rimplenet_wallet_symbol'),
@@ -416,7 +416,132 @@ trait RimplenetWalletTrait
         ];
         return $res;
     }
+    function rimplenet_fund_user_mature_wallet($request_id, $user_id, $amount_to_add, $wallet_id, $note = '', $tags = [], $extra_data = '')
+    {
+        global $wpdb;
 
+        $txn_request_id = $user_id . "_" . $request_id;
+        $recent_txn_transient_key = "recent_txn_" . $txn_request_id;
+
+        if ($GLOBALS[$recent_txn_transient_key] == "executing") {
+            return;
+        }
+        if (get_transient($recent_txn_transient_key)) {
+            return;
+        }
+
+        $GLOBALS[$recent_txn_transient_key] = 'executing';
+        set_transient($recent_txn_transient_key, 'executing', 60);
+
+        $inputed_data = array(
+            "request_id" => $request_id, "user_id" => $user_id, "amount_to_add" => $amount_to_add, "wallet_id" => $wallet_id
+        );
+
+        $empty_input_array = array();
+        //Loop & Find out empty inputs
+        foreach ($inputed_data as $input_key => $single_data) {
+            if (empty($single_data)) {
+                $empty_input_array[$input_key]  = "field_required";
+            }
+        }
+
+        //RUN CHECKS
+        $result = array();
+        $additonal_result = array();
+
+        $row_result = $wpdb->get_row("SELECT * FROM $wpdb->postmeta WHERE meta_key='txn_request_id' AND meta_value='$txn_request_id'");
+        if (!empty($row_result)) { //it means txn has already exist
+
+            $funds_id = $row_result->post_id;
+            $status = "transaction_already_executed";
+            $response_message = "Transaction Already Executed";
+            $data = array("txn_id" => $funds_id);
+        } elseif (!empty($empty_input_array)) {
+            //if atleast one required input is empty
+            $status = "one_or_more_input_required";
+            $response_message = "One or more input field is required";
+            $data = array("error" => $empty_input_array);
+        } elseif ($amount_to_add == 0) {
+            $status = "amount_is_zero";
+            $response_message = "Amount should not be Zero";
+            $data = array("error" => "Amount is zero");
+        } else { // ALL GOOD, PROCEED WITH OPERATION
+            $key = 'user_withdrawable_bal_' . strtolower($wallet_id);
+            $user_balance = get_user_meta($user_id, $key, true);
+            if (!is_numeric($user_balance) and !is_int($user_balance)) {
+                $user_balance = 0;
+            }
+
+            $bal_before = $user_balance;
+            $user_balance_total = $this->get_total_wallet_bal($user_id, $wallet_id);
+
+            $new_balance  = $user_balance + $amount_to_add;
+            $new_balance  = $new_balance;
+
+            $update_bal = update_user_meta($user_id, $key, $new_balance);
+            if ($update_bal) { //balance successfully updated
+                if ($amount_to_add > 0) {
+                    $tnx_type = "CREDIT";
+                } else {
+                    $tnx_type = "DEBIT";
+                    $amount_to_add = $amount_to_add * -1;
+                }
+
+                $txn_add_bal_id = $this->record_Txn($user_id, $amount_to_add, $wallet_id, $tnx_type, 'publish');
+
+                if (!empty($note)) {
+                    add_post_meta($txn_add_bal_id, 'note', $note);
+                }
+                add_post_meta($txn_add_bal_id, 'request_id', $request_id);
+                add_post_meta($txn_add_bal_id, 'txn_request_id', $txn_request_id);
+                update_post_meta($txn_add_bal_id, 'balance_before', $bal_before);
+                update_post_meta($txn_add_bal_id, 'balance_after', $new_balance);
+
+                update_post_meta($txn_add_bal_id, 'total_balance_before', $user_balance_total);
+                update_post_meta($txn_add_bal_id, 'total_balance_after', $this->get_total_wallet_bal($user_id, $wallet_id));
+                update_post_meta($txn_add_bal_id, 'funds_type', $key);
+            } else {
+                $status = "unknown_error";
+                $response_message = "Unknown Error";
+                $data = array();
+            }
+        }
+
+        if ($txn_add_bal_id > 0) {
+            $result = $txn_add_bal_id;
+        } else {
+            $result = array(
+                "status" => $status,
+                "message" => $response_message,
+                "data" => $data
+            );
+            $result = json_encode($result);
+        }
+
+        return $result;
+    }
+
+    /**
+     * 
+     */
+    public function ConvertRimplenetAmount($amount, $wallet_from, $wallet_to)
+    {
+
+        $base_wallet = get_option("rimplenet_website_base_wallet", "rimplenetcoin");
+
+        $key_from_wallet_to_base_wallet = "rate_1_" . $wallet_from . "_to_website_base_wallet";
+        $value_from_wallet_to_base_wallet = get_option($key_from_wallet_to_base_wallet, 1);
+
+        $key_to_wallet_to_base_wallet = "rate_1_" . $wallet_to . "_to_website_base_wallet";
+        $value_to_wallet_to_base_wallet = get_option($key_to_wallet_to_base_wallet, 1);
+
+        $amount_to_base_wallet = $amount * $value_from_wallet_to_base_wallet; // convert the amt (in wallet_from) to website base cur value
+        $amount_to_wallet_to = $amount_to_base_wallet / $value_to_wallet_to_base_wallet; // convert from website base cur value TO provided WALLET_TO
+
+        $amt_converted = $amount_to_wallet_to;
+
+        return $amt_converted;
+    }
     protected function postMeta($field = '')
     {
         return get_post_meta($this->id, $field, true);

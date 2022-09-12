@@ -10,7 +10,8 @@ class RimplenetLoginUser
         add_shortcode('rimplenet-login-user', array($this, 'login_user_test'));
     }
 
-    public function login_user_test() {
+    public function login_user_test()
+    {
         ob_start();
         var_dump($this->login_user("taiwo@gmail.com", "abc123"));
         return ob_get_clean();
@@ -24,14 +25,14 @@ class RimplenetLoginUser
         $is_user = wp_authenticate($user_email, $user_password);
 
         if (empty($this->validation_error) && is_wp_error($is_user)) {
-            
+
             $this->validation_error[] = 'Invalid Credential';
         }
 
         if ($token_expiration == null) {
-            
-            if(!empty($this->validation_error)) return $this->response(400, "failed", "Validation error", [], $this->validation_error);
-            
+
+            if (!empty($this->validation_error)) return $this->response(400, "failed", "Validation error", [], $this->validation_error);
+
             if (empty($this->validation_error)) {
 
                 $request = [
@@ -39,11 +40,11 @@ class RimplenetLoginUser
                     "user_password" => $user_password,
                     "token_expiration" => $token_expiration
                 ];
-                
-                do_action('rimplenet_hooks_and_monitors_on_started', $action='rimplenet_login_user', $auth=null ,$request);
+
+                do_action('rimplenet_hooks_and_monitors_on_started', $action = 'rimplenet_login_user', $auth = null, $request);
 
                 unset($is_user->data->user_pass);
-    
+
                 $iss = 'localhost';
                 $iat = time();
                 $exp = $iat + 3600;
@@ -52,22 +53,27 @@ class RimplenetLoginUser
                 # unset user data ... email /fname--lname
                 $newData = [];
                 $newData["id"] = $user_data["ID"];
-                foreach($user_data as $data => $val):
-                    if($data == 'ID' || $data == 'user_email' || $data == 'first_name' || $data == 'last_name'){
+                foreach ($user_data as $data => $val) :
+                    if (
+                        $data == 'ID'
+                        || $data == 'user_email'
+                        || $data == 'first_name'
+                        || $data == 'last_name'
+                    ) {
                         unset($user_data[$data]);
                         continue;
                     }
                     $newData[$data] = $val;
                 endforeach;
-    
-    
+
+
                 $payload = json_encode([
                     'iss' => $iss,
                     'iat' => $iat,
                     'exp' => $exp,
                     'user' => $newData
                 ]);
-    
+
                 $jwt = JWT::encode($payload);
 
                 $data = [
@@ -77,35 +83,33 @@ class RimplenetLoginUser
                     "username"      => $is_user->data->user_login,
                     "time_of_login" => time()
                 ];
-                
-                return $this->response(200, true, "Login successful", $data, []);
-    
-            }
 
+                return $this->response(200, true, "Login successful", $data, []);
+            }
         } else {
 
             if ($token_expiration == 'persistent') {
 
-                if(!empty($this->validation_error)) return $this->response(400, "failed", "Validation error", [], $this->validation_error);
-            
+                if (!empty($this->validation_error)) return $this->response(400, "failed", "Validation error", [], $this->validation_error);
+
                 if (empty($this->validation_error)) {
-        
+
                     unset($is_user->data->user_pass);
-        
+
                     $iss = 'localhost';
                     $iat = time();
                     $exp = $iat + 15780000;
                     $user_data = $this->userFormat($is_user);
-        
+
                     $secret_key = "user123";
-        
+
                     $payload = json_encode([
                         'iss' => $iss,
                         'iat' => $iat,
                         'exp' => $exp,
                         'user' => $user_data
                     ]);
-        
+
                     $jwt = JWT::encode($payload);
 
                     $data = [
@@ -115,17 +119,13 @@ class RimplenetLoginUser
                         "username"      => $is_user->data->user_login,
                         "time_of_login" => time()
                     ];
-                    
+
                     return $this->response(200, true, "Login successful", $data, []);
-        
                 }
             } else {
-                return $this->response(400, "failed", "Validation error", [], ['error'=>'unkown token_expiration']);
+                return $this->response(400, "failed", "Validation error", [], ['error' => 'unkown token_expiration']);
             }
         }
-
-        
-
     }
 
     public function validate($user_email, $user_pass)
@@ -134,7 +134,7 @@ class RimplenetLoginUser
         $user_pass_error = [];
 
         $user['user_email'] = sanitize_text_field($user_email);
-	    $user['user_pass'] = $user_pass;
+        $user['user_pass'] = $user_pass;
 
         if ($user['user_email'] == '') {
             $user_email_error[] = 'user_email is required';
@@ -152,17 +152,16 @@ class RimplenetLoginUser
         if (!empty($user_pass_error)) {
             $this->validation_error[] = ['user_pass' => $user_pass_error];
         }
-
     }
 
-    public function response($status_code, $status, $message, $data=[], $error=[])
+    public function response($status_code, $status, $message, $data = [], $error = [])
     {
         return [
             "status_code" => $status_code,
             "status" => $status,
             "message" => $message,
             "data" => $data,
-            "error" =>$error
+            "error" => $error
         ];
     }
 
@@ -177,10 +176,9 @@ class RimplenetLoginUser
             "user_email" => $user->data->user_email,
             "first_name" => get_user_meta($user->data->ID, "first_name", true),
             "last_name" => get_user_meta($user->data->ID, "last_name", true),
-			"roles" => $user->roles,
+            "roles" => $user->roles,
         ];
     }
-    
 }
 
 $RimplenetLoginUser = new RimplenetLoginUser();
