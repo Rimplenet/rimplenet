@@ -16,23 +16,25 @@ class RimplenetPasswordChangeMail extends Base
 
      $user_id=$this->getUserId('email', $email);
      if (!$user_id) {
-      return $this->error(401, "User not found");
+        return $this->error(401, "User not found");
      }
 
 
 
-     $sent['token_to_reset_password']=$this->generateToken();
-     $this->storeResetToken($user_id, $sent['token_to_reset_password']);
+     $sent['token_to_change_password']=$this->generateToken();
+     $this->storeChangeToken($user_id, $sent['token_to_change_password']);
         
-        if ($sendmail) {
-          $sent['mail']=$this->sendPasswordChange($email, $sent['token_to_reset_password']);
-          $message=$sent['mail'] ? 'Password Change Email Sent' : 'Password Change Email Not Sent';
+        if ($sendmail=="true") {
+          $sent['mail']=$this->sendPasswordChange($email, $sent['token_to_change_password']);
+          $message = $sent['mail'] ? 'Password Change Email Sent' : 'Password Change Email Not Sent';
+          unset($sent['token_to_change_password']);
           $sent['mail'] ? $this->success($sent, $message) : $this->error($sent, $message);
           return $this->response;
         }
 
-        $message=$sent['token_to_reset_password'] ? 'Token Generated' : 'Token Not Generated';
-        $sent['token_to_reset_password'] ? $this->success($sent, $message) : $this->error($sent, $message);
+        $sent['mail']=false;
+        $message=$sent['token_to_change_password'] ? 'Token Generated' : 'Token Not Generated';
+        $sent['token_to_change_password'] ? $this->success($sent, $message) : $this->error($sent, $message);
           return $this->response;
    }
 }
