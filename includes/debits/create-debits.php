@@ -82,7 +82,7 @@ class RimplenetCreateDebits extends Debits
             update_post_meta($txn_add_bal_id, 'funds_type', $key);
         else :
             #  action hook
-            $param['action'] = "failed";
+            $param['action_status'] = "failed";
             do_action(
                 'rimplenet_hooks_and_monitors_on_finished',
                 'rimplenet_create_debits',
@@ -94,7 +94,7 @@ class RimplenetCreateDebits extends Debits
 
         if ($txn_add_bal_id > 0) {
             # action hook
-            $param['action'] = "success";
+            $param['action_status'] = "success";
             do_action(
                 'rimplenet_hooks_and_monitors_on_finished',
                 'rimplenet_create_debits',
@@ -105,7 +105,7 @@ class RimplenetCreateDebits extends Debits
             return Res::success(['transaction_id' => $result], "Transaction Completed", 200);
         } else {
             # action hook
-            $param['action'] = "failed";
+            $param['action_status'] = "failed";
             do_action(
                 'rimplenet_hooks_and_monitors_on_finished',
                 'rimplenet_create_debits',
@@ -128,7 +128,8 @@ class RimplenetCreateDebits extends Debits
         $value = strtolower($value);
         $row = $wpdb->get_row("SELECT * FROM $wpdb->postmeta WHERE meta_key='txn_request_id' AND meta_value='$value'");
         if ($row) :
-            $param['action'] = "already executed";
+            $param['action_status'] = "already_executed";
+            $param['transaction_id'] = $row->post_id;
             do_action(
                 'rimplenet_hooks_and_monitors_on_finished',
                 'rimplenet_create_debits',

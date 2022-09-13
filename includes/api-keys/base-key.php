@@ -105,7 +105,7 @@ class ApiKey
                 'password' => 'Confirm password matches',
             ]
         ], 'Invalid Token', 401);
-        $isAdministrator = $user->caps['administrator'];
+        $isAdministrator = $user->caps['administrator'] ?? false;
 
         # chek if user is Administrator
         if (!$isAdministrator) return Res::error([
@@ -196,7 +196,13 @@ class ApiKey
         $permission = $this->permission;
         if($permission == 'read-only') $affix = 'get';
         if($permission == 'write-only') $affix = 'create';
-        if($permission == 'read-write') $affix = 'all';
+        if($permission == 'read-write') $affix = ['get', 'create', 'update', 'delete'];
+
+        if(is_array($permission)) {
+            foreach ($permission as $key) {
+            }
+            return $action;
+        }
         $action = str_replace('_', '_'.$affix.'_' ,$action);
         return $action;
     }
