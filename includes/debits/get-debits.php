@@ -20,8 +20,8 @@ class RimplenetGetDebits extends Debits
             $debits = get_post($debits->post_id);
             $debit = $this->formatDebits($debits);
             # action hook
-            $param['action'] = "success";
-            $param['debit'] = $debit;
+            $param['action_status'] = "success";
+            $param['debit_id'] = $debit;
             do_action(
                 'rimplenet_hooks_and_monitors_on_finished',
                 'rimplenet_get_debit',
@@ -31,7 +31,7 @@ class RimplenetGetDebits extends Debits
             return Res::success($debit, 'Transacrion Retrieved', 200);
         else :
             # action hook
-            $param['action'] = "failed";
+            $param['action_status'] = "failed";
             $param['debit_id'] = $id;
             do_action(
                 'rimplenet_hooks_and_monitors_on_finished',
@@ -52,7 +52,7 @@ class RimplenetGetDebits extends Debits
                 $posts[$key] = $this->formatDebits($post);
             endforeach;
             # action hook
-            $param['action'] = "success";
+            $param['action_status'] = "success";
             $param['debits'] = $posts;
             do_action(
                 'rimplenet_hooks_and_monitors_on_finished',
@@ -63,7 +63,7 @@ class RimplenetGetDebits extends Debits
             return Res::success($posts, 'Debits Retrieved');
         else :
             # action hook
-            $param['action'] = "failed";
+            $param['action_status'] = "failed";
             do_action(
                 'rimplenet_hooks_and_monitors_on_finished',
                 'rimplenet_get_debits',

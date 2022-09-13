@@ -96,7 +96,9 @@ class RimplenetCreateCredits extends RimplenetGetWallets
             $result = $txn_add_bal_id;
 
             # action on finished
-            $prop['action'] = "success";
+            $prop['action_status'] = "success";
+            $prop['transaction_id'] = $result;
+
             do_action(
                 'rimplenet_hooks_and_monitors_on_finished',
                 'rimplenet_create_credits',
@@ -106,7 +108,8 @@ class RimplenetCreateCredits extends RimplenetGetWallets
 
             return Res::success(['transaction_id' => $result], "Transaction Completed", 200);
         } else {
-            $prop['action'] = "already executed";
+            $prop['action_status'] = "already_executed";
+            $prop['transaction_id'] = $txn_add_bal_id ?? null;
             do_action(
                 'rimplenet_hooks_and_monitors_on_finished',
                 'rimplenet_create_credits',
@@ -115,7 +118,7 @@ class RimplenetCreateCredits extends RimplenetGetWallets
             );
             return Res::error('Transaction Already Executed', 'Transaction Already Executed', 409);
         }
-        $prop['action'] = "failed";
+        $prop['action_status'] = "failed";
         do_action(
             'rimplenet_hooks_and_monitors_on_finished',
             'rimplenet_create_credits',
@@ -136,7 +139,8 @@ class RimplenetCreateCredits extends RimplenetGetWallets
         $value = strtolower($value);
         $row = $wpdb->get_row("SELECT * FROM $wpdb->postmeta WHERE meta_key='txn_request_id' AND meta_value='$value'");
         if ($row) :
-            $param['action'] = "already executed";
+            $param['action_status'] = "already_executed";
+            $param['transaction_id'] =  $row->post_id;
             do_action(
                 'rimplenet_hooks_and_monitors_on_finished',
                 'rimplenet_create_credits',

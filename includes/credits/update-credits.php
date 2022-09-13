@@ -39,7 +39,7 @@ class RimplenetUpdateCredits extends Credits
                 update_post_meta($id, 'note', $note);
 
                 #  Updated Credit on ended do action
-                $$request['action'] = "success";
+                $$request['action_status'] = "success";
                 do_action(
                     'rimplenet_hooks_and_monitors_on_finished',
                     'rimplenet_update_credit',
@@ -52,7 +52,7 @@ class RimplenetUpdateCredits extends Credits
                 add_post_meta($id, 'note', $note);
 
                 # update credits action hook
-                $request['action'] = "success";
+                $request['action_status'] = "success";
                 do_action(
                     'rimplenet_hooks_and_monitors_on_finished',
                     'rimplenet_update_credit',
@@ -64,7 +64,7 @@ class RimplenetUpdateCredits extends Credits
             return true;
         else :
             # Update Credits action hook
-            $request['action'] = "failed";
+            $request['action_status'] = "failed";
             do_action(
                 'rimplenet_hooks_and_monitors_on_finished',
                 'rimplenet_update_credit',

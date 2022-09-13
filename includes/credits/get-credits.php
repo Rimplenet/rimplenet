@@ -25,7 +25,7 @@ class RimplenetGetCredits extends Credits
             # Format credits
             $credits = $this->formatCredits($credits);
             # get Credits action hook
-            $param['action'] = "success";
+            $param['action_status'] = "success";
             $param['credit'] = $credits;
             do_action(
                 'rimplenet_hooks_and_monitors_on_finished',
@@ -36,7 +36,7 @@ class RimplenetGetCredits extends Credits
             return Res::success($credits, 'Transacrion Retrieved', 200);
         else :
             # get Credits action hook
-            $param['action'] = "failed";
+            $param['action_status'] = "failed";
                 do_action(
                     'rimplenet_hooks_and_monitors_on_finished',
                     'rimplenet_get_credit',
@@ -56,7 +56,7 @@ class RimplenetGetCredits extends Credits
                 $posts[$key] = $this->formatCredits($post);
             endforeach;
             # get Credits action hook
-            $param['action'] = "success";
+            $param['action_status'] = "success";
             $param['credits'] = $posts;
                 do_action(
                     'rimplenet_hooks_and_monitors_on_finished',
@@ -67,7 +67,7 @@ class RimplenetGetCredits extends Credits
             return Res::success($posts, 'Credits Retrieved');
         else :
             # Update Credits action hook
-            $param['action'] = "failed";
+            $param['action_status'] = "failed";
                 do_action(
                     'rimplenet_hooks_and_monitors_on_finished',
                     'rimplenet_get_credits',
