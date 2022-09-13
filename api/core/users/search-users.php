@@ -30,7 +30,27 @@ class RimplenetSearchUserApi
                 'user_email',
                 'user_url',
             ),
-        ) );
+        ),
+    
+        array(
+            'meta_query' => array(
+                'relation' => 'AND',
+                    array(
+                        'key'     => 'first_name',
+                        'value'   => $user_id,
+                         'compare' => 'LIKE' // any value that contains developer
+                    ),
+                    array(
+                        'key'     => 'last_name',
+                        'value'   => $user_id,
+                         'compare' => 'LIKE'
+                    ),
+                    // array(
+                    //     'key'     => 'experience',,
+                    //     'value'   => '5',
+                    //      'compare' => '>='
+                    // )
+            )) );
         $users_found = $users->get_results();
         // var_dump($users_found);
         
