@@ -58,14 +58,14 @@ class RimplenetCreateUser
             try {
 
                 $user_access_token = JWT::decode($access_token);
-                $id = json_decode($user_access_token)->user->ID;
+                $id = json_decode($user_access_token)->user->id;
                 
                 if ($user_access_token === "Expired token") {
                     return $this->response(400, "failed", "Validation error", [], ["Expired token"]);
                 } elseif ($user_access_token === "Invalid signature") {
                     return $this->response(400, "failed", "Validation error", [], ["Invalid signature"]);
                 } elseif ($user_access_token) {
-                    if(!$this->authorization($id)) return $this->response(403, "failed", "Permission denied", [], ["unauthorize"=>"Request is not authorized"]);
+                    if(!$this->authorization($id)) return $this->response(403, "failed", "Permission denied", [], ["unauthorize"=>"Request is not authorized", "id" =>  json_decode($user_access_token)->user->id]);
 
                     if(!empty($this->validation_error)) return $this->response(400, "failed", "Validation error", [], $this->validation_error);
             
