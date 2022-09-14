@@ -103,11 +103,27 @@ class RimplenetLoginUser
 
                     $secret_key = "user123";
 
+                    # unset user data ... email /fname--lname
+                    $newData = [];
+                    $newData["id"] = $user_data["ID"];
+                    foreach ($user_data as $data => $val) :
+                        if (
+                            $data == 'ID'
+                            || $data == 'user_email'
+                            || $data == 'first_name'
+                            || $data == 'last_name'
+                        ) {
+                            unset($user_data[$data]);
+                            continue;
+                        }
+                        $newData[$data] = $val;
+                    endforeach;
+
                     $payload = json_encode([
                         'iss' => $iss,
                         'iat' => $iat,
                         'exp' => $exp,
-                        'user' => $user_data
+                        'user' => $newData
                     ]);
 
                     $jwt = JWT::encode($payload);
