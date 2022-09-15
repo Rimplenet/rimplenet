@@ -79,7 +79,7 @@ class RimplenetGetUser
             try {
                     
                 $user_access_token = JWT::decode($access_token);
-                $id = json_decode($user_access_token)->user->ID;
+                $id = json_decode($user_access_token)->user->id;
                 $username = json_decode($user_access_token)->user->username;
                 
                 if ($user_access_token === "Expired token") {
@@ -91,6 +91,7 @@ class RimplenetGetUser
                     $get_single_user = get_user_by('ID', $user_id) ? get_user_by('ID', $user_id) : get_user_by('login', $user_id);
                     unset($get_single_user->data->user_pass);
                     $user_data = $this->userFormat($get_single_user);
+
                     
                     if($user_id !== null) {
                         
