@@ -37,7 +37,7 @@ class RimplenetGetWalletBalance extends RimplenetBalance
                 'status' => true,
                 'message' => 'Wallet Balance retrieved',
                 'data' => $data,
-                'submitted'=>$wallet_id
+                'submitted'=>$this->req
             ];
 
         // $balance = $this->get_withdrawable_wallet_bal($user_id, $wallet_id) + $this->get_nonwithdrawable_wallet_bal($user_id, $wallet_id);
