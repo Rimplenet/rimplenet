@@ -2,6 +2,8 @@
 
 namespace Traits\Wallet;
 
+use Res;
+
 trait RimplenetWalletTrait
 {
     /**
@@ -415,6 +417,116 @@ trait RimplenetWalletTrait
             // )
         ];
         return $res;
+    }
+    function rimplenet_fund_user_wallet($request_id, $user_id, $amount_to_add, $wallet_id, $note = '', $tags = [], $extra_data = '')
+    {
+        global $wpdb;
+        $error  =  'Please try again';
+
+        $txn_request_id = $user_id . "_" . $request_id;
+        $recent_txn_transient_key = "recent_txn_" . $txn_request_id;
+
+        if ($GLOBALS[$recent_txn_transient_key] == "executing") return Res::error(['msg' => 'please_try_again'], $error);
+
+        if (get_transient($recent_txn_transient_key)) return Res::error(['msg' => 'please_try_again'], $error);
+
+        $GLOBALS[$recent_txn_transient_key] = 'executing';
+        set_transient($recent_txn_transient_key, 'executing', 60);
+
+        $inputed_data = array(
+            "request_id" => $request_id, "user_id" => $user_id, "amount_to_add" => $amount_to_add, "wallet_id" => $wallet_id
+        );
+
+        $empty_input_array = array();
+        //Loop & Find out empty inputs
+        foreach ($inputed_data as $input_key => $single_data) {
+            if (empty($single_data)) {
+                $empty_input_array[$input_key]  = "field_required";
+            }
+        }
+
+        //RUN CHECKS
+        $result = array();
+        $additonal_result = array();
+
+        $row_result = $wpdb->get_row("SELECT * FROM $wpdb->postmeta WHERE meta_key='txn_request_id' AND meta_value='$txn_request_id'");
+        if (!empty($row_result)) { //it means txn has already exist
+
+            $funds_id = $row_result->post_id;
+            // $status = "transaction_already_executed";
+
+            $response_message = "Transaction Already Executed";
+            $data = array("transaction_id" => $funds_id);
+
+            return Res::error($data, $response_message);
+        } elseif (!empty($empty_input_array)) {
+            //if atleast one required input is empty
+            $response_message = "One or more input field is required";
+            // $data = array("msg" => $empty_input_array);
+
+            return Res::error($empty_input_array, $response_message);
+        } elseif ($amount_to_add == 0) {
+
+            $response_message = "Amount should not be Zero";
+            $data = array("mssg" => "Amount is zero",);
+
+            return Res::error($data, $response_message);
+        } else { // ALL GOOD, PROCEED WITH OPERATION
+            $key = 'user_withdrawable_bal_' . strtolower($wallet_id);
+            $user_balance = get_user_meta($user_id, $key, true);
+            if (!is_numeric($user_balance) and !is_int($user_balance)) {
+                $user_balance = 0;
+            }
+
+            $bal_before = $user_balance;
+            $user_balance_total = $this->get_total_wallet_bal($user_id, $wallet_id);
+
+            $new_balance  = $user_balance + $amount_to_add;
+            $new_balance  = $new_balance;
+
+            $update_bal = update_user_meta($user_id, $key, $new_balance);
+            if ($update_bal) { //balance successfully updated
+                if ($amount_to_add > 0) {
+                    $tnx_type = "CREDIT";
+                } else {
+                    $tnx_type = "DEBIT";
+                    $amount_to_add = $amount_to_add * -1;
+                }
+
+                $txn_add_bal_id = $this->record_Txn($user_id, $amount_to_add, $wallet_id, $tnx_type, 'publish');
+
+                if (!empty($note)) {
+                    add_post_meta($txn_add_bal_id, 'note', $note);
+                }
+                add_post_meta($txn_add_bal_id, 'request_id', $request_id);
+                add_post_meta($txn_add_bal_id, 'txn_request_id', $txn_request_id);
+                update_post_meta($txn_add_bal_id, 'balance_before', $bal_before);
+                update_post_meta($txn_add_bal_id, 'balance_after', $new_balance);
+
+                update_post_meta($txn_add_bal_id, 'total_balance_before', $user_balance_total);
+                update_post_meta($txn_add_bal_id, 'total_balance_after', $this->get_total_wallet_bal($user_id, $wallet_id));
+                update_post_meta($txn_add_bal_id, 'funds_type', $key);
+            } else {
+                $status = "unknown_error";
+                $response_message = "Unknown Error";
+                $data = array();
+            }
+        }
+
+        if ($txn_add_bal_id > 0) {
+
+            // return $txn_add_bal_id;
+            return array(
+                "status" => true,
+                "message" => 'Transaction successful',
+                "data" => ['transaction_id' => $txn_add_bal_id]
+            );
+        } else {
+
+            return Res::error($data, $response_message);
+        }
+
+        return $result;
     }
     function rimplenet_fund_user_mature_wallet($request_id, $user_id, $amount_to_add, $wallet_id, $note = '', $tags = [], $extra_data = '')
     {
