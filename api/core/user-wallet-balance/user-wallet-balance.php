@@ -25,7 +25,8 @@ class User_Wallet_Balance extends RimplenetGetWalletBalance
         
         $this->req = [
             'user_id' => sanitize_text_field($req['user_id']),
-            'wallet_id' => explode(',',sanitize_text_field($req['wallet_id'])),
+            // 'wallet_id' => explode(',',sanitize_text_field($req['wallet_id'])) ?? false,
+            'wallet_id' => sanitize_text_field($req['wallet_id']) ?? false,
             'formatted' => sanitize_text_field($req['formatted'] ?? ''),
         ];
 
