@@ -76,6 +76,13 @@ class RimplenetGetWalletBalance extends RimplenetBalance
 
     public function checkIfEmpty($data, $required)
     {
+
+        // if (empty($data)) {
+        //     # code...
+        // }
+
+
+
         // $error=[];
         // var_dump($required);
         foreach ($data as $key => $value) {
