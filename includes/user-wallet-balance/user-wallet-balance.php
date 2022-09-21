@@ -35,29 +35,56 @@ class RimplenetGetWalletBalance extends RimplenetBalance
         // var_dump($wallet_id);
         // die;
 
-        foreach ($wallet_id as $key => $value) {
-            // $this->wallet_id = $value;
-            
-            // $wallet=$this->getWalletById($value);
-            $wallet=$this->getWallet($value);
-            // var_dump($wallet);
-            // die;
-            if ($wallet) {
-                $data[$key]["wallet_id"]=$value;
-                $data[$key]["wallet_balance_raw"]=$this->get_withdrawable_wallet_bal($user_id, $value) + $this->get_nonwithdrawable_wallet_bal($user_id, $value);
-                $data[$key]['wallet_balance_formatted']= $this->getRimplenetWalletFormattedAmount($this->get_withdrawable_wallet_bal($user_id, $value) + $this->get_nonwithdrawable_wallet_bal($user_id, $value), $value);
-                $data[$key]["wallet_name"]=$wallet['wallet_name'];
-                $data[$key]["wallet_symbol"]=$wallet['wallet_symbol'];
-                $data[$key]["wallet_symbol_position"]=$wallet['wallet_symbol_position'];
-                $data[$key]["wallet_decimal"]=$wallet['wallet_decimal'];
-                $data[$key]["wallet_note"]=$wallet['wallet_note'];
-                $data[$key]["wallet_type"]=$wallet['wallet_type'];
-                // }
-            }else{
-                continue;
+        if (count($wallet_id) > 1) {
+            foreach ($wallet_id as $key => $value) {
+                // $this->wallet_id = $value;
+                
+                // $wallet=$this->getWalletById($value);
+                $wallet=$this->getWallet($value);
+                // var_dump($wallet);
+                // die;
+                if ($wallet) {
+                    $data[$value]["wallet_id"]=$value;
+                    $data[$value]["wallet_balance_raw"]=$this->get_withdrawable_wallet_bal($user_id, $value) + $this->get_nonwithdrawable_wallet_bal($user_id, $value);
+                    $data[$value]['wallet_balance_formatted']= $this->getRimplenetWalletFormattedAmount($this->get_withdrawable_wallet_bal($user_id, $value) + $this->get_nonwithdrawable_wallet_bal($user_id, $value), $value);
+                    $data[$value]["wallet_name"]=$wallet['wallet_name'];
+                    $data[$value]["wallet_symbol"]=$wallet['wallet_symbol'];
+                    $data[$value]["wallet_symbol_position"]=$wallet['wallet_symbol_position'];
+                    $data[$value]["wallet_decimal"]=$wallet['wallet_decimal'];
+                    $data[$value]["wallet_note"]=$wallet['wallet_note'];
+                    $data[$value]["wallet_type"]=$wallet['wallet_type'];
+                    // }
+                }else{
+                    continue;
+                }
+                    // return Res::error($this->error, "Wallet Already Exists", 409);
+                // $data[$value]=$this->get_withdrawable_wallet_bal($user_id, $value) + $this->get_nonwithdrawable_wallet_bal($user_id, $value);
             }
-                // return Res::error($this->error, "Wallet Already Exists", 409);
-            // $data[$value]=$this->get_withdrawable_wallet_bal($user_id, $value) + $this->get_nonwithdrawable_wallet_bal($user_id, $value);
+        }else{
+            foreach ($wallet_id as $key => $value) {
+                // $this->wallet_id = $value;
+                
+                // $wallet=$this->getWalletById($value);
+                $wallet=$this->getWallet($value);
+                // var_dump($wallet);
+                // die;
+                if ($wallet) {
+                    $data["wallet_id"]=$value;
+                    $data["wallet_balance_raw"]=$this->get_withdrawable_wallet_bal($user_id, $value) + $this->get_nonwithdrawable_wallet_bal($user_id, $value);
+                    $data['wallet_balance_formatted']= $this->getRimplenetWalletFormattedAmount($this->get_withdrawable_wallet_bal($user_id, $value) + $this->get_nonwithdrawable_wallet_bal($user_id, $value), $value);
+                    $data["wallet_name"]=$wallet['wallet_name'];
+                    $data["wallet_symbol"]=$wallet['wallet_symbol'];
+                    $data["wallet_symbol_position"]=$wallet['wallet_symbol_position'];
+                    $data["wallet_decimal"]=$wallet['wallet_decimal'];
+                    $data["wallet_note"]=$wallet['wallet_note'];
+                    $data["wallet_type"]=$wallet['wallet_type'];
+                    // }
+                }else{
+                    continue;
+                }
+                    // return Res::error($this->error, "Wallet Already Exists", 409);
+                // $data[$value]=$this->get_withdrawable_wallet_bal($user_id, $value) + $this->get_nonwithdrawable_wallet_bal($user_id, $value);
+            }
         }
         // $data['submitted']='';
 
@@ -66,7 +93,7 @@ class RimplenetGetWalletBalance extends RimplenetBalance
                 'status' => true,
                 'message' => 'Wallet Balance retrieved',
                 'data' => $data,
-                'submitted'=>$this->req
+                'submitted'=>$this->req ?? $param
             ];
 
         // $balance = $this->get_withdrawable_wallet_bal($user_id, $wallet_id) + $this->get_nonwithdrawable_wallet_bal($user_id, $wallet_id);
@@ -87,7 +114,7 @@ class RimplenetGetWalletBalance extends RimplenetBalance
         // var_dump($required);
         foreach ($data as $key => $value) {
             if (array_key_exists($key, $required) && empty($value)) {
-                $this->entityerror[$key]=$key." is required";
+                $this->entityerror[$value]=$key." is required";
             }
         }
 

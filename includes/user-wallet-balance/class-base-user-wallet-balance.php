@@ -11,6 +11,7 @@ class Rimplenet_Base_User_Wallet_Balance {
    	 //Add Required Files to Load
 	 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'user-wallet-balance/base-user-wallet-balance.php';
 	 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'user-wallet-balance/user-wallet-balance.php';
+	 require_once plugin_dir_path( dirname( __FILE__ ) ) . 'user-wallet-balance/user-wallet-balance-multi.php';
     }
 	
 }
