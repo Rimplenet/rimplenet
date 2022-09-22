@@ -3,7 +3,7 @@
  * Create Transfers
  */
 
-class User_Wallet_Balance_Multi extends RimplenetGetWalletBalance
+class User_Wallet_Balance_Multi extends RimplenetGetWalletBalanceMulti
 {
 
     public function __construct()
