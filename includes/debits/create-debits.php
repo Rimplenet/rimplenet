@@ -80,6 +80,7 @@ class RimplenetCreateDebits extends Debits
             update_post_meta($txn_add_bal_id, 'total_balance_before', $user_balance_total);
             update_post_meta($txn_add_bal_id, 'total_balance_after', $this->get_total_wallet_bal($user_id, $wallet_id));
             update_post_meta($txn_add_bal_id, 'funds_type', $key);
+            update_post_meta($txn_add_bal_id, 'user_id', $user_id);
         else :
             #  action hook
             $param['action_status'] = "failed";
@@ -102,7 +103,7 @@ class RimplenetCreateDebits extends Debits
                 $param
             );
             $result = $txn_add_bal_id;
-            return Res::success(['transaction_id' => $result], "Transaction Completed", 200);
+            return Res::success(['transaction_id' => $result, 'user_id' => $user_id], "Transaction Completed", 200);
         } else {
             # action hook
             $param['action_status'] = "failed";

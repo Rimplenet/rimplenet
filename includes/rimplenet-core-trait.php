@@ -17,15 +17,14 @@ trait RimplenetWalletTrait
 
         $key = 'user_withdrawable_bal_' . strtolower($wallet_id);
 
-        $user_balance = get_user_meta($user_id, $key, true);
-        if (empty($user_balance)) {
-            $user_balance = 0;
+        $balance = get_user_meta($user_id, $key, true);
+        if (empty($balance)) {
+            $balance = 0;
         }
 
-        //$balance = number_format($user_balance,2);
-        $balance = $user_balance;
+        // $balance = number_format($balance,2);
 
-        return (int) $balance;
+        return $balance;
     }
 
     /**
@@ -39,14 +38,12 @@ trait RimplenetWalletTrait
 
         $key = 'user_nonwithdrawable_bal_' . strtolower($wallet_id);
 
-        $user_balance = get_user_meta($user_id, $key, true);
-        if (empty($user_balance)) {
-            $user_balance = 0;
+        $balance = get_user_meta($user_id, $key, true);
+        if (empty($balance)) {
+            $balance = 0;
         }
 
-        //$balance = number_format($user_balance,2);
-        $balance = (int) $user_balance;
-
+        // $balance = number_format($balance,2);
         return $balance;
     }
 
@@ -97,12 +94,12 @@ trait RimplenetWalletTrait
 
         $balance = $this->get_withdrawable_wallet_bal($user_id, $wallet_id) + $this->get_nonwithdrawable_wallet_bal($user_id, $wallet_id);
 
-        //   $walllets = $this->getWallet();
-        //   $dec = $walllets[$wallet_id]['decimal'];
+          $walllets = (object) $this->getWallet($wallet_id);
+          $dec = $walllets->wallet_decimal;
 
-        //$balance = number_format($balance,$dec);
+        // $balance = number_format($balance, $dec);
 
-        return (int) $balance;
+        return $balance;
     }
 
     /**
