@@ -65,7 +65,8 @@ class RimplenetCreateCredits extends RimplenetGetWallets
         $new_balance  = $user_balance + $amount;
         $new_balance  = $new_balance;
 
-        $update_bal = update_user_meta($user_id, $key, $new_balance);
+        // $update_bal = update_user_meta($user_id, $key, $new_balance);
+        $update_bal = 1;
 
         if ($update_bal) :
             if ($amount > 0) :
@@ -74,6 +75,7 @@ class RimplenetCreateCredits extends RimplenetGetWallets
                 $tnx_type = self::DEBIT;
                 $amount = $amount * -1;
             endif;
+
 
             $txn_add_bal_id = $this->record_Txn($user_id, $amount, $wallet_id, $tnx_type, 'publish');
 
@@ -88,6 +90,7 @@ class RimplenetCreateCredits extends RimplenetGetWallets
             update_post_meta($txn_add_bal_id, 'total_balance_before', $user_balance_total);
             update_post_meta($txn_add_bal_id, 'total_balance_after', $this->get_total_wallet_bal($user_id, $wallet_id));
             update_post_meta($txn_add_bal_id, 'funds_type', $key);
+            update_post_meta($txn_add_bal_id, 'user_id', $user_id);
         else :
             return Res::error(['Unknown Error'], "unknown error", 400);
         endif;
@@ -106,7 +109,7 @@ class RimplenetCreateCredits extends RimplenetGetWallets
                 $prop
             );
 
-            return Res::success(['transaction_id' => $result], "Transaction Completed", 200);
+            return Res::success(['transaction_id' => $result, 'user_id' => (int) $user_id], "Transaction Completed", 200);
         } else {
             $prop['action_status'] = "already_executed";
             $prop['transaction_id'] = $txn_add_bal_id ?? null;
