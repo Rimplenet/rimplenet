@@ -21,7 +21,6 @@ class   VerifyEmailMail extends Base
 
         $this->prop['user_id'] = $this->getUserId('email', $email);
 
-        // var_dump($this->prop['user_id']);
 
         if ($this->prop['user_id'] ==false) {
             return $this->error(401, "User not found");
@@ -41,7 +40,7 @@ class   VerifyEmailMail extends Base
 
     public function checkToken()
     {
-        $user = get_user_meta($this->prop['user_id'] ?? 1, 'token_to_verify_email');
+        $user = get_user_meta($this->prop['user_id'], 'token_to_verify_email');
 
         if (!$user) {
             return false;
@@ -51,9 +50,20 @@ class   VerifyEmailMail extends Base
         // var_dump(add_user_meta($this->prop['user_id'], 'nll_user_email_address_verifed', 'yes'));
         // die;
 
+        
+
         if ($this->prop['token'] == end($user)) {
+            delete_user_meta($this->prop['user_id'], 'token_to_verify_email');
             add_user_meta($this->prop['user_id'], 'nll_user_email_address_verification_token', $this->prop['token']);
-            return add_user_meta($this->prop['user_id'], 'nll_user_email_address_verified', 'yes');
+            delete_user_meta($this->prop['user_id'], 'nll_user_email_address_verified');
+            // return add_user_meta($this->prop['user_id'], 'nll_user_email_address_verified', 'yes');
+            return update_user_meta($this->prop['user_id'], 'nll_user_email_address_verified', 'yes');
+            // if (get_user_meta($this->prop['user_id'], 'nll_user_email_address_verified')) {
+            //     delete_user_meta($this->prop['user_id'], 'nll_user_email_address_verified');
+            //     return add_user_meta($this->prop['user_id'], 'nll_user_email_address_verified', 'yes');
+            // }else{
+            //     return add_user_meta($this->prop['user_id'], 'nll_user_email_address_verified', 'yes');
+            // }
             // return true;
         }
 
