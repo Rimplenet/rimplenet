@@ -65,7 +65,7 @@ class RimplenetCreateCredits extends RimplenetGetWallets
         $new_balance  = $user_balance + $amount;
         $new_balance  = $new_balance;
 
-        // $update_bal = update_user_meta($user_id, $key, $new_balance);
+        $update_bal = update_user_meta($user_id, $key, $new_balance);
         $update_bal = 1;
 
         if ($update_bal) :
