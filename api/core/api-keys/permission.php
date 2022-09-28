@@ -45,7 +45,7 @@ class APIkeyPermission
             endif;
         else :
             Res::error([
-                'token' => 'No Tokem',
+                'token' => 'No Token',
                 'recommendation' => 'Provide an authorization header'
             ], 'Permission Denied', 403);
             echo json_encode(Utils::$response);
@@ -63,6 +63,15 @@ class APIkeyPermission
     {
         $permisson = $this->apikey->getPermission($key->allowedActions, $key->permission);
         // $action = $this->apikey->applyAffix($action);
+
+        # check if incoming permssion is a list of read-write
+        if(is_array($permisson[0])){
+            $permissons = array_filter($permisson, function($permisson) use ($action) {
+                if(array_search($action, $permisson)) return $permisson;
+            });
+            $permisson = !empty($permissons) ? $permissons[0] : $permisson;
+        }
+        
         if (!in_array($action, $permisson)) {
             Res::error([
                 'permissionType' => $key->permission,
