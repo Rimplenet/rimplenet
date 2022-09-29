@@ -197,10 +197,9 @@ class ApiKey
         if($permission == 'read-only') $affix = 'get';
         if($permission == 'write-only') $affix = 'create';
         if($permission == 'read-write') $affix = ['get', 'create', 'update', 'delete'];
-
-        if(is_array($permission)) {
+        if(is_array($affix)) {
             $data = [];
-            foreach ($permission as $key) {
+            foreach ($affix as $key) {
                 $data[] = str_replace('_', '_'.$key.'_' ,$action);
             }
             return $data;
