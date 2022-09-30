@@ -62,10 +62,10 @@ class Rimplenet_Admin {
 		include_once plugin_dir_path( dirname( __FILE__ ) ) . '/admin/class-admin-sidebar-menu-settings.php';
 		
 		//Include class-file to displays Wallet Settings as Metabox 
-		include_once plugin_dir_path( dirname( __FILE__ ) ) . '/admin/class-admin-wallets.php';
+		//include_once plugin_dir_path( dirname( __FILE__ ) ) . '/admin/class-admin-wallets.php';
 		
 		//Include class-file to displays Matrix Settings as Metabox 
-		include_once plugin_dir_path( dirname( __FILE__ ) ) . '/admin/class-admin-matrix.php';
+		//include_once plugin_dir_path( dirname( __FILE__ ) ) . '/admin/class-admin-matrix.php';
         
         //tgmpa_register Shows message for installing required plugins
         add_action( 'tgmpa_register', array( $this,  'required_plugins' ));
