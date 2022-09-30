@@ -74,21 +74,24 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-rimplenet.php';
  */
 
 
- Class Rimplenet_Launcher{
-	public function __construct()
-	{
-		add_action('init', array($this, 'run_rimplenet'), 10);
-		add_action('admin-init', array($this, 'run_rimplenet'), 10);
-		$this->run_rimplenet();
+//  Class Rimplenet_Launcher{
+// 	public function __construct()
+// 	{
+// 		add_action('init', array($this, 'run_rimplenet'), 10);
+// 		add_action('admin-init', array($this, 'run_rimplenet'), 10);
+// 		$this->run_rimplenet();
 		
-	}
+// 	}
 
-	public function run_rimplenet() {
+// 	public function run_rimplenet() {
 
-		$plugin = new Rimplenet();
-		$plugin->run();
+// 		$plugin = new Rimplenet();
+// 		$plugin->run();
 	
-	}
- }
+// 	}
+//  }
 
- new Rimplenet_Launcher();
+//  new Rimplenet_Launcher();
+
+$plugin = new Rimplenet();
+$plugin->run();
