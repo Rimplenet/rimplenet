@@ -79,6 +79,7 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-rimplenet.php';
 	{
 		add_action('init', array($this, 'run_rimplenet'), 10);
 		add_action('admin-init', array($this, 'run_rimplenet'), 10);
+		$this->run_rimplenet();
 		
 	}
 
