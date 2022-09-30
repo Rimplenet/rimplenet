@@ -72,10 +72,21 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-rimplenet.php';
  *
  * @since    1.0.0
  */
-function run_rimplenet() {
 
-	$plugin = new Rimplenet();
-	$plugin->run();
 
-}
-run_rimplenet();
+ Class Rimplenet_Launcher{
+	public function __construct()
+	{
+		add_action('init', array($this, 'run_rimplenet'), 10);
+		
+	}
+
+	public function run_rimplenet() {
+
+		$plugin = new Rimplenet();
+		$plugin->run();
+	
+	}
+ }
+
+ new Rimplenet_Launcher();
