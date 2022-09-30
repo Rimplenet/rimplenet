@@ -149,7 +149,7 @@
             Below adds taxonomy called 
     
             */
-            register_taxonomy($this->tax_unique_name, array($this->unique_name), array("hierarchical" => true, "label" => "Transaction Type", "singular_label" => "Transaction Type", "rewrite" => true));
+            register_taxonomy($this->tax_unique_name, array($this->unique_name), array("hierarchical" => true, "label" => "Transactions Type", "singular_label" => "Transaction Type", "rewrite" => true));
         }
     
         public function set_columns($columns) {
