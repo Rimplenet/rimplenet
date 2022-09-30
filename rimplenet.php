@@ -93,5 +93,12 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-rimplenet.php';
 
 //  new Rimplenet_Launcher();
 
-$plugin = new Rimplenet();
-$plugin->run();
+
+
+
+function run_rimplenet(){
+	$plugin = new Rimplenet();
+	$plugin->run();
+}
+
+run_rimplenet();
