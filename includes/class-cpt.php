@@ -40,8 +40,8 @@
         private $tax_unique_name    = 'rimplenettransaction_type';
         private $type               = 'rimplenettransaction';
         private $slug               = 'rimplenettransaction';
-        private $name               = 'Rimplenet';
-        private $singular_name      = 'Rimplenet';
+        private $name               = 'Rimplenet ';
+        private $singular_name      = 'Rimplenet Transaction';
         private $rimplenettransaction_type, $post_id;
         
         public function __construct() {
