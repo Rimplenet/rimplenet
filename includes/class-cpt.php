@@ -134,7 +134,7 @@
                 'rewrite' => true,
                 'capability_type' => 'post',
                 'capabilities' => array(
-                'create_posts1' => 'do_not_allow', // false < WP 4.5
+                'create_posts' => 'do_not_allow', // false < WP 4.5
               ),
                 'map_meta_cap' => true, // Set to `false`, if users are not allowed to edit/delete existing posts
     
