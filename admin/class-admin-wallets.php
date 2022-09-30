@@ -11,9 +11,9 @@ class Rimplenet_Admin_Wallets{
         
         $wallet_id = get_post_meta($this->post_id, 'rimplenet_wallet_id', true);
         if(empty($this->post_id) or !empty($wallet_id )){
-            add_action('init',  array($this,'required_admin_functions_loaded'));
+            //add_action('init',  array($this,'required_admin_functions_loaded'));
             //save meta value with save post hook when Template Settings is POSTED
-            add_action('save_post_rimplenettransaction',  array($this,'save_wallet_settings'), 10,3 );
+            //add_action('save_post_rimplenettransaction',  array($this,'save_wallet_settings'), 10,3 );
         }  
     }
     
