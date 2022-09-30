@@ -48,8 +48,8 @@
             add_action('init', array($this, 'register'));// Register CPT
             add_filter( 'manage_edit-'.$this->type.'_columns',array($this, 'set_columns'), 10, 1) ;// Admin set post columns
             add_action( 'manage_'.$this->type.'_posts_custom_column', array($this, 'edit_columns'), 10, 2 );//Admin edit post columns
-            add_action( 'admin_menu',  array($this,'change_rimplenet_cpt_edit_post_labels' ),10);//Change Labels Edit Post  based on viewed url
-            add_action( 'enter_title_here',  array($this,'change_rimplenet_cpt_edit_post_title' ),10,2);//Change Labels Edit Post  based on viewed url
+            //add_action( 'admin_menu',  array($this,'change_rimplenet_cpt_edit_post_labels' ),10);//Change Labels Edit Post  based on viewed url
+            //add_action( 'enter_title_here',  array($this,'change_rimplenet_cpt_edit_post_title' ),10,2);//Change Labels Edit Post  based on viewed url
             
         }
        
