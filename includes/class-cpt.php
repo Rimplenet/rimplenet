@@ -40,8 +40,8 @@
         private $tax_unique_name    = 'rimplenettransaction_type';
         private $type               = 'rimplenettransaction';
         private $slug               = 'rimplenettransaction';
-        private $name               = 'Rimplenet E-banking, E-Wallet, Investment, MLM, Matrix';
-        private $singular_name      = 'Rimplenet Transaction';
+        private $name               = 'Rimplenet';
+        private $singular_name      = 'Rimplenet';
         private $rimplenettransaction_type, $post_id;
         
         public function __construct() {
