@@ -77,7 +77,7 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-rimplenet.php';
  Class Rimplenet_Launcher{
 	public function __construct()
 	{
-		add_action('init', array($this, 'run_rimplenet'), 10);
+		add_action('wp', array($this, 'run_rimplenet'), 10);
 		
 	}
 
