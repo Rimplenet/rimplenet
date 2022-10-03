@@ -602,7 +602,6 @@ class Rimplenet_Wallets extends RimplenetRules
   function get_total_wallet_bal_disp_formatted($user_id, $wallet_id)
   {
 
-
     $balance = $this->get_withdrawable_wallet_bal($user_id, $wallet_id) + $this->get_nonwithdrawable_wallet_bal($user_id, $wallet_id);
 
     $walllets = $this->getWallets();
@@ -618,7 +617,6 @@ class Rimplenet_Wallets extends RimplenetRules
 
     return $balance;
   }
-
 
   function record_Txn($user_id, $amount, $wallet_id, $tnx_type, $status = 'pending')
   {
