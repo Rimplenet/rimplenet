@@ -67,7 +67,7 @@ class APIkeyPermission
         # check if incoming permssion is a list of read-write
         if(is_array($permisson[0])){
             $permissons = array_filter($permisson, function($permisson) use ($action) {
-                if(array_search($action, $permisson)) return $permisson;
+                if(in_array($action, $permisson)) return $permisson;
             });
             $permisson = !empty($permissons) ? $permissons[0] : $permisson;
         }
