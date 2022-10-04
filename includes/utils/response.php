@@ -2,7 +2,7 @@
 class Res
 {
 
-    public static array $submitted = [];
+    public static $submitted = [];
     public static function error($err = '', string $message = '', int $status = 400)
     {
         Utils::$response = [
