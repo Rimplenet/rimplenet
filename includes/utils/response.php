@@ -1,7 +1,6 @@
 <?php
 class Res
 {
-
     public static $submitted = [];
     public static function error($err = '', string $message = '', int $status = 400)
     {
