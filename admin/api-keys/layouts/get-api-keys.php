@@ -24,12 +24,16 @@ require plugin_dir_path(dirname(__FILE__)) . '/assets/php/get.php';
             if (isset($keys['data']) && !empty($keys['data']) && is_iterable($keys['data'])) :
                 foreach ($keys['data'] as $key) :
                     $type = $transferType ?? '';
-
+                    $currentUser = wp_get_current_user();
+                    $user = $currentUser->user_login;
+                    
                     extract((array) $key);
+
+                    $authorization = base64_encode($user.':'.$key??'');
                     $id = $keyId ?? 3; ?>
                     <tr>
                         <td> <?= $name ?: '__' ?> </td>
-                        <td> <?= $key ?: '__' ?> </td>
+                        <td> <?= $authorization ?> </td>
                         <td> 
                         <?php 
                             $sel = "<select class='form-control' style='background:transparent'>";
