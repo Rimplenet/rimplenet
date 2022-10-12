@@ -77,4 +77,29 @@ trait RimplenetEmailTrait
   {
     # code...
   }
+
+  public function sendCreditAlertEmail($email, $amount, $transaction=null)
+  {
+    $to = $email;
+    include(plugin_dir_path( dirname( __FILE__ ) ) . 'emails/email-templates/create-credit.php');
+
+    if (wp_mail( $to, $subject, $message )) {
+        return true;
+    } else {
+        return false;
+    }
+  }
+
+
+  public function sendDebitAlertEmail($email, $amount, $transaction=null)
+  {
+    $to = $email;
+    include(plugin_dir_path( dirname( __FILE__ ) ) . 'emails/email-templates/create-debit.php');
+
+    if (wp_mail( $to, $subject, $message )) {
+        return true;
+    } else {
+        return false;
+    }
+  }
 }
