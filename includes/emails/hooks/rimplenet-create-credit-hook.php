@@ -15,3 +15,5 @@ class RimplenetCreateCreditHook
         $this->sendCreditAlertEmail($params['email'], $params['amount']);
     }
 }
+
+new RimplenetCreateCreditHook();

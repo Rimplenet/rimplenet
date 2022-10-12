@@ -15,3 +15,5 @@ class RimplenetCreateDebitHook
         $this->sendDebitAlertEmail($params['email'], $params['amount']);
     }
 }
+
+new RimplenetCreateDebitHook();
