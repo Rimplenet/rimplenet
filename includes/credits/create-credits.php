@@ -128,6 +128,16 @@ class RimplenetCreateCredits extends RimplenetGetWallets
             null,
             $prop
         );
+
+        $get_user=get_user_by('id', $user_id);
+        $prop['email']=$get_user->user_email;
+
+        do_action(
+            'rimplenet_create_credit_alert_hook',
+            'rimplenet_create_credits',
+            null,
+            $prop
+        );
         return;
     }
 

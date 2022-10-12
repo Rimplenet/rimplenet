@@ -103,6 +103,15 @@ class RimplenetCreateDebits extends Debits
                 $param
             );
             $result = $txn_add_bal_id;
+            $get_user=get_user_by('id', $user_id);
+            $prop['email']=$get_user->user_email;
+
+            do_action(
+                'rimplenet_create_debit_alert_hook',
+                'rimplenet_create_debits',
+                null,
+                $prop
+            );
             return Res::success(['transaction_id' => $result, 'user_id' => $user_id], "Transaction Completed", 200);
         } else {
             # action hook
