@@ -15,6 +15,7 @@ class Rimplenet_Base_API_KEY
 		require_once plugin_dir_path(dirname(__FILE__)) . 'api-keys/base-key.php';
 		require_once plugin_dir_path(dirname(__FILE__)) . 'api-keys/create-key.php';
 		require_once plugin_dir_path(dirname(__FILE__)) . 'api-keys/get-keys.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'api-keys/allowed-ip-domains.php';
 	}
 }
 

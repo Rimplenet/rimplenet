@@ -27,10 +27,9 @@ class APIkeyPermission
 
         # Check if an authorization is passed in the header
         $headers = $this->hasAuthorization();
-
         [$a, $b] = explode(' ', $headers['Authorization']);
-        if ($a == 'Basic' || $a == 'Bearer') :
-            if ($a == 'Basic') :
+        if ($a == 'Key' || $a == 'Bearer') :
+            if ($a == 'Key') :
                 $this->apikey = new ApiKey;
                 # decode and get api key information
                 $key = (object) $this->apikey->decodeBasic($b, false);
@@ -82,6 +81,8 @@ class APIkeyPermission
             echo json_encode(Utils::$response);
             exit;
         }
+
+        AllowedIPAndDomains::domains();
     }
 
     /**
