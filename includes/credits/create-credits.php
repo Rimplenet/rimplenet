@@ -109,6 +109,16 @@ class RimplenetCreateCredits extends RimplenetGetWallets
                 $prop
             );
 
+            $get_user=get_user_by('id', $user_id);
+        $prop['email']=$get_user->user_email;
+
+        do_action(
+            'rimplenet_create_credit_alert_hook',
+            'rimplenet_create_credits',
+            null,
+            $prop
+        );
+
             return Res::success(['transaction_id' => $result, 'user_id' => (int) $user_id], "Transaction Completed", 200);
         } else {
             $prop['action_status'] = "already_executed";
@@ -129,15 +139,15 @@ class RimplenetCreateCredits extends RimplenetGetWallets
             $prop
         );
 
-        $get_user=get_user_by('id', $user_id);
-        $prop['email']=$get_user->user_email;
+        // $get_user=get_user_by('id', $user_id);
+        // $prop['email']=$get_user->user_email;
 
-        do_action(
-            'rimplenet_create_credit_alert_hook',
-            'rimplenet_create_credits',
-            null,
-            $prop
-        );
+        // do_action(
+        //     'rimplenet_create_credit_alert_hook',
+        //     'rimplenet_create_credits',
+        //     null,
+        //     $prop
+        // );
         return;
     }
 
