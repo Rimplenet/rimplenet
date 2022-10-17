@@ -15,7 +15,7 @@ require plugin_dir_path(dirname(__FILE__)) . '/assets/php/helpers.php';
 
                 <h1 class="display-4">Create <span class="fw-bold text-primary">API Keys</span></h1>
                 <p class="text-start">
-                    This page allows you to transfer funds from one user to another
+                    This page allows you to create new API Key
                 </p>
             </div>
             <div class="col-md-6">

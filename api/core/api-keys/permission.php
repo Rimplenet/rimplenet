@@ -39,6 +39,7 @@ class APIkeyPermission
                     status_header(Utils::$response['status_code']);
                     exit;
                 endif;
+                AllowedIPAndDomains::domains();
                 $this->authorizeKey($action, $key);
                 return;
             endif;
@@ -82,7 +83,6 @@ class APIkeyPermission
             exit;
         }
 
-        AllowedIPAndDomains::domains();
     }
 
     /**
