@@ -7,7 +7,7 @@ $current_user = wp_get_current_user();
 <div class="wrap rimplenet-wrap">
 
     <div id="icon-options-rimplenet-action-and-rules" class="icon32"></div>
-    <!-- <h1>< ?php _e('Rimplenet Action & Rules', 'rimplenet'); ?></h1> -->
+    <h1><?php _e('Rimplenet Action & Rules', 'rimplenet'); ?></h1>
     <!-- wordpress provides the styling for tabs. -->
     <!-- <h2 class="nav-tab-wrapper"> -->
     <!-- when tab buttons are clicked we jump back to the same page but with a new parameter that represents the clicked tab. accordingly we make it active -->
@@ -21,7 +21,7 @@ $current_user = wp_get_current_user();
         $setup_tab_active = "nav-tab-active";
         $path_to_tab = plugin_dir_path(dirname(__FILE__)) . "layouts/create-api-keys.php";
     } elseif ($active_tab == "api_settings") {
-        $api_settings_tab_active = "nav-tab-active";
+        $setup_tab_active = "nav-tab-active";
         $path_to_tab = plugin_dir_path(dirname(__FILE__)) . "layouts/api-settings.php";
     } else {
         $active_tab  = "dashboard-overview";
@@ -46,10 +46,10 @@ $current_user = wp_get_current_user();
     </a>
 
     <a href="<?php echo $apiKeys_tab_url; ?>" class="nav-tab <?php echo $get_api_tab_active; ?>">
-        <?php _e('API Keys', 'rimplenet'); ?>
+        <?php _e('Api Keys', 'rimplenet'); ?>
     </a>
     <a href="<?php echo $setup_tab_url; ?>" class="nav-tab <?php echo $setup_tab_active; ?>">
-        <?php _e('Create API Key', 'rimplenet'); ?>
+        <?php _e('Create Api Key', 'rimplenet'); ?>
     </a>
 
     <a href="<?php echo $api_settings_tab_url; ?>" class="nav-tab <?php echo $api_settings_tab_active; ?>">
