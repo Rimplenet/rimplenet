@@ -2,23 +2,15 @@
 
 if (isset($_POST['submit']) && isset($_POST['in_restriction_nonce_field'])) :
 
-    $data = [
-        'allowed_ip_address' => $_POST['allowed_ip_address'] ?? '',
-        'allowed_domains' => $_POST['allowed_domains'] ?? ''
-    ];
-
-    foreach ($data as $key => $value) :
-        update_option($key, $value);
-        continue;
-    endforeach;
+        $allowed_ip_domain = $_POST['allowed_ip_domain'] ?? '';
+        update_option('allowed_ip_domain', $allowed_ip_domain);
 
     echo '<div class="updated">
     <p>Your settings have been saved</p>
     </div> ';
 endif;
 
-$allowed_ip_address = get_option('allowed_ip_address');
-$allowed_domains = get_option('allowed_domains');
+$allowed_ip_domain = get_option('allowed_ip_domain');
 ?>
 
 <form method="POST">
@@ -27,16 +19,9 @@ $allowed_domains = get_option('allowed_domains');
     <table class="form-table">
         <tbody>
             <tr>
-                <th><label for="allowed_domains"> Allowed Domains</label></th>
+                <th><label for="allowed_ip_domain"> Allowed Domain/IP</label></th>
                 <td>
-                    <textarea name="allowed_domains" id="allowed_domains" style="width:95%; height:100px" spellcheck="false"><?= trim($allowed_domains ?? '') ?></textarea>
-
-                </td>
-            </tr>
-            <tr>
-                <th><label for="allowed_ip_address"> Allowed IP Addresses</label></th>
-                <td>
-                    <textarea name="allowed_ip_address" id="allowed_ip_address" style="width:95%; height:100px" spellcheck="false"><?= trim($allowed_ip_address ?? '') ?></textarea>
+                    <textarea name="allowed_ip_domain" id="allowed_ip_domain" style="width:95%; height:100px" spellcheck="false"><?= trim($allowed_ip_domain ?? '') ?></textarea>
                 </td>
             </tr>
 
