@@ -82,7 +82,7 @@ class APIkeyPermission
             exit;
         }
 
-        AllowedIPAndDomains::domains();
+        AllowedIPAndDomains::ip_domains();
     }
 
     /**
