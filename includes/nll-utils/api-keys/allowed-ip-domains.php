@@ -2,11 +2,11 @@
 
 class AllowedIPAndDomains
 {
-    public static function ip_domains()
+    public static function ip_domains($ipAndDomains)
     {
         $referral = self::host();
 
-        $domains = trim(str_replace(['\r\n', ' ', PHP_EOL], '', get_option('allowed_ip_domain')));
+        $domains = trim(str_replace(['\r\n', ' ', PHP_EOL], '', $ipAndDomains));
 
         # if domain is not set ignore and return true
         if ($domains === null || empty($domains)) return true;

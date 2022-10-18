@@ -212,6 +212,7 @@ class ApiKey
     {
         $postId = $key[0]->post_id;
         return [
+            'allowedIpDomain' => get_post_meta($postId, 'allowed_ip_domain', true),
             'action'    => get_post_meta($postId, 'action', true),
             'allowedActions' => get_post_meta($postId, 'allowed_action', true),
             'permission'  => get_post_meta($postId, 'key_type', true),

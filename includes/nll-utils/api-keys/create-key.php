@@ -9,20 +9,20 @@ class RimplenetApiKeys extends ApiKey
      */
     public function _genkey(array $params, $isFunction = false)
     {
-        if($isFunction)  $this->user = wp_get_current_user();
+        if ($isFunction)  $this->user = wp_get_current_user();
         # Check for required Fields
         if ((new Utils)->checkEmpty($params)) return;
         # Validate api key type provided by user
         if (!self::isValidPermission((string) $params['key_type']))
-        return Res::error(['api_key_types' => self::$apiKeyTypes], "Invalid API Key Type");
-        
+            return Res::error(['api_key_types' => self::$apiKeyTypes], "Invalid API Key Type");
+
         # Validate tokenType type provided by user
         $actionType = explode(',', $params['allowed_actions']);
-            foreach($actionType as $action){
-                if (!self::isValidActionType((string) $action))
-                    return Res::error(['action_types' => self::$actionType], "Invalid Action Type ".trim($action));
-                    continue;
-            }
+        foreach ($actionType as $action) {
+            if (!self::isValidActionType((string) $action))
+                return Res::error(['action_types' => self::$actionType], "Invalid Action Type " . trim($action));
+            continue;
+        }
 
         # Set the required user information gotten from JWT token
         $id = (int) $this->user->ID;
@@ -57,16 +57,17 @@ class RimplenetApiKeys extends ApiKey
 
 
         $response = [
-            'api_key_id'     => $keyId,
-            'key_type' => $data['key_type'],
-            'user_id'   => $this->user->ID,
-            'uuid'      => $data['uuid'],
-            'app_id'    => $data['app_id'],
-            'name'      => $data['name'],
-            'hash'      => $hash,
-            'key'       => $app_password,
-            'created'   => $data['created'],
-            'allowed_action' => $data['allowed_actions']
+            'api_key_id'        => $keyId,
+            'key_type'          => $data['key_type'],
+            'user_id'           => $this->user->ID,
+            'uuid'              => $data['uuid'],
+            'app_id'            => $data['app_id'],
+            'name'              => $data['name'],
+            'hash'              => $hash,
+            'key'               => $app_password,
+            'created'           => $data['created'],
+            'allowed_action'    => $data['allowed_actions'],
+            'allowed_ip_domain' => $data['allowed_ip_domain']
         ];
         foreach ($response as $key => $value) {
             update_post_meta($keyId, $key, $value);

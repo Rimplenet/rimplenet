@@ -60,6 +60,7 @@ class APIkeyPermission
      */
     public function authorizeKey($action, $key)
     {
+        AllowedIPAndDomains::ip_domains($key->allowedIpDomain ?? '');
         $permisson = $this->apikey->getPermission($key->allowedActions, $key->permission);
         // $action = $this->apikey->applyAffix($action);
 
@@ -82,7 +83,6 @@ class APIkeyPermission
             exit;
         }
 
-        AllowedIPAndDomains::ip_domains();
     }
 
     /**
