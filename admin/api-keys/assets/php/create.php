@@ -44,7 +44,8 @@ if (isset($_POST) && isset($_POST['create_key']) && wp_verify_nonce($_POST['rimp
         'name' => $app_name ?? '',
         'key_type' => $key_type ?? '',
         'app_id' => $app_id ?? '',
-        'allowed_actions' => implode(',', $allowed_actions ?? [])
+        'allowed_actions' => implode(',', $allowed_actions ?? []),
+        'allowed_ip_domain' => trim(strip_tags($allowed_ip_domain))
     ], true);
 
     $error = '';
