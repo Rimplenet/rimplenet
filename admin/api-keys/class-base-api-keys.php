@@ -22,7 +22,7 @@ class Rimplenet_Admin_Base_Api_Keys
 		// wp_enqueue_script( 'custom-script', get_stylesheet_directory_uri() . '/js/custom_script.js', array( 'jquery' ) );
 
 		wp_enqueue_style('rimplenet-api-keys', plugin_dir_url(__FILE__) . 'assets/css/style.css');
-		// wp_enqueue_script('rimplenet-api-keys', plugin_dir_url(__FILE__) . 'assets/js/api-keys.js', ['jquery'], false, true);
+		wp_enqueue_script('rimplenet-api-keys', plugin_dir_url(__FILE__) . 'assets/js/api-keys.js', ['jquery'], false, true);
 		// wp_localize_script(
 		// 	'rimplenet-api-keys',
 		// 	'rimplenet_api_keys_ajax_object',

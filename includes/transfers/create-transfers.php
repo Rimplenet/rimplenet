@@ -16,19 +16,19 @@ class RimplenetCreateTransfer extends RimplenetGetWallets
         $this->req = $prop;
         extract($prop);
         if (self::requires([
-            'transfer_from_user' => "$transfer_from_user || alnum",
+            'transfer_from_user' => "$transfer_from_user || int",
             'amount_to_transfer' => "$amount_to_transfer || amount",
-            'transfer_to_user' => "$transfer_to_user || alnum",
+            'transfer_to_user' => "$transfer_to_user || int",
             'wallet_id' => "$wallet_id || alnum",
         ])) return self::$response;
 
         # Get current loggedin user (user from)
-        $current_user = get_user_by('login', $transfer_from_user);
+        $current_user = get_user_by('id', $transfer_from_user);
         $current_user_id  = $current_user->ID;
         if(!$current_user) return Res::error(['Invalid User '.$transfer_from_user], 'Unable to reach '.$transfer_from_user);
         
         # Get Other user (user to)
-        $user_transfer_to = get_user_by('login', $transfer_to_user);
+        $user_transfer_to = get_user_by('id', $transfer_to_user);
         if(!$user_transfer_to) return Res::error(['Invalid User '.$transfer_to_user], 'Unable to reach '.$transfer_to_user);
         $transfer_to_user_id  = $user_transfer_to->ID;
         
@@ -64,7 +64,7 @@ class RimplenetCreateTransfer extends RimplenetGetWallets
             'dec' => $dec,
             'name' => $name,
             'balance' => $balance,
-            'note' => ''
+            'note' => $note
         ]);
     }
 

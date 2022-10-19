@@ -31,6 +31,7 @@ class RimplenetGetApiKeys extends ApiKey
             foreach ($apiKeys as $keys => $value) :
                 $this->id = $value->ID;
                 $apiKeys[$keys] = [
+                    'keyId' => $this->api_key_metas('api_key_id'),
                     'action'    => $this->api_key_metas('action'),
                     'allowedAction' => $this->api_key_metas('allowed_action'),
                     'keyType'  => $this->api_key_metas('key_type'),
@@ -40,13 +41,27 @@ class RimplenetGetApiKeys extends ApiKey
                     'name'      => $this->api_key_metas('name'),
                     'hash'      => $this->api_key_metas('hash'),
                     'key'       => $this->api_key_metas('key'),
-                    'created'   => $this->api_key_metas('created')
+                    'created'   => $this->api_key_metas('created'),
+                    'allowedIpDomain' => $this->api_key_metas('allowed_ip_domain')
                 ];
             endforeach;
             Res::success($apiKeys, "Api keys retrieved");
             return $apiKeys;
         else :
             return Res::error("No api key was found", "Api key not found", 404);
+        endif;
+    }
+    public function getKeyById($key_id)
+    {
+        global $wpdb;
+        $key_id = sanitize_text_field($key_id);
+        $key = $wpdb->get_row("SELECT * FROM $wpdb->postmeta WHERE post_id = '$key_id' AND meta_key = 'api_key_id' ");
+
+        if ($key) :
+            return $key;
+        else :
+            Res::error(["Invalid key Id"], "key not found", 404);
+            return false;
         endif;
     }
 
