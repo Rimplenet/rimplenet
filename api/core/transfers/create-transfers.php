@@ -29,7 +29,7 @@ class CreateTransfers extends RimplenetCreateTransfer
             'amount_to_transfer'    => sanitize_text_field($req['amount_to_transfer'] ?? ''),
             'transfer_to_user'      => sanitize_text_field($req['transfer_to_user'] ?? ''),
             'wallet_id'             => sanitize_text_field($req['wallet_id'] ?? ''),
-            'note'                  => sanitize_text_field($req['note'] ?? 'Intrjk'),
+            'note'                  => sanitize_text_field($req['note'] ?? ''),
         ];
 
         $this->transfer();

@@ -64,7 +64,7 @@ class RimplenetCreateTransfer extends RimplenetGetWallets
             'dec' => $dec,
             'name' => $name,
             'balance' => $balance,
-            'note' => ''
+            'note' => $note
         ]);
     }
 
