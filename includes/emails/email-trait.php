@@ -102,4 +102,18 @@ trait RimplenetEmailTrait
         return false;
     }
   }
+
+
+
+
+  public function sendGeneralEmail($email, $data)
+  {
+    $to = $email;
+
+    if (wp_mail( $to, $data['subject'], $data['message'] )) {
+        return true;
+    } else {
+        return false;
+    }
+  }
 }
