@@ -61,7 +61,7 @@ class RimplenetCreateTransfer extends RimplenetGetWallets
             'min_transfer_amt' => $min_transfer_amt,
             "user_transfer_to" => $user_transfer_to,
             'symbol' => $symbol,
-            'dec' => $dec,
+            'dec' => $dec, 
             'name' => $name,
             'balance' => $balance,
             'note' => $note
