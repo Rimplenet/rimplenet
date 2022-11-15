@@ -78,7 +78,7 @@ trait RimplenetEmailTrait
     # code...
   }
 
-  public function sendCreditAlertEmail($email, $amount, $transaction=null)
+  public function sendCreditAlertEmail($email, $data, $transaction=null)
   {
     $to = $email;
     include(plugin_dir_path( dirname( __FILE__ ) ) . 'emails/email-templates/create-credit.php');
