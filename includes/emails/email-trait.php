@@ -91,7 +91,7 @@ trait RimplenetEmailTrait
   }
 
 
-  public function sendDebitAlertEmail($email, $amount, $transaction=null)
+  public function sendDebitAlertEmail($email, $data, $transaction=null)
   {
     $to = $email;
     include(plugin_dir_path( dirname( __FILE__ ) ) . 'emails/email-templates/create-debit.php');

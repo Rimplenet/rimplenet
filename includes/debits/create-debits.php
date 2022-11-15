@@ -105,6 +105,9 @@ class RimplenetCreateDebits extends Debits
             $result = $txn_add_bal_id;
             $get_user=get_user_by('id', $user_id);
             $prop['email']=$get_user->user_email;
+            $prop['transaction_id']=$txn_id;
+            $prop['note']=$note;
+            $prop['formatted_amount']=$note;
 
             do_action(
                 'rimplenet_create_debit_alert_hook',
