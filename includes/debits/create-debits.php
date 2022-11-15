@@ -107,7 +107,7 @@ class RimplenetCreateDebits extends Debits
             $prop['email']=$get_user->user_email;
             $prop['transaction_id']=$txn_id;
             $prop['note']=$note;
-            $prop['formatted_amount']=$note;
+            $prop['symbol']=$this->getWallet($wallet_id)['wallet_symbol'];
 
             do_action(
                 'rimplenet_create_debit_alert_hook',
