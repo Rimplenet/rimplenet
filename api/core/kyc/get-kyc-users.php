@@ -16,10 +16,9 @@ class RimplenetGetKycUserApi
         ]);
     }
 
-    public function get_kyc_users(WP_REST_Request $request)
+    public function get_kyc_users()
     {
         // do_action('rimplenet_api_request_started', $request, $allowed_roles = ['administrator'], $action = 'rimplenet_kyc_get_users');
-        return $request;
         $kyc_users  = new RimplenetGetKycUser;
         $result     = $this->formatData($kyc_users->get_kyc_users());
 

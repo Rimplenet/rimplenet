@@ -48,7 +48,7 @@ $no_image = "https://as1.ftcdn.net/v2/jpg/02/33/46/24/1000_F_233462402_Fx1yke4ng
                                         <?= $k + 1 ?>
                                     </td>
                                     <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                        <a href="<?= $user['user_profile_photo_url'][0] ?: $no_image ?>" data-toggle="lightbox">
+                                        <a target="_blank" href="<?= $user['user_profile_photo_url'][0] ?: $no_image ?>" data-toggle="lightbox">
                                             <img height="100px" width="100px" src="<?= $user['user_profile_photo_url'][0] ?: $no_image ?>" alt="">
                                         </a>
                                     </td>
@@ -68,12 +68,12 @@ $no_image = "https://as1.ftcdn.net/v2/jpg/02/33/46/24/1000_F_233462402_Fx1yke4ng
                                         <?= $user['identity_document_date_of_expiry'][0] ?: '__' ?>
                                     </td>
                                     <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                        <a href="<?= $user['identity_document_file_url_front'][0] ?: $no_image ?>" data-toggle="lightbox">
+                                        <a target="_blank" href="<?= $user['identity_document_file_url_front'][0] ?: $no_image ?>" data-toggle="lightbox">
                                             <img height="100px" width="100px" src="<?= $user['identity_document_file_url_front'][0] ?: $no_image ?>" alt="">
                                         </a>
                                     </td>
                                     <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                        <a href="<?= $user['identity_document_file_url_back'][0] ?: $no_image ?>" data-toggle="lightbox">
+                                        <a target="_blank" href="<?= $user['identity_document_file_url_back'][0] ?: $no_image ?>" data-toggle="lightbox">
                                             <img height="100px" width="100px" src="<?= $user['identity_document_file_url_back'][0] ?: $no_image ?>" alt="">
                                         </a>
                                     </td>
