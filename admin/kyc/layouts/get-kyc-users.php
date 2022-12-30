@@ -5,7 +5,7 @@ $no_image = "https://as1.ftcdn.net/v2/jpg/02/33/46/24/1000_F_233462402_Fx1yke4ng
 ?>
 <!-- <h2> Active Users</h2> -->
 <script src="https://cdn.tailwindcss.com"></script>
-<div class="flex flex-col px-5 p-5 bg-white">
+<div class="flex flex-col px-5 m-5 bg-white">
     <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
             <div class="overflow-x-auto">
@@ -42,7 +42,7 @@ $no_image = "https://as1.ftcdn.net/v2/jpg/02/33/46/24/1000_F_233462402_Fx1yke4ng
                         </tr>
                     </thead>
                     <tbody>
-                        <?php if (!empty($users)) : foreach ($users as $k => $user) : $id = $user['ID']; ?>
+                        <?php foreach ($users as $k => $user): ?>
                                 <tr class="border-b">
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                                         <?= $k + 1 ?>
@@ -78,8 +78,7 @@ $no_image = "https://as1.ftcdn.net/v2/jpg/02/33/46/24/1000_F_233462402_Fx1yke4ng
                                         </a>
                                     </td>
                                 </tr>
-                        <?php endforeach;
-                        endif; ?>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>
