@@ -34,8 +34,7 @@ class RimplenetGetKycUserApi
 
     private function formatData($users)
     {
-
-        // if (!isset($user->data)) return;
+        $user_data = [];
         foreach ($users as $k => $user) :
             $user_data[] = [
                 "user_profile_photo_url"            =>  $user['user_profile_photo_url'][0],
