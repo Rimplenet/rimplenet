@@ -1,5 +1,4 @@
 <?php
-
 require plugin_dir_path(dirname(__FILE__)) . '/assets/php/get.php';
 $no_image = "https://as1.ftcdn.net/v2/jpg/02/33/46/24/1000_F_233462402_Fx1yke4ng4GA8TJikJZoiATrkncvW6Ib.jpg";
 ?>
