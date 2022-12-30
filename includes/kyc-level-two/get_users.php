@@ -12,6 +12,7 @@ class RimplenetGetKycUser
 
     public function get_kyc_users()
     {
+        $user_id = NULL;
         $results = [];
         $users = [
             'meta_query' => [
@@ -53,18 +54,36 @@ class RimplenetGetKycUser
                 ],
             ]
         ];
-        
+
+        if (isset($user_id) && null != $user_id) :
+            $users["meta_query"]["user_id"] = [
+                'key'     => 'user_id',
+                'value'   => $user_id,
+                'compare' => '==',
+            ];
+            $result = self::run_cmd($users);
+            var_dump($result);
+        endif;
+
         // Create the WP_User_Query object
-        $wp_user_query = new WP_User_Query($users);
-        $resp = $wp_user_query->get_results();
+        // $wp_user_query = new WP_User_Query();
+        // $resp = $wp_user_query->get_results();
         // var_dump($resp); exit;
-        
-        foreach($resp as $user):
+        $resp = self::run_cmd($users);
+
+        foreach ($resp as $user) :
             $results[] = get_user_meta($user->data->ID);
         endforeach;
         // Get the results
         // var_dump($results); exit; 
         return $results;
+    }
+
+    private function run_cmd($data)
+    {
+        $wp_user_query = new WP_User_Query($data);
+        $resp = $wp_user_query->get_results();
+        return $resp;
     }
 }
 

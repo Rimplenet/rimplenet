@@ -18,18 +18,25 @@ class RimplenetGetKycUserApi
 
     public function get_kyc_users(WP_REST_Request $request)
     {
-        // do_action('rimplenet_api_request_started', $request, $allowed_roles = ['administrator', 'subscriber'], $action = 'rimplenet_kyc_get_users');
+        do_action('rimplenet_api_request_started', $request, $allowed_roles = ['administrator'], $action = 'rimplenet_kyc_get_users');
 
         $kyc_users  = new RimplenetGetKycUser;
         $result     = $this->formatData($kyc_users->get_kyc_users());
-        return $result;
+
+        $data = [
+            'status_code'   =>    200,
+            'status'        =>    true,
+            'message'       =>    "KYC user retrieved successfully",
+            'data'          =>    $result
+        ];
+        return $data;
     }
 
     private function formatData($users)
     {
 
         // if (!isset($user->data)) return;
-        foreach ($users as $k => $user):
+        foreach ($users as $k => $user) :
             $user_data[] = [
                 "user_profile_photo_url"            =>  $user['user_profile_photo_url'][0],
                 "gender"                            =>  $user['gender'][0],
