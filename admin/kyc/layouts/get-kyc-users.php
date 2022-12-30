@@ -48,33 +48,33 @@ $no_image = "https://as1.ftcdn.net/v2/jpg/02/33/46/24/1000_F_233462402_Fx1yke4ng
                                         <?= $k + 1 ?>
                                     </td>
                                     <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                        <a target="_blank" href="<?= $user['user_profile_photo_url'][0] ?: $no_image ?>" data-toggle="lightbox">
-                                            <img height="100px" width="100px" src="<?= $user['user_profile_photo_url'][0] ?: $no_image ?>" alt="">
+                                        <a target="_blank" href="<?= $user['user_profile_photo_url'] ?? $no_image ?>" data-toggle="lightbox">
+                                            <img height="100px" width="100px" src="<?= $user['user_profile_photo_url'] ?? $no_image ?>" alt="">
                                         </a>
                                     </td>
                                     <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                        <?= $user['gender'][0] ?: $no_image ?>
+                                        <?= $user['gender'] ?? "__" ?>
                                     </td>
                                     <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                        <?= $user['country_of_origin'][0] ?: '__' ?>
+                                        <?= $user['country_of_origin'] ?? '__' ?>
                                     </td>
                                     <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                        <?= $user['date_of_birth'][0] ?: '__' ?>
+                                        <?= $user['date_of_birth'] ?? '__' ?>
                                     </td>
                                     <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                        <?= $user['identity_document_date_of_issue'][0] ?: '__' ?>
+                                        <?= $user['identity_document_date_of_issue'] ?? '__' ?>
                                     </td>
                                     <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                        <?= $user['identity_document_date_of_expiry'][0] ?: '__' ?>
+                                        <?= $user['identity_document_date_of_expiry'] ?? '__' ?>
                                     </td>
                                     <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                        <a target="_blank" href="<?= $user['identity_document_file_url_front'][0] ?: $no_image ?>" data-toggle="lightbox">
-                                            <img height="100px" width="100px" src="<?= $user['identity_document_file_url_front'][0] ?: $no_image ?>" alt="">
+                                        <a target="_blank" href="<?= $user['identity_document_file_url_front'] ?? $no_image ?>" data-toggle="lightbox">
+                                            <img height="100px" width="100px" src="<?= $user['identity_document_file_url_front'] ?? $no_image ?>" alt="">
                                         </a>
                                     </td>
                                     <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                        <a target="_blank" href="<?= $user['identity_document_file_url_back'][0] ?: $no_image ?>" data-toggle="lightbox">
-                                            <img height="100px" width="100px" src="<?= $user['identity_document_file_url_back'][0] ?: $no_image ?>" alt="">
+                                        <a target="_blank" href="<?= $user['identity_document_file_url_back'] ?? $no_image ?>" data-toggle="lightbox">
+                                            <img height="100px" width="100px" src="<?= $user['identity_document_file_url_back'] ?? $no_image ?>" alt="">
                                         </a>
                                     </td>
                                 </tr>
