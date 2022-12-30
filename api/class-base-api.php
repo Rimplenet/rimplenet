@@ -44,7 +44,6 @@ class Rimplenet_Api
 		require_once plugin_dir_path(dirname(__FILE__)) . 'api/core/investments/class-base-investments.php';
 
 		require_once plugin_dir_path(dirname(__FILE__)) . 'api/core/emails/class-base-emails.php';
-		require_once plugin_dir_path(dirname(__FILE__)) . 'api/core/kyc/class-base-kyc.php';
 		
 	}
 }

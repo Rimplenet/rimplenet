@@ -166,12 +166,6 @@ class Rimplenet
 		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-bonus.php';
 
 		/**
-		 * The class responsible for Bonus
-		 * core plugin.
-		 */
-		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/kyc-level-two/load_class.php';
-
-		/**
 		 * The class responsible for Registering Custom Post Type
 		 * core plugin.
 		 */
