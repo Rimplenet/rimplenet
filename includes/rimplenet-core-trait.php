@@ -651,6 +651,7 @@ trait RimplenetWalletTrait
 
         return $amt_converted;
     }
+    
     protected function postMeta($field = '')
     {
         return get_post_meta($this->id, $field, true);

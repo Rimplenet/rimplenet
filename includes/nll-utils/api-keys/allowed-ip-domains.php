@@ -16,7 +16,7 @@ class AllowedIPAndDomains
             if (empty($domain)) unset($domain_array[$key]);
         endforeach;
 
-        if (in_array($referral['ip'], $domain_array) || in_array($referral['host'], $domain_array)) return true;
+        if (in_array($referral['ip'], $domain_array) || in_array($referral['host'], $domain_array) || in_array($referral['referral'], $domain_array)) return true;
 
         Res::error([
             'referral' => "invalid referral domain",
@@ -32,7 +32,8 @@ class AllowedIPAndDomains
 
         return [
             'ip' => $_SERVER['REMOTE_ADDR'] ?? '',
-            'host' => $_SERVER['SERVER_NAME'] ?? ''
+            'host' => $_SERVER['SERVER_NAME'] ?? '',
+            'referral' => $_SERVER['HTTP_REFERER'] ?? '*',
         ];
     }
 }
