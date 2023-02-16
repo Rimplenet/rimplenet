@@ -111,6 +111,10 @@ class RimplenetCreateCredits extends RimplenetGetWallets
 
             $get_user=get_user_by('id', $user_id);
         $prop['email']=$get_user->user_email;
+        $prop['transaction_id']=$txn_id;
+            $prop['note']=$note;
+            $prop['symbol']=$this->getWallet($wallet_id)['wallet_symbol'];
+            $prop['balance_after']=$new_balance;
 
         do_action(
             'rimplenet_create_credit_alert_hook',

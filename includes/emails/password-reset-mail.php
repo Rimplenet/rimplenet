@@ -30,7 +30,7 @@ class RimplenetPasswordResetMail extends Base
           $sent['mail']=$this->sendResetPasswordMail($email,  $sent['token_to_reset_password']);
           $message=$sent['mail'] ? 'Email Sent' : 'Password Reset Email Not Sent';
 
-          unset($sent['token_to_verify_email']);
+          unset($sent['token_to_reset_password']);
           $sent['mail'] ? $this->success($sent, $message) : $this->error($sent, $message);
           return $this->response;
         }
