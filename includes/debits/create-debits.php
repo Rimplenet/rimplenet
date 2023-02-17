@@ -59,6 +59,11 @@ class RimplenetCreateDebits extends Debits
 
         $update_bal = update_user_meta($user_id, $key, $new_balance);
 
+        $current_total_site_holding_balance = $this->total_site_holding_bal($wallet_id)->get();
+        $total_site_holding_balance_after = $current_total_site_holding_balance + $amount;
+
+        $this->total_site_holding_bal($wallet_id)->set($total_site_holding_balance_after);
+
         if ($update_bal) :
             if ($amount > 0) :
                 $tnx_type = self::CREDIT;
@@ -79,6 +84,10 @@ class RimplenetCreateDebits extends Debits
 
             update_post_meta($txn_add_bal_id, 'total_balance_before', $user_balance_total);
             update_post_meta($txn_add_bal_id, 'total_balance_after', $this->get_total_wallet_bal($user_id, $wallet_id));
+            
+            update_post_meta($txn_add_bal_id, 'total_site_holding_balance_before', $current_total_site_holding_balance);
+            update_post_meta($txn_add_bal_id, 'total_site_holding_balance_after', $this->total_site_holding_bal($wallet_id)->get());
+            
             update_post_meta($txn_add_bal_id, 'funds_type', $key);
             update_post_meta($txn_add_bal_id, 'user_id', $user_id);
         else :
