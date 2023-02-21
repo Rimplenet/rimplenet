@@ -94,11 +94,34 @@ trait RimplenetWalletTrait
 
         $balance = $this->get_withdrawable_wallet_bal($user_id, $wallet_id) + $this->get_nonwithdrawable_wallet_bal($user_id, $wallet_id);
 
-          $walllets = (object) $this->getWallet($wallet_id);
-          $dec = $walllets->wallet_decimal;
+        $walllets = (object) $this->getWallet($wallet_id);
+        $dec = $walllets->wallet_decimal;
 
         // $balance = number_format($balance, $dec);
 
+        return $balance;
+    }
+
+    /**
+     * Get a  Total wallet balance
+     * @param string $wallet_id id of wallet e.g (USD)
+     * @return object
+     */
+    public function total_site_holding_bal($wallet_id)
+    {
+        $this->total_site_holding_bal_key = strtolower($wallet_id) . '_total_site_holding_bal';
+        return $this;
+    }
+    public function get()
+    {
+        $balance = get_option($this->total_site_holding_bal_key);
+        if (empty($balance) || $balance == null) $balance = 0;
+        return $balance;
+    }
+    public function set($value)
+    {
+        $balance = update_option($this->total_site_holding_bal_key, (float) $value, false);
+        // echo $value;
         return $balance;
     }
 
@@ -651,6 +674,7 @@ trait RimplenetWalletTrait
 
         return $amt_converted;
     }
+
     protected function postMeta($field = '')
     {
         return get_post_meta($this->id, $field, true);

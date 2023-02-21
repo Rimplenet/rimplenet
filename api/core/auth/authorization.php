@@ -18,6 +18,7 @@ class RimplenetAuthorizationApi
 
         add_action('rest_api_init', array($this, 'register_api_routes'));
         add_action( 'rimplenet_api_request_started', array($this, 'validate_jwt'), 1, 3 );
+        // add_action( 'rimplenet_hooks_and_monitors_on_started', [$this, 'start_it'] , 1, 3);
 
     }
 
@@ -86,6 +87,16 @@ class RimplenetAuthorizationApi
             exit;
         }
     }
+
+    // public function start_it($type, $data, $obj)
+    // {
+    //     echo json_encode([
+    //         'type' => $type,
+    //         'data' => $data,
+    //         'object' => $obj
+    //     ]);
+    //     return exit;
+    // }
     
 }
 
