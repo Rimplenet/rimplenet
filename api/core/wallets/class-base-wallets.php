@@ -8,8 +8,6 @@ class Rimplenet_Base_Wallets_Api {
 
 	public function __construct()
 	{
-		$this->plugin_name = $plugin_name ?? 'RimplenetIn';
-		$this->version = $version ?? 'v1';
 		$this->load_required_files();
 	}
   private function load_required_files() {
@@ -23,5 +21,4 @@ class Rimplenet_Base_Wallets_Api {
 	
 }
 
-
-$Rimplenet_Base_Wallets_Api = new Rimplenet_Base_Wallets_Api();
+new Rimplenet_Base_Wallets_Api();

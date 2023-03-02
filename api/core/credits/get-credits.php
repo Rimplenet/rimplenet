@@ -1,6 +1,6 @@
 <?php
 
-$getCredits = new class extends RimplenetGetCredits
+new class extends RimplenetGetCredits
 {
     public function __construct()
     {
@@ -18,12 +18,11 @@ $getCredits = new class extends RimplenetGetCredits
     public function api_get_credits(WP_REST_Request $req)
     {
         
-        do_action('rimplenet_api_request_started', $req, $allowed_roles = ['administrator'], $action = 'rimplenet_get_credits');
+        do_action('nll_api_request_started', $req, $allowed_roles = ['administrator'], $action = 'rimplenet_get_credits');
         # ================= set fields ============
         $wlt_id  = sanitize_text_field($req['credit_id'] ?? '');
-        $page      = $req['page'] ?? 1;
+        // $page      = $req['page'] ?? 1;
 
-        // if ($wlt_id !== '') :
             $this->getCredits($wlt_id, 'credit');
             return new WP_REST_Response(self::$response, self::$response['status_code']);
     }

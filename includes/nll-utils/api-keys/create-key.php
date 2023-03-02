@@ -1,7 +1,8 @@
 <?php
 class RimplenetApiKeys extends ApiKey
 {
-
+    public $user;
+    
     /**
      * Generate Api key
      * @param array key params

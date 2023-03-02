@@ -1,6 +1,6 @@
 <?php
 
-$GetTransfers = new class extends RimplenetGetTransfers
+new class extends RimplenetGetTransfers
 {
     public function __construct() {
         add_action('rest_api_init', [$this, 'rest_api_routes']);
@@ -16,7 +16,7 @@ $GetTransfers = new class extends RimplenetGetTransfers
 
     public function api_get_transfers(WP_REST_Request $req)
     {
-        do_action('rimplenet_api_request_started', $req, $allowed_roles = ['administrator'], $action = 'rimplenet_get_transfers');
+        do_action('nll_api_request_started', $req, $allowed_roles = ['administrator'], $action = 'rimplenet_get_transfers');
         $param = [
             'transfer_id' => sanitize_text_field($req['transfer_id']),
             'user_id' => sanitize_text_field($req['userId']),

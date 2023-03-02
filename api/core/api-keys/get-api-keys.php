@@ -21,7 +21,7 @@ class GetApiKey extends RimplenetGetApiKeys
 
     public function api_get_keys(WP_REST_Request $req)
     {
-        do_action('rimplenet_api_request_started', $req, $allowed_roles=['administrator'], $action='rimplenetl_wallets');
+        do_action('nll_api_request_started', $req, $allowed_roles=['administrator'], $action='rimplenetl_wallets');
         $key = sanitize_text_field($req['api_key'] ?? '');
 
         $this->getKeys($key);
@@ -30,4 +30,4 @@ class GetApiKey extends RimplenetGetApiKeys
     }
 }
 
-$GetApiKey = new GetApiKey();
+new GetApiKey();

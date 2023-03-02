@@ -21,7 +21,7 @@ class RimplenetDeleteInvestmentApi
 
     public function delete_investment(WP_REST_Request $request)
     {
-        do_action('rimplenet_api_request_started', $request, $allowed_roles=['administrator'], $action='rimplenet_delete_investments');
+        do_action('nll_api_request_started', $request, $allowed_roles=['administrator'], $action='rimplenet_delete_investments');
 
         $investment = new RimplenetDeleteInvestment();
         $delete_investment = $investment->delete_investment($request->get_param('investment_id'));

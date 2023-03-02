@@ -23,7 +23,7 @@ class RimplenetDeleteUserApi
 
     public function delete_user(WP_REST_Request $request)
     {
-        do_action('rimplenet_api_request_started', $request, $allowed_roles=['administrator'], $action='rimplenet_delete_users');
+        do_action('nll_api_request_started', $request, $allowed_roles=['administrator'], $action='rimplenet_delete_users');
         
         $user_id = sanitize_text_field($request->get_param('user_id'));
 

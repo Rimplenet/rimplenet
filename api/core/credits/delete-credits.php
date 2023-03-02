@@ -5,7 +5,7 @@
  */
 
 
-$DeleteCredits = new class extends RimplenetDeleteCredits
+new class extends RimplenetDeleteCredits
 {
     public function __construct()
     {
@@ -22,7 +22,7 @@ $DeleteCredits = new class extends RimplenetDeleteCredits
 
     public function api_delete_credits($Credits)
     {
-        do_action('rimplenet_api_request_started', $Credits, $allowed_roles = ['administrator'], $action = 'rimplenet_delete_credits');
+        do_action('nll_api_request_started', $Credits, $allowed_roles = ['administrator'], $action = 'rimplenet_delete_credits');
 
         $this->deleteCredits($Credits['credits'], 'credit');
         return new WP_REST_Response(self::$response);

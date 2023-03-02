@@ -1,8 +1,6 @@
 <?php
 
-// use Wallets\GetWallets\RimplenetGetWallets;
-
-$RetrieveWallet = new class extends RimplenetGetWallets
+new class extends RimplenetGetWallets
 {
     public function __construct()
     {
@@ -19,8 +17,7 @@ $RetrieveWallet = new class extends RimplenetGetWallets
 
     public function retrieve_wallet(WP_REST_Request $req)
     {
-        // $allowed_roes = []; 
-        do_action('rimplenet_api_request_started', $req, $allowed_roles = ['administrator'], $action = 'rimplenet_get_wallets');
+        do_action('nll_api_request_started', $req, $allowed_roles = ['administrator'], $action = 'rimplenet_get_wallets');
 
         # ================= set fields ============
         $wlt_id  = sanitize_text_field($req['wallet'] ?? '');
