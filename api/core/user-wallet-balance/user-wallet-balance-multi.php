@@ -21,7 +21,7 @@ class User_Wallet_Balance_Multi extends RimplenetGetWalletBalanceMulti
 
     public function api_get_wallet_balance(WP_REST_Request $req)
     {
-        do_action( 'rimplenet_api_request', $req, $allowed_roles = ['admin'], $action = 'get_rimplenet_wallets_balance');
+        do_action( 'nll_api_request', $req, $allowed_roles = ['admin'], $action = 'get_rimplenet_wallets_balance');
         
         $this->req = [
             'user_id' => sanitize_text_field($req['user_id']),

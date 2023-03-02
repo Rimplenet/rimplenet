@@ -1,7 +1,7 @@
 <?php
 
 
-$createCredits = new class extends RimplenetCreateCredits
+new class extends RimplenetCreateCredits
 {
 
     public function __construct()
@@ -19,7 +19,7 @@ $createCredits = new class extends RimplenetCreateCredits
 
     public function api_create_credits(WP_REST_Request $req)
     {
-        do_action('rimplenet_api_request_started', $req, $allowed_roles = ['administrator'], $action = 'rimplenet_create_credits');
+        do_action('nll_api_request_started', $req, $allowed_roles = ['administrator'], $action = 'rimplenet_create_credits');
 
         $this->req = [
             'note'          => sanitize_text_field($req['note'] ?? ''),

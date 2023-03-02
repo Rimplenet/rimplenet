@@ -16,4 +16,4 @@ class Rimplenet_Base_API_KEYS_Api
 }
 
 
-$Rimplenet_Base_API_KEYS_Api = new Rimplenet_Base_API_KEYS_Api();
+new Rimplenet_Base_API_KEYS_Api();

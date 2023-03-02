@@ -3,7 +3,7 @@
 /**
  * Delete
  */
-$DeleteWallets = new class extends RimplenetDeleteWallets
+new class extends RimplenetDeleteWallets
 {
     public function __construct()
     {
@@ -20,7 +20,7 @@ $DeleteWallets = new class extends RimplenetDeleteWallets
 
     public function api_delete_wallet($wallet)
     {
-        do_action('rimplenet_api_request_started', $wallet, $allowed_roles = ['administrator'], $action = 'rimplenet_delete_wallets');
+        do_action('nll_api_request_started', $wallet, $allowed_roles = ['administrator'], $action = 'rimplenet_delete_wallets');
         
         $wallet = $this->deleteWallet($wallet['wallet']);
         return new WP_REST_Response(self::$response, self::$response['status_code']);

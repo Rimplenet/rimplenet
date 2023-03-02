@@ -21,7 +21,7 @@ class RimplenetCreateInvestmentApi
 
     public function create_investment(WP_REST_Request $request)
     {
-        do_action('rimplenet_api_request_started', $request, $allowed_roles=['administrator', 'subscriber'], $action='rimplenet_create_investments');
+        do_action('nll_api_request_started', $request, $allowed_roles=['administrator', 'subscriber'], $action='rimplenet_create_investments');
 
         $data = [
             'investment_name'                       => $request->get_param('investment_name'),

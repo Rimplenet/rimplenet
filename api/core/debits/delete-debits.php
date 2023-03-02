@@ -5,7 +5,7 @@
  */
 
 
-$DeleteDebits = new class extends RimplenetDeleteDebits
+new class extends RimplenetDeleteDebits
 {
     public function __construct()
     {
@@ -14,15 +14,17 @@ $DeleteDebits = new class extends RimplenetDeleteDebits
 
     public function register_api_routes()
     {
-        register_rest_route('/rimplenet/v1', 'debits/(?P<Debits>[\d]+)', [
+        register_rest_route(
+            '/rimplenet/v1', 'debits/(?P<Debits>[\d]+)', [
             'methods' => 'DELETE',
             'callback' => [$this, 'api_delete_debits']
-        ]);
+            ]
+        );
     }
 
     public function api_delete_debits($Debits)
     {
-        do_action('rimplenet_api_request_started', $Debits, $allowed_roles = ['administrator'], $action = 'rimplenet_delete_debits');
+        do_action('nll_api_request_started', $Debits, $allowed_roles = ['administrator'], $action = 'rimplenet_delete_debits');
         $this->deleteDebits($Debits['Debits'], 'debit');
         return new WP_REST_Response(self::$response, self::$response['status_code']);
     }

@@ -3,6 +3,7 @@
 class APIkeyPermission
 {
 
+    public $apikey;
     public function __construct()
     {
         add_action('rest_api_init', [$this, 'register_api_routes']);
@@ -17,10 +18,6 @@ class APIkeyPermission
         ]);
     }
 
-    public function api_key_permit(WP_REST_Request $req)
-    {
-    }
-
     public function validate_api_key($request, $allowed_roles, $action = '')
     {
         if (empty($allowed_roles)) return;
@@ -28,8 +25,8 @@ class APIkeyPermission
         # Check if an authorization is passed in the header
         $headers = $this->hasAuthorization();
         [$a, $b] = explode(' ', $headers['Authorization']);
-        if ($a == 'Key' || $a == 'Bearer') :
-            if ($a == 'Key') :
+        if ($a === 'Key' || $a === 'Bearer') :
+            if ($a === 'Key') :
                 $this->apikey = new ApiKey;
                 # decode and get api key information
                 $key = (object) $this->apikey->decodeBasic($b, false);

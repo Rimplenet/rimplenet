@@ -9,8 +9,8 @@ class Rimplenet_Base_Credits_Api
 
 	public function __construct()
 	{
-		$this->plugin_name = $plugin_name ?? 'RimplenetIn';
-		$this->version = $version ?? 'v1';
+		$this->plugin_name = $this->plugin_name ?? 'RimplenetIn';
+		$this->version = $this->version ?? 'v1';
 		$this->load_required_files();
 	}
 	private function load_required_files()
@@ -24,4 +24,4 @@ class Rimplenet_Base_Credits_Api
 }
 
 
-$Rimplenet_Base_Credits_Api = new Rimplenet_Base_Credits_Api();
+new Rimplenet_Base_Credits_Api();

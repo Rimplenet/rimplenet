@@ -1,6 +1,6 @@
 <?php
 
-$updateWallet = new Class
+new Class
 {
     public function __construct() {
         add_action('rest_api_init', [$this, 'register_api_routes']);

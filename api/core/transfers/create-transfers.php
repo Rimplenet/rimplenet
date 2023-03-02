@@ -22,7 +22,7 @@ class CreateTransfers extends RimplenetCreateTransfer
 
     public function api_create_transfers(WP_REST_Request $req)
     {
-        do_action('rimplenet_api_request_started', $req, $allowed_roles = ['administrator'], $action = 'rimplenet_create_transfers');
+        do_action('nll_api_request_started', $req, $allowed_roles = ['administrator'], $action = 'rimplenet_create_transfers');
         
         $this->req = [
             'transfer_from_user'    => sanitize_text_field($req['transfer_from_user'] ?? ''),
@@ -37,4 +37,4 @@ class CreateTransfers extends RimplenetCreateTransfer
     }
 }
 
-$CreateTransfers = new CreateTransfers();
+new CreateTransfers();
