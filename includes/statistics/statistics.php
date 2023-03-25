@@ -61,6 +61,22 @@ class RimplenetStatistics extends BaseStatistics
                 return Res::success($this->userCountDebit($user_id), 'Data Retreived Successfully');
                 break;
 
+            case 'maximum_credit_transaction':
+                return Res::success($this->userMaximumCredit($user_id), 'Data Retreived Successfully');
+                break;
+
+            case 'maximum_debit_transaction':
+                return Res::success($this->userMaximumDebit($user_id), 'Data Retreived Successfully');
+                break;
+            
+            case 'minimum_credit_transaction':
+                return Res::success($this->userMinimumCredit($user_id), 'Data Retreived Successfully');
+                break;
+
+            case 'minimum_debit_transaction':
+                return Res::success($this->userMinimumDebit($user_id), 'Data Retreived Successfully');
+                break;
+
             default:
                 return Res::error($this->error_message, "$meta_key is not a valid meta key");
                 break;
@@ -90,15 +106,28 @@ class RimplenetStatistics extends BaseStatistics
             case 'count_debit':
                 return Res::success($this->sitewideCountCredit(), 'Data Retreived Successfully');
                 break;
+                
+            case 'maximum_credit_transaction':
+                return Res::success($this->sitewideMaximumCredit(), 'Data Retreived Successfully');
+                break;
+    
+            case 'maximum_debit_transaction':
+                return Res::success($this->sitewideMaximumDebit(), 'Data Retreived Successfully');
+                break;
+                
+            case 'minimum_credit_transaction':
+                return Res::success($this->sitewideMinimumCredit(), 'Data Retreived Successfully');
+                break;
+    
+            case 'minimum_debit_transaction':
+                return Res::success($this->sitewideMinimumDebit(), 'Data Retreived Successfully');
+                break;
 
             default:
                 return Res::error($this->error_message, "$meta_key is not a valid meta key");
                 break;
         }
     }
-
-
-
 
 
     public function userHighestAmount($user_id)
@@ -148,6 +177,40 @@ class RimplenetStatistics extends BaseStatistics
                     ->userqueryBuilder();
     }
 
+    public function userMinimumCredit($user_id)
+    {
+        return $this->setPrefix('rimplenet_minimum_credit_amount_at')
+                    ->setwalletId($this->wallet_id)
+                    ->setuserId($user_id)
+                    ->userqueryBuilder();
+    }
+
+    public function userMaximumCredit($user_id)
+    {
+        return $this->setPrefix('rimplenet_maximum_credit_amount_at')
+                    ->setwalletId($this->wallet_id)
+                    ->setuserId($user_id)
+                    ->userqueryBuilder();
+    }
+
+    public function userMinimumDebit($user_id)
+    {
+        return $this->setPrefix('rimplenet_minimum_debit_amount_at')
+                    ->setwalletId($this->wallet_id)
+                    ->setuserId($user_id)
+                    ->userqueryBuilder();
+    }
+
+    public function userMaximumDebit($user_id)
+    {
+        return $this->setPrefix('rimplenet_maximum_credit_amount_at')
+                    ->setwalletId($this->wallet_id)
+                    ->setuserId($user_id)
+                    ->userqueryBuilder();
+    }
+
+
+
     public function sitewideHighestAmount()
     {
         return $this->setPrefix('rimplenet_highest_amount_at')
@@ -190,7 +253,37 @@ class RimplenetStatistics extends BaseStatistics
                     ->siteWideQueryBuilder();
     }
 
-    public function setEntityTypeError(Type $var = null)
+
+    public function sitewideMinimumCredit()
+    {
+        return $this->setPrefix('rimplenet_minimum_credit_amount_at')
+                    ->setwalletId($this->wallet_id)
+                    ->siteWideQueryBuilder();
+    }
+
+    public function sitewideMaximumCredit()
+    {
+        return $this->setPrefix('rimplenet_maximum_credit_amount_at')
+                    ->setwalletId($this->wallet_id)
+                    ->siteWideQueryBuilder();
+    }
+
+    public function sitewideMinimumDebit()
+    {
+        return $this->setPrefix('rimplenet_minimum_debit_amount_at')
+                    ->setwalletId($this->wallet_id)
+                    ->siteWideQueryBuilder();
+    }
+
+    public function sitewideMaximumDebit()
+    {
+        return $this->setPrefix('rimplenet_maximum_credit_amount_at')
+                    ->setwalletId($this->wallet_id)
+                    ->siteWideQueryBuilder();
+    }
+
+
+    public function setEntityTypeError($var = null)
     {
         $this->error_message['error_message'] = 'Entity Error';
         $this->error_message['suggestion'] = 'Please enter a valid entity type';

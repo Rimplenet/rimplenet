@@ -56,6 +56,7 @@ class BaseStatistics
                 ORDER BY `option_name`";
     
         $results = $wpdb->get_results( $sql );
+        $common_user_meta = [];
 
         foreach ($results as $key => $value) {
             $common_user_meta[$value->name] = floatval($value->value);
