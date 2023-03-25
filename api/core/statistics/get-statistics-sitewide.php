@@ -22,7 +22,7 @@ $rimplenet_wallet_addon_get_statistic_sitewide = new class extends RimplenetStat
 
     public function register_api_routes()
     {
-        register_rest_route('/rimplenet/v1', 'statistics/(?P<meta_key>\S+)/(?P<wallet_id>[a-zA-Z0-9-]+)', [
+        register_rest_route('/rimplenet/v1', 'statistics/sitewide/(?P<meta_key>\S+)/(?P<wallet_id>[a-zA-Z0-9-]+)', [
             'methods' => 'GET',
             'callback' => [$this, 'api_get_statistics']
         ]);

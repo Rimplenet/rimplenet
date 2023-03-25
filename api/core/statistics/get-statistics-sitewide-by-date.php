@@ -22,12 +22,12 @@ $rimplenet_wallet_addon_get_statistic_sitewide_by_date = new class extends Rimpl
 
     public function register_api_routes()
     {
-        // register_rest_route('/rimplenet-wallet-addon/v1', 'statistics/(?P<meta_key>\S+)/(?P<wallet_id>[a-zA-Z0-9-]+)/(?P<date>\S+)', [
+        register_rest_route('/rimplenet/v1', 'statistics/sitewide/(?P<meta_key>\S+)/(?P<wallet_id>[a-zA-Z0-9-]+)/(?P<date>\S+)', [
         // register_rest_route('/rimplenet/v1', 'statistics/(?P<meta_key>\S+)/(?P<wallet_id>[a-zA-Z0-9-]+)/(?P<date>\S+)', [
         // // register_rest_route('/rimplenet/v1', 'statistics/highest_amount/', [
-        //     'methods' => 'GET',
-        //     'callback' => [$this, 'api_get_statistics']
-        // ]);
+            'methods' => 'GET',
+            'callback' => [$this, 'api_get_statistics']
+        ]);
     }
 
     /** 

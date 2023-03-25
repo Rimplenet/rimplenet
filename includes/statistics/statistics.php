@@ -61,20 +61,36 @@ class RimplenetStatistics extends BaseStatistics
                 return Res::success($this->userCountDebit($user_id), 'Data Retreived Successfully');
                 break;
 
-            case 'maximum_credit_transaction':
+            case 'maximum_credit_amount':
                 return Res::success($this->userMaximumCredit($user_id), 'Data Retreived Successfully');
+                break;
+    
+            case 'maximum_debit_amount':
+                return Res::success($this->userMaximumDebit($user_id), 'Data Retreived Successfully');
+                break;
+                
+            case 'minimum_credit_amount':
+                return Res::success($this->userMinimumCredit($user_id), 'Data Retreived Successfully');
+                break;
+    
+            case 'minimum_debit_amount':
+                return Res::success($this->userMinimumDebit($user_id), 'Data Retreived Successfully');
+                break;
+
+            case 'maximum_credit_transaction':
+                return Res::success($this->userMaximumCreditTransaction($user_id), 'Data Retreived Successfully');
                 break;
 
             case 'maximum_debit_transaction':
-                return Res::success($this->userMaximumDebit($user_id), 'Data Retreived Successfully');
+                return Res::success($this->userMaximumDebitTransaction($user_id), 'Data Retreived Successfully');
                 break;
             
             case 'minimum_credit_transaction':
-                return Res::success($this->userMinimumCredit($user_id), 'Data Retreived Successfully');
+                return Res::success($this->userMinimumCreditTransaction($user_id), 'Data Retreived Successfully');
                 break;
 
             case 'minimum_debit_transaction':
-                return Res::success($this->userMinimumDebit($user_id), 'Data Retreived Successfully');
+                return Res::success($this->userMinimumDebitTransaction($user_id), 'Data Retreived Successfully');
                 break;
 
             default:
@@ -106,21 +122,38 @@ class RimplenetStatistics extends BaseStatistics
             case 'count_debit':
                 return Res::success($this->sitewideCountCredit(), 'Data Retreived Successfully');
                 break;
+
+            case 'maximum_credit_amount':
+                return Res::success($this->sitewideMaximumCredit(), 'Data Retreived Successfully');
+                break;
+        
+            case 'maximum_debit_amount':
+                return Res::success($this->sitewideMaximumDebit(), 'Data Retreived Successfully');
+                break;
+                    
+            case 'minimum_credit_amount':
+                return Res::success($this->sitewideMinimumCredit(), 'Data Retreived Successfully');
+                break;
+        
+            case 'minimum_debit_amount':
+                return Res::success($this->sitewideMinimumDebit(), 'Data Retreived Successfully');
+                break;
+
                 
             case 'maximum_credit_transaction':
-                return Res::success($this->sitewideMaximumCredit(), 'Data Retreived Successfully');
+                return Res::success($this->sitewideMaximumCreditTransaction(), 'Data Retreived Successfully');
                 break;
     
             case 'maximum_debit_transaction':
-                return Res::success($this->sitewideMaximumDebit(), 'Data Retreived Successfully');
+                return Res::success($this->sitewideMaximumDebitTransaction(), 'Data Retreived Successfully');
                 break;
                 
             case 'minimum_credit_transaction':
-                return Res::success($this->sitewideMinimumCredit(), 'Data Retreived Successfully');
+                return Res::success($this->sitewideMinimumCreditTransaction(), 'Data Retreived Successfully');
                 break;
     
             case 'minimum_debit_transaction':
-                return Res::success($this->sitewideMinimumDebit(), 'Data Retreived Successfully');
+                return Res::success($this->sitewideMinimumDebitTransaction(), 'Data Retreived Successfully');
                 break;
 
             default:
@@ -210,6 +243,39 @@ class RimplenetStatistics extends BaseStatistics
     }
 
 
+    public function userMinimumCreditTransaction($user_id)
+    {
+        return $this->setPrefix('rimplenet_minimum_credit_transaction_at')
+                    ->setwalletId($this->wallet_id)
+                    ->setuserId($user_id)
+                    ->userqueryBuilder();
+    }
+
+    public function userMaximumCreditTransaction($user_id)
+    {
+        return $this->setPrefix('rimplenet_maximum_credit_transaction_at')
+                    ->setwalletId($this->wallet_id)
+                    ->setuserId($user_id)
+                    ->userqueryBuilder();
+    }
+
+    public function userMinimumDebitTransaction($user_id)
+    {
+        return $this->setPrefix('rimplenet_minimum_debit_transaction_at')
+                    ->setwalletId($this->wallet_id)
+                    ->setuserId($user_id)
+                    ->userqueryBuilder();
+    }
+
+    public function userMaximumDebitTransaction($user_id)
+    {
+        return $this->setPrefix('rimplenet_maximum_credit_transaction_at')
+                    ->setwalletId($this->wallet_id)
+                    ->setuserId($user_id)
+                    ->userqueryBuilder();
+    }
+
+
 
     public function sitewideHighestAmount()
     {
@@ -278,6 +344,35 @@ class RimplenetStatistics extends BaseStatistics
     public function sitewideMaximumDebit()
     {
         return $this->setPrefix('rimplenet_maximum_credit_amount_at')
+                    ->setwalletId($this->wallet_id)
+                    ->siteWideQueryBuilder();
+    }
+
+
+    public function sitewideMinimumCreditTransaction()
+    {
+        return $this->setPrefix('rimplenet_minimum_credit_transaction_at')
+                    ->setwalletId($this->wallet_id)
+                    ->siteWideQueryBuilder();
+    }
+
+    public function sitewideMaximumCreditTransaction()
+    {
+        return $this->setPrefix('rimplenet_maximum_credit_transaction_at')
+                    ->setwalletId($this->wallet_id)
+                    ->siteWideQueryBuilder();
+    }
+
+    public function sitewideMinimumDebitTransaction()
+    {
+        return $this->setPrefix('rimplenet_minimum_debit_transaction_at')
+                    ->setwalletId($this->wallet_id)
+                    ->siteWideQueryBuilder();
+    }
+
+    public function sitewideMaximumDebitTransaction()
+    {
+        return $this->setPrefix('rimplenet_maximum_credit_transaction_at')
                     ->setwalletId($this->wallet_id)
                     ->siteWideQueryBuilder();
     }
