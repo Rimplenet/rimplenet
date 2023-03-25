@@ -232,6 +232,11 @@ class Rimplenet
 		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/debits/class-base-debits.php';
 		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/nll-utils/api-keys/class-base-api-keys.php';
 		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/investments/class-base-investments.php';
+
+		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/statistics/debits/class-base-debits-hook.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/statistics/credits/class-base-credits-hook.php';
+
+		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/statistics/class-base-statistics.php';
 		
 
 		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/withdrawals/class-base-withdrawals.php';
