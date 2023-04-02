@@ -35,6 +35,8 @@ class RimplenetAddDebitHook extends BaseDebitHook
             $this->rimplenet_count_user_debits($params['user_id'], $value);
             $this->rimplenet_count_site_wide_debits($value);
         }
+
+        $this->rimplenet_create_highest_lowest_debits($action, $auth, $params);
         }
     }
 
@@ -59,29 +61,29 @@ class RimplenetAddDebitHook extends BaseDebitHook
                     'rimplenet_maximum_debit_amount_at_all_time_'.$wallet_id,
                 ];
 
-        foreach ($date as $key => $value) {
-            $this->addHighestUserDebit($params['user_id'], $value, $params['amount'], $transaction_id);
-            $this->addHighestSiteWide($value, $params['amount']);
-            // $this->rimplenet_count_user_debits($params['user_id'], $value);
-            // $this->rimplenet_count_site_wide_debits($value);
-        }
+            foreach ($date as $key => $value) {
+                $this->addHighestUserDebit($params['user_id'], $value, $params['amount'], $transaction_id);
+                $this->addHighestSiteWide($value, $params['amount'], $transaction_id);
+                // $this->rimplenet_count_user_debits($params['user_id'], $value);
+                // $this->rimplenet_count_site_wide_debits($value);
+            }
 
-        $date = [
-            'rimplenet_minimum_debit_amount_at_'.str_replace(":", "_",date("Y:m:d:H:i:s")).'_'.$wallet_id, 
-            'rimplenet_minimum_debit_amount_at_'.str_replace(":", "_",date("Y:m:d:H:i")).'_'.$wallet_id, 
-            'rimplenet_minimum_debit_amount_at_'.str_replace(":", "_",date("Y:m:d:H")).'_'.$wallet_id, 
-            'rimplenet_minimum_debit_amount_at_'.str_replace(":", "_",date("Y:m:d")).'_'.$wallet_id, 
-            'rimplenet_minimum_debit_amount_at_'.str_replace(":", "_",date("Y:m")).'_'.$wallet_id, 
-            'rimplenet_minimum_debit_amount_at_'.str_replace(":", "_",date("Y")).'_'.$wallet_id, 
-            'rimplenet_minimum_debit_amount_at_all_time_'.$wallet_id,
-        ];
+            $date = [
+                'rimplenet_minimum_debit_amount_at_'.str_replace(":", "_",date("Y:m:d:H:i:s")).'_'.$wallet_id, 
+                'rimplenet_minimum_debit_amount_at_'.str_replace(":", "_",date("Y:m:d:H:i")).'_'.$wallet_id, 
+                'rimplenet_minimum_debit_amount_at_'.str_replace(":", "_",date("Y:m:d:H")).'_'.$wallet_id, 
+                'rimplenet_minimum_debit_amount_at_'.str_replace(":", "_",date("Y:m:d")).'_'.$wallet_id, 
+                'rimplenet_minimum_debit_amount_at_'.str_replace(":", "_",date("Y:m")).'_'.$wallet_id, 
+                'rimplenet_minimum_debit_amount_at_'.str_replace(":", "_",date("Y")).'_'.$wallet_id, 
+                'rimplenet_minimum_debit_amount_at_all_time_'.$wallet_id,
+            ];
 
-        foreach ($date as $key => $value) {
-            $this->addLowestUserDebit($params['user_id'], $value, $params['amount'], $transaction_id);
-            $this->addLowestSiteWide($value, $params['amount']);
-            // $this->rimplenet_count_user_debits($params['user_id'], $value);
-            // $this->rimplenet_count_site_wide_debits($value);
-        }
+            foreach ($date as $key => $value) {
+                $this->addLowestUserDebit($params['user_id'], $value, $params['amount'], $transaction_id);
+                $this->addLowestSiteWide($value, $params['amount'], $transaction_id);
+                // $this->rimplenet_count_user_debits($params['user_id'], $value);
+                // $this->rimplenet_count_site_wide_debits($value);
+            }
 
         }
     }

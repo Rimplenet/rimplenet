@@ -105,6 +105,7 @@ class RimplenetCreateDebits extends Debits
         if ($txn_add_bal_id > 0) {
             # action hook
             $param['action_status'] = "success";
+            $param['transaction_id'] = $txn_add_bal_id;
             do_action(
                 'rimplenet_hooks_and_monitors_on_finished',
                 'rimplenet_create_debits',

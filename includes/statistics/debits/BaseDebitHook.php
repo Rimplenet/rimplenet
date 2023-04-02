@@ -72,7 +72,7 @@ class BaseDebitHook
 
 
 
-    public function addLowestSiteWide($key, $amount)
+    public function addLowestSiteWide($key, $amount, $transaction_id)
     {
         $data=get_option($key);
         if ($data !== false ) {

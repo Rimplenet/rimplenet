@@ -236,7 +236,7 @@ class RimplenetStatistics extends BaseStatistics
 
     public function userMaximumDebit($user_id)
     {
-        return $this->setPrefix('rimplenet_maximum_credit_amount_at')
+        return $this->setPrefix('rimplenet_maximum_debit_amount_at')
                     ->setwalletId($this->wallet_id)
                     ->setuserId($user_id)
                     ->userqueryBuilder();
@@ -269,7 +269,7 @@ class RimplenetStatistics extends BaseStatistics
 
     public function userMaximumDebitTransaction($user_id)
     {
-        return $this->setPrefix('rimplenet_maximum_credit_transaction_at')
+        return $this->setPrefix('rimplenet_maximum_debit_transaction_at')
                     ->setwalletId($this->wallet_id)
                     ->setuserId($user_id)
                     ->userqueryBuilder();
@@ -343,7 +343,7 @@ class RimplenetStatistics extends BaseStatistics
 
     public function sitewideMaximumDebit()
     {
-        return $this->setPrefix('rimplenet_maximum_credit_amount_at')
+        return $this->setPrefix('rimplenet_maximum_debit_amount_at')
                     ->setwalletId($this->wallet_id)
                     ->siteWideQueryBuilder();
     }
@@ -372,7 +372,7 @@ class RimplenetStatistics extends BaseStatistics
 
     public function sitewideMaximumDebitTransaction()
     {
-        return $this->setPrefix('rimplenet_maximum_credit_transaction_at')
+        return $this->setPrefix('rimplenet_maximum_debit_transaction_at')
                     ->setwalletId($this->wallet_id)
                     ->siteWideQueryBuilder();
     }
