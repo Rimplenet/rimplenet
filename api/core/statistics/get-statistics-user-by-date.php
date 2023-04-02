@@ -22,7 +22,8 @@ $rimplenet_wallet_addon_get_statistic_user_by_date = new class extends Rimplenet
 
     public function register_api_routes()
     {
-        register_rest_route('/rimplenet/v1', 'statistics/(?P<wallet_id>[a-zA-Z0-9-]+)/user/(?P<slug>[a-zA-Z0-9-]+)/(?P<meta_key>\S+)/(?P<date>\S+)', [
+        // register_rest_route('/rimplenet/v1', 'statistics/(?P<wallet_id>[a-zA-Z0-9-]+)/user/(?P<slug>[a-zA-Z0-9-]+)/(?P<meta_key>\S+)/(?P<date>\S+)', [
+        register_rest_route('/rimplenet/v1', 'statistics/user', [
             'methods' => 'GET',
             'callback' => [$this, 'api_get_statistics'],
             'id' => array(
@@ -40,7 +41,7 @@ $rimplenet_wallet_addon_get_statistic_user_by_date = new class extends Rimplenet
     {
         $this->req = [
             'entity_type'          => 'user',
-            'entity_id'       => sanitize_text_field($req['slug']),
+            'entity_id'       => sanitize_text_field($req['user_id']),
             'meta_key'     => sanitize_text_field(strtolower($req['meta_key'])),
             'wallet_id'     => sanitize_text_field(strtolower($req['wallet_id'])),
             'date'     => sanitize_text_field(strtolower($req['date']) ?? ''), 
