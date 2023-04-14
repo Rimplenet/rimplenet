@@ -1,6 +1,7 @@
 <?php
 class RimplenetGetCredits extends Credits
 {
+    public $id;
     public function getCredits($id, $type)
     {
         if ($id !== '') :
@@ -20,7 +21,9 @@ class RimplenetGetCredits extends Credits
 
     public function creditById($id, $type)
     {
-        if ($credits = $this->CreditsExists($id, $type)) :
+        $param = [];
+        $credits = $this->CreditsExists($id, $type);
+        if ($credits) :
             $credits = get_post($credits->post_id);
             # Format credits
             $credits = $this->formatCredits($credits);
@@ -49,6 +52,7 @@ class RimplenetGetCredits extends Credits
 
     public function getAllCredits()
     {
+        $param = [];
         $this->queryTxn('');
         if ($this->query && $this->query->have_posts()) :
             $posts = $this->query->get_posts();

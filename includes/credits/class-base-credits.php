@@ -19,4 +19,4 @@ class Rimplenet_Base_Credits {
 }
 
 
-$Rimplenet_Base_Credits = new Rimplenet_Base_Credits();
+new Rimplenet_Base_Credits();

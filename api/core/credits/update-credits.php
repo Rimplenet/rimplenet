@@ -17,7 +17,7 @@ new class extends RimplenetUpdateCredits
 
     public function api_update_credits(WP_REST_Request $request)
     {
-        do_action('nll_api_request_started', $request, $allowed_roles = ['administrator'], $action = 'rimplenet_update_credits');
+        do_action('nll_api_request_started_api_key', $request, $allowed_roles = ['administrator'], $action = 'rimplenet_update_credits');
 
         $this->req = [
             'id' => $request['credit_id'] ?? '',

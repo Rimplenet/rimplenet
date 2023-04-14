@@ -20,7 +20,7 @@ new class extends RimplenetUpdateDebits
 
     public function api_update_debits(WP_REST_Request $request)
     {
-        do_action('nll_api_request_started', $request, $allowed_roles = ['administrator'], $action = 'rimplenet_update_debits');
+        do_action('nll_api_request_started_api_key', $request, $allowed_roles = ['administrator'], $action = 'rimplenet_update_debits');
         $this->req = [
             'id' => (int) $request['debits_id'],
             'note' => sanitize_text_field($request['note']),

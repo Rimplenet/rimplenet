@@ -8,14 +8,15 @@ class AllowedIPAndDomains
 
         $domains = trim(str_replace(['\r\n', ' ', PHP_EOL], '', $ipAndDomains));
 
+        
         # if domain is not set ignore and return true
         if ($domains === null || empty($domains)) return true;
-
+        
         $domain_array = explode(',', $domains);
         foreach ($domain_array as $key => $domain) :
             if (empty($domain)) unset($domain_array[$key]);
         endforeach;
-
+      
         if (in_array($referral['ip'], $domain_array) || in_array($referral['host'], $domain_array) || in_array($referral['referral'], $domain_array)) return true;
 
         Res::error([
