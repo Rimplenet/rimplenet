@@ -4,7 +4,9 @@ class RimplenetDeleteCredits extends Credits
 {
     public function deleteCredits(int $id, string $type = '')
     {
-        if ($credits = $this->creditsExists($id, $type)) :
+        $param = [];
+        $credits = $this->creditsExists($id, $type);
+        if ($credits) :
             do_action(
                 'rimplenet_hooks_and_monitors_on_started',
                 'rimplenet_delete_credits',

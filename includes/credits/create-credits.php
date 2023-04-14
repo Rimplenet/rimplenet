@@ -6,12 +6,18 @@ class RimplenetCreateCredits extends RimplenetGetWallets
 {
     use RimplenetWalletTrait;
 
+    public $req;
     public function createCredits(array $param = [], $isApi = false)
     {
         // do checks
 
         $prop = empty($param) ? $this->req : $param;
-        extract($prop);
+
+        $user_id = $prop['user_id'];
+        $wallet_id = $prop['wallet_id'];
+        $request_id = $prop['request_id'];
+        $amount = $prop['amount'];
+        $note = $prop['note'];
 
         if (self::requires([
             'user_id'    => "$user_id || int",
@@ -45,7 +51,7 @@ class RimplenetCreateCredits extends RimplenetGetWallets
 
         # Chech transient key
         if (isset($GLOBALS[$recent_txn_transient_key])) {
-            if ($GLOBALS[$recent_txn_transient_key] == "executing") return;
+            if ($GLOBALS[$recent_txn_transient_key] === "executing") return;
             if (get_transient($recent_txn_transient_key)) return;
         }
 
@@ -58,7 +64,6 @@ class RimplenetCreateCredits extends RimplenetGetWallets
 
         # set user balance before time
         $bal_before = $user_balance;
-        // return $user_balance_total;
 
         $user_balance_total = $this->get_total_wallet_bal($user_id, $wallet_id);
 
@@ -156,15 +161,6 @@ class RimplenetCreateCredits extends RimplenetGetWallets
             $prop
         );
 
-        // $get_user=get_user_by('id', $user_id);
-        // $prop['email']=$get_user->user_email;
-
-        // do_action(
-        //     'rimplenet_create_credit_alert_hook',
-        //     'rimplenet_create_credits',
-        //     null,
-        //     $prop
-        // );
         return;
     }
 
@@ -199,7 +195,7 @@ class RimplenetCreateCredits extends RimplenetGetWallets
     public static function isMyself($userId)
     {
         $currentUser = Token::getUserByToken();
-        if ($currentUser->ID == $userId) return true;
+        if ($currentUser->ID === $userId) return true;
         return false;
     }
 }

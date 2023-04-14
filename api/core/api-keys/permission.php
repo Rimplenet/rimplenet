@@ -7,7 +7,7 @@ class APIkeyPermission
     public function __construct()
     {
         add_action('rest_api_init', [$this, 'register_api_routes']);
-		add_action('rimplenet_api_request_started', array($this, 'validate_api_key'), 1, 3);
+        add_action('nll_api_request_started_api_key', array($this, 'validate_api_key'), 1, 3);
     }
 
     public function register_api_routes()
@@ -26,19 +26,19 @@ class APIkeyPermission
         $headers = $this->hasAuthorization();
         [$a, $b] = explode(' ', $headers['Authorization']);
         if ($a === 'Key' || $a === 'Bearer') :
-            if ($a === 'Key') :
-                $this->apikey = new ApiKey;
-                # decode and get api key information
-                $key = (object) $this->apikey->decodeBasic($b, false);
-                # if key is not true
-                if (isset($key->scalar)) :
-                    echo json_encode(Utils::$response);
-                    status_header(Utils::$response['status_code']);
-                    exit;
-                endif;
-                $this->authorizeKey($action, $key);
-                return;
+            // if ($a === 'Key') :
+            $this->apikey = new ApiKey;
+            # decode and get api key information
+            $key = (object) $this->apikey->decodeBasic($b, false);
+            # if key is not true
+            if (isset($key->scalar)) :
+                echo json_encode(Utils::$response);
+                status_header(Utils::$response['status_code']);
+                exit;
             endif;
+            $this->authorizeKey($action, $key);
+            return;
+        // endif;
         else :
             Res::error([
                 'token' => 'No Token',
@@ -62,13 +62,13 @@ class APIkeyPermission
         // $action = $this->apikey->applyAffix($action);
 
         # check if incoming permssion is a list of read-write
-        if(is_array($permisson[0])){
-            $permissons = array_filter($permisson, function($permisson) use ($action) {
-                if(in_array($action, $permisson)) return $permisson;
+        if (is_array($permisson[0])) {
+            $permissons = array_filter($permisson, function ($permisson) use ($action) {
+                if (in_array($action, $permisson)) return $permisson;
             });
             $permisson = !empty($permissons) ? $permissons[0] : $permisson;
         }
-        
+
         if (!in_array($action, $permisson)) {
             Res::error([
                 'permissionType' => $key->permission,
@@ -79,7 +79,6 @@ class APIkeyPermission
             echo json_encode(Utils::$response);
             exit;
         }
-
     }
 
     /**
@@ -88,7 +87,7 @@ class APIkeyPermission
     public function hasAuthorization()
     {
         $headers = getallheaders();
-        if(!isset($headers['Authorization'])):
+        if (!isset($headers['Authorization'])) :
             Res::error([
                 'authorization' => 'An authorization is required',
                 'recommendation' => 'Provide an authorization header'
@@ -96,13 +95,13 @@ class APIkeyPermission
             echo json_encode(Utils::$response);
             exit;
         endif;
-        
+
         $auth = explode(' ', $headers['Authorization']);
-        
+
         # Account for possible errors..
         # Sometimes if no header is passed... using PostMan.
         # Authorization returns Basic without a value
-        if(count($auth) < 2):
+        if (count($auth) < 2) :
             Res::error([
                 'authorization' => 'An authorization is required',
                 'recommendation' => 'Provide an authorization header'
