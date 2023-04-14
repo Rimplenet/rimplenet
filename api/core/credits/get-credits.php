@@ -18,7 +18,7 @@ new class extends RimplenetGetCredits
     public function api_get_credits(WP_REST_Request $req)
     {
         
-        do_action('nll_api_request_started', $req, $allowed_roles = ['administrator'], $action = 'rimplenet_get_credits');
+        do_action('nll_api_request_started_api_key', $req, $allowed_roles = ['administrator'], $action = 'rimplenet_get_credits');
         # ================= set fields ============
         $wlt_id  = sanitize_text_field($req['credit_id'] ?? '');
         // $page      = $req['page'] ?? 1;
