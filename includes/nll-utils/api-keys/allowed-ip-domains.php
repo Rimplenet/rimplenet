@@ -20,10 +20,10 @@ class AllowedIPAndDomains
         if (in_array($referral['ip'], $domain_array) || in_array($referral['host'], $domain_array) || in_array($referral['referral'], $domain_array)) return true;
 
         Res::error([
-            'referral' => "invalid referral domain",
-            'domain' => $referral,
-            'process' => 'end'
-        ], 'Invalid referral domain', 403);
+            // 'referral' => "invalid referral domain",
+            'domain' => [],
+            'process' => 'end',
+        ], 'Request Blocked', 403);
         echo json_encode(Utils::$response);
         exit;
     }
