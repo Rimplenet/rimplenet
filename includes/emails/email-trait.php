@@ -83,7 +83,7 @@ trait RimplenetEmailTrait
     $to = $email;
     include(plugin_dir_path( dirname( __FILE__ ) ) . 'emails/email-templates/create-credit.php');
 
-    if (wp_mail( $to, $subject, $message )) {
+    if (wp_mail( $to, $subject, $message, $headers)) {
         return true;
     } else {
         return false;
@@ -96,7 +96,7 @@ trait RimplenetEmailTrait
     $to = $email;
     include(plugin_dir_path( dirname( __FILE__ ) ) . 'emails/email-templates/create-debit.php');
 
-    if (wp_mail( $to, $subject, $message )) {
+    if (wp_mail( $to, $subject, $message, $headers )) {
         return true;
     } else {
         return false;
