@@ -13,7 +13,7 @@
                     Please visit Middey for more enquiries and If this is not you,
                     do not hesitate to change your password and contact us immediately. <br>
   
-                    <div style='width:100%; margin-top:3%'>
+                    <div style='width:100%; margin-top:15px; margin-bottom:15px;'>
                         <a style='padding: 200px; padding-top:15px; padding-bottom: 15px; background-color: #4298f5; color:white; margin-top: 20px;  border-radius: 5px; cursor:pointer;'>Go to Middey</a>
                     </div>
   
