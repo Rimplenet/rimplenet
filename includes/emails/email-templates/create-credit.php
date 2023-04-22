@@ -4,7 +4,7 @@
     // $message = 'Your account has been credited with '.$amount.' Please visit Middey for more enquiries';
     $message = "
                 <div style='text-align:center; padding: 9%; align-self:center;'>
-                    <img src='https://app.middey.com/img/middey-logowhitebg.7893c61c.png' width='200' height='150' style='max-width: 400px; text-align: center'> <br>
+                    
                     <h2>Credit Alert - ".$data['symbol'].$data['amount_formatted']."</h2>
                     Your account has been credited with the sum 
                     of <strong>".$data['symbol'].$data['amount_formatted']."</strong>
@@ -15,13 +15,14 @@
                     do not hesitate to change your password and contact us immediately. <br>
   
                     <div style='width:100%; margin-top:15px; margin-bottom:15px;'>
-                        <a style='padding: 200px; padding-top:15px; padding-bottom: 15px; background-color: #4298f5; color:white; margin-top: 20px;  border-radius: 5px; cursor:pointer;'>Go to Middey</a>
+                        <a style='padding: 200px; padding-top:15px; padding-bottom: 15px; background-color: black; color:white; margin-top: 20px;  border-radius: 5px; cursor:pointer;'>Go to Dashboard</a>
                     </div>
   
-                    <p style='margin-top:3%'>Thank you for choosing Middey <strong>&copy; <script>document.write(new Date().getFullYear())</script></strong></p>
+                    <p style='margin-top:3%'>Thank you for choosing us <strong>&copy; <script>document.write(new Date().getFullYear())</script></strong></p>
     
                 </div>";
 
+                // <img src='https://app.middey.com/img/middey-logowhitebg.7893c61c.png' width='200' height='150' style='max-width: 400px; text-align: center'> <br>
                 
     // $headers = 'just a test';
 
