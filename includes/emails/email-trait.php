@@ -4,6 +4,14 @@ namespace Traits\Email;
 
 trait RimplenetEmailTrait
 {
+
+  public function __construct()
+  {
+    add_filter('wp_mail_content_type', function( $content_type ) {
+      return 'text/html';
+    });
+  }
+
   public function sendWelcomeMail($email)
   {
     # code...
