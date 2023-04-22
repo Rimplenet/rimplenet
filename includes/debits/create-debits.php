@@ -115,7 +115,10 @@ class RimplenetCreateDebits extends Debits
             $result = $txn_add_bal_id;
             $get_user=get_user_by('id', $user_id);
             $prop['email']=$get_user->user_email;
-            $prop['transaction_id']=$txn_id;
+            $prop['transaction_id']=$txn_add_bal_id;
+            $walllet = $this->getWallet($wallet_id);
+            $decimal = $walllet['wallet_decimal'];
+            $prop['amount_formatted']=number_format($amount, $decimal);;
             $prop['note']=$note;
             $prop['symbol']=$this->getWallet($wallet_id)['wallet_symbol'];
             $prop['balance_after']=$new_balance;
