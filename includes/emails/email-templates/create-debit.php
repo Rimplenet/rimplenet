@@ -14,7 +14,7 @@
                     do not hesitate to change your password and contact us immediately. <br>
   
                     <div style='width:100%; margin-top:15px; margin-bottom:15px;'>
-                        <a style='padding: 200px; padding-top:15px; padding-bottom: 15px; background-color: black; color:white; margin-top: 20px;  border-radius: 5px; cursor:pointer;'>Go to Dashboard</a>
+                    <a href='".get_ste_url()."' style='padding: 200px; padding-top:15px; padding-bottom: 15px; background-color: black; color:white; margin-top: 20px;  border-radius: 5px; cursor:pointer;'>Go to Dashboard</a>
                     </div>
   
                     <p style='margin-top:3%'>Thank you for choosing us <strong>&copy; <script>document.write(new Date().getFullYear())</script></strong></p>
