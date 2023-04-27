@@ -137,6 +137,10 @@ class RimplenetCreateCredits extends RimplenetGetWallets
             $prop['note']=$note;
             $prop['symbol']=$this->getWallet($wallet_id)['wallet_symbol'];
             $prop['balance_after']=$new_balance;
+            $prop['user_id']=$user_id;
+            $prop['user_non_wdr_bal_formatted ']=$this->get_nonwithdrawable_wallet_bal($user_id, $wallet_id);
+
+            
 
         do_action(
             'rimplenet_create_credit_alert_hook',
