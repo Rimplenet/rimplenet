@@ -1,0 +1,19 @@
+name: Deploy Rimplenet Project on push
+on:
+  push:
+    branches:
+      - main
+jobs:
+  web-deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get the latest code
+        uses: actions/checkout@v2.3.2
+      - uses: actions/setup-node@master
+      - name: 📂 Sync files
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ftp.myazabox.site
+          username: danielmiddey@wordpress.myazabox.site
+          password: bfo1kC[oXrSv
