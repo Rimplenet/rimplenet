@@ -1,6 +1,6 @@
 <?php
 
-use ResponseUtil as Res;
+use Res;
 class RimplenetStatistics extends BaseStatistics
 {
     use Traits\Wallet\RimplenetWalletTrait;
