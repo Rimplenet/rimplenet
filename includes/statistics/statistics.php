@@ -279,6 +279,7 @@ class RimplenetStatistics extends BaseStatistics
 
     public function sitewideHighestAmount()
     {
+        var_dump('here');
         return $this->setPrefix('rimplenet_highest_amount_at')
                     ->setwalletId($this->wallet_id)
                     ->siteWideQueryBuilder();
