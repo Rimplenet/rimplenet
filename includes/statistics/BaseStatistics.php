@@ -32,7 +32,7 @@ class BaseStatistics
         return $this;
     }
 
-    public function userqueryBuilder()
+    public function userqueryBuilder() : array
     {
         // $user_meta = get_user_meta($this->user_id);
         $common_user_meta = array();
@@ -45,7 +45,7 @@ class BaseStatistics
         return $common_user_meta;
     }
 
-    public function siteWideQueryBuilder()
+    public function siteWideQueryBuilder() : array
     {
         global $wpdb;
         $query= $this->meta_prefix.'_'.$this->date;
@@ -61,7 +61,7 @@ class BaseStatistics
         foreach ($results as $key => $value) {
             $common_user_meta[$value->name] = floatval($value->value);
         }
-        var_dump($common_user_meta);
+        
         return $common_user_meta;
     }
 }
