@@ -19,6 +19,8 @@ class RimplenetStatistics extends BaseStatistics
         $this->wallet_id = $wallet_id;
         $this->date = $this->setDashtoUnderScore($date);
 
+        var_dump('check from here');
+
         switch ($entity_type) {
             case 'user':
                 return (!is_null($entity_id) && !empty($entity_id)) ? $this->queryUser($entity_id, $meta_key) : Res::error('Entity Error', 'Please enter a valid user id');
