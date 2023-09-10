@@ -31,6 +31,7 @@ class Res
         if(count(self::$submitted) == 0) unset(Utils::$response['submitted']);
 
         status_header(Utils::$response['status_code']);
-        return true;
+        // return true;
+        return Utils::$response;
     }
 }
