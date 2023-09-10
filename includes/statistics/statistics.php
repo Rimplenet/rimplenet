@@ -1,6 +1,6 @@
 <?php
 
-use \Res as Res;
+use Res as Res;
 class RimplenetStatistics extends BaseStatistics
 {
     use Traits\Wallet\RimplenetWalletTrait;
@@ -19,7 +19,7 @@ class RimplenetStatistics extends BaseStatistics
         $this->wallet_id = $wallet_id;
         $this->date = $this->setDashtoUnderScore($date);
 
-        var_dump($this->wallet_id);
+        // var_dump($this->wallet_id);
 
         switch ($entity_type) {
             case 'user':
