@@ -61,6 +61,7 @@ class BaseStatistics
         foreach ($results as $key => $value) {
             $common_user_meta[$value->name] = floatval($value->value);
         }
+        var_dump($common_user_meta);
         return $common_user_meta;
     }
 }
