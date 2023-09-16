@@ -119,10 +119,10 @@ class RimplenetStatistics extends BaseStatistics
                 break;
 
             case 'count_credit':
-                return Res::success($this->sitewideCountDebit(), 'Data Retreived Successfully');
+                return Res::success($this->sitewideCountCredit(), 'Data Retreived Successfully');
                 break;
             case 'count_debit':
-                return Res::success($this->sitewideCountCredit(), 'Data Retreived Successfully');
+                return Res::success($this->sitewideCountDebit(), 'Data Retreived Successfully');
                 break;
 
             case 'maximum_credit_amount':
