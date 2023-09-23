@@ -15,6 +15,13 @@ class RimplenetGetUser
         return ob_get_clean();
     }
 
+    public function count_users()
+    {
+        global $wpdb; $user_count = $wpdb->get_var( "SELECT COUNT(*) FROM $wpdb->users" );
+        return $this->response(200, "success", "Validation error", [], $user_count);
+
+    }
+
     public function get_users($access_token = null, $user_id = null, $page = 1, $users_per_page = 10)
     {
 
