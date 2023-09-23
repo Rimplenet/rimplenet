@@ -1,6 +1,6 @@
 <?php
 
-use ResponseUtil as Res;
+use Res as Res;
 class RimplenetStatistics extends BaseStatistics
 {
     use Traits\Wallet\RimplenetWalletTrait;
@@ -18,6 +18,8 @@ class RimplenetStatistics extends BaseStatistics
         extract($this->req ?? $params);
         $this->wallet_id = $wallet_id;
         $this->date = $this->setDashtoUnderScore($date);
+
+        // var_dump($this->wallet_id);
 
         switch ($entity_type) {
             case 'user':
@@ -117,10 +119,10 @@ class RimplenetStatistics extends BaseStatistics
                 break;
 
             case 'count_credit':
-                return Res::success($this->sitewideCountDebit(), 'Data Retreived Successfully');
+                return Res::success($this->sitewideCountCredit(), 'Data Retreived Successfully');
                 break;
             case 'count_debit':
-                return Res::success($this->sitewideCountCredit(), 'Data Retreived Successfully');
+                return Res::success($this->sitewideCountDebit(), 'Data Retreived Successfully');
                 break;
 
             case 'maximum_credit_amount':
