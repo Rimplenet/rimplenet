@@ -1,6 +1,6 @@
 <?php
 
-class RimplenetGetUserApi
+class RimplenetCountUserApi
 {
     public function __construct()
     {
@@ -36,4 +36,4 @@ class RimplenetGetUserApi
     }
 }
 
-$RimplenetGetUserApi = new RimplenetGetUserApi();
+$RimplenetCountUserApi = new RimplenetCountUserApi();
