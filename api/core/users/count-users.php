@@ -20,13 +20,13 @@ class RimplenetCountUserApi
 
     public function count_users(WP_REST_Request $request)
     {
-        do_action('nll_api_request_started', $request, $allowed_roles=['administrator', 'subscriber'], $action='rimplenet_get_users');
+        // do_action('nll_api_request_started', $request, $allowed_roles=['administrator', 'subscriber'], $action='rimplenet_get_users');
 
-        $user_id = sanitize_text_field($request->get_param('user_id'));
-        $page = sanitize_text_field($request->get_param('page'));
+        // $user_id = sanitize_text_field($request->get_param('user_id'));
+        // $page = sanitize_text_field($request->get_param('page'));
 
-        $headers = getallheaders();
-        $access_token = explode(" ", $headers['Authorization'])[1];
+        // $headers = getallheaders();
+        // $access_token = explode(" ", $headers['Authorization'])[1];
 
         $user = new RimplenetGetUser();
         $count_users = $user->count_users();
