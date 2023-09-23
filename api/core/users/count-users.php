@@ -31,7 +31,7 @@ class RimplenetCountUserApi
         $user = new RimplenetGetUser();
         $count_users = $user->count_users();
         
-        return new WP_REST_Response($get_user, $get_user['status_code']);
+        return new WP_REST_Response($count_users, $count_users['status_code']);
 
     }
 }
