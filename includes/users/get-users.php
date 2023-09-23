@@ -18,7 +18,7 @@ class RimplenetGetUser
     public function count_users()
     {
         global $wpdb; $user_count = $wpdb->get_var( "SELECT COUNT(*) FROM $wpdb->users" );
-        return $this->response(200, "success", "Validation error", [], $user_count);
+        return $this->response(200, "success", "User Count Retrieved Successfully", $user_count);
 
     }
 
