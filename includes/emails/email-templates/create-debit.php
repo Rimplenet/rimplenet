@@ -10,7 +10,7 @@
                     on transaction <strong>#".$data['transaction_id']."</strong> with 
                     description: ".$data['note'].". 
                     Your new balance is <strong>".$data['symbol'].number_format($data['balance_after'], $data['decimal'])."</strong>
-                    Please visit Middey for more enquiries and If this is not you,
+                    Please visit our website for more enquiries and If this is not you,
                     do not hesitate to change your password and contact us immediately. <br>
   
                     
