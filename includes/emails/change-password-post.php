@@ -56,7 +56,7 @@ class   ChangePasswordMail extends Base
 
     public function checkPasswordMatch()
     {
-        if ($this->prop['new_password'] == $this->prop['confirm_password']) {
+        if ($this->prop['new_password'] == $this->prop['confirm_new_password']) {
             return true;
         }
 
