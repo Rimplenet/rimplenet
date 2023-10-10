@@ -46,7 +46,6 @@ class   ChangePasswordMail extends Base
         $user = get_user_meta($this->prop['user_id'] ?? 1, 'token_to_change_password');
 
 
-        var_dump($user, end($user), $this->prop['token']);
         if ($this->prop['token'] == end($user)) {
             return true;
         }
