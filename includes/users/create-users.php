@@ -42,8 +42,9 @@ class RimplenetCreateUser
                 if(!empty($metas)) {
                     
                     foreach($metas as $meta_key=>$meta_value) {
-                        
+                        if(!empty($meta_value)) {
                         add_user_meta($new_user, $meta_key, $meta_value);
+			}
                     }
     
                 }
