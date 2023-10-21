@@ -177,4 +177,15 @@ class Utils
     {
         return get_post_meta($this->id, $field, true);
     }
+
+    public static function addMetaData($postID, array $data = [])
+    {
+        if(count($data) === 0) return;
+        if(!is_array($data)) return;
+
+        foreach($data as $key => $value):
+            add_post_meta($postID, $key, $value);
+        endforeach;
+        return;
+    }
 }

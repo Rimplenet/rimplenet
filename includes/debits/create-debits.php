@@ -6,7 +6,14 @@ class RimplenetCreateDebits extends Debits
     {
 
         $prop = empty($param) ? $this->req : $param;
-        extract($prop);
+
+        $user_id = $prop['user_id'];
+        $wallet_id = $prop['wallet_id'];
+        $request_id = $prop['request_id'];
+        $amount = $prop['amount'];
+        $note = $prop['note'];
+        $metaData = $prop['meta_data'];
+
         if (self::requires([
             'user_id'    => "$user_id || int",
             'wallet_id'  => "$wallet_id || string",
@@ -90,6 +97,8 @@ class RimplenetCreateDebits extends Debits
             
             update_post_meta($txn_add_bal_id, 'funds_type', $key);
             update_post_meta($txn_add_bal_id, 'user_id', $user_id);
+
+            self::addMetaData($txn_add_bal_id, (array) $metaData);
         else :
             #  action hook
             $param['action_status'] = "failed";

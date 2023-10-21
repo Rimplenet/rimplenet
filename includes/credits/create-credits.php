@@ -18,6 +18,7 @@ class RimplenetCreateCredits extends RimplenetGetWallets
         $request_id = $prop['request_id'];
         $amount = $prop['amount'];
         $note = $prop['note'];
+        $metaData = $prop['meta_data'];
 
         if (self::requires([
             'user_id'    => "$user_id || int",
@@ -109,6 +110,8 @@ class RimplenetCreateCredits extends RimplenetGetWallets
             
             update_post_meta($txn_add_bal_id, 'funds_type', $key);
             update_post_meta($txn_add_bal_id, 'user_id', $user_id);
+
+            self::addMetaData($txn_add_bal_id, (array) $metaData);
         else :
             return Res::error(['Unknown Error'], "unknown error", 400);
         endif;
