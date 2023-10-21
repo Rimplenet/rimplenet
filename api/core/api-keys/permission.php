@@ -61,14 +61,15 @@ class APIkeyPermission
     {
         AllowedIPAndDomains::ip_domains($key->allowedIpDomain ?? '');
         $permission = $this->apikey->getPermission($key->allowedActions, $key->permission);
+        
         // $action = $this->apikey->applyAffix($action);
-
+        
         # check if incoming permssion is a list of read-write
         if (is_array($permission[0])) {
             $permissions = array_filter($permission, function ($permission) use ($action) {
                 if (in_array($action, $permission)) return $permission;
             });
-            $permission = (!empty($permissions)) ? ((is_array($permissions) ? $permissions[0] : $permission)) : $permission;
+            $permission = (!empty($permissions)) ? ((isset($permissions[0]) ? $permissions[0] : $permissions[1])) : $permission;
         }
 
         if (!is_array($permission)) {
@@ -80,7 +81,7 @@ class APIkeyPermission
             echo json_encode(Utils::$response);
             exit;
         }
-        
+
         if (!in_array($action, $permission)) {
             Res::error([
                 'permissionType' => $key->permission,
