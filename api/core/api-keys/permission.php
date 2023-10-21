@@ -60,21 +60,21 @@ class APIkeyPermission
     public function authorizeKey($action, $key)
     {
         AllowedIPAndDomains::ip_domains($key->allowedIpDomain ?? '');
-        $permisson = $this->apikey->getPermission($key->allowedActions, $key->permission);
+        $permission = $this->apikey->getPermission($key->allowedActions, $key->permission);
         // $action = $this->apikey->applyAffix($action);
 
         # check if incoming permssion is a list of read-write
-        if (is_array($permisson[0])) {
-            $permissons = array_filter($permisson, function ($permisson) use ($action) {
-                if (in_array($action, $permisson)) return $permisson;
+        if (is_array($permission[0])) {
+            $permissions = array_filter($permission, function ($permission) use ($action) {
+                if (in_array($action, $permission)) return $permission;
             });
-            $permisson = !empty($permissons) ? $permissons[0] : $permisson;
+            $permission = (!empty($permissions)) ? ((is_array($permissions) ? $permissions[0] : $permission)) : $permission;
         }
 
-        if (!in_array($action, $permisson)) {
+        if (!in_array($action, $permission)) {
             Res::error([
                 'permissionType' => $key->permission,
-                'permissions' => $permisson,
+                'permissions' => $permission,
                 'permission' => 'Permission Denied for ' . $action,
                 'recommendation' => 'Set allowed actions withing the given permissions list'
             ], 'Permission Denied', 403);
