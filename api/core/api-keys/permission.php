@@ -71,6 +71,16 @@ class APIkeyPermission
             $permission = (!empty($permissions)) ? ((is_array($permissions) ? $permissions[0] : $permission)) : $permission;
         }
 
+        if (!is_array($permission)) {
+            Res::error([
+                'permissions' => $permission,
+                'action' => $action,
+                'errors' => "Something went wrong with the permissions"
+            ], "Error: Permission", 400);
+            echo json_encode(Utils::$response);
+            exit;
+        }
+        
         if (!in_array($action, $permission)) {
             Res::error([
                 'permissionType' => $key->permission,
