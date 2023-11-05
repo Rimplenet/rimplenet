@@ -2,6 +2,11 @@
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     if (isset($_POST['rimplenet_create_debit_submitted']) || wp_verify_nonce($_POST['rimplenet_create_debit_nonce_field'], 'rimplenet_create_debit_nonce_field')) {
+        if(rimplenetCheckIfAdminTransactionsAreEnabled('disable_admin_transactions')){
+            echo "<div class='error'>
+               <p> Debits Disabled at this time</p>
+           </div> ";
+        }else{
 
         $req = [
             'note'          => sanitize_text_field($_POST['rimplenet_credit_debit_note'] ?? ''),
@@ -31,6 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
            </div> ";
             }
         }
+    }
     }elseif (isset($_POST['rimplenet_search_user'])) {
         $users = new WP_User_Query( array(
             'search'         => '*'.esc_attr( $_POST['rimplenet_search_user'] ).'*',
