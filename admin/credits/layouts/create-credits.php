@@ -2,32 +2,33 @@
 
 if ($_SERVER['REQUEST_METHOD'] == "POST") {
     if (isset($_POST['rimplenet_create_credit_submitted']) || wp_verify_nonce($_POST['rimplenet_create_credit_nonce_field'], 'rimplenet_create_credit_nonce_field')) {
-
-        $req = [
-            'note'          => sanitize_text_field($_POST['rimplenet_credit_debit_note'] ?? ''),
-            'user_id'       => (int) $_POST['rimplenet_user'],
-            'wallet_id'     => sanitize_text_field(strtolower($_POST['rimplenet_wallet'])),
-            // 'request_id'      => sanitize_text_field($_POST['request_id']) ?? rand(5, 6),
-            'amount' => floatval(str_replace('-', '', $_POST['rimplenet_amount'])),
-            // 'request_id'=> sanitize_text_field("request".$_POST['rimplenet_credit_debit_note'])
-            'request_id'=> sanitize_text_field("admin_credit_".$_POST['rimplenet_user']."_".date('Y_m_d_H_i_s'))
-        ];
-        $wallets = new RimplenetCreateCredits();
-
-        // var_dump($wallets->createCredits($req));
-        // die;
-        $wallets->createCredits($req);
-        if (empty($wallets::$response['error'])) {
-            echo '<div class="updated">
-               <p>Credit has been created successfully</p>
-           </div> ';
-        } else {
-            foreach ($wallets::$response['error'] as $key => $value) {
-                echo "<div class='error'>
-               <p>".$wallets::$response['message'].": ".$value."</p>
+        if(rimplenetCheckIfAdminTransactionsAreEnabled('disable_admin_transactions')){
+            echo "<div class='error'>
+               <p> Credits Disabled at this time</p>
            </div> ";
+        }else{
+            $req = [
+                'note'          => sanitize_text_field($_POST['rimplenet_credit_debit_note'] ?? ''),
+                'user_id'       => (int) $_POST['rimplenet_user'],
+                'wallet_id'     => sanitize_text_field(strtolower($_POST['rimplenet_wallet'])),
+                'amount' => floatval(str_replace('-', '', $_POST['rimplenet_amount'])),
+                'request_id'=> sanitize_text_field("admin_credit_".$_POST['rimplenet_user']."_".date('Y_m_d_H_i_s'))
+            ];
+            $wallets = new RimplenetCreateCredits();
+            $wallets->createCredits($req);
+            if (empty($wallets::$response['error'])) {
+                echo '<div class="updated">
+                   <p>Credit has been created successfully</p>
+               </div> ';
+            } else {
+                foreach ($wallets::$response['error'] as $key => $value) {
+                    echo "<div class='error'>
+                   <p>".$wallets::$response['message'].": ".$value."</p>
+               </div> ";
+                }
             }
         }
+        
     // }elseif (isset($_POST['rimplenet_search_user'])) {
     }
 }
@@ -230,9 +231,9 @@ function filterFunction() {
   div = document.getElementById("myDropdown");
   a = div.getElementsByTagName("a");
   jQuery.ajax({
-        type: 'POST',
-        url: site+'/wp-json/rimplenet/v1/users/search',
-        // url: site+'?rest_route=/rimplenet/v1/users/search',
+        type: 'GET',
+        // url: site+'/wp-json/rimplenet/v1/users/search',
+        url: site+'?rest_route=/rimplenet/v1/users/search',
         data: {
             'rimplenet_search_user':filter
         },

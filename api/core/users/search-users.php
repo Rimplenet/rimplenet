@@ -12,7 +12,7 @@ class RimplenetSearchUserApi
         register_rest_route(
             'rimplenet/v1', '/users/search',
             [
-                'methods' => 'POST',
+                'methods' => ['POST','GET'],
                 'callback' => [$this, 'search_users']
             ]
         );

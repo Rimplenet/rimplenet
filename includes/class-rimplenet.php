@@ -119,6 +119,11 @@ class Rimplenet
 		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-matrix-and-rules.php';
 
 		/**
+		 * File having helper functions
+		 * */
+		require_once plugin_dir_path(dirname(__FILE__)) . 'helpers.php';
+
+		/**
 		 * The class responsible for Utility
 		 * core plugin.
 		 */

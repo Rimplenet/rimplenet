@@ -26,11 +26,13 @@ class RimplenetGetTransactions extends RimplenetGetWallets
     // die;
     if ($transaction_id !== false && !empty($transaction_id)) {
       $txn_loop = $this->getTransactionByID($transaction_id);
-      // var_dump($txn_loop);
-      // die;
-      // die("Fs");
     } elseif ($user_id) {
       $txn_loop=$this->getTransactionsByUser($user_id, 10, $pageno??1);
+      if ($txn_loop->have_posts()) {
+        $txn_loop = $txn_loop->get_posts();
+      }
+    } elseif($search !== false && $meta_key !==null){
+      $txn_loop = $this->searchTransactions($meta_key, $meta_value, $post_per_page, $pageno);
       if ($txn_loop->have_posts()) {
         $txn_loop = $txn_loop->get_posts();
       }
@@ -38,7 +40,6 @@ class RimplenetGetTransactions extends RimplenetGetWallets
     else {
       do_action('rimplenet_hooks_and_monitors_on_started', $action = 'rimplenet_get_transactions', $auth = null, $request = ['credit_id' => $id]);
       $txn_loop = $this->getAllTransactions($posts_per_page, $pageno);
-      // $txn_loop=$txn_loop
       if ($txn_loop->have_posts()) {
         $txn_loop = $txn_loop->get_posts();
       }
@@ -98,7 +99,41 @@ class RimplenetGetTransactions extends RimplenetGetWallets
             'field'    => 'name',
             'terms'    => array('DEBIT'),
           ),
+        )
+      )
+    );
+  }
+
+  public function searchTransactions($meta_key, $meta_value, $posts_per_page, $pageno)
+  {
+    // die;
+    return new WP_Query(
+      array(
+        'post_type' => 'rimplenettransaction',
+        'post_status' => 'any',
+        // 'author' => $user_id,
+        'posts_per_page' => $posts_per_page,
+        'paged' => $pageno,
+        'tax_query' => array(
+          'relation' => 'OR',
+          array(
+            'taxonomy' => 'rimplenettransaction_type',
+            'field'    => 'name',
+            'terms'    => array('CREDIT'),
+          ),
+          array(
+            'taxonomy' => 'rimplenettransaction_type',
+            'field'    => 'name',
+            'terms'    => array('DEBIT'),
+          ),
         ),
+        'meta_query' => array(
+          array(
+              'key'       => $meta_key,
+              'value'     => $meta_value,
+              'compare'   => 'LIKE'
+          )
+        )
       )
     );
   }
