@@ -43,10 +43,9 @@ class   ChangePasswordMail extends Base
 
     public function checkToken()
     {
-        $user = get_user_meta($this->prop['user_id'] ?? 1, 'token_to_reset_password');
+        $user = get_user_meta($this->prop['user_id'] ?? 1, 'token_to_change_password');
 
 
-        
         if ($this->prop['token'] == end($user)) {
             return true;
         }
@@ -57,7 +56,7 @@ class   ChangePasswordMail extends Base
 
     public function checkPasswordMatch()
     {
-        if ($this->prop['new_password'] == $this->prop['confirm_password']) {
+        if ($this->prop['new_password'] == $this->prop['confirm_new_password']) {
             return true;
         }
 

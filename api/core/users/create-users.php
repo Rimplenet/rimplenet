@@ -34,7 +34,8 @@ class RimplenetCreateUserApi
             [
                 "first_name" => $request->get_param('first_name'),
                 "last_name" => $request->get_param('last_name'),
-                "phone_number" => $request->get_param('phone_number')
+                "phone_number" => $request->get_param('phone_number'),
+                "rimplenet_referrer_sponsor" => $request->get_param('rimplenet_referrer_sponsor')
             ],
             $access_token
         );
