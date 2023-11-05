@@ -232,8 +232,8 @@ function filterFunction() {
   a = div.getElementsByTagName("a");
   jQuery.ajax({
         type: 'GET',
-        // url: site+'/wp-json/rimplenet/v1/users/search',
-        url: site+'?rest_route=/rimplenet/v1/users/search',
+        url: site+'/wp-json/rimplenet/v1/users/search',
+        // url: site+'?rest_route=/rimplenet/v1/users/search',
         data: {
             'rimplenet_search_user':filter
         },
