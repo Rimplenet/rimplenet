@@ -32,7 +32,7 @@ class RimplenetGetTransactions extends RimplenetGetWallets
         $txn_loop = $txn_loop->get_posts();
       }
     } elseif(($search !== false && !empty($search)) && ($meta_key !== null && !empty($meta_key))){
-      $txn_loop = $this->searchTransactions($meta_key, $meta_value, $post_per_page, $pageno);
+      $txn_loop = $this->searchTransactions($meta_key, $meta_value, $posts_per_page, $pageno);
       if ($txn_loop->have_posts()) {
         $txn_loop = $txn_loop->get_posts();
       }
