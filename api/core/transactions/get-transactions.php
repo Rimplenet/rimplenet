@@ -22,6 +22,9 @@ class RetrieveTransactions extends RimplenetGetTransactions
     $param = [
       'transaction_id' => sanitize_text_field($request['transaction_id']) ?? false,
       'user_id' => sanitize_text_field($request['user_id']) ?? false,
+      'search' => sanitize_text_field($request['search']) ?? false,
+      'meta_key' => sanitize_text_field($request['meta_key']) ?? false,
+      'meta_value' => sanitize_text_field($request['meta_value']) ?? false,
       'type' => sanitize_text_field($request['type'] ?? false),
       'id' => sanitize_text_field($request['id'] ?? false),
   ];
