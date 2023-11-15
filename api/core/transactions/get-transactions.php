@@ -9,7 +9,7 @@ class RetrieveTransactions extends RimplenetGetTransactions
   }
   
   public function register_api_routes() {
-          register_rest_route( 'rimplenet/v1','/transactions', array(
+          register_rest_route( '/rimplenet/v1','/transactions', array(
             'methods' => 'GET',
             'permission_callback' => '__return_true',
             'callback' => array($this,'api_retrieve_txns'),

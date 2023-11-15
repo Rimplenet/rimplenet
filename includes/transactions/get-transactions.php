@@ -18,23 +18,25 @@ class RimplenetGetTransactions extends RimplenetGetWallets
     } else {
       $pageno = 1;
     }
-    // if (isset($user_id) && $user_id != "any") {
-    //   do_action('rimplenet_hooks_and_monitors_on_started', $action = 'rimplenet_get_transactions', $auth = null, $request = ['credit_id' => $id]);
-    //   $txn_loop = $this->getTransactionsByUser($user_id, $posts_per_page, $pageno);
-    // }else 
-    // var_dump($transaction_id);
-    // die;
+    
+    
     if ($transaction_id !== false && !empty($transaction_id)) {
       $txn_loop = $this->getTransactionByID($transaction_id);
-    } elseif ($user_id) {
-      $txn_loop=$this->getTransactionsByUser($user_id, 10, $pageno??1);
-      if ($txn_loop->have_posts()) {
-        $txn_loop = $txn_loop->get_posts();
-      }
-    } elseif(($search !== false && !empty($search)) && ($meta_key !== null && !empty($meta_key))){
+    }elseif(($search !== false && !empty($search)) && ($meta_key !== null && !empty($meta_key))){
+      // do_action('rimplenet_hooks_and_monitors_on_started', $action = 'rimplenet_get_transactions', $auth = null, $request = ['credit_id' => $id]);
       $txn_loop = $this->searchTransactions($meta_key, $meta_value, $posts_per_page, $pageno);
       if ($txn_loop->have_posts()) {
         $txn_loop = $txn_loop->get_posts();
+      }else{
+        $txn_loop = false;
+      }
+    }
+    elseif ($user_id) {
+      $txn_loop=$this->getTransactionsByUser($user_id, 10, $pageno??1);
+      if ($txn_loop->have_posts()) {
+        $txn_loop = $txn_loop->get_posts();
+      }else{
+        $txn_loop = false;
       }
     }
     else {
@@ -42,20 +44,16 @@ class RimplenetGetTransactions extends RimplenetGetWallets
       $txn_loop = $this->getAllTransactions($posts_per_page, $pageno);
       if ($txn_loop->have_posts()) {
         $txn_loop = $txn_loop->get_posts();
+      }else{
+        $txn_loop = false;
       }
     }
 
     if ($txn_loop) {
-
-      $status_code = 200;
-      $status = true;
-      $response_message = "Txns Retrieved Successful";
-      $data = $this->formatTransactions($txn_loop);
+      $data = Res::success($this->formatTransactions($txn_loop), "Txns Retrieved Successful");
     } else {
       $status_code = 406;
-      $status = "failed";
-      $response_message = "Txns Retrieved Failed";
-      $data = "No Transaction Performed by this User";
+      $data = Res::success(['No Transaction Performed by this User'], "Transaction Not found", 404);
     }
 
     return $data;
