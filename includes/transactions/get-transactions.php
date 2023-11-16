@@ -19,7 +19,7 @@ class RimplenetGetTransactions extends RimplenetGetWallets
       $pageno = 1;
     }
     
-    
+
     if ($transaction_id !== false && !empty($transaction_id)) {
       $txn_loop = $this->getTransactionByID($transaction_id);
     }elseif(($search !== false && !empty($search)) && ($meta_key !== null && !empty($meta_key))){
@@ -53,7 +53,7 @@ class RimplenetGetTransactions extends RimplenetGetWallets
       $data = Res::success($this->formatTransactions($txn_loop), "Txns Retrieved Successful");
     } else {
       $status_code = 406;
-      $data = Res::success(['No Transaction Performed by this User'], "Transaction Not found", 404);
+      $data = Res::success(['No Transaction Performed by this User'], "Transaction Not found", 200);
     }
 
     return $data;
