@@ -22,9 +22,9 @@ class RimplenetGetTransactions extends RimplenetGetWallets
 
     if ($transaction_id !== false && !empty($transaction_id)) {
       $txn_loop = $this->getTransactionByID($transaction_id);
-    }elseif(($search !== false && !empty($search)) && ($meta_key !== null && !empty($meta_key))){
+    }elseif(($meta_key !== null && !empty($meta_key)) || ($meta_value !== null && !empty($meta_value))){
       // do_action('rimplenet_hooks_and_monitors_on_started', $action = 'rimplenet_get_transactions', $auth = null, $request = ['credit_id' => $id]);
-      $txn_loop = $this->searchTransactions($meta_key, $meta_value, $posts_per_page, $pageno);
+      $txn_loop = $this->searchTransactions($meta_key, $meta_value, $category, $posts_per_page, $pageno, $user_id ?? null);
       if ($txn_loop->have_posts()) {
         $txn_loop = $txn_loop->get_posts();
       }else{
@@ -102,13 +102,14 @@ class RimplenetGetTransactions extends RimplenetGetWallets
     );
   }
 
-  public function searchTransactions($meta_key, $meta_value, $posts_per_page, $pageno)
+  public function searchTransactions($meta_key, $meta_value, $category, $posts_per_page, $pageno, $user_id=null)
   {
     // die;
     return new WP_Query(
       array(
         'post_type' => 'rimplenettransaction',
         'post_status' => 'any',
+        'author' => ($user_id) ? $user_id : null,
         // 'author' => $user_id,
         'posts_per_page' => $posts_per_page,
         'paged' => $pageno,
@@ -116,6 +117,11 @@ class RimplenetGetTransactions extends RimplenetGetWallets
           'relation' => 'OR',
           array(
             'taxonomy' => 'rimplenettransaction_type',
+            'field'    => 'name',
+            'terms'    => array('CREDIT'),
+          ),
+          array(
+            'taxonomy' => 'category',
             'field'    => 'name',
             'terms'    => array('CREDIT'),
           ),
