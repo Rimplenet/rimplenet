@@ -214,7 +214,7 @@ class RimplenetGetTransactions extends RimplenetGetWallets
         // die;
         $txn_id = $value->ID;
         $data[$key]->transaction_id=$value->ID;
-      unset($value->ID);
+        unset($value->ID);
 
 
         $data[$key]->date_time = get_the_date('D, M j, Y', $txn_id) . '<br>' . get_the_date('g:i A', $txn_id);
@@ -483,6 +483,7 @@ class RimplenetGetTransactions extends RimplenetGetWallets
 
           $txn_id = $value->ID;
           $key = $key;
+
           //delete other info from retrieved taxonomy 
           unset($data[$key]->post_author);
           unset($data[$key]->post_date);
@@ -523,8 +524,10 @@ class RimplenetGetTransactions extends RimplenetGetWallets
           $data[$key]->transaction_type = get_post_meta($txn_id, 'txn_type', true);
 
           $data[$key]->wallet_id = get_post_meta($txn_id, 'currency', true);
-          $data[$key]->wallet_symbol = get_post_meta($txn_id, 'wallet_symbol', true);
-          $data[$key]->wallet_decimal = get_post_meta($txn_id, 'wallet_decimal', true);
+          $wallet = $this->getWallet($data[$key]->wallet_id);
+          $data[$key]->wallet_symbol = $wallet['wallet_symbol'];
+          $data[$key]->wallet_decimal = $wallet['wallet_decimal'];
+          $data[$key]->amount_formatted = $wallet['wallet_symbol']. '' . get_post_meta($txn_id, 'amount', true);
 
           if (!empty($request['metas_to_retrieve'])) {
             $metas_to_ret = explode(",", $request['metas_to_retrieve']);
