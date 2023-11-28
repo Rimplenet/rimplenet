@@ -432,4 +432,155 @@ class RimplenetGetTransactions extends RimplenetGetWallets
       return new WP_Error($status_code, $response_message, $data);
     }
   }
+
+
+
+  public function fetchTransactions($params)
+  {
+    extract($params);
+
+    $query_arr = array(
+      'post_type' => 'rimplenettransaction',
+      'post_status' => 'any',
+      'orderby' => $orderby,
+      'order' => $order,
+      'posts_per_page' => $posts_per_page,
+      'paged' => $pageno,
+      'tax_query' => array(
+        'relation' => 'OR',
+        array(
+          'taxonomy' => 'rimplenettransaction_type',
+          'field'    => 'name',
+          'terms'    => array('CREDIT'),
+        ),
+        array(
+          'taxonomy' => 'rimplenettransaction_type',
+          'field'    => 'name',
+          'terms'    => array('DEBIT'),
+        ),
+      ),
+      'meta_query' => array(
+        array(
+          'key'       => $meta_key,
+          'value'     => $meta_value,
+          'compare'   => 'LIKE'
+        )
+      )
+    );
+    if (!empty($request['user_id'])) {
+      $query_arr['author'] = $request['user_id'];
+    }
+    $txn_loop = new WP_Query(
+      $query_arr
+    );
+
+    if ($txn_loop->have_posts()) {
+      $data = $txn_loop->get_posts();
+
+      if (is_array($data)) {
+
+        foreach ($data as $key => $value) {
+
+          $txn_id = $value->ID;
+          $key = $key;
+          //delete other info from retrieved taxonomy 
+          unset($data[$key]->post_author);
+          unset($data[$key]->post_date);
+          unset($data[$key]->post_date_gmt);
+          unset($data[$key]->post_content);
+          unset($data[$key]->post_title);
+          unset($data[$key]->post_excerpt);
+          unset($data[$key]->post_status);
+          unset($data[$key]->comment_status);
+          unset($data[$key]->ping_status);
+          unset($data[$key]->post_password);
+          unset($data[$key]->post_name);
+          unset($data[$key]->to_ping);
+          unset($data[$key]->pinged);
+          unset($data[$key]->post_modified);
+          unset($data[$key]->post_modified_gmt);
+          unset($data[$key]->post_content_filtered);
+          unset($data[$key]->post_parent);
+          unset($data[$key]->guid);
+          unset($data[$key]->menu_order);
+          unset($data[$key]->post_type);
+          unset($data[$key]->post_mime_type);
+          unset($data[$key]->comment_count);
+          unset($data[$key]->filter);
+
+          $data[$key]->ID = intval($value->ID);
+
+          $data[$key]->request_id = get_post_meta($txn_id, 'request_id', true);
+          $data[$key]->user_id = intval(get_post_meta($txn_id, 'user_id', true));
+          $data[$key]->date_time = get_the_date('l, F j, Y', $txn_id) . ' ' . get_the_date('g:iA', $txn_id);
+          $data[$key]->timestamp = get_post_time('U', false, $txn_id);
+          $data[$key]->amount = floatval(get_post_meta($txn_id, 'amount', true));
+          //$data[$key]->amount_formatted = $this->getRimplenetWalletFormattedAmount($data[$key]->amount, 'usdt');
+          $data[$key]->amount_formatted = get_post_meta($txn_id, 'currency', true) . ' ' . get_post_meta($txn_id, 'amount', true);
+          $data[$key]->note = get_post_meta($txn_id, 'note', true);
+
+          $data[$key]->transaction_id = intval($txn_id);
+          $data[$key]->transaction_type = get_post_meta($txn_id, 'txn_type', true);
+
+          $data[$key]->wallet_id = get_post_meta($txn_id, 'currency', true);
+          $data[$key]->wallet_symbol = get_post_meta($txn_id, 'wallet_symbol', true);
+          $data[$key]->wallet_decimal = get_post_meta($txn_id, 'wallet_decimal', true);
+
+          if (!empty($request['metas_to_retrieve'])) {
+            $metas_to_ret = explode(",", $request['metas_to_retrieve']);
+            $metas_to_return = [];
+            foreach ($metas_to_ret as $met_value) {
+              $metas_to_return[$met_value] = get_post_meta($txn_id, $met_value, true);
+            }
+            $data[$key]->metas = $metas_to_return;
+          }
+        }
+      }
+
+      $status_code = 200;
+      $status = true;
+      $message = "Transactions Retrieved";
+
+      $api_response =  array(
+        'status_code' => $status_code,
+        'status' => $status,
+        'message' => $message,
+        'data' => $data
+      );
+    } else {
+
+      $status_code = 200;
+      $status = true;
+      $message = "No transaction found";
+      $data = [];
+      $error = array(
+        'msg' => "No transaction found",
+        'recommendation' => "Try using modifying the filters or params"
+      );
+
+
+      $api_response =  array(
+        'status_code' => $status_code,
+        'status' => $status,
+        'message' => $message,
+        'data' => $data,
+        'error' => $error
+      );
+    }
+
+
+
+    if ($status) {
+
+      return new WP_REST_Response($api_response, $status_code);
+    } else {
+
+      $status_code = 400;
+      $response_message = "Unknown Error";
+      $data = array(
+          "error" => "unknown_error"
+        );
+      return new WP_Error($status_code, $response_message, $data);
+    }
+  }
 }

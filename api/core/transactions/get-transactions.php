@@ -19,17 +19,29 @@ class RetrieveTransactions extends RimplenetGetTransactions
     
   public function api_retrieve_txns(WP_REST_Request $request ) {
 
+    // $param = [
+    //   'transaction_id' => sanitize_text_field($request['transaction_id']) ?? false,
+    //   'user_id' => sanitize_text_field($request['user_id']) ?? false,
+    //   'search' => sanitize_text_field($request['search']) ?? false,
+    //   'meta_key' => sanitize_text_field($request['meta_key']) ?? false,
+    //   'meta_value' => sanitize_text_field($request['meta_value']) ?? false,
+    //   'type' => sanitize_text_field($request['type'] ?? false),
+    //   'id' => sanitize_text_field($request['id'] ?? false),
+    // ];
+
     $param = [
-      'transaction_id' => sanitize_text_field($request['transaction_id']) ?? false,
-      'user_id' => sanitize_text_field($request['user_id']) ?? false,
-      'search' => sanitize_text_field($request['search']) ?? false,
-      'meta_key' => sanitize_text_field($request['meta_key']) ?? false,
-      'meta_value' => sanitize_text_field($request['meta_value']) ?? false,
-      'type' => sanitize_text_field($request['type'] ?? false),
-      'id' => sanitize_text_field($request['id'] ?? false),
-  ];
+      'user_id' => sanitize_text_field($request['user_id']),
+      'pageno' => sanitize_text_field($request['page_no']),
+      'posts_per_page' => sanitize_text_field($request['posts_per_page']),
+      'orderby' => sanitize_text_field($request['orderby']),
+      'order' => sanitize_text_field($request['order']),
+      'meta_key' => sanitize_text_field($request['meta_key']),
+      'meta_value' => sanitize_text_field($request['meta_value']),
+      'metas_to_retrieve' => sanitize_text_field($request['metas_to_retrieve']),
+    ];
     // return $this->getTransactionsOld($request);
-    return $this->getTransactions($param);
+    // return $this->getTransactions($param);
+    return $this->fetchTransactions($param);
      
      
 
