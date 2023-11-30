@@ -517,7 +517,7 @@ class RimplenetGetTransactions extends RimplenetGetWallets
           $data[$key]->timestamp = get_post_time('U', false, $txn_id);
           $data[$key]->amount = floatval(get_post_meta($txn_id, 'amount', true));
           //$data[$key]->amount_formatted = $this->getRimplenetWalletFormattedAmount($data[$key]->amount, 'usdt');
-          $data[$key]->amount_formatted = get_post_meta($txn_id, 'currency', true) . ' ' . get_post_meta($txn_id, 'amount', true);
+          $data[$key]->amount_formatted = get_post_meta($txn_id, 'currency', true) . ' ' . $data[$key]->amount;
           $data[$key]->note = get_post_meta($txn_id, 'note', true);
 
           $data[$key]->transaction_id = intval($txn_id);
@@ -526,7 +526,7 @@ class RimplenetGetTransactions extends RimplenetGetWallets
           $data[$key]->wallet_id = get_post_meta($txn_id, 'currency', true);
           $wallet = $this->getWallet($data[$key]->wallet_id);
           $data[$key]->wallet_symbol = $wallet['wallet_symbol'];
-          $data[$key]->wallet_decimal = $wallet['wallet_decimal'];
+          $data[$key]->wallet_decimal = floatval($wallet['wallet_decimal']);
           $data[$key]->amount_formatted = $wallet['wallet_symbol']. '' . get_post_meta($txn_id, 'amount', true);
 
           if (!empty($request['metas_to_retrieve'])) {
